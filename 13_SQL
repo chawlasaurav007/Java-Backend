@@ -33,11 +33,11 @@ select name, grade from students where Grade = "A";
 
 //--Logical operators (And, Or, Not)--
 
-names whose age > 14 and also grade = A--
+names whose age > 14 and also grade = A
 
 Select name, age, grade from students where age >13 AND grade = "A";
 
-names whose age 13 or grade =C--
+names whose age 13 or grade =C
 
 select * from students where age >14 or grade ="C";
 
@@ -51,11 +51,11 @@ select * from students where not age = 13;//give that data whose age is not 13 w
 
 //Studnet names which starts with "A"
 
-Select * from students where name like "A
+SELECT * FROM students WHERE name LIKE 'A%';
 
 //Ends with A
 
-Select * from students where name like "A";
+SELECT * FROM students WHERE name LIKE '%A';
 
 //names where 2nd letter is A
 
@@ -111,6 +111,7 @@ INSERT INTO sales (employee_id, employee_name, product, quantity, sale_date) VAL
 //groupy by clause 
 //--Total quantity sold by each employee--
 Select employee_name, sum(quantity) as total_quantity from sales group by employee_name;
+//in this above query new column will be creted which is having name as total_quantity
 
 //--count of sales per product --
 select product, count(*) as numofsales from sales group by product;
@@ -134,7 +135,7 @@ select sale_date, sum (quantity) as total_quantity from sales group by sale_date
 
 //List all sales in ASC of quantity--
 
-select * from sales order by quantity desc;
+select * from sales order by quantity aesc;
 
 //list all the sales with latet date first--
 
@@ -146,16 +147,16 @@ select employee_name, product, quantity from sales order by employee_name asc, q
 
 top 5 highest quantity sales--
 
-select * from sales order by quantity desc LIMIT 10;
-[4:59 pm, 24/6/2025] SAURAV CHAWLA: select employee_name, product, quantity from sales order by employee_name asc, quantity desc;
-
-top 5 highest quantity sales+-
-
-select * from sales order by quantity desc LIMIT 10;
+select * from sales order by quantity desc LIMIT 5;
 
 Combine group by and order by--
 
-select product, count(*) as total sales from sales les group by product order by total sales desc;
+//Show total number of sales for each product and display them in descending order of sales count.
+
+SELECT product, COUNT(*) AS total_sales
+FROM sales
+GROUP BY product
+ORDER BY total_sales DESC;
 
 
 ---SQL Functions----
@@ -165,6 +166,8 @@ select product, count(*) as total sales from sales les group by product order by
 //-- Upper()- Converts a string to upper case letters
 
 Select employee_name, upper(employee_name) as uppercase from sales;
+here new column will be created having column name as uppercase
+
 
 //Lower() converts a string to all lower case letters
 
@@ -172,15 +175,9 @@ Select employee_name, lower(employee_name) as lowercase from sales;
 
 //Concat()-- Combines 2 or more strings
 
-Select employee_name, upper(employee_name) as uppercase from sales;
-
-//Lower() converts a string to all lower case letters
-
-Select employee_name, lower(employee_name) as lowercase from sales;
-
-//-- Concat() Combines 2 or more strings
-
 select employee_name, product, concat(employee_name, Sold, product) as concatenate from sales;
+here concatenate column will be created
+
 
 //Length () --Length of the string
 
@@ -230,8 +227,6 @@ Conditional Funcitons
 IF and case when
 
 IF () --
-
-Select employee_name, quantity, if(quantity > 2, "High quantity", "Low quantity") as Sale_type from sales;
 Select employee_name, quantity, if(quantity> 2, "High quantity", "Low quantity") as Sale type from sales;
 
 Case when() condition--
@@ -256,7 +251,7 @@ ISNULL()-- Checkes if a value is null or not
 select employee_name, quantity, isnull(quantity) as isquantitynull from sales;
 
 //--Alter, modify update, drop, truncate, delete,rename--
-//Alter-- is used to modify the structure of a existing tab;e this can include adding new columns, modifying, deleting columns
+//Alter-- is used to modify the structure of a existing table this can include adding new columns, modifying, deleting columns
 
 //Add a new column to the table
 
@@ -282,7 +277,7 @@ drop table sales; -- is to drop the entire table
 drop database databasename; -- is to drop the entire database
 Truncate used to delete all the rows from the table but the structure of the table remains intact.
 
-Truncate table sales; this will delete all the rows from the table but structure remains same so that we can dd new values later
+Truncate table sales; this will delete all the rows from the table but structure remains same so that we can add new values later
 
 Delete command used to remove rows from a table but unlike truncate it allows you to specify conditions for deleting specific rows
 
