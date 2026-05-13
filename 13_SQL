@@ -1,0 +1,713 @@
+//To create DB
+Create database Schooldb;
+
+//To specify the databse to use
+use schooldb;
+
+//Create a table
+create table students (Studentid int, name varchar(50), age int, grade char(1));
+
+// To check the structure of the table
+Describe students;
+
+//INsert some values into the table--
+Insert into students (Studentid, name, age, grade) values (1, "Aarav", 14, "A"), (2, "Ravi", 15, "B"), (3, "Sita", 13, "A"), (4, "Meera", 16, "C");
+
+//Content / Retrive all the content in the table
+//Select statement 
+select * from students;//retrives all the column data 
+select Name, age from students;// retrive only name and age 
+
+
+//Where clause-- Used to filter the data--
+
+//-- Studnets who are older than 14--
+
+Select * from students where age > 14;
+
+//--names whose grade = A
+
+select name, grade from students where Grade = "A";
+
+
+
+//--Logical operators (And, Or, Not)--
+
+names whose age > 14 and also grade = A--
+
+Select name, age, grade from students where age >13 AND grade = "A";
+
+names whose age 13 or grade =C--
+
+select * from students where age >14 or grade ="C";
+
+NOt operator--
+
+select * from students where not age = 13;//give that data whose age is not 13 whose ever has the age 13 it will not give that record 
+
+
+
+//Pattern matching operators -- Like, not like (Wild card characters)
+
+//Studnet names which starts with "A"
+
+Select * from students where name like "A
+
+//Ends with A
+
+Select * from students where name like "A";
+
+//names where 2nd letter is A
+
+Select * from students where name like "_a%"
+
+//names where names with only 5 characters--
+
+select * from students where name like "_____";//total 5 underscores
+
+//Not like
+
+//--studnets whose name dont end with A
+
+Select * from students where name not like "%a";
+
+-----------------------------------------------------------------------------------------------------------------------------------
+create database employee;
+use employee;
+create table sales(employee_id int primary key, employee_name varchar(58), product varchar(58), quantity int, sale_date date);
+
+//suppose we have now inserted 50 values into this table 
+
+INSERT INTO sales (employee_id, employee_name, product, quantity, sale_date) VALUES
+
+(1, 'Alice', 'Mobile', 2, 2024-01-051)
+
+(2, 'Bob', 'Laptop', 1, 12024-01-10),
+
+(3, 'Charlie', 'Tablet', 3, '2024-01-15)
+
+(4, 'David', 'TV", 2, 2024-02-20),
+
+)5, 'Eve', 'Mobile',1,25-01-2024 و(,
+
+(6, Frank', 'Laptop', 2, 2024-02-01)
+
+(7, 'Grace', 'Tablet", 1, 2024-02-05),
+
+(8, 'Hannah', 'TV', 3, '2024-02-10),
+
+(9, 'Ivy', 'Mobile', 2, 2024-02-15),
+
+(10, 'Jack', 'Laptop', 1, '2024-02-20),
+
+(11, 'Kelly', 'Tablet', 4, '2024-02-25'),
+.
+.
+.
+.
+// so like this 50 data we entered  
+
+
+//groupy by clause 
+//--Total quantity sold by each employee--
+Select employee_name, sum(quantity) as total_quantity from sales group by employee_name;
+
+//--count of sales per product --
+select product, count(*) as numofsales from sales group by product;
+
+//--avg quantity sold per product--
+select product, avg(quantity) as avg_quantity from sales group by product;
+
+
+//--max quantity sold by each emplyee--
+
+select employee_name, max(quantity) as maxquantitysold from sales group by employee_name;
+
+//--Total quantity sold per day--
+
+select sale_date, sum (quantity) as total_quantity from sales group by sale_date;
+
+
+//order by clause
+
+
+
+//List all sales in ASC of quantity--
+
+select * from sales order by quantity desc;
+
+//list all the sales with latet date first--
+
+select * from sales order by sale_date desc;
+
+List employees sales in alphabettical by emplyeename and then quanityt in desc--
+
+select employee_name, product, quantity from sales order by employee_name asc, quantity desc;
+
+top 5 highest quantity sales--
+
+select * from sales order by quantity desc LIMIT 10;
+[4:59 pm, 24/6/2025] SAURAV CHAWLA: select employee_name, product, quantity from sales order by employee_name asc, quantity desc;
+
+top 5 highest quantity sales+-
+
+select * from sales order by quantity desc LIMIT 10;
+
+Combine group by and order by--
+
+select product, count(*) as total sales from sales les group by product order by total sales desc;
+
+
+---SQL Functions----
+
+// String functions --
+
+//-- Upper()- Converts a string to upper case letters
+
+Select employee_name, upper(employee_name) as uppercase from sales;
+
+//Lower() converts a string to all lower case letters
+
+Select employee_name, lower(employee_name) as lowercase from sales;
+
+//Concat()-- Combines 2 or more strings
+
+Select employee_name, upper(employee_name) as uppercase from sales;
+
+//Lower() converts a string to all lower case letters
+
+Select employee_name, lower(employee_name) as lowercase from sales;
+
+//-- Concat() Combines 2 or more strings
+
+select employee_name, product, concat(employee_name, Sold, product) as concatenate from sales;
+
+//Length () --Length of the string
+
+Select employee_name, length(employee_name) as Lengthofname from sales;
+
+Date Functions
+
+//--NOW()- this returns the current date and time
+Select now() as currentdatetime;
+
+//Curdate()-- extracts / gives the date
+select curdate() as currentdateonly;
+
+//Extracts the date part from the date4 or datetime expressions
+select date(now()) as currentdate;
+
+//Date()--- Extracts the date part from the date4 or datetime expressions
+select date(now()) as currentdate;
+
+//Year()-- which shows only the Year from the selected date
+Select year(sale_date) as yearofsale from sales;
+
+//Year()-- which shows only the Year from the selected date
+Select year(sale_date) as yearofsale from sales;
+
+//Month()- Extracts only Month from the date selected
+Select month(sale_date) as Monthnumber from sales;
+
+//Month()- Extracts only Month from the date selected
+Select month(sale_date) as Monthnumber from sales;
+
+//MOD()--- this returns the reminder od the division
+
+select mod(quantity, 2) as reminder from sales;
+
+//-- Month()- Extracts only Month from the date selected
+
+Select month(sale_date) as Monthnumber from sales;
+
+//MOD()-- - this returns the reminder od the division
+
+select quantity, mod(quantity, 2) as reminder from sales;
+select quantity, mod (quantity, 2) as reminder from sales;
+
+Conditional Funcitons
+
+IF and case when
+
+IF () --
+
+Select employee_name, quantity, if(quantity > 2, "High quantity", "Low quantity") as Sale_type from sales;
+Select employee_name, quantity, if(quantity> 2, "High quantity", "Low quantity") as Sale type from sales;
+
+Case when() condition--
+
+Provides a way to handle conditional logics--
+
+Select employee_name, case when quantity > 2 then High Quantity when quantity < 2 then "Low Quantity" else "Unknown" end as sale_category from sales
+Group_Concat()--
+
+
+Use to concatenate values from multiple rows--
+
+
+
+Select Group_concat(employee_name) as employees from sales;
+[7:36 PM, 6/24/2025] SAURAV CHAWLA: NUll functions--
+
+
+ISNULL()-- Checkes if a value is null or not
+
+
+select employee_name, quantity, isnull(quantity) as isquantitynull from sales;
+
+//--Alter, modify update, drop, truncate, delete,rename--
+//Alter-- is used to modify the structure of a existing tab;e this can include adding new columns, modifying, deleting columns
+
+//Add a new column to the table
+
+Alter table sales add column region varchar(50);
+// -- Modify a column- modify the data type or properties of an existing column
+
+alter table sales modify column quantity decimal(12,2);
+
+Describe sales;
+
+//-- Drop, Truncate and Delete--
+
+
+
+//Drop a column-- to remove a column from a table
+
+alter table sales drop column region;
+
+Describe sales;
+
+drop table sales; -- is to drop the entire table
+
+drop database databasename; -- is to drop the entire database
+Truncate used to delete all the rows from the table but the structure of the table remains intact.
+
+Truncate table sales; this will delete all the rows from the table but structure remains same so that we can dd new values later
+
+Delete command used to remove rows from a table but unlike truncate it allows you to specify conditions for deleting specific rows
+
+Select from sales;
+
+delete from sales where employee_id=73;
+//Deleting without where clause--
+
+schooldb
+
+delete from sales;
+
+delete all the rows from the sales table but keeps the structure intact.
+Update-- is used to modify the existing records in the table
+
+ -- Update a single record--
+
+update sales set quantity 100 where employee_id = 10;
+
+Select from sales;
+
+update sales set quantity 400 where employee_ID = 11;
+
+
+select from sales;
+Updating mutiple columns--
+
+Update sales set product = "Tablet", quantity 15000 where Employee_ID = 15;
+
+Select from sales;
+ Update multiple rows--
+
+Update sales set quantity quantity 1.1 where employee_name = "David";
+
+
+-------------------------
+
+
+Set operators
+
+//Union-- All the unique elements form both the tables removes the duplicaates
+
+
+select * from table1 union select * from table2;
+
+//Union ALL-- Returns all the values present in both the tables including duplicates
+
+select coulumn from tablel union all select column from table2
+
+
+
+
+employee table 
+
+emp_id emp_name dept_id salary
+101     alice    1      60000.0
+102     bob      1      75000.0
+103     charlie  1      50000.0
+104     david   null    80000.0
+105     eve      1      65000.0
+null    null    null    null
+
+department table 
+
+dept_id  dept_name
+1         HR
+2         IT  
+3         Sales
+4         Marketing
+null      null
+
+// Inner join-- All the common elements
+
+-- Retrives only employees that are associated with a department--
+
+select employees.emp_id, employees.emp_name, departments.dept_name from employees INNER join departments ON Employees.dept_id = departments.dept_id;
+
+//Left join All the common elements + All the other elements from the left table
+
+//Return all the employees including those who dont belong to any department
+
+select employees.emp_id, employees.emp_name, departments.dept_name from employees left join departments on employees.dept_id = departments.dept_id;
+
+//Right join- All the common elements + All the other elements from the right table
+
+Return all departments, even if no employee is assigned
+
+Select employees.emp_id, employees.emp_name, departments.dept_name from employees right join departments on employees.emp_id = departments.dept_id;
+
+Full join Returns all the rows from both the tables--
+
+Select employees.emp_id, employees.emp_name, departments.dept_name from employees left join departments on employees.dept_id = departments.dept_id
+UNION
+Select employees.emp_id, employees.emp_name, departments.dept_name from employees right join departments on employees.emp_id departments.dept_id;
+
+ Cross join -- All the combinations of the records
+
+Select employees.emp_name, departments.dept_name from employees cross join departments;
+
+------------constraints------------
+
+
+ Primary Key constraint--
+
+ Ensures the column only have unique elements/records--
+
+ Create table employee (empid int primary key, empname varchar(10));
+
+
+ Foreign Key--
+
+ Maintains the relation btw the tables by linking a column in a table to the primary key in another table--
+
+
+
+ Create table department(deptid int primary key, deptname varchar(50));
+
+Create table employee (empid int primary key, name varchar(50), deptid int, foreign key(deptid) references department (deptid));
+
+
+
+ Unique constraint-- ensures that all the values in a column are distinct (but allows the Null values)
+
+
+
+ Create table employee(empid int primary key, email varchar(50) UNIQUE);
+ Not null constraint-- Ensures that a column cannot have a Null value
+
+
+
+Create table employee (empid int primary key, name varchar(50) Not null);
+
+
+
+ Check Constraint-- Restricts the values based on a condition
+
+
+
+ Create table employee (empid int primary key, Age Int check(Age >= 18));
+
+
+Default Constraint-- Assigns a default value if value is not provided--
+
+
+
+ Create table employees (empid int primary key, name varchar(100) not null, deptname varchar(50) Default "General");
+
+
+
+-------------
+
+SQL Interview Questions
+
+1. What is SQL and why is it used?
+
+2. What is the difference between WHERE and HAVING clause?
+
+3. Explain the difference between DELETE, TRUNCATE, and DROP.
+
+4. What is a Primary Key? Can a table have more than one primary key?
+
+5. What are the different types of JOINs in SQL? Explain with examples.
+
+6. What is the use of the GROUP BY clause in SQL?
+
+7. What is the difference between NULL and O in SQL?
+
+8. How do you find duplicate records in a table?
+
+9. What is the difference between UNION and UNION ALL?
+
+10. How would you get the second highest salary from an Employee table?
+
+11. What is a foreign key?
+
+12. What is the difference between INNER JOIN and LEFT JOIN?
+
+13. How do you write a query to count the number of employees in each department?
+
+14. How can you fetch only odd or even rows?
+
+15. How do you find the maximum salary for each department?
+
+16. How do you find employees who do not belong to any department?
+
+17. How to retrieve records between two dates?
+
+18. How do you update multiple records in one query?
+
+19. Retrieve all employees along with their department names, even if they don't belong to any department?
+
+20. Find all departments and show the number of employees in each department, including departments with zero employees?
+
+
+Q:max salary?
+SELECT DISTINCT salary 
+FROM employees 
+ORDER BY salary DESC 
+LIMIT 1;
+
+ 
+ Q : second hiest salary ? 
+ans  :  SELECT DISTINCT salary 
+		FROM employees 
+		ORDER BY salary DESC 
+		LIMIT 1 OFFSET 1;
+
+ Q: low salary? 
+SELECT DISTINCT salary 
+FROM employees 
+ORDER BY salary ASC 
+LIMIT 1;
+or 
+SELECT MIN(salary) AS lowest_salary
+FROM employees;
+
+
+
+ 
+Q : second lowest salary?
+SELECT DISTINCT salary 
+FROM employees 
+ORDER BY salary ASC 
+LIMIT 1 OFFSET 1;
+
+
+
+Q : find the employee gavinf same second higest salary if ? 
+| Name           | Salary |
+| -------------- | -----: |
+| Samay Raina    |  10000 |
+| Saurav Chawla  |   8000 |
+| Manisha Chawla |   8000 |
+| Mamta Chawla   |   7000 |
+
+
+Step 1: Find the second highest distinct salary
+SELECT DISTINCT salary 
+FROM employee 
+ORDER BY salary DESC 
+LIMIT 1 OFFSET 1;
+
+DISTINCT salary → [10000, 8000, 7000]
+
+Ordered descending → [10000, 8000, 7000]
+
+LIMIT 1 OFFSET 1 → skip 10000, pick 8000
+
+Step 2: Get the employees who earn that salary
+SELECT name, salary 
+FROM employee 
+WHERE salary = (
+  SELECT DISTINCT salary 
+  FROM employee 
+  ORDER BY salary DESC 
+  LIMIT 1 OFFSET 1
+);
+
+So both Saurav and Manisha will appear, because they share the second-highest salary.
+
+or 
+
+
+you can absolutely use the RANK() or DENSE_RANK() function to find the second-highest salary — and it’s actually the 
+cleanest way when multiple employees have the same salary.
+
+Here’s how 👇
+
+✅ Using DENSE_RANK() (Recommended)
+SELECT name, salary
+FROM (
+  SELECT name, salary,
+         DENSE_RANK() OVER (ORDER BY salary DESC) AS rnk
+  FROM employee
+) AS ranked
+WHERE rnk = 2;
+
+
+Explanation:
+
+ORDER BY salary DESC → sorts salaries from highest to lowest.
+
+DENSE_RANK() → gives same rank to people with the same salary.
+
+WHERE rnk = 2 → fetches all employees having the second-highest distinct salary.
+
+🧩 Example Output for your data:
+Name	Salary	Rank
+Samay Raina	10000	1
+Saurav Chawla	8000	2
+Manisha Chawla	8000	2
+Mamta Chawla	7000	3
+
+✅ Result (for rnk = 2):
+
+Name	Salary
+Saurav Chawla	8000
+Manisha Chawla	8000
+🔹 Difference between RANK() and DENSE_RANK()
+Function	Behavior with Ties
+RANK()	Skips next rank after a tie (e.g., 1, 1, 3)
+DENSE_RANK()	Doesn’t skip (e.g., 1, 1, 2) ✅
+
+✅ Final Interview Answer:
+
+“Yes, we can use DENSE_RANK() to handle duplicate salaries. It assigns the same rank to equal salaries and helps get all 
+employees having the second-highest salary easily.”
+
+
+Q : second lowest salary?
+SELECT DISTINCT salary 
+FROM employees 
+ORDER BY salary ASC 
+LIMIT 1 OFFSET 1;
+
+
+Q : find third highest salary using sql query ?
+| emp_name | salary |
+| -------- | ------ |
+| A        | 90000  |
+| B        | 85000  |
+| C        | 85000  |
+| D        | 80000  |
+| E        | 75000  |
+ 
+
+
+here B and C having same rank 2  
+
+so output will be 
+| emp_name | salary |
+| -------- | ------ |
+| D        | 80000  |
+
+
+SELECT emp_name, salary
+FROM (
+  SELECT emp_name, salary, DENSE_RANK() OVER (ORDER BY salary DESC) AS rnk
+  FROM employees
+) AS ranked
+WHERE rnk = 3;
+
+
+
+Normalization : we have to store the data in such a way that we can find them easily, update them easily. 
+                breaking the table and defining the relationship between the table and we save that data in such 
+				that data can be retrive easily.
+				so that we can do the crud operations easily.
+				
+types of normalization : 
+1 : 1NF
+2 : 2NF
+3 : 3NF
+
+1NF : you dont store the collection of value in one column. store the values such that they are not the 
+      collection of values.
+	  
+	  eg : No 6, BTM layoyt , banglore , 560076 , india ( not store like this in address column)
+      
+      so now create some different columns like this address_line, area, city, pinocde , country 
+      
+      so 1NF says data should not store in a mixture like this. so divide address into multiple columns.
+      so by using this i can use my query effectively to search a particular part.
+
+      so 1NF gives you safety but not ultimate safety so we will go with 2NF.
+
+2NF : SO now 2NF says that you need to find out relevance between your column and you group that and you 
+      cegrigate data into multiple tables and every table should have primary key so that you can use 
+      RDBMS concept between the tables.  
+
+      relevance data means id(primary key), name and address_line  in one table 
+                           id(foreign key), company and contact number of company  in one table 
+                           id(foreign key), area ,  pincode , location and country in one table 
+						   
+						   so we have created total 3 tables.And all these tables are connected ton each other 
+						   
+						   so now we have completed the 2NF  but for further safety  we will use 3NF. 
+			
+3NF : 3NF says that remove the redundant data from your table means the data which is duplicate try to remove 
+      that. 
+
+      see suppose 5 employees working in banglore so there city will be banglore and here banglore comes 
+      many time so we will make a seperate city table having its primary key suppose 1 banglore and now 
+      suppose mike lives in baglore so i will make a differnt column in main table having the column name 
+      as foreign_key_city and we can use here the foreign key in main table of city table. 	  
+       			
+      or 
+
+      chat gpt explanation  : 
+  
+	  Suppose multiple employees work in the same city (e.g., Bangalore). Instead of repeating "Bangalore" in 
+	  the main table, create a City table:
+	  City Table: city_id (Primary Key), city_name. Example: 1, Bangalore.
+	  Main Table: employee_id, name, city_id (Foreign Key). Example: 101, Mike, 1.
+	  This eliminates redundancy, ensures consistency, and allows efficient updates (e.g., changing "Bangalore"
+	  in one place instead of multiple rows).
+	  
+	  so main advantage is suppose an employee wants to change his city location so he so do change in one place 
+	  not in all the places.  
+
+
+
+Drop vs truncate
+       
+	                  Drop                     |             Truncate
+_______________________________________________|___________________________________________________________________
+		1 :	Deletes the entire table.     	   |  1 : Deletes all rows in the table.
+		2 : Removes structure and data.        |  2 : Keeps structure, removes data.
+		3 : Can't be rolled back.	           |  3 : Can't be rolled back.
+
+
+highest salary 
+
+SELECT salary 
+FROM employee 
+ORDER BY salary DESC 
+LIMIT 1;
+
+limit  - fetches one row 
+
+Second highest salary
+ 
+SELECT DISTINCT salary 
+FROM employees 
+ORDER BY salary DESC 
+LIMIT 1 OFFSET 1;
+
+offset  - skip the first row and retrives the next one  

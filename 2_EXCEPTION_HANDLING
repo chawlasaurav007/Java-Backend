@@ -1,0 +1,521 @@
+Exception handling 
+
+Q1 : what is exception in java  ?
+Ans - exception is an event/object which disrupt normal flow of program it is an object thrown at run 
+      time(here object is an exception which is thrown) or we can say exception is a runtime error.
+      
+      ex : int x = 10/0;
+           Syso(x); // it shows arithemetic exception at run time. 
+            	|	   
+            	|
+                ↓
+            so to handel this exception we use exception handling by this we handel the exception 
+
+Q2 : what is exception handling?
+Ans - Exception handling is a mechanism to handel the runtime error. so that normal flow of exceution
+      can be maintained. 
+
+      Ways to handel the exception : 
+	  through try-catch block we handel the exception
+     
+	  
+Q3: Hierarchy of Java Exception classes ? 
+               Throwable
+                  |
+                  |
+                  |
+                  |
+       ___________|__________________           
+       |                             | 
+       |                             | 
+       |                             | 
+       |                             | 
+       |                             |
+    Exception                      Error----- 1 : stack overflow error (Happens when the stack memory gets full.)
+       |                                          stack overflow error occurs due to infinite recursion
+       |                                          This keeps calling itself until stack is full
+       |                                       2 : out of memory error (Happens when Java runs out of heap memory.) 
+       |                                        
+       |                                        
+ ______|______________________________________________________                                              
+ |                                                           |
+ |                                                           |
+ |                                                           |
+ |                                                           |
+ |                                                           |
+ |                                                           |
+checked exception/compile time exception(the down examples  unchecked exception/runtime exception(the down examples all 
+all are classes)                                            are classes)
+ 1 . file not found exception     						1.arithemetic exception
+ 2 . class not found exception    						2.null pointer exception
+ 3 . IO exception                 						3.number format exception
+ 4 . SQLException                 					    4.index out of bound exception(array,string) 
+ 
+ throwable class is the root class /parent class of exception and error.
+ throwable class has two subclasses/ classes exception and error 
+ exception occurs due to programmers fault and it can be recoverable
+ error occurs due to lack of memory/resources and it is not recoveraable because memory is fixed  
+ 
+ Explaning  Hierarchy : 
+  throwable is the parent class it has two sub classes error and exception. Exceptions are mainly of two 
+  types checked and unchecked exception checked exceptions occur during compile time for eg : IOException,
+  SqlException , file not found excetion,class not found exception.it is also known as compile time 
+  exception also. unchecked exception occurs at runtime exception. arithmetic,null pointer, number format,
+  index out of bound exception.error occurs during the execution of the program. error are mainly 
+  like stack overflow ,out of memory error. 
+  
+ 
+Q4 : what is error ? 
+Ans - error occurs during the execution of the program.error are related to the environment in which 
+      our code is running. errors are like running out of memory, stack overflow. 
+	  
+	  or
+	  
+	  Error means a serious problem that occurs at runtime, usually due to system issues like memory shortage or stack 
+	  overflow, and cannot be handled by the program.
+	  
+
+	  Types of error ? 
+
+| Error Type             | When It Happens   | Reason                                     |
+| ---------------------- | ----------------- | ------------------------------------------ |
+| **StackOverflowError** | stack memory full | too many method calls (infinite recursion) |
+| **OutOfMemoryError**   | heap memory full  | too many objects / memory leak             |
+
+Q5: Comile time error vs Runtime error 
+
+ Comile time error : when there is a mistake in the code that the compiler catches before the program 
+	                     runs like syntax error,missing refrences. the program would not
+						 run until you fix these errors.
+						 compile time error is not exception.
+ Runtime error : this error occurs while the code is running .the code might be correct but something
+                     unexpected occur during the execution like dividing by zero these error cause 
+                     the program to crash or behave unexpectedly. this is called run time error.
+					 Runtime error is exception 
+					 
+	
+    Compile-time errors → detected by compiler.
+    Runtime errors → happen while program runs.	
+ 
+Q6: Checked exception vs Unchecked exception
+ 
+ Checked exception / compile time excetion : 
+    checked exception can be checked by compiler. if some code within the method throws the checked 
+	exception then the method must handel the exception(using try-catch block) or it must specify the 
+	exception using throws keyword
+	ex : file not found , class not found.
+	
+	or another defination  
+	
+	 These are exceptions that the compiler checks at compile time. You must handle them using a try-catch block
+	 or declare them in the method signature using throws. For example, IOException and SQLException are checked 
+	 exceptions.
+	 
+	 or this is good explaination  
+	 
+	  exception occur during the compilation time(.java file into .class file) is called checked exception.
+	 This means that the compiler checks for these exceptions when compiling the .java file into a .class file, 
+	 and requires you to either catch them or declare them using the throws keyword.
+	 
+	
+	code  : 
+	try{
+	   //code that may cause an exception 
+	}catch{
+	   //handel the exception
+	}
+	
+	
+ 
+ Unchecked exception / run time excetion :
+    unchecked exception are the exception which are not checked at compile time and it can be handel 
+    with in try-catch block.
+	
+	or
+	
+	These are exceptions that the compiler does not check at compile time. They happen during runtime and are 
+	usually caused by programming errors like NullPointerException or ArithmeticException. You don’t have to 
+	handle them explicitly.you can handel unchecked exception using try catch block and by declaring throws 
+	keyword with method signature.
+
+    or this is good explanation  
+	
+	 exception occur during the runtime time(.class file into machine code) is called uncheked exception.
+	 
+	
+    ex  :arithemetic, null pointer ,arrayindex out of bound,number format exception 	
+                 
+ 
+  Note :   
+  wrong concept  : compile time exception occurs at compile time and run time exception occurs at 
+                   run time 
+  correct concept : all the exception occurs at run time.  				   
+	  
+Q7: Common scenario of java where exceptions occurs ? 
+Ans - 1 : Arithemetic exception - if we divide a number by zero there occurs arithmetic exception.
+      2 : Null pointer exception  - if we have a null value on any variable and we are performing 
+	                                any operation on that variable it will throw null pointer exception.
+	  3	: Number format exception - formatting of any varaible or number is mismatched it may result 
+	                                into number format exception. 
+                                    ex : String s = "abc";
+                                         int i = Integer.parseInt(s);//will show number format exception									
+  									
+      4 : Array index out of bound exception - 
+          when arrays exceed to its size then it thorws array index out of bound exception.	  
+                      	  
+        these above all four are runtime exception.
+
+Q8 :  how to handel the exception ? 
+Ans -  by using try-catch block we handel the exception
+      		
+	  
+	  Q : what is try block ?
+      Ans : try block is used to keep the code that might throw an exception(in try block we write 
+	  risky code).	  
+	  Q : what is catch block ?
+	  Ans : the catch block is used to handel the exception by declaring the type of exception with in
+	  the parameters of catch block.
+	  
+	  parameter
+	        ↓
+	  catch( ){
+	  }
+	  
+	  catch block must be used after try block only. you can use multiple catch block with a single 
+      try block.
+
+      Internal working of try-catch block : 
+      
+	                an object of exception 
+                     class is thrown					
+	  int x =10/0;-----------------------------> Exception Object
+	                                            (an object of exception class is thrown internally by jvm)
+                                                     |            	  
+	                                                 |
+	                                                 |
+													 |
+													 |
+													 ↓
+	                                              is handel  
+	                                                 |
+													 |
+									_______no________|______yes___________				 |
+ 	                                |                                     |
+                                    |                                     | 
+                                    ↓  									  ↓
+                            1.print exception description           1.rest of the code will execute
+                            2.print stack trace
+                            3.terminate the program 
+
+							
+	  
+	   Important Note : we can use multiple catch block with a single try block but order must be from 
+                        most specefic to most general(child to parent).  
+                        for ex : catch for arithmetic must come before catch for exception.
+                        at a time only one exception occurs and at a time one catch block is executed
+                        if we dont follow the order in case of multiple catch block it will throw 
+                        compilation error.
+						
+important example : suppose i have divide a number by 0 at run time of program an object of arthimetic 
+                    exception class is thrown/created by jvm. now this object is send to catch block so 
+					in catch block it handel the arithemtic exception(so exception is handled like this)			  
+
+	
+Q9: why we need the child exception like arithmetic and null pointer exception when we have parent 
+    exception?	  
+Ans - Because child exception provide more precise information of the type of error that occured.it can
+      make your code more readable and maintainable.
+       	  
+	  
+Q10:What is finally block ?
+Ans - is used to execute the necessary code the code written in finally block will definatly run for sure
+      wheather the exception occured or not but code written in finally block will definately run.
+	  for example : it is used for closing the database connection . 
+	  finally is useful for cleanup work → closing files, DB connections, releasing locks, sockets, streams, etc.
+	  
+
+Q11: What is throws keyword?
+Ans - throws keyword does not handel the exception. we use throws keyword along with the method. throws 
+      keywords says that the code in the method might throw the exception so handel the exception with 
+      try-catch block. so apply try-catch block on that code which is inside the method so exception is
+      handeled by the try-catch block not by the thorws keyword. we can declare multiple exception using 
+	  throws keyword.
+      for example : 
+            public static void main(String[] args) throws ArithmeticException {  
+							try {
+								int y = 10 / 0;
+							} catch (ArithmeticException a) {
+								System.out.println(100);
+							}
+			}
+									  
+Q12: what is throw keyword?
+Ans - throw keyword is used to throw the exception explicitly by the developer.it is a 
+      customised exception. to make a customised exception that  exception class must extends 
+	  Exception/Throwable/RuntimeException  class . we are allowed to throw only one exception at a time using throw keyword.throw keyword is used within the method. 
+      
+      or
+
+      better version of the answer : 
+      throw keyword is used to throw an exception explicitly by the developer. 
+	We can throw predefined exceptions or customized exceptions. 
+	To create a customized exception, the class should extend Exception, RuntimeException, or Throwable class(in these three what ever u want to use u can use because throwable is parent exception is a child of throwable and and runtime exception is a child of exception). 
+	Using throw keyword, we can throw only one exception at a time. 
+	throw keyword is used inside a method or block. 	  
+      
+example : code of customised exception made by developer 
+package p1;
+InvalidVoterAge.java
+public class InvalidVoterAge extends Throwable {
+	 InvalidVoterAge(){
+		System.out.println("Invalid age");
+	}	
+}
+
+package p1;
+
+public class A {
+	public static void main(String[] args) throws InvalidVoterAge {
+		// TODO Auto-generated method stub
+		int age = 10;
+		if (age < 18) {
+			try {
+				throw new InvalidVoterAge();
+			} catch (InvalidVoterAge e) {
+
+			}
+		} else {
+			System.out.println("person is eligible");
+		}
+
+	}
+
+}
+output - invalid age 
+
+
+Q13 : what is java exception propagation? 
+Ans : Java exception propagation refers to how an exception is passed up through the method call stack. 
+      If a method doesn't handle an exception (no try-catch block is used), the exception is passed 
+	  (propagated) to the caller method. This continues until it is caught, or if it isn't caught at all, 
+	  the program terminates.
+      example code  : 
+            class A{  
+			  void m(){  
+				int data=50/0;  
+			  }  
+			  void n(){  
+				m();  
+			  }  
+			  void p(){  
+			   try{  
+				n();  
+			   }catch(Exception e){
+			   System.out.println("exception handled");
+			   }  
+			  }  
+			  public static void main(String args[]){  
+			   A a1 = new A();
+               a1.p();			   
+			   System.out.println("normal flow...");  
+			  }  
+			}  	  
+				   
+        output - exception handled
+		         normal flow...
+
+Q14 : can we use try and finally block together there is no catch block in between  ?
+Ans : yes  because The purpose of finally is to ensure cleanup 
+
+Q15 : can we use multiple finally block?
+Ans : no
+
+Q16 : can we use multiple try block?
+Ans : Yes, you can use multiple try blocks in Java. You can either use them sequentially or nest them within each
+      other.
+      
+      Sequential try blocks : but it should be seperted by a code  
+       1 : try {
+			System.out.println("First try block");
+			// Code that may throw an exception
+		} catch (Exception e) {
+			System.out.println("First catch block");
+		}
+        System.out.println("Some code here");
+		try {
+			System.out.println("Second try block");
+			// Code that may throw another exception
+		} catch (Exception e) {
+			System.out.println("Second catch block");
+		}
+	  
+       
+        Nested try blocks
+		
+		2: try {
+			System.out.println("Outer try block");
+			try {
+				System.out.println("Inner try block");
+				// Code that may throw an exception
+			} catch (Exception e) {
+				System.out.println("Inner catch block");
+			}
+		} catch (Exception e) {
+			System.out.println("Outer catch block");
+		}
+
+		
+
+		3 : this will not work  it must be seperted by some code  
+		try {
+		    // code
+		}
+		try {    // ❌ ERROR — must have catch or finally before starting another try
+		    // code
+		}
+
+
+        4 : this will work 
+        try {
+		    // code
+		}
+		System.out.println("Some code here");
+
+		try {
+		    // code
+		}
+
+
+
+Q17 : can we use multiple catch block  ? 
+Ans : Yes, you can use multiple catch blocks with a single try block in Java. This allows you to handle different
+      types of exceptions separately , but here order must be from child exception to parent exception. 
+	  
+	  code  : 
+	    try {
+			// Code that may throw different exceptions
+		} catch (NullPointerException e) {
+			System.out.println("Caught NullPointerException");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Caught ArrayIndexOutOfBoundsException");
+		} catch (Exception e) {
+			System.out.println("Caught generic Exception");
+		}
+
+Q : can finally block handel the exception ? 
+Ans : No
+
+Q : can a single catch block can handel multiple exceptions ? 
+Ans : yes 
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        try {
+
+            int a = 10 / 0;
+
+            String s = null;
+            System.out.println(s.length());
+
+        } catch (ArithmeticException | NullPointerException e) {// multiple exceptions handeled in 
+                                                                //single catch block
+            System.out.println("Exception Handled");
+        }
+    }
+}
+
+//------handling exception in spring boot project------- 
+
+@ControllerAdvice - Global error handler
+@ExceptionHandler - Handle specific exceptions
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(Exception.class) // Catch-all for any exception
+    public ResponseEntity<String> handleGenericException(Exception ex) {
+        return new ResponseEntity<>("Something went wrong: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException ex) {
+        return new ResponseEntity<>("Invalid input: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+	
+	//here we can write the custome exception which is made by us but for that we need to make seperate class 
+	@ExceptionHandler(ProductNotFoundException.class)
+	public ResponseEntity<String> handleProductNotFound(ProductNotFoundException ex) {
+	     
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+	}
+
+}
+
+   //for 3rd exception ProductNotFoundException we need to create a seperate class which extends RuntimeException 
+   public class ProductNotFoundException extends RuntimeException {
+    public ProductNotFoundException(String message) {
+        super(message);//It goes to the parent class constructor and parent class here is RuntimeException class and this   RuntimeException class is already having the constructor 
+        //“super(message)” calls the parent exception class (RuntimeException) constructor and stores the error message inside it. Later we can retrieve it using getMessage() in our global exception handler.”
+    }
+   }
+   
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Service
+public class ProductService {
+
+    // Simulated in-memory data
+    private static final Map<Long, Product> fakeProductDB = new HashMap<>();
+
+    static {
+        fakeProductDB.put(1L, new Product(1L, "Laptop"));
+        fakeProductDB.put(2L, new Product(2L, "Mobile"));
+        fakeProductDB.put(3L, new Product(3L, "Tablet"));
+    }
+
+    public Product getProductById(Long id) {
+        Product product = fakeProductDB.get(id);
+        if (product == null) {
+            throw new ProductNotFoundException("Product with ID " + id + " not found.");
+        }
+        return product;
+    }
+}
+
+
+   so at the end what happens is controller - > service -> if product not found it will go to the 
+   GlobalExceptionHandler class and handle the ProductNotFoundException
+
+   
+   So in the flow:
+   Controller ➝ Service ➝ (Product not found)
+   we throw a ProductNotFoundException, which is then handled by the GlobalExceptionHandler class using the 
+   @ExceptionHandler method.
+   
+   by handling exceptions with @ControllerAdvice and @ExceptionHandler, the exception will be shown as an HTTP
+   response in Postman, not as a full stack trace in the console (unless you explicitly log it).
+   
+Q : @ControllerAdvice vs @RestControllerAdvice
+
+ans : 
+Annotation           |What It Does                                                |Output Format                                          
+-------------------- |------------------------------------------------------------|------------------------------------------------------ 
+@ControllerAdvice    |Global exception handler for **web apps or MVC controllers**|Returns **HTML or views** (like error page) by default 
+@RestControllerAdvice|Global exception handler for **REST APIs**                  |Returns **JSON** automatically (in postman)                        |
+   
+   
+@RestControllerAdvice is a combination of:
+
+@ControllerAdvice  (for global exception handling)
+
+@ResponseBody (to return data in response body, like JSON or plain text)

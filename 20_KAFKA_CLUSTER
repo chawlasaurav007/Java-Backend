@@ -1,0 +1,187 @@
+Kafka Producer
+|
+|
+|
+KAFKA CLUSTER                            
+─────────────────────────────────────────--------------------
+|   │                                                       |
+|   ├── Broker 1                                            |
+|   │       ├── Topic: orders                               |
+|   │       │        ├── Partition-0  ← contains offsets    |
+|   │       │        │       [Offset 0] Message1            |
+|   │       │        │       [Offset 1] Message2            |
+|   │       │        │       [Offset 2] Message3            |
+|   │       │        │                                      |
+|   │       │        └── Partition-1  ← contains offsets    |
+|   │       │                [Offset 0] MessageA            |
+|   │       │                [Offset 1] MessageB            |
+|   │       │                                               |
+|   │                                                       |
+|   ├── Broker 2                                            |
+|   │       ├── Topic: orders                               |
+|   │       │        ├── Partition-2  ← contains offsets    |
+|   │       │        │       [Offset 0] X1                  |
+|   │       │        │       [Offset 1] X2                  |
+|   │       │        │                                      |
+|   │       │        └── Partition-0 (Replica)              |
+|   │                                                       |
+|   └── Broker 3                                            |
+|          ├── Topic: orders                                |
+|          │        ├── Partition-1 (Replica)               |
+|          │        └── Partition-2 (Replica)               | 
+|___________________________________________________________|
+|
+|
+|
+kafka consumer 
+
+
+What this diagram shows (simple words)
+✔ Producer → topic → partition
+
+Producer message bhejta hai → Kafka usse topic ke ek partition me daalta hai.
+
+✔ Partition ke andar hi OFFSET hota hai
+
+Offset = message ordering
+Offset 0 → pehla message
+Offset 1 → dusra message
+
+✔ Brokers topic ke partitions store karte hain
+
+Broker 1 → Partition-0, Partition-1
+
+Broker 2 → Partition-2
+
+Broker 3 → Replicas
+
+✔ Consumer ALWAYS offset order me message read karta hai
+
+0 → 1 → 2 → 3 (strict order)
+
+
+
+                            ┌───────────────────────────┐
+                            │       Kafka Cluster       │
+                            └───────────────────────────┘
+                 ┌────────────────────────────┬────────────────────────────┐
+                 │                            │                            │
+         ┌─────────────┐              ┌─────────────┐               ┌─────────────┐
+         │   Broker 1  │              │   Broker 2  │               │   Broker 3  │
+         └─────────────┘              └─────────────┘               └─────────────┘
+                 │                            │                            │
+                 │                            │                            │
+         ┌────────────────┐          ┌────────────────┐           ┌────────────────┐
+         │ Topic: orders  │          │ Topic: orders  │           │ Topic: orders  │
+         └────────────────┘          └────────────────┘           └────────────────┘
+                 │                            │                            │
+         ┌────────────────┐          ┌────────────────┐           ┌────────────────┐
+         │ Partition-0    │◄─Leader  │ Partition-1    │◄─Leader   │ Partition-2    │◄─Leader
+         │ (Broker 1)     │          │ (Broker 2)     │           │ (Broker 3)     │
+         └────────────────┘          └────────────────┘           └────────────────┘
+                 │                            │                            │
+
+Inside Partition (Ordering)
+───────────────────────────────────────────────────────────
+Partition-0
+   Offset 0  →  "Order #101 Created"
+   Offset 1  →  "Order #101 Payment Done"
+   Offset 2  →  "Order #101 Packed"
+   Offset 3  →  "Order #101 Shipped"
+
+👉 Offset sequence = Ordering guarantee
+───────────────────────────────────────────────────────────
+
+
+
+
+OFFSET ही Kafka ka message ordering hota hai.
+Ordering = Offset ka sequence.
+Offset decide karta hai ki message kis order me likha aur padha jayega.
+
+Kafka partition ke andar:
+Har message ko ek unique offset number milta hai
+Ye offset 0, 1, 2, 3… aise sequence me hota hai
+Ye sequence hi message ka order hota hai
+
+Partition-0:
+Offset 0 → "Order Created"
+Offset 1 → "Payment Done"
+Offset 2 → "Order Shipped"
+
+
+Why offset = ordering?
+Because Kafka har partition ke andar messages ko sequential index deta hai:
+Producer ka message → partition me append hota hai
+Append ka order hi offset ka order hota hai
+Consumer exactly offset ke order me hi read karta hai
+
+
+Below is **SUPER SIMPLE Kafka ordering code** —
+Exactly woh 2 lines jisse **ordering ensure hoti hai** 👇
+
+---
+
+# ✅ **1. PRODUCER CODE (Ordering ensure)**
+
+👉 **Key same rakhna = Messages same partition me jayenge = Order maintain**
+
+```java
+@Autowired
+private KafkaTemplate<String, String> kafkaTemplate;
+
+public void sendOrderEvents() {
+
+    String key = "order-101"; // SAME KEY → SAME PARTITION → ORDERING
+
+    //EXACTLY jis order me aap kafkaTemplate.send() likhoge,ussi order me KAFKA partition ke andar message store hoga.BUT ONLY IF: SAME KEY use kar rahe ho //+ same partition.
+    kafkaTemplate.send("orders", key, "Order Created");
+    kafkaTemplate.send("orders", key, "Payment Done");
+    kafkaTemplate.send("orders", key, "Order Packed");
+    kafkaTemplate.send("orders", key, "Order Shipped");
+    
+    //and consumer bhi issi order mai padhta hai 
+    //Offset 0 → Order Created
+    //Offset 1 → Payment Done
+    //Offset 2 → Order Packed
+    //Offset 3 → Order Shipped
+
+}
+```
+
+### 🔥 Explanation (in Hinglish)
+
+* `"order-101"` key same rakhne se
+  **saare messages same partition me jayenge**
+* Isi partition ke andar **offset order** banega
+  (0 → 1 → 2 → 3)
+
+---
+
+# ✅ **2. CONSUMER CODE (Order me messages padhta hai)**
+
+```java
+@KafkaListener(topics = "orders", groupId = "order-group")
+public void consume(String message) {
+    System.out.println("Consumed: " + message);
+}
+```
+
+### 🔥 Explanation
+
+Consumer hamesha **offset ke order me** read karta hai:
+
+```
+Order Created
+Payment Done
+Order Packed
+Order Shipped
+```
+
+---
+
+# 🎯 FINAL SUMMARY (1 line)
+
+**Producer same key send kare → Kafka same partition choose kare → Consumer ordered messages padhe.**
+
+If you want, I can give **full runnable Spring Boot Kafka project** also.

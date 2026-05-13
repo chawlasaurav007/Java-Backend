@@ -1,0 +1,651 @@
+Q1: what is the main aim of java 8?
+Ans:1- to simplify programming. 
+    2- to enable functional programming 
+	   Q : what is functional programming? 
+	   functional programming is a way of writing the code that
+	   focus on function/methods to get the output. we can achive functional programming 
+       by using lambdas expression, functional interface and stream api. functional programming 
+       methods are map(),filter(),forEach(),reduce(),flatMap(),collect() by using these methods 
+	   we get our output no need to write big lines of code by these methods we can achieve 
+	   output in short number of lines of code.	   
+	   ex : 
+
+		public class FunctionalExample {
+			public static void main(String[] args) {
+				List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+				// Functional programming: using a lambda to double each number
+				numbers.stream()
+					   .map(n -> n * 2)
+					   .forEach(System.out::println);
+			}
+		}
+
+    3- to write more readable and precise code. 
+	
+Q2: what are java 8 features? 
+Ans: 1. Lambda Expressions: Shorter syntax for writing anonymous functions.
+     2. Stream API: Efficient processing of collections of data.
+     3. Functional Interfaces: Interfaces with a single abstract method, like Runnable.
+     4. Default Methods: Methods with a body in interfaces.
+	    ex - 
+		    interface Greetable {
+			default void greet() {// using default keyword to complete the method in interface
+				System.out.println("Hello!");
+	    		}
+     		}
+     5. Optional Class: To handle null values more gracefully.
+	 6. New Date and Time API: Improved handling of date and time.
+     7. Method References: A shorthand way to refer to methods using ::, 
+	    like ClassName::methodName.
+     8. Static Methods in Interfaces: used to make complete static method inside interface. it 
+	    keeps the implementation which we dont want to share amoung other class.
+		
+	1: Functional interface : 
+       it is a interface which consist of only one incomplete/abstract method.functional interface 
+       has only one functionality to execute.functional interface can have any number of defaults 
+       method(complete methods).
+       functional interface is also known as single abstract method interface(sam interface).
+	   @FunctionalInterface is used on top of interface.
+       lambdas expression is used to implement the incomplete method which is present in Functional
+       interface.
+       functional interface and lambdas expression are dependent on each other.   	   
+        	   
+       ex : Runnable and Comparable interface are example of functional interface.
+	   
+	   Q: Why do we need functional interface?
+       Ans : We need functional interfaces to use lambda expressions in Java.
+	         to enable lambads expression. to enable functional programming in java. by 
+	         implementing lambads expression we can reduce number of lines of code.
+             to implement incomplete method of functional interface we dont require any inheritance 			 
+             concept. and fucntional interface require functional programming like map(),filter(),
+			 reduce().functional programming is a terms which perform some function map,filter,
+			 reduce,sort etc. Lambda expressions work only with functional interfaces
+			 
+			 here no implements keyword we are using in class B here lambdas expression implements the test 
+			 method 
+			 
+			@FunctionalInterface               |  public class B{
+			public interface A{                |   main(){
+			     public void test();           |    A a1 = ()->{------------|
+			}                                  |     Syso("saurav");        |--->lambdas expression 
+			                                   |    };----------------------|         |
+											                   |      a1.test();                      |
+                                         |	 }                                  ↓
+                                         |   }                     which implements the 					
+         			                                                   functional interface method 
+       
+	   Q: types of functional interface ?
+	   Ans :   1 . predicate--------|
+             2 . supplier         |------> these all are inbuilt fucntional interface
+             3 . consumer         |        and we can use there methods directly 
+             4 . function---------|		   provided by java 8	 
+			 
+			 Note : i dont have to write this predicate , supplier , consumer , function code seperatly 
+                    i have to create a class and i will use these method seperatly by creating there 
+                    object(predicate , supplier , consumer , function) 					
+   	   
+	    1. predicate : it is used to perform some conditional check. it return true or false.
+                @FucntionalInterface
+							  public interface Predicate<T>{// T is generic it can take any value of wrapper class 
+								  boolean test(T t);
+							  }
+        ___________________________________________
+		  
+		      public class demo {
+                  psvm(){
+				     // here only wrapper class would come
+				               ↓
+			        Predicate<Integer> p = i->i>10;// here i->i>10 is implementation of test method 
+					syso(p.test(100));//output : true - through variable p we access test method 
+					
+           	      }		 	   
+ 			   
+		      }
+        ___________________________________________
+        another example : print the name whose names start with s  
+        String names[] = {"saurav","ritesh","neeraj","kunal","shubham"};
+        
+        Predicate<String> p1 = i->i.charAt(0)=="s";//here i->i.charAt(0)=="s" is implementing 
+                                                   //test method   
+        for(String name : names){
+		     if(p1.test(name)){
+			    Syso(name);
+			 }
+		}  		
+		  
+		
+        2. function : function is a type of interface that takes an object of input type T 
+                       and return the object of type R(in simple words it takes the input 
+					   and produces the output).
+            
+              @FucntionalInterface
+			  public interface<T,R> { 
+				  R apply(T t);
+			  }			
+			___________________________________________
+            
+			public class demo{
+			    psvm(){
+				   Function<String , Integer> length = str->str.length();// here str->str.length()
+                                                                         // is implementing apply 				   
+				                                                         // method
+				   Syso(length.apply("saurav"));//6
+				}
+			}
+ 			
+        3. Consumer : Consumer interface will accept values, will perform operations but 
+                      wont return any value.
+        
+                @FunctionalInterface
+				public interface Consumer<T> {
+					void accept(T t);
+				}
+ 		    ____________________________________________
+		  
+		    public class ConsumerExample {
+               public static void main(String[] args) {
+				// Define a Consumer that prints the input value
+				Consumer<String> consumer = i-> syso("my name is " + i);
+				// here i-> syso("my name is " + i) is implementing accept method 
+				// Use the Consumer
+				consumer.accept("saurav");  // Output: my name is saurav
+				 }
+				}
+				
+				
+		4. Supplier : it contains only one abstract method only which is get() method. supplier 
+		              will only return the value.
+
+                @FunctionalInterface
+				public interface Supplier<T> {
+					T get();
+				}					  
+        ___________________________________________
+		
+ 
+				public class SupplierExample {
+					public static void main(String[] args) {
+						// Define a Supplier that provides a greeting message
+						Supplier<String> messageSupplier = () -> "Hello, World!";
+                        // here () -> "Hello, World!" is implementing the get method 
+						// Use the Supplier
+						Syso(messageSupplier.get());// Output: Hello, World!
+					}
+				}
+		
+    Important : 		
+		functional interface | methods of fucntional interface
+		_____________________|_________________________________    
+			  predicate        | test() 
+		    function         | apply()
+		    consumer         | accept() 
+		    supplier         | get()
+	
+
+    2. Lambdas expression : 
+	 lambdas expression is an anonymous function which has no access modifier, return type and 
+     method name. It basically reduces lines of code in a program it also enables the functional 
+     programming(like map,filter,reduce). lambdas expression is used to implement fucntional
+	 interface.
+	 
+	 here we can use lambdas expression along with the functional programming. 
+	 .map(n -> n * 2)// here map is fucntional programming and this statement (n -> n * 2) is lambads expression 
+	 
+	 syntax : 
+	  ()->{
+	  };
+	   or 
+	   (x, y) -> x + y
+       or 
+	  (x, y) -> {
+	   return x + y; 
+	  };
+	   
+	  // lambdas expression uses fucntional programming like this 
+      List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+      // Functional programming with lambda: Double each number
+	  List<Integer> doubled = numbers.stream()
+								   .map(n -> n * 2) 
+								   .collect(Collectors.toList());	  
+	 
+	 // here (n -> n * 2) this is lambdas expression and here along with the lambdas expression 
+     // we are using functional programming which is map	 
+    
+
+    3.Optional Class :  
+      optional class is an alternative way to handel the null pointer exception.  
+      optional class has several methods like .empty(), .of(), .ofNullable().
+	  these are static methods called by class name which is Optional class. 
+	  
+	  Optional  is a container Object which may or may not contain null value. 
+	  if the value is present we use isPresent() method will return true 
+      and .get() will return the value.
+	  
+	  suppose i write Optional.of(null) // so this will give the null pointer exception
+      
+      suppose i write Optional.ofNullable(null) // so this handel the null pointer exception
+	  
+	  so by using ofNullable() we can handel the null pointer exception. so to contain null value 
+	  which we think that it can give null value so use .ofNullable() method of optional class.
+	  
+	  .of() : returns an Optional object with specified non-null value. 
+      
+	  ex 1 : 
+	  main(){
+	   Optional<String> a = Optional.of("saurav");
+       Syso(a);//Optional[saurav]
+	   Syso(a.get());//saurav
+      }
+	  .ofNullable() : it returns Optional object with specified value if value is non-null other
+	                  wise it return an empty Optinal object/instance (Optinal.empty)   
+      ex 2 :
+     main(){	  
+       Optional<String> o = Optional.ofNullable(null);
+      if(o.isPresent()){
+        System.out.println(o.get().length());
+      }else{
+        System.out.println("value is not present");
+      }  	
+     }
+
+      op - value is not present
+
+       ex 3 : 
+     main(){	  
+       Optional<String> o = Optional.ofNullable("saurav"); // so if you write null so it will 
+	                                                       // handel null pointer exception
+														   // so it is better to use .ofNullable()
+                                                          														   
+      if(o.isPresent()){
+        System.out.println(o.get().length());
+      }else{
+        System.out.println("value is not present");
+      }  	
+     }
+	   output : 6 
+     
+	 //so it is better to use .ofNullable() give some value if u want or else it will handel the 
+	 // the null pointer exception if you give null value.   
+    
+     Optional<Object> o = Optional.ofNullable(null);
+	 Syso(o); // Optional.empty
+	 Syso(o.get());//NoSuchElementException
+
+	.empty() method : 
+ 	return an empty optional  object(means container is empty)
+    
+    ex 1 :
+    Optional<String> e = Optional.empty();
+	System.out.println(e.isPresent()); // Output: false 
+    System.out.println(e); // Output: Optional.empty 
+    System.out.println(e.get(); //NoSuchElementException means no such value present
+
+    .isPresent() : return true if value is present else false.
+	
+	.get() : if value is present in the optional return the value otherwise NoSuchElementException. 
+    	
+ Q : Difference between .of() vs .ofNullable() method ?  
+ ans : 
+ Here is the **shortest, simplest explanation** with a **very clear code example** 👇
+
+---
+
+# ✅ **Difference Between `Optional.of()` and `Optional.ofNullable()`**
+
+## ⭐ 1. `Optional.of(value)`
+
+✔ Use when you are **100% sure the value is NOT null**
+❌ If value is null → it throws **NullPointerException**
+
+### Example:
+
+```java
+String name = "Saurav";
+Optional<String> opt = Optional.of(name); // works
+
+String n2 = null;
+Optional<String> opt2 = Optional.of(n2);  // ❌ throws NullPointerException
+```
+
+---
+
+## ⭐ 2. `Optional.ofNullable(value)`
+
+✔ Safe for both **null and non-null** values
+✔ If value is null → Optional becomes **empty**
+❌ Does NOT throw exception
+
+### Example:
+
+```java
+String name = "Saurav";
+Optional<String> opt = Optional.ofNullable(name); // works
+
+String n2 = null;
+Optional<String> opt2 = Optional.ofNullable(n2);  // safe → gives Optional.empty
+```
+
+---
+
+# ⭐ Final Simple Explanation (Layman Terms)
+
+### ✔ `of()` → value **must not be null**
+
+If null → **crash (NPE)**
+
+### ✔ `ofNullable()` → value **can be null or non-null**
+
+If null → Optional.empty (safe)
+
+---
+
+# ⭐ Tiny Real-Life Example
+
+```java
+public Optional<String> getUserName(String name) {
+    return Optional.ofNullable(name);  // safe for both null & non-null
+}
+```
+
+---
+
+Q : what are the methods which are present in optional class ? 
+Ans : 
+⭐1. of(value) - Creates Optional only if value is NOT null.
+
+⭐ 2. ofNullable(value) - Creates Optional with null OR non-null value.
+
+⭐ 3. empty() - Returns an empty Optional.
+
+⭐ 4. isPresent() - Returns true if value is present.
+
+⭐ 5. isEmpty() - Returns true if value is NOT present.
+
+⭐ 6. get() - Returns value inside Optional.
+❌ Throws exception if value is missing → not recommended.
+
+⭐ 7. orElse(defaultValue) - Returns value if present, else returns defaultValue.
+
+⭐ 8. orElseGet(Supplier) - Similar to orElse, but default value is created only if required.
+
+⭐ 9. orElseThrow() - Throws exception if value is missing.
+
+⭐ 10. ifPresent(Consumer) - Runs logic only if value is present.
+
+⭐ 11. ifPresentOrElse(Consumer, Runnable) - Runs logic when value is present OR alternate logic when value missing.
+
+⭐ 12. map(Function) - Transforms the value inside Optional.
+
+⭐ 13. flatMap(Function) - Same as map, but for nested Optional values.
+
+⭐ 14. filter(Predicate) - Returns value only if it matches a condition.
+
+
+  	4 . default keyword : 
+	default keyword is used in interface to make incomplete method complete. it is always used with 
+    non static method.
+
+	Default Method
+
+	1: Declared using the keyword default inside an interface.
+
+	2: It has a body (implementation) inside the interface.
+
+	3: “We use the default keyword in an interface to put common logic that can be shared across all implementing classes.
+        This way, we don’t need to write the same implementation again and again in every class — they can directly use 
+		the default method from the interface if they want. And if a class wants a different behavior, it can simply 
+		override that default method.”
+		Yes — the main purpose of default methods is to avoid unnecessary duplicate implementation in multiple classes by
+		keeping common logic in the interface itself.
+	
+	
+	overrding the method in class: so if we want we can change the logic 
+	
+    interface Vehicle {
+    default void start() {
+        System.out.println("Vehicle is starting...");
+    }
+	}
+
+	class Car implements Vehicle {
+		@Override
+		public void start() {
+			System.out.println("Car is starting...");
+			Vehicle.super.start(); // calling Vehicle interface's default method
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			Car car = new Car();
+			car.start();  // calls Car's start() and then Vehicle's default start()
+		}
+	}
+	
+	
+	without overrding the method in class:
+	
+	interface Vehicle {
+    default void start() {
+        System.out.println("Vehicle is starting...");
+    }
+	}
+
+	class Car implements Vehicle {
+		// ❌ No override — Car will use Vehicle's default start() method
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			Car car = new Car();
+			car.start();  // directly calls Vehicle's default method
+		}
+	}
+
+	
+	
+	
+
+    5. Static keyword  : 
+	static keyword is used to make complete static method inside interface .it keeps the 
+	implementation inside interface which we dont want to share amoung other class.  
+	
+	Static Method
+
+	1: Declared using the keyword static inside an interface.
+
+	2: It also has a body, but — it belongs to the interface itself, not to the implementing classes.
+
+	3: So, you cannot override a static method in the implementing class.
+
+	4: It is called using the interface name, not the class or object.
+	
+	interface Vehicle {
+    static void repair() {
+        System.out.println("Vehicle is being repaired...");
+		}
+	}
+
+	class Car implements Vehicle {
+		// Can't override repair()
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			Vehicle.repair(); // ✅ correct
+			// new Car().repair(); ❌ not allowed
+		}
+	}
+
+	
+	
+	Note : 
+	private keyword is used in interface after java 1.9
+	
+	6. Method refrence(::) - 
+ 	
+	  method refrences allows us to refer to a method. method refrences can be used in place of 
+      lambdas expression when lambdas expression calls only calls existing methods.
+      
+	  method refrence are of three types 
+	  1 . Reference to a static method.
+      2 . Reference to an instance method / non static mehtod.
+      3 . Reference to a constructor.
+      ex : by using lambdas expression 
+	  
+      public class Test{
+	     public static void print(String s){
+		    Syso(s);
+		 }
+		 
+		 main(){
+		   List<String> students = Arrays.asList("saurav","kunal","praveen");
+		   students.forEach(x->syso(x)); // by using lambads expression we print the names 
+		                                 // here x->syso(x) this is same as Syso(s) which is 
+										 // present in print method so why dont we refer to the 
+										 // method print  
+		 }
+	  }	  
+	   
+	   ex : by using refrence to a static method 
+       	   
+	    public class Test{
+	     public static void print(String s){
+		    Syso(s);
+		 }
+		 
+		 main(){
+		   List<String> students = Arrays.asList("saurav","kunal","praveen");
+		   students.forEach(Test::print));//   
+		 }
+	  }	  
+	   
+	    ex : by using refrence to a non-static method/ instance method 
+       	   
+	    public class Test{
+	     public  void print(String s){
+		    Syso(s);
+		 }
+		 
+		 main(){
+		   Test t = new Test();
+		   List<String> students = Arrays.asList("saurav","kunal","praveen");
+		   students.forEach(t::print));//   
+		 }
+	  }	 
+
+	7. date and time / date api :
+        it provides date related functionality like deal with only date , deal with only time,
+        and deal with both date and time.
+	    // get current date 
+        LocalDate currentDate = LocalDate.now();
+        System.out.println("Current Date: " + currentDate);
+
+        // Get the current time
+        LocalTime currentTime = LocalTime.now();
+        System.out.println("Current Time: " + currentTime);
+
+        // Get the current date and time
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        System.out.println("Current Date and Time: " + currentDateTime); 	   
+	   
+	8. Stream api : 
+         Steam api is a way to process collection of objects enable us to perform operation 
+         like filtering, mapping ,reducing , sorting. Stream is not data structure instead it
+         takes input from collections. stream does not change the original data structure.
+		 they only provide the result as per methods of stream api only.
+         Suppose we have list(here list is collection) it does not change the list values it 
+		 convert into stream api and then apply method on the stream.
+		 
+		 There are two operation performed on stream 
+		 1 : intermediate - it is applied between the streams.
+		 ex : map(),filter(),sorted(),distinct(). -> these are intermediate methods 
+
+         2 : terminal : it is applied at the end of the stream.
+         ex : reduce(),forEach(),max(),min(),collect(). -> these are terminal methods		 
+		 	 
+	Q : Collection vs Stream
+	   Collection                            |              Stream
+	________________________________________ |________________________________________________   
+	1 . collection is a data-structure which | 1. stream is not a data-structure it takes input  
+        can be altered. 	                 |     from collection and it does not change the 
+		suppose you have list of 5 number      |     original data structure.      
+	    (1,2,3,4,5) now you have to remove   |
+		odd number from the list so you        |
+		can change the list and make all       |
+ 		number of the list as even number      |
+      so you have made changes in the list |		
+	   
+	  
+Q3: difference between map vs flatmap ? 
+Ans : map() and flatmap() both are methods of stream interface and both perform intermediate operation.
+      
+      map()                                   |                      flatmap()
+______________________________________________|___________________________________________________________________ 
+1 : normal map() is used to transforming the  |1 : flatmap() is used deal with sub collections(nested collections)  
+    data                                      |    (nested collections - collections with another collection)
+	
+	
+Q4 :  boxed() method in strema api ?
+Yes — we use boxed() to convert primitive values into their object (wrapper) types.
+
+So when you write:
+
+IntStream intStream = IntStream.of(1, 2, 3, 4, 5);
+Stream<Integer> stream = intStream.boxed();	
+
+“We use boxed() to convert primitive stream elements like int into their wrapper objects like Integer, 
+so that we can use object-based Stream operations such as collect().
+
+coding ex : 
+
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        List<Integer> list = IntStream.of(1, 2, 3, 4, 5)
+                                      .boxed()
+                                      .collect(Collectors.toList());
+
+        System.out.println(list);
+    }
+}
+
+
+Output:
+[1, 2, 3, 4, 5]
+
+Explanation:
+
+IntStream.of(1,2,3,4,5) → creates primitive int stream.
+boxed() → converts primitive int into Integer objects(Wrapper object means Integer).
+collect(Collectors.toList()) → converts stream into List<Integer>.
+
+
+and here in down code u can see that String(List<String>) is an object so iam able to convert in collection object but in above code u see that int is not an object sso i need to use boxed() to convert int into Integer Object so thats why we use boxed()   
+
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        List<String> list = Stream.of("Apple", "Orange", "Banana")
+                                  .collect(Collectors.toList());
+        System.out.println(list);
+    }
+}
+
+
+Output:
+[Apple, Orange, Banana]

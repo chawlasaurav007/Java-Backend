@@ -1,0 +1,27 @@
+Hi, I have an interview for the role of Software Engineer and my tech stack is: • Back-end Technologies: Core Java, Java 8, Spring MVC, Spring Boot, Hibernate, Spring Data JPA, REST API Development, Microservices Architecture, Kafka, Swagger, JUnit, Mockito, Log4j, AWS (S3, EC2), GRPC • Database: Redis, JDBC, MySQL, MongoDB • Version Control: Git, GitHub, SVN • Tools: STS, Eclipse, IntelliJ IDEA, Postman, GitHub, Jira, SonarQube, Maven, Linux, Shell Scripting, Docker
+ 
+My project is Card Vault.
+This project is a secure payment authorization system designed to validate card transactions received from POS devices using industry-grade cryptography and PCI-DSS compliant components. When a customer taps or swipes a card on a POS machine, the card data is captured and the PIN is encrypted using AES-256 within the POS secure PIN pad. The encrypted PIN, along with transaction details, is routed to the Card Authentication Service, which coordinates the flow using a Ticketing Service for secure vault access. The request then moves through an HSM Proxy Service that interacts with PINsafe and TrackSafe vaults to fetch encrypted PIN blocks and track data. These encrypted elements are forwarded to the HSM Service (Thales), which performs PIN verification, cryptogram validation, and PCI-compliant security checks. After verification, the response flows back through the HSM Proxy and Card Authentication Service to the POS terminal, completing the payment approved/declined flow securely and efficiently.
+
+My roles and responsibilities in the project are:
+• Developed Card Authentication Service to process POS transaction requests 
+• Implemented AES-256–based PIN encryption flow from POS to backend 
+• Integrated Ticketing Service for secure vault access authorization 
+• Consumed PINsafe and TrackSafe services to retrieve encrypted PIN and track data 
+• Developed HSM Proxy Service to communicate securely with Thales HSM 
+• Implemented PIN verification and card cryptogram validation using HSM APIs 
+• Ensured full PCI-DSS compliance across all services and data flows 
+• Designed end-to-end flow: POS → Card Auth → Ticketing → PINsafe/TrackSafe → HSM → Response 
+• Built microservices with secure communication, authentication, and encryption standards 
+• Added strong logging, data masking, and exception handling for sensitive data 
+• Performed unit, integration, and E2E testing for all critical flows 
+• Worked on fault-tolerant architecture with retries, timeouts, and error propagation 
+• Optimized performance for low-latency card authorization 
+• Collaborated with team to review API contracts, encryption logic, and HSM operations As per my roles, responsibilities, and tech stack:
+• When I ask project-related questions, give project-specific answers 
+• Otherwise, give normal answers 
+• Highlight 5–6 main points 
+• Provide answers in point-wise format 
+• Give only answers, no extra text 
+• Highlight important keywords in bold 
+• For Java coding: – First give the approach – Then give full code in main method – Provide time and space complexity and yes also show me the output as well of              that code

@@ -1,0 +1,353 @@
+### ⭐ 15 Git Commands Every Developer Must Know
+
+#### 1️⃣ Clone Repository
+
+```bash
+git clone <repository-url>
+```
+
+* **Purpose:** Download project from GitHub to your local system.
+
+---
+
+#### 2️⃣ Check Repository Status
+
+```bash
+git status
+```
+
+* Shows **modified, staged, and untracked files**.
+
+---
+
+#### 3️⃣ Add Files to Staging Area
+
+```bash
+git add fileName
+```
+
+or
+
+```bash
+git add .
+```
+
+* Moves files to **staging area before commit**.
+
+---
+
+#### 4️⃣ Commit Changes
+
+```bash
+git commit -m "message"
+```
+
+* Saves code changes in **local repository**.
+
+---
+
+#### 5️⃣ Push Code
+
+```bash
+git push origin branchName
+```
+
+* Uploads code to **remote GitHub repository**.
+
+---
+
+#### 6️⃣ Pull Latest Code
+
+```bash
+git pull origin branchName
+```
+
+* Downloads **latest code from remote repository**.
+
+---
+
+#### 7️⃣ Check Commit History
+
+```bash
+git log
+```
+
+* Shows **complete commit history**.
+
+---
+
+#### 8️⃣ Create New Branch
+
+```bash
+git branch branchName
+```
+
+* Creates **new feature branch**.
+
+---
+
+#### 9️⃣ Switch Branch
+
+```bash
+git checkout branchName
+```
+
+* Switch to another branch.
+
+---
+
+#### 🔟 Create + Switch Branch
+
+```bash
+git checkout -b branchName
+```
+
+* Creates and switches **in one command**.
+
+---
+
+#### 1️⃣1️⃣ Merge Branch
+
+```bash
+git merge branchName
+```
+
+* Combines **two branches together**.
+
+---
+
+#### 1️⃣2️⃣ Git Stash
+
+```bash
+git stash
+```
+
+* Temporarily **save unfinished work**.
+
+---
+
+#### 1️⃣3️⃣ Git Reset
+
+```bash
+git reset --hard HEAD
+```
+
+* Removes **uncommitted changes**.
+
+---
+
+#### 1️⃣4️⃣ Git Cherry-Pick
+
+```bash
+git cherry-pick commitID
+```
+
+* Apply **specific commit to another branch**.
+
+---
+
+#### 1️⃣5️⃣ Git Rebase
+
+```bash
+git rebase branchName
+```
+
+* Moves **commits on top of another branch** for clean history.
+
+---
+
+### 🎯 Simple Rule Developers Follow
+
+Daily work usually uses only **6 commands**:
+
+* **git clone**
+* **git add**
+* **git commit**
+* **git push**
+* **git pull**
+* **git branch / checkout**
+
+💡 If you learn these **15 commands**, you will be **fully comfortable with Git for interviews and real projects**.
+
+
+about git reset : 
+
+Yes 👍
+
+Suppose:
+
+```bash id="e1"
+A ---- B ---- C
+               ↑
+             HEAD
+```
+
+Now if you do:
+
+```bash id="e2"
+git reset B
+```
+
+or
+
+```bash id="e3"
+git reset <commit-id-of-B>
+```
+
+Then Git moves back to **B**:
+
+```bash id="e4"
+A ---- B
+         ↑
+       HEAD
+```
+
+Commit **C** is removed from current branch.
+
+Then you can:
+
+```bash id="e5"
+git add .
+git commit -m "new changes"
+git push
+```
+
+---
+
+But if commit **C** was already pushed to remote/GitHub, then normal push may fail.
+
+You may need:
+
+```bash id="e6"
+git push --force
+```
+
+because history changed.
+
+---
+
+# Simple Meaning
+
+```bash id="e7"
+git reset <commit-id>
+```
+
+= “Go back to this commit and remove commits after it.”
+
+ will it be deleted from local as well ? 
+Yes 👍
+
+`git reset` changes your **local repository** first.
+
+Example:
+
+```bash id="f1"
+A ---- B ---- C
+```
+
+If you do:
+
+```bash id="f2"
+git reset B
+```
+
+Then locally it becomes:
+
+```bash id="f3"
+A ---- B
+```
+
+So commit **C** is removed from your local branch.
+
+---
+
+But what happens to code depends on reset type:
+
+### 1. Mixed Reset (default)
+
+```bash id="f4"
+git reset B
+```
+
+* Commit C removed locally
+* Code changes still present in files
+
+---
+
+### 2. Hard Reset
+
+```bash id="f5"
+git reset --hard B
+```
+
+* Commit C removed locally
+* Code changes also deleted
+
+---
+
+If commit C was already pushed to GitHub, then remote still has C until you do:
+
+```bash id="f6"
+git push --force
+```
+
+Then remote/GitHub also becomes same as local.
+
+
+will it be deleted from remote as well ? 
+
+Yes 👍
+Remote commit will also get deleted **after force push**.
+
+Example:
+
+Before:
+
+```bash id="r1"
+A ---- B ---- C
+```
+
+Now locally do:
+
+```bash id="r2"
+git reset --hard B
+```
+
+Local becomes:
+
+```bash id="r3"
+A ---- B
+```
+
+But remote/GitHub still has:
+
+```bash id="r4"
+A ---- B ---- C
+```
+
+Now do:
+
+```bash id="r5"
+git push --force
+```
+
+Then remote also becomes:
+
+```bash id="r6"
+A ---- B
+```
+
+So commit **C** is deleted from:
+
+* Local
+* Remote/GitHub
+
+---
+
+# Simple Meaning
+
+```bash id="r7"
+git reset + git push --force
+```
+
+= Remove commits from both local and remote.

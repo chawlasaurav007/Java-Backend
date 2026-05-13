@@ -1,0 +1,79 @@
+### 🔹 Top 15 LLD Practice Questions (Interview Focused)
+
+---
+
+### 🟢 Beginner Level
+
+1️⃣ **Design Parking Lot System**
+👉 Slots, vehicles, ticket, pricing
+
+2️⃣ **Design Library Management System**
+👉 Books, users, issue/return
+
+3️⃣ **Design Elevator System**
+👉 Multiple lifts, request handling
+
+4️⃣ **Design ATM System**
+👉 Withdraw, deposit, balance
+
+5️⃣ **Design Snake & Ladder Game**
+👉 Board, player, dice logic
+
+---
+
+### 🟡 Medium Level
+
+6️⃣ **Design BookMyShow (Movie Ticket Booking)**
+👉 Seats, booking, concurrency
+
+7️⃣ **Design Food Delivery System (like Swiggy)**
+👉 Order, restaurant, delivery
+
+8️⃣ **Design Cab Booking System (like Uber/Ola)**
+👉 Driver, rider, matching
+
+9️⃣ **Design Cache System (LRU Cache)**
+👉 Eviction policy
+
+10️⃣ **Design Notification System**
+👉 Email, SMS, push notifications
+
+---
+
+### 🔴 Advanced Level
+
+11️⃣ **Design Rate Limiter**
+👉 Control API requests
+
+12️⃣ **Design Logging System**
+👉 Levels, storage, async logs
+
+13️⃣ **Design Splitwise App**
+👉 Expense sharing, balances
+
+14️⃣ **Design URL Shortener (like Bitly)**
+👉 Short URL, mapping
+
+15️⃣ **Design Chat System (like WhatsApp)**
+👉 Messaging, online/offline
+
+---
+
+### 🔹 How to Practice (Important)
+
+👉 For each question:
+
+* Identify **classes & objects**
+* Apply **SOLID principles**
+* Use **design patterns**
+* Write **clean Java code**
+
+---
+
+### 🔹 One Line
+
+👉 **Practice these 10–15 LLD problems to cover almost all interview scenarios**
+
+---
+
+If you want, I can solve **1 question step-by-step (Parking Lot or LRU Cache)** like in interview 👍

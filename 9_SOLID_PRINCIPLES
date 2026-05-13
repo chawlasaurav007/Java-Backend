@@ -1,0 +1,549 @@
+Q1: What is SOLID principles and why we need SOLID principles? 
+Ans : SOLID principle is a design principle that makes your application more understandable ,
+      maintainable. Through SOLID principle it reduces the dependiencies, so that if a developer 
+	  changes one area of software it will not impact other part of the software.
+	  
+Q2: What are SOLID principles ? 
+Ans : S - Single Responsibilty
+      O - Open/close
+      L - Liskov Substitution
+      I - Interface Segregation	  
+      D - Dependency Inversion
+	  
+	  Single responsibility and Interface segeregation both are same but single responsibility is used with 
+	  classes and interface segeregation is used with interface.
+	  
+Q 3 : What is Single Responsibilty ?
+Ans : One class should have only one and only one responsibility.
+      Suppose we have 2 classes Employee and Address class. Suppose if we want to modify our address class then 
+	  we dont need to modify our employee class. Both classes are independent of each other. But if you want 
+      to use address class object in employee class you can do by creating a refrence of address class.
+      so if you modify your address class it wont effect employee class.
+
+      Now suppose you have merged Both the classes. Employee class and address class. Both class refrence 
+	  variable comes under one class than if you modify something in address refrence variable than it will 
+      modify the whole class including Employee refrence variable. So avoid this mistake make seperate pojo 
+	  classes. 	  
+      
+	  code : 
+	  Employee.java
+      // Employee class focused on employee-related tasks
+		class Employee {
+			private String name;
+			private String position;
+			private Address address;// if you want address in employee class you can use address class 
+            
+
+			public Employee(String name, String position) {
+				this.name = name;
+				this.position = position;				
+			}
+			
+			public Employee(String name, String position, Address address) {
+				this.name = name;
+				this.position = position;
+				this.address = address;
+			}
+
+			public String getName() {
+				return name;
+			}
+
+			public String getPosition() {
+				return position;
+			}
+
+			public Address getAddress() {
+				return address;
+			}
+
+			public void printEmployeeDetails() {
+				System.out.println("Employee Name: " + name);
+				System.out.println("Position: " + position);
+				address.printAddress(); // Delegate address printing to Address class
+			}
+
+			// Other employee-related methods...
+		}
+		
+		//but changes in address class will not effect employee class suppose you want to remove psotalCode 
+        //it wont effect employee class.
+ 		
+		Address.java
+		// Address class focused on address-related tasks
+		class Address {
+			private String street;
+			private String city;
+			private String postalCode;
+
+			public Address(String street, String city, String postalCode) {
+				this.street = street;
+				this.city = city;
+				this.postalCode = postalCode;
+			}
+
+			public String getStreet() {
+				return street;
+			}
+
+			public String getCity() {
+				return city;
+			}
+
+			public String getPostalCode() {
+				return postalCode;
+			}
+
+			public void printAddress() {
+				System.out.println("Address: " + street + ", " + city + ", " + postalCode);
+			}
+            
+			// Other address-related methods...
+		}
+
+		// Main class to run the program
+		public class Main {
+			public static void main(String[] args) {
+				Address address = new Address("123 Main St", "New York", "10001");
+				
+				Employee employee = new Employee("John Doe", "Software Engineer");
+
+				Employee employee1 = new Employee("John Doe", "Software Engineer", address);
+
+				// Print employee details
+				employee1.printEmployeeDetails();
+			}
+		}
+	  
+Q4 : Have you ever seen worst Single Responsibilty violation ?
+Ans : i have merged my entity class with my service class i have written our business logic(crud operation)
+      into entity class. so this is worst violation principle in single responsibility principle.
+	  
+Q5 : why is Single responsibility principle is important? 
+Ans : 1 - In real world requirement changes frequently so we dont want while implementing our requirement would 
+	      effect other classes or entities. 
+ 	  2 - Testing will be easier with single responsibility you will have less test cases.
+	  3 - Easy to understand . 
+	  4 - use layer in your application and break god classes into smaller classes or modules(dont write 
+	      everything in one POJO class). 
+
+Q6 : What is Open/Close principle ? 
+Ans : Open/Close principle states that your software component is open for extention but closed for modification.
+      
+	  open for extention - you should be able to add new features or behaviour to your code but dont change the 
+	  old code.
+      
+      for ex : suppose you have an emplyoee which has 2 non-static variable id and name which you have 
+	  initialized with constructor now suppose this employee class gets extended by TraneeEmployee class.
+      in this TraneeEmployee class you made the constructor like this that through this TraneeEmployee you
+      can use Employee constructor(by using super() inside TraneeEmployee constructor) to assign value so 
+	  this means it is open for extension.
+	  
+	  Close for modification - after we add the extra fucntionality  we should not modify the existing 
+	  implementation means suppose you have extended Employee class by TraneeEmployee class . so do modification
+      you want in TraneeEmployee class dont change any implementation in Employee class or existing class.  	  
+	
+Q7 :How to implement Open/close principle ? 
+Ans - So we will do implementation of open/close principle like this  : 
+      Create a POJO class Employee with id and name , now suppose new feature we want to add which says add
+      training location. Now your constructor will be failed of employee class which means those employee 
+      who did not do training. SO better extend Employee class , name it TraneeEmployee class then add 
+      constructor.
+      
+      see if  i change means add the parameter of trainingPlace in that Employee class constructor only but the 
+      problem with this apporoach is all the code which is using the constructor to initialize the value id and 
+      name will break. so if you change your constructor in employee class it will break the whole code so better
+      it to extend Employee class with TraneeEmployee class and create a constructor over there which has the
+      value of employee class or we can say like this , which uses employee class constructor to initialize
+      the value through TraneeEmployee constructor.
+
+     code :
+  	    Employee.java
+    	package p10;
+
+		public class Employee {
+			int id ; 
+			String name ; 
+			
+			Employee(int id,String name){
+				this.id= id ;
+				this.name = name ; 
+			}
+			
+			public void printMe() {
+				System.out.println(" Emp id: "+this.id+" Emp Name: "+this.name);
+				
+			}
+		}
+		
+		TraneeEmployee.java
+		package p10;
+
+public class TraneeEmployee extends Employee {
+    // adding trainingArea variable while extending
+	String trainingArea ; 
+	TraneeEmployee(int id,String name,String trainingArea){//you are using this constructor to initialize id and
+		super(id,name);                                    //name and also using trainingArea so our code is 
+		this.trainingArea = trainingArea;                  //not been broken
+	}
+	
+	@Override
+	public void printMe() {
+    	System.out.println(" Emp id: "+this.id+" Emp Name: "+this.name+" Emp Training Area: "+this.trainingArea);
+    }
+
+}
+
+Client.java
+package p10;
+
+public class Client {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+        Employee e1 = new Employee(1,"saurav");
+        e1.printMe();
+        TraneeEmployee t1 = new TraneeEmployee(2, "ashish", "MP");
+        t1.printMe();
+	}
+
+}
+
+
+output :  Emp id: 1 Emp Name: saurav
+          Emp id: 2 Emp Name: ashish Emp Training Area: MP
+
+Q8: Why is open/close principle important ? 
+Ans - using this principle it seperates the existing code from the modified code so it provides better statbility,
+      readable and maintainable and minimize changes in your code.
+	  
+       
+Q9: What is Liskov Substitution principle ? 
+Ans : Object of parent class should be replace with object of child class without breaking the code/application.
+     
+    Code : 
+    Employee.java
+    package p10;
+
+	public class Employee {
+		int id ; 
+		String name ; 
+		
+		Employee(int id,String name){
+			this.id= id ;
+			this.name = name ; 
+		}
+		
+		public void printMe() {
+			System.out.println(" Emp id: "+this.id+" Emp Name: "+this.name);
+			
+		}
+	}
+ 	
+   TraneeEmployee.java
+   package p10;
+
+public class TraneeEmployee extends Employee {
+	String trainingArea ; 
+	TraneeEmployee(int id,String name,String trainingArea){
+		super(id,name);
+		this.trainingArea = trainingArea;
+	}
+	
+	@Override
+	public void printMe() {
+    	System.out.println(" Emp id: "+this.id+" Emp Name: "+this.name+" Emp Training Area: "+this.trainingArea);
+    }
+
+}
+ 
+      Client.java 
+	  package p10;
+
+		public class Client {
+			public void usedToPrintYourData(Employee e) {
+				e.printMe();
+			}
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				Employee e1 = new Employee(1,"saurav");
+				e1.printMe();
+				TraneeEmployee t1 = new TraneeEmployee(2, "ashish", "MP");
+				t1.printMe();
+				Client c = new Client();
+				c.usedToPrintYourData(e1);//passing parent class object 
+				c.usedToPrintYourData(t1);// and here we are passing child class object 
+				                          // and it is not breaking our code also 
+				
+			}
+
+		}
+
+     	  output :  Emp id: 1 Emp Name: saurav
+					Emp id: 2 Emp Name: ashish Emp Training Area: MP
+					Emp id: 1 Emp Name: saurav
+					Emp id: 2 Emp Name: ashish Emp Training Area: MP
+					
+	1  - Object child class should be completely substitutable/replace with parent class object without breaking 
+	     the code. This shows that our Trained emplyeee (TraneeEmployee) is also an employee.
+    2 -  The classes that you develop by extending our class should be able to fit in our application without 
+         failure. (iam extending a TraneeEmployee class so this class should be completely fit in the application
+         without any failure.)
+    3 - so here trained employee behave same as employee 		 
+
+Q10: Why is Liskov substitution principle important ?
+
+Ans : 1 - this avoids misuing of inheritance .
+      2 - it helps us to conform is-a relationship.
+      3 - Child class fulfills the contract of parent class . 
+	  
+      Wrongly implementing it can prove real world objects wrong like :
+	  make a rectangle class and extends this rectangle class with the square class.
+      "Square is a rectangle" it is not in real world but its easy to implement through code. so to prevent this
+      better use this Liskov substitution principle. so thorough this princple i can prove "square is a rectangle".	   
+ 	  
+	  
+	  Code 
+	  Rectangle.java
+	  package p11;
+
+		class Rectangle {
+			protected int width;
+			protected int height;
+
+			public void setWidth(int width) {
+				this.width = width;
+			}
+
+			public void setHeight(int height) {
+				this.height = height;
+			}
+
+			public int getArea() {
+				return width * height;
+			}
+		}
+
+     Square.java
+	 package p11;
+
+		class Square extends Rectangle {
+			@Override
+			public void setWidth(int width) {
+				this.width = width;
+				this.height = width; // Ensure width equals height
+			}
+
+			@Override
+			public void setHeight(int height) {
+				this.height = height;
+				this.width = height; // Ensure height equals width
+			}
+		}
+
+    Use.java
+
+		package p11;
+
+		public class Use {
+
+			public static void testLSP(Rectangle rectangle) {
+				rectangle.setWidth(5);
+				rectangle.setHeight(10);
+				System.out.println("Area: " + rectangle.getArea()); // Should work correctly
+			}
+
+			public static void main(String[] args) {
+				Rectangle rect = new Rectangle();
+				testLSP(rect); // Rectangle case
+
+				Rectangle square = new Square(); // Replacing Rectangle with Square
+				testLSP(square); // Should work correctly with Square as well
+			}
+
+ 		}
+        
+        output : Area: 50
+				 Area : 100
+				 
+
+Q10 : What is interface segregation principle? 
+Ans : In single responsibility principle that is responsible for classes while this interface segregation is 
+      responsible for interfaces. 
+      So this principle says that client should not be forced to implement unecessary methods which they will
+      not use.
+
+      for eg : 
+ 	  i have made the pizza app in this pizza app i have made the an interface which has some incomplete methods.
+	  like  : acceptOrderOnline(); ------------
+	          acceptWalkingOrder();           |
+			  acceptPaymentOnline();          |---> so i have these methods in my pizza app 
+			  acceptOnlyCash();---------------|
+			  
+	  Now suppose i have some pizza outlet suppose 4 to 5 pizza outlets i have so some outlets accept online 
+	  orders and some outlets accept cash payment. so the outlet that is accepting cash payment why they need to 
+	  implement online payment methods also unecessary. so make different - different interfaces of both online 
+      payment and cash payment. onlinePayment interface should have online payment incomplete methods 
+      and similarly offlinePayment interface should have only cash payment incomplete methods. 
+      by this we can achieve interface segregation principle. 
+     
+      code : 
+	  PizzaAppInterfaceOnline.java
+      public interface PizzaAppInterfaceOnline { 
+	       public void acceptOrderOnline();
+		   public void acceptPaymentsOnline();
+	  }	  
+      PizzaAppInterfaceOffline.java	  
+	  public interface PizzaAppInterfaceOffline { 
+	       public void acceptWalkingOrder();
+		   public void acceptOnlyCash();
+	  }	  
+	  
+	  // now suppose i am a franchise that deals with offline so you implement only PizzaAppInterfaceOffline
+	  // interface    
+	  
+	  public class PizzaClient implements PizzaAppInterfaceOffline{
+		  @Override
+		  public void acceptWalkingOrder(){
+		     // write your logic here 
+			}
+		  @Override  
+		  public void acceptOnlyCash(){
+		    // write your logic here 
+		   }
+	     
+	  } 
+	  
+	  // if the franchize have both the features(online and offline) than he can implement both 
+	  public class PizzaClient implements PizzaAppInterfaceOffline,PizzaAppInterfaceOnline{
+		  @Override
+		  public void acceptWalkingOrder(){
+		     // write your logic here 
+			}
+		  @Override  
+		  public void acceptOnlyCash(){
+		    // write your logic here 
+		   }
+		   
+		  @Override
+		  public void acceptOrderOnline(){
+		     // write your logic here 
+			}
+		  @Override  
+		  public void acceptPaymentsOnline(){
+		    // write your logic here 
+		   } 
+	     
+	  }
+			  
+		So what ever interface you need use that only dont need to implement unecessary methods make 
+		seperate - seperate interfaces.
+
+Q11 : Why is Interface segregation principle important ? 
+Ans : to prevent client for unnecessarily getting stuck in implementing unwanted methods. 
+
+Q12 : what is depepndency inverison principle? 
+Ans : depepndency inverison principle states that depends on abstraction not on concretion(means complete methods).
+      High level module(class) should not depend on low level module because it will be tighntly coupled so 
+      we want that both the modules should depend on abstarction so that they can be loosely coupled.
+      So we should ddesign our software in such a way that various modules can be seperated from each other 
+      using an abstract layer to bind them together.
+      
+	  Legacy follows : 
+       
+      Controller layer------->Service layer-------->Repository layer------->DB(Database)
+	  
+      but what dependency inversion principle says: that classes should depends on abstraction
+	  like this : 
+	  
+                abstraction/interface    abstraction/interface  
+               /                   \     /                  \
+              /	                    \   /                    \
+	  Controller layer             Service layer             Repository layer---->DB(Database) 
+	  
+      now here classes are dependent on abstraction.
+      	  
+      Now a days we write our code like this(currently we are using this in our code) :  
+	  The BookingController class depends on the BookingService interface (which is an abstraction), 
+	  not on the concrete implementation (BookingServiceImpl).This is exactly in line with the Dependency 
+	  Inversion Principle (DIP).
+	  
+	  
+	  code  : 
+	  // Abstraction (Interface)
+		public interface BookingService {
+			void bookRoom();
+		}
+
+		// Service Implementation
+		public class BookingServiceImpl implements BookingService {
+			private final BookingRepository repository;
+
+			public BookingServiceImpl(BookingRepository repository) {
+				this.repository = repository;
+			}
+
+			@Override
+			public void bookRoom() {
+				repository.saveBooking();
+			}
+		}
+
+		// Repository Abstraction
+		public interface BookingRepository {
+			void saveBooking();
+		}
+
+		// Repository Implementation
+		public class BookingRepositoryImpl implements BookingRepository {
+			@Override
+			public void saveBooking() {
+				System.out.println("Booking saved in DB");
+			}
+		}
+
+		// Controller Layer
+		public class BookingController {
+			private final BookingService bookingService;
+
+			public BookingController(BookingService bookingService) {
+				this.bookingService = bookingService;
+			}
+
+			public void handleRequest() {
+				bookingService.bookRoom();
+			}
+		}
+
+		// Main Class (Dependency Injection)
+		public class Main {
+			public static void main(String[] args) {
+				BookingRepository repository = new BookingRepositoryImpl();
+				BookingService service = new BookingServiceImpl(repository);
+				BookingController controller = new BookingController(service);
+
+				controller.handleRequest(); // Loose coupling maintained
+			}
+		}
+
+
+Q13: why depepndency inverison principle important and what benefits we are getting ? 
+Ans - Dependency Inversion Principle (DIP) is important because it promotes loose coupling between modules, 
+      improving flexibility, testability, and maintainability by relying on abstractions instead of concrete 
+      implementations.
+	  
+	  By applying the Dependency Inversion Principle, the benefits we are getting are :
+
+		Loose Coupling: Modules can be changed independently.
+		Better Testability: Easily mock dependencies for testing.
+		Improved Maintainability: Simplifies updates and reduces code impact.
+		Reusability: Abstractions make components more reusable.
+		
+| Principle                                         | Short Interview Answer                                                                                                            |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **S** – **Single Responsibility Principle (SRP)** | A class should do **only one job**. It should have **one reason to change**.                                                      |
+| **O** – **Open/Closed Principle (OCP)**           | Code should be **open for extension but closed for modification**. We should add new features **without changing existing code**. |
+| **L** – **Liskov Substitution Principle (LSP)**   | Subclasses(childclass) should **replace** their parent classes **without breaking** the application.                              |
+| **I** – **Interface Segregation Principle (ISP)** | Don’t force a class to implement **unused methods**. Use **small, specific interfaces**.                                          |
+| **D** – **Dependency Inversion Principle (DIP)**  | Code should depend on **abstractions (interfaces)**, not on **concrete classes**.                                                 |
+		

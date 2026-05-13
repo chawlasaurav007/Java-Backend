@@ -1,0 +1,97 @@
+Q1 : Future vs CompletableFuture ? 
+Ans : 
+
+future  : 
+Future<Integer> future = executorService.submit(() -> 10 + 20);
+int result = future.get(); // blocks other threads until result is ready
+System.out.println(result);
+
+Introduced in Java 5
+
+Used to perform asynchronous tasks
+
+❌ .get() blocks the other thread
+
+❌ No easy way to chain actions or handle exceptions
+
+CompletableFuture : 
+CompletableFuture.supplyAsync(() -> 10 + 20)
+    .thenApply(result -> result * 2)
+    .thenAccept(result -> System.out.println("Final: " + result)); // here we are retriving value through
+	// thenAccept() method which does not block any thread
+
+thenAccept() → "I just want to use the result (like printing), I don’t need it anymore."
+thenApply() → "I want to process the result and get something back."
+
+Introduced in Java 8
+
+Supports asynchronous programming with non-blocking features
+
+✅ Allows chaining using .thenApply(), .thenAccept()
+
+✅ Supports exception handling (.exceptionally(), .handle())
+
+both are used to handle the tasks asynchronously
+  
+  
+Q2 :  application.yml file and application.properties file if we run both which value it will take
+suppose in application.properties i have value = "saurav" and in application.yml i have value : "saurav" 
+and if i run the spring boot project which file it will be run application.yml or application.properties 
+
+Ans  : 
+If both application.yml and application.properties have the same key, Spring Boot will use the value from 
+application.properties. That’s because Spring loads .yml first and then .properties, so the last one wins.
+Basically, application.properties overrides .yml if both exist.
+
+or
+
+Spring Boot loads application.yml first 
+Then it loads application.properties(this is the latest once)
+The last one wins, so application.properties overrides application.yml
+
+Q3 : how we can make win of application.yml file over application.properties
+Ans : 
+By default, Spring Boot gives priority to application.properties. If you want application.yml to win, don’t put 
+the same key in both files. Just define it in application.yml. Or, use a profile like application-dev.yml and 
+set spring.profiles.active=dev. This way, Spring will use the value from the .yml file.
+
+Q4 : try with resource ? 
+Ans  : 
+"try-with-resources is the modern way. It saves time, writes less code, and closes things automatically. 
+So it's better than the older try-finally approach." 
+
+so try with resource 
+It automatically closes resources like files, streams, DB connections — even if an exception happens.
+It's cleaner and avoids bugs like forgetting to close something.
+
+Normal try-finally (old way):
+
+FileReader reader = null;
+try {
+    reader = new FileReader("data.txt");
+    // read file
+} finally {
+    if (reader != null) {
+        reader.close(); // manually closing
+    }
+}
+
+Try-with-resources (better way):
+ 
+try (FileReader reader = new FileReader("data.txt")) {
+    // read file
+} // reader is auto-closed here 
+
+Q5 : where u have used functional interface in your project ? 
+Ans : While filtering available hotels based on location, price, or rating, we used Stream.filter(), which 
+internally uses the Predicate functional interface.
+
+
+
+1 future vs completyable future 
+2 application.yml file and application.properties file if we run both which value it will take
+3 try with resource
+4 docker padhna hai basics 
+5 kafka producer padhlo interview questions 
+6 where u have used functional interface in your project 
+

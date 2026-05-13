@@ -1,0 +1,1162 @@
+Q1 : What is multitasking ?
+Ans  : performing multiple task at one time is called multitasking.
+       there are two types of multitasking : 
+       1 : process based multitasking:
+	       a program which is in a running state is called process.
+           process based multitasking is executing several tasks simultaneously where each task is
+		   a seperate independent process in called process based multitasking.
+           for ex : process based  multitasking enables you to run the java IDE at the same time 
+           while you are using a text editor or visiting a website using chrome.  		   
+       2 : thread based multitasking:
+	       is executing the several tasks simultaneously where each task is a seperate 
+		   independent part of  the same program/process which is called thread.
+	       a process(vlc) consist of multiple threads. so any process works with multiple 
+           threads to accomplish its process to increase the performance and reduce the 
+		   responsibility so this is thread based multitasking. 
+		   
+		   Thread : thread is unit of cpu which is used to perform independent task.
+		   ex : 
+		   a human(cpu) have two hands one hand is doing writing and another hand is punching
+           the wall so both the hands doing there work independently.
+           so in programming one thread is in run method other thread is in main method 
+           cpu allows to run thread or multiple threads. 
+		   
+           Multithreading : it is a process of executing multiple threads without depending
+           on each other. 		   
+           
+		   steps to achive mulitasking :
+           thread  - cpu allows independent excution using threads.
+		   and through multiple threads we achieve a process
+		   and through multiple process we achieve multitasking. 
+
+
+	_______________________________________________________________________ 
+	|	   ________________________________                                |     
+	|	   |                              |                                |
+	|	   |  t1           t2             |-----> this is process(vlc)     |
+	|	   |                              |                                |----->os
+	|	   |                              |                                |   (operating system)
+	|	   |       t4          t3         |                                | 
+	|	   |             t5               |                                |
+	|	   |______________________________|                                |
+	|	                                                                   |
+    |______________________________________________________________________|
+
+	
+		Multithreading :  multithreading is a specialized form of multitasking.
+        multithreading in java is a process of executing multiple threads simultaneoulsy
+        without depending on each other. through multithreading you can achive multitasking.
+		
+		process vs thread 
+		process                       |        thread
+______________________________________|__________________________________		
+1. it is heavy weight                 |1. it is light weight                 
+2. process uses seperate memory area  |2. thread uses shared memory.                                      
+		   
+	shared memory : suppose in a thread you have used int x = 6 ; so put this x in a memory
+    (which is shared memory ) so that other thread can ujse this x.	
+	
+Q : what is concurrency and multithreading? 
+🔁Concurrency – Big Concept
+
+Concurrency means doing multiple tasks at the same time (or overlapping).
+
+It’s about managing many tasks together so they make progress.
+
+You can achieve concurrency in many ways — one of them is multithreading.
+
+🧵 Multithreading – One Way to Achieve Concurrency
+
+Multithreading means using multiple threads inside a program so that tasks can run concurrently.
+
+Each thread runs independently, so multiple parts of your code can execute simultaneously.
+
+💡 Example:
+Imagine you have 3 tasks: A, B, C
+
+Concurrency: You try to handle A, B, C together (maybe by switching quickly).
+
+Multithreading: You create 3 threads — one for A, one for B, one for C — to run them together.
+
+✅ In short (for interview):
+“Concurrency is a concept of doing multiple tasks at the same time or overlapping in time. Multithreading is one way to achieve concurrency — by using multiple threads to run parts of a program simultaneously.”
+
+Would you like me to explain parallelism vs concurrency too? (It’s another common interview question.)
+
+	
+Q2 : how to create thread in java ? 
+Ans  : 1 - by extending thread class 
+       2 - by implementing runnable interface 
+
+	   1: by extending thread class
+      	   we create thread by using Thread class. it has both start and run method.
+		   
+		   code: 
+		    
+			package p2;
+
+			public class A extends Thread {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					for(int i=0;i<100;i++) {
+						System.out.println("ashish");
+					}
+				}
+
+				public static void main(String[] args) {
+					// TODO Auto-generated method stub
+					A a1 = new A();
+					a1.start();
+					for(int i=0;i<100;i++) {
+						System.out.println("saurav");
+					}
+				}
+
+			}
+         
+		 2. by implementing runnable interface 
+            it has only one method which is run method(it is fucntional interface). 
+			here we pass the object of current class in the thread class because runnable 
+			class does not have start method so we pass it to thread class because thread class 
+			has start method.
+
+            code : 
+            package p2;
+
+			public class B implements Runnable {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					for(int i=0;i<100;i++) {
+						System.out.println("saurav");
+					}
+				}
+				
+				public static void main(String[] args) {
+					// TODO Auto-generated method stub
+					B b1 = new B();
+					Thread t1 = new Thread(b1);
+					t1.start();
+					for(int i=0;i<100;i++) {
+						System.out.println("ashish");
+					}
+					
+				}
+
+			}
+			
+	    // here we will do code by lambdas expression so no need of implementing the runnable
+		   interface 
+		   
+		   code : 
+		   package p2;
+
+			public class C {
+
+				public static void main(String[] args) {
+					// TODO Auto-generated method stub
+					Runnable r1 = ()->{
+						for(int i=0;i<100;i++) {
+							System.out.println("saurav");
+						}
+					};
+					
+					Runnable r2 = ()->{
+						for(int i=0;i<100;i++) {
+							System.out.println("ashish");
+						}
+					};
+					
+					Thread t1 = new Thread(r1);
+					Thread t2 = new Thread(r2);
+					t1.start();
+					t2.start();
+					
+				}
+
+			}
+			
+			
+			
+Q3 : What is Thread Schedular ? 		
+Ans : thread schedular is a part of jvm which decide which thread to execute first
+      	thread schedular picks up the thread which thread to execute first. 
+			thread schedular follows 3 algorithm : 
+			1 : fcfs(first come first serve)
+            2 : sjf(shortest job first)
+            3 : round robin
+      	
+        here thread schduler decide which algorithm to choose to execute the thread.
+        we dont know which algorithm thread schduler uses.  		
+
+Q4 : how to assign name to a thread?
+     package p2;
+
+		public class D implements Runnable {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				String name  = Thread.currentThread().getName();
+				System.out.println(name);
+			}
+			
+			public static void main(String[] args) {
+				  D d1 = new D();
+				  Thread t1 = new Thread(d1); //new Thread(new D()); here we can write like this 
+				  Thread t2 = new Thread(d1); //new Thread(new D()); also 
+				  Thread t3 = new Thread(d1); //new Thread(new D()); 
+				  
+				  t1.setName("saurav");
+				  t2.setName("ashish");
+				  t3.setName("das");
+				  
+				  t1.start();
+				  t2.start();
+				  t3.start();
+			}
+
+		}
+		
+Q5 : what is thread life cycle?
+Ans :as we know thread is well known for independent execution during the life cycle a thread can 
+     move from different states . 
+     1 : new state (born)
+     2 : runnable state (ready)
+     3 : running state (execution)
+     4 : waiting state (blocked/waiting)
+     5 : dead state (exit)
+	 
+	 1 : new state - when ever a thread object is created it is always in new state.
+	 2 : runnable state - when thread use start method it moves from new state to runnable state
+	 3 : running state - when thread scheduler select the thread then thread moves into running 
+                         state and execute the code.
+     4 : waiting state - when ever a thread is inactive for short period of time.then the 
+                         thread is in blocked state or waiting state. 
+                         for eg : when the thread invoke(use) sleep method then thread moves into
+						          waiting state/ blocked state.
+ 	 5 : dead state - when thread finish its job then it terminates normally.
+	 
+
+    diagram  - 
+                            _______blocked__________________ 
+                            |                              ↑                 
+                unblocking--|                              |--sleep(),suspend(),wait()
+        start()             ↓          thread scheduler    |
+   born--------->ready/runnable state------------------->running---------->dead 	
+ 	 |
+     |
+     ↓
+   Thread t1 = new Thread();  	 
+		
+	
+Note : if we dont implement the run method thread will still work it will call the run
+       method of thread class but its body will be empty.
+
+Q6: why do need thread class method ? 
+Ans - we need methods of thread class to control and manage thread in a program.
+
+Q7 :  What is sleep method ? 
+Ans  : sleep is a static method of thread class. which throws checked exception which is 
+       interrupted exception.
+	   the main purpose of sleep method is to put a thread into temporary waiting state.
+       
+       Systax : Thread.sleep(1000);//in milisec
+                      or 
+                Thread t = new Thread();
+                   t.sleep(1000); // it gives warning 
+				   
+		code : 
+		package p2;
+
+			public class E extends Thread {
+				@Override
+				public void run() {
+					String name  = Thread.currentThread().getName();
+					for(int i=0;i<3;i++) {
+						
+						try {
+							System.out.println(name);
+							Thread.sleep(3000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				
+				}
+				public static void main(String[] args) {
+					// TODO Auto-generated method stub
+					E e1 = new E();
+					E e2 = new E();
+					E e3 = new E();
+					e1.setName("saurav");
+					e2.setName("ashish");
+					e3.setName("das");
+					
+					e1.start();    		
+					e2.start();
+					e3.start();
+					// if i do e2.sleep(4000) so here e2 thread will execute after 4 sec 
+                    // until then it will go into sleeping state.l 					
+				}
+
+			}
+			
+			   output - saurav
+						das
+						ashish
+						das
+						ashish
+						saurav
+						ashish
+						das
+						saurav
+		   
+
+Q8 : what is join method? 
+Ans : the main purpose of join method is to put the other thread into waiting state.
+      join method also throw the checked exception that is interrupted exception.
+      If you use the join() method on Thread A, then Thread B will enter the waiting state. 
+      While Thread B is waiting, Thread A will execute fully. Once Thread A completes, 
+      Thread B will resume execution.
+	  
+	  code  : 
+	  
+	      package p2;
+
+			public class E extends Thread {
+				@Override
+				public void run() {
+					String name  = Thread.currentThread().getName();
+					for(int i=0;i<3;i++) {
+						System.out.println(name);
+					}
+				
+				}
+				public static void main(String[] args) {
+					// TODO Auto-generated method stub
+					E e1 = new E();
+					E e2 = new E();
+					E e3 = new E();
+					e1.setName("saurav");
+					e2.setName("ashish");
+					e3.setName("das");
+					// here  e
+					e2.start();
+					try {
+						e2.join();
+
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}        		
+					
+					e1.start();
+					e3.start();
+				}
+
+			}
+        //here ashsih will execute fully  
+ 	    output- ashish
+				ashish
+				ashish
+				saurav
+				das
+				saurav
+				das
+                saurav
+				das 
+				
+Q9 : what is thread pool ? 
+Ans - it is a group of all the available thread in our code/class/program.
+      A thread pool is like a team of workers ready to do tasks. Instead of hiring a new worker 
+	  for each job, you use the workers you already have in the pool. This makes getting work 
+	  done faster and more efficient. 
+
+Q10 : what is yield() method ? 
+Ans : yield is a method of thread class. suppose i have three thread A,B,C i put yield method on 
+      thread B so it is giving chance to another thread to execute(A,C will execute) and B thread 
+      will be stop for some times until Thread A, Thread C fully completed.and now Thread A 
+	  will go to the ready state. yield method will only  work if all the threads are in same 
+	  priority else yield method will not work. and it depends on thread scheduler to accept yield
+	  method or not so that's why our output varies sometimes.
+	                        
+							________waiting state___________
+    diagram  -              |                              ↑                 
+                            |                              |
+                            |                              | t1 and t3 will fully execute 
+                            |                              | 
+                            ↓          thread scheduler    | 
+   born---------->ready/runnable state------------------->running---------->dead 	
+ 	 | t1.start()            ↑                            t2.yield
+     | t2.start()            |                              | 
+	 | t3.start()            |______________________________|
+     ↓
+   A t1 = new A();  	 
+   A t2 = new A();  	 
+   A t3 = new A();  	 
+		 		  
+  	   
+Q11 : What is stop() method ? 
+Ans  : stop() is a method of thread class which is used to terminate a thread permanently.
+       once a thread is stopped you cannot start that thread again.
+       
+       package p2;
+
+		public class E extends Thread {
+			@Override
+			public void run() {
+				String name = Thread.currentThread().getName();
+				for (int i = 0; i < 3; i++) {
+
+					System.out.println(name);
+				}
+
+			}
+			
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				E e1 = new E();
+				E e2 = new E();
+				E e3 = new E();
+				e1.setName("saurav");
+				e2.setName("ashish");
+				e3.setName("das");
+
+				e1.start();
+				e2.start();
+				e3.start();
+
+				e2.stop();
+
+			}
+
+		}
+	   output : saurav
+				saurav
+				saurav
+				das
+				das
+				das
+				
+Q12 : What is isAlive() method ?
+Ans  : isAlive is a method of thread class through which we can verify wheather the thread is 
+       alive or not(dead state).
+    Note - 1 : if thread is alive then it will return true otherwise false
+           2 : if we use isAlive() method before the start() method then it will print 
+               false but after the start method it will print true.
+           3 : you cant start() method 1 thread two times. ek thread ko hum ek hi baar start 
+               kr sakte hai dusri baar nhi kr sakte hai other wise it will give IllegalThread
+               exception.
+
+        code : 
+         package p2;
+
+			public class F extends Thread{
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					System.out.println("Thread is alive");
+				}
+				public static void main(String[] args) {
+					// TODO Auto-generated method stub
+					F f1 = new F();
+					System.out.println(f1.isAlive());
+					f1.start();
+					System.out.println(f1.isAlive());
+				}
+
+			}
+		
+Q13 : What is interrupt() method ?
+Ans  : interrupt method is a thread class method which is used to interrupt the thread. 
+       note - 
+       1 - if any thread is in sleeping state or blocking state or waiting state and we use 
+	   interrupt method on that thread it will throw interrupted exception. interrupt() method 
+       will be only applied on the thread which is in sleeping state else interrupt() method 
+	   will not work(it is a must condition to use interrupt() method).
+	   
+	   2 - if thread is not in sleeping state or waiting state or blocking state and we apply 
+	   interrupt() method on that thread then the thread will not interrupt it will execute
+       normally. 
+       
+       so first make that thread in sleeping state and apply interrupt method on the thread.
+ 
+       package p2;
+
+		public class G extends Thread{
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try {
+				    System.out.println("saurav");
+					Thread.sleep(5000);
+					System.out.println("ashish");
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				G g1 = new G();
+				g1.start();
+				g1.interrupt();// suppose if i comment down this line so it will give output 
+				               // saurav after 5 sec so it executes normally 
+			}
+		}
+		
+		output  -saurav 
+		         java.lang.InterruptedException: sleep interrupted
+					at java.base/java.lang.Thread.sleep(Native Method)
+					at Java/p2.G.run(G.java:8)
+
+
+	   
+       Q :  what we achive from interrupted method? 
+       this mehtod will reduce the waiting time of the thread which result into high  performance 
+       so in above code we used interrupt method on the thread which is in sleep mode for 5 sec
+       so why to waste the 5 sec to print ashish(if you dont want) so use interrupt method 
+	   so that you can save your time.
+
+Q14 : what is thread priority?
+Ans -  in java it is possible to assign the priority to a thread if we dont assign the priority
+       to a thread than jvm will automatically asign a priorty 5 to a thread . 
+       
+     to set these priorities java thread class has provided two predifined methods : 
+     1 : setPriority() - we can set the priority of thread. 
+     2 : getPriority() - whatever priority we set we can get that priority.
+ 	 
+	 the thread class has also provided three pre defined final static variable and its value lies
+	 between 1 to 10 : 
+     
+     these are three predefined final static variable 
+     Thread.MIN_PRIORITY = 1
+	 Thread.NORM_PRIORITY = 5
+     Thread.MAX_PRIORITY = 10	 
+ 	 
+	 
+	Note : max value priority will run first suppose there are two threads having priority 
+	7 and 8  so thread having priority 8 will run first than thread having priority 7 will run 
+	second.  
+	
+	And if we dont set the priority of thread than all the threads priorities will be set as 5
+	by jvm .
+	
+	And if we give priority above the range suppose t1.setPriority(12) so it will throw the 
+    exception which is illegal argument exception.
+
+     code : 
+        package p2;
+
+		public class H extends Thread{
+			
+			@Override
+			public void run() {
+				
+				System.out.println(Thread.currentThread().getName());
+				System.out.println(Thread.currentThread().getPriority());
+			}
+
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				H h1 = new H();
+				H h2 = new H();
+				H h3 = new H();
+				
+				h1.setName("saurav");
+				h2.setName("ashish");
+				h3.setName("praveen");
+				
+				h1.setPriority(10);
+				h2.setPriority(5);
+				h3.setPriority(2);
+				
+				h1.start();
+				h2.start();
+				h3.start();
+			 
+			}
+		}
+		
+		output : saurav
+				 10
+				 ashish
+				 5
+				 praveen
+				 2
+
+Q15 : what is synchronization ?
+ 
+ans : synchronization is a technique which is used to control multiple thread. amoung all the 
+      threads only one thread at a time will go inside the synchronization area. 
+	  the main purpose of synchronization is to overcome the problem of multithreading when the 
+	  multiple threads are trying to aceess same resource at same time on that situation it may
+	  provide some wrong output.
+      so if synchronization is not there than it may or may not give expected answers as you want.
+      so to avoid multithreading we use synchronization.
+	 Q : why we use synchronized keyword ?
+	 Ans :  we use synchronized keyword to get correct output.
+           ex : suppose a bus has only one seat and there are three person A,B,C if we use 
+		   multithreading concept so seat will be alloted to everyone so we want only one seat 
+           to be alloted so we use synchronized keyword. the jvm will decide whom to give that 
+           one seat.
+
+        code ex 1: without using synchronized keyword
+           package p2;
+
+			public class J implements Runnable {
+				int available = 1; 
+				int passenger; 
+				
+				J(int passenger){
+					this.passenger = passenger;
+				}
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					String name  = Thread.currentThread().getName();
+					
+					if(available>=1) {
+						System.out.println(name+" youn got the seat");
+					}else {
+						System.out.println("sorry seat is not available to u");
+					}
+					
+				}
+
+			}
+
+---------------------------------------------------------------------------------------------------              
+		package p2;
+
+public class K {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+        J j1 = new J(1);
+        
+        Thread t1 = new Thread(j1);
+        Thread t2 = new Thread(j1);
+        Thread t3 = new Thread(j1);
+        
+        t1.setName("saurav");
+        t2.setName("ashish");
+        t3.setName("salesh");
+        
+        t1.start();
+        t2.start();
+        t3.start();
+        
+	}
+
+}
+
+// so all got the seat this is the problem with multithreading 
+
+output - ashish youn got the seat
+		 saurav youn got the seat
+		 salesh youn got the seat	   
+
+___________________________________________________________________________________________________
+
+code ex 2 : using synchronized keyword
+		   
+		    package p2;
+
+public class J implements Runnable {
+    int available = 1; 
+    int passenger; 
+	
+	J(int passenger){
+    	this.passenger = passenger;
+    }
+	@Override
+	public synchronized void run() {
+		// TODO Auto-generated method stub
+		String name  = Thread.currentThread().getName();
+		
+		if(available>=1) {
+			System.out.println(name+" youn got the seat");
+			available = available - passenger;
+		}else {
+			System.out.println("sorry seat is not available to u");
+		}
+		
+	}
+
+}
+
+---------------------------------------------------------------------------------------------------
+
+package p2;
+
+public class K {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+        J j1 = new J(1);
+        
+        Thread t1 = new Thread(j1);
+        Thread t2 = new Thread(j1);
+        Thread t3 = new Thread(j1);
+        
+        t1.setName("saurav");
+        t2.setName("ashish");
+        t3.setName("salesh");
+        
+        t1.start();
+        t2.start();
+        t3.start();
+        
+        
+        
+	}
+
+}
+	   
+				
+     Synchronization is classified into  2 parts : 
+     1 : method level synchronization
+     2 : block level synchronization
+
+     1 - method level synchronization - 	 
+	     synchronized keyword is used to make method synchronized so it allows only one thread 
+         at a time to enter into method.
+         
+		 ↓ ↓ ↓(3 threads are there but only one thread will enter into synchronized method)
+        public synchronized void run() {
+		//only one thread will enter 
+		
+		}
+
+        code  : 
+        package p2;
+
+			public class I extends Thread {
+				int x; 
+				 
+				I(int x){
+					this.x = x ;  
+				}
+
+				@Override
+				public synchronized void  run() {
+					 
+						for(int i=1;i<=10;i++) {
+							System.out.println(x*i);
+						}		
+				}
+				
+				public static void main(String[] args) throws InterruptedException {
+					// TODO Auto-generated method stub
+					I i1 = new I(5);
+					I i2 = new I(7);
+					i1.start();
+					i1.join();
+					i2.start();     
+				}
+
+			}
+ 		
+		 
+	 2 - block level synchronization - 
+         block level sysnchronization is more efficient at it is applied on the small portion 
+         of code inside the method where the resource is kept apply block level synchronization
+         ont that resource.
+
+        public void test(){
+		
+		↓ ↓ ↓(3 threads willenter in method and all three thread perform simultaneoulsy upto here)
+		synchronized(this){
+		resource // only one thread will enter at a time in this block  
+		
+		}
+		
+		
+		}
+		 code : 
+		 package p2;
+
+			public class I extends Thread {
+				int x; 
+				 
+				I(int x){
+					this.x = x ;  
+				}
+
+				
+				@Override
+				public void  run() {
+					 synchronized (this) {
+						for(int i=1;i<=10;i++) {
+							System.out.println(x*i);
+						}	
+					}
+					
+				}
+				
+				public static void main(String[] args) throws InterruptedException {
+					// TODO Auto-generated method stub
+					I i1 = new I(5);
+					I i2 = new I(7);
+					i1.start();
+					i1.join();
+					i2.start();
+					
+				}
+
+			}
+			
+
+Q16 : what is the static synchronizaion block why we need if we have synchronizaion block/method? 
+Ans - problem with multithreading  
+      suppose one object has three thread, and all three thread will enter together and will 
+      give wrong output. so we come up with synchronization block or method.
+	  
+	  problem with synchornization 
+	  suppose i have two objects, one object has 2 threads and another object also have 2 threads
+	  so here in java each obejct has one lock, so total we have two object so total we have two 
+      locks . so in case of synchronization block/method it allows one thread of one object 
+	  similarly it allows one thread of another object. so now here two thread have entered in
+      the synchronized block(two threads enter of 2 different objects).
+      so this also leads to corrupted data so we here need to make the method as static 
+      synchronized so that only one thread can enter into the block/method.
+	  
+	  code : 
+	  package p3;
+
+		public class Bank extends Thread {
+		  
+			int bal = 5000;
+			int withdrawl; 
+			
+			Bank(int withdrawl){
+			 this.withdrawl = withdrawl;
+			}
+			
+			
+			 @Override
+			 public synchronized void run() {
+			   String name  = Thread.currentThread().getName();
+			   if(withdrawl<=bal) {
+				   System.out.println(name + " withdrawl money");
+				   bal = bal -withdrawl;
+			   }else {
+				   System.out.println("Insuffient balance");
+			   }
+			 }
+			
+		}
+
+---------------------------------------------------------------------------------------------------
+		package p3;
+		class Customer{
+			public static void main(String[] args) {
+				Bank b1 = new Bank(5000);// here b1 has one lock
+				
+				Thread t1 = new Thread(b1);
+				Thread t2 = new Thread(b1);
+				
+				t1.setName("saurav");
+				t2.setName("ashish");
+				
+				Bank b2 = new Bank(5000);//here b2 has one lock
+				
+				Thread t3 = new Thread(b2);
+				Thread t4 = new Thread(b2);
+				
+				
+				t3.setName("nishant");
+				t4.setName("das");
+				
+				t1.start();
+				t2.start();
+				t3.start();
+				t4.start();
+				
+			}
+		}
+
+        output -ashish withdrawl money
+				nishant withdrawl money
+				Insuffient balance
+				Insuffient balance
+       // here the problem with output is from one object ashish has withdrawl 5000 and from 
+	      another object nishant has withdrawl 5000 so how this can happen if total amount is 
+          5000 only so here data currupted.
+		  
+      static synchronized block/method - 
+      so we have problem with synchronized block/method is it cant handel more than one object and 
+      it enters one thread of every object so multiple thread enter in that synchronized 
+	  block/method . so we use static synchronized block here.
+	  
+	  As we know every object has a lock in java.and this lock can be given to only thread at a 
+	  time  and if we have multiple object so we have multiple locks and this lock can be given 
+	  to multiple threads so again we will get corrupted data even in synchronized block.
+	  so here static synchronized block/method comes into picture.
+	  
+	  ex : 1 object  -  1 lock
+	       3 object  -  3 lock
+	  
+      	  
+     So by using static synchronized on block or method then in that class only one thread 
+	 will enter in that class and will access the resource of the method or block. by this 
+	 we cant get corrupt data. 
+	 
+	 code  : 
+	 package p3;
+
+		public class Bank extends Thread {
+		  
+			static int bal = 5000;
+			static int withdrawl; 
+			
+			Bank(int withdrawl){
+			 this.withdrawl = withdrawl;
+			}
+			
+			
+			
+			 public static synchronized void debit() {
+			   String name  = Thread.currentThread().getName();
+			   if(withdrawl<=bal) {
+				   System.out.println(name + " withdrawl money");
+				   bal = bal -withdrawl;
+			   }else {
+				   System.out.println("Insuffient balance");
+			   }
+			 }
+			
+			 @Override
+			public void run() {
+				// TODO Auto-generated method stub
+				 debit();
+			}
+		}
+
+
+		class Customer{
+			public static void main(String[] args) {
+				Bank b1 = new Bank(5000);
+				
+				Thread t1 = new Thread(b1);
+				Thread t2 = new Thread(b1);
+				
+				t1.setName("saurav");
+				t2.setName("ashish");
+				
+				Bank b2 = new Bank(5000);
+				
+				Thread t3 = new Thread(b2);
+				Thread t4 = new Thread(b2);
+				
+				
+				t3.setName("nishant");
+				t4.setName("das");
+				
+				t1.start();
+				t2.start();
+				t3.start();
+				t4.start();
+				
+			}
+		}
+
+      output -  saurav withdrawl money
+				Insuffient balance
+				Insuffient balance
+				Insuffient balance
+
+	 
+Q17 : What is deadlock ? 
+Ans: If two threads are waiting for each other forever such type of situation is called deadlock.
+     
+	 suppose Thread1 is holding object1 and Thread2 is holding Object2 now suppose Thread1 wants to get Object2
+	 and similary Thread2 wants to get the Object1 but they both cant get each other object this situation is
+	 called deadlock.
+	 
+	 synchronized keyword is the cause of deadlock hence whenever we are using synchronized keyword we have to 
+	 take special care(means through synchronized keyword we are getting deadlock).
+	 
+	 If we remove atleast one synchronized keyword then we wont get deadlock.Hence synchronized keyword is the 
+     only reason for deadlock due to this while using synchronized keyword we have to handel it carefully.
+	 
+	 
+	 code - 
+     A.java
+	 package p22;
+ 
+		public class A {
+	                    
+			public synchronized void test1(B b) {
+				System.out.println("saurav");
+				b.test();
+			}
+			
+			public synchronized void test() {
+				System.out.println("Jhunjhunu");
+			}
+		}
+    
+	B.java
+	package p22;
+
+	public class B {
+	                
+		public synchronized void test2(A a) {
+			System.out.println("ashish");
+			a.test();
+		}
+		public synchronized void test() {
+			System.out.println("jabalpur");
+		}
+
+	}
+    
+	C.java
+    package p22;
+
+	public class C implements Runnable {
+		A a = new A();
+		B b = new B();
+		
+		
+		
+		C(){
+			
+			Thread t = new Thread(this); 
+			t.start();
+			a.test1(b);
+			
+		}
+		@Override
+		public void run() {
+			b.test2(a);
+		}
+		
+		public static void main(String[] args) {
+		
+			new C();
+		}
+	}
+ 	
+	or 
+	
+	C.java
+	package p22;
+
+public class C implements Runnable {
+	A a = new A();
+	B b = new B();
+	
+	
+	
+	
+    @Override
+    public void run() {
+    	b.test2(a);
+    }
+    
+    public void m() {
+    	a.test1(b);	
+    }
+    public static void main(String[] args) {
+	
+		C c1 = new C();
+		Thread t1 = new Thread(c1);
+		t1.start();
+		c1.m();
+		
+	}
+}
+
+	
+     output - saurav
+			  ashish	
+			  
+    	// the above code shows deadlock is happening
+        // if you removing atleast one synchronized keyword from any method our deadlock then our deadlock 
+		// will be prevented and then our output will be like this 
+        output - saurav
+		         jabalpur
+	     		 ashish	
+                 jhunjhunu 	   		
+
+Q18 : What is wait() ,notify() and notifyAll() method ? 
+Ans  : wait() - wait() is a method of Object class when wait method is applied on the current thread then that 
+       thread execution stops until  notify and notifyall methods are used by other thread.
+	   (When a thread calls wait() on an object, it releases the lock on that object and pauses execution. 
+	    It will remain paused until another thread calls notify() or notifyAll() on that same object.)
+        
+        here thread is calling the wait method not object is calling the wait method.        
+		
+		
+       notify() - It is a method of Object class, is used to wake up one thread that is waiting(thread is waiting
+	   not object is waiting) for an object.It will notify the next thread which is waiting. we have surity 
+	   that which thread will be selected(because only one thread is waiting).
+	   
+       notifyAll() - notifyAll() method is used by thread to wake up all the waiting thread instead of a single 
+	   thread. In notifyAll() we are not sure which thread will be selected because notification is send to all
+       the threads which are waiting in waiting state so thread schedular decides which thread to go.	   
+	   
+	   Note - Synchronized keyword is must to use wait(),notify() and notifyAll().
+	   
+Q19: wait() and notify() code? 
+Ans - code : 
+      A.java
+      
+      package p23;
+
+		public class A extends Thread{
+
+			int total_amount = 0; 
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				synchronized (this) {
+					for(int i=1;i<=10;i++) {
+						total_amount +=100;
+					}
+					this.notify();
+				}
+			}
+
+		}
+	  _______________________________________________________________________
+	  
+	  
+	  package p23;
+
+public class B {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+        A a1 = new A();
+        a1.start();
+        
+        // these line are run by main thread  
+        synchronized (a1) {
+			try {
+				a1.wait();// here main thread will wait and it will release the lock(a1)
+				          //to child thread so that child thread can start execution inside synchronize block
+				          // in child thread(run method) and when child thread completes its task
+				          // it invoke notify method and releases lock to the main method.
+				          
+			} catch (InterruptedException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			System.out.println(a1.total_amount);
+		}
+	}
+}
+
+Q 20 : which is better way to create a thread by extending thread class or by implementing runnable interface?
+Ans :Implementing Runnable is better because it allows you to extend another class if needed(loosely coupled), 
+promoting flexibility. Extending Thread ties you to that class(tightly coupled), limiting inheritance options.

@@ -1,0 +1,2986 @@
+Q1 : What is JDK vs JRE vs JVM vs JIT? 
+Ans : JDK - Jdk stands for java development kit it is responsible for developing java application. 
+jdk contains several other tools like jre,  jvm and and other libraries. 
+
+JRE - JRE stands for java runtime environment. Jre provides runtime environment to run our 
+byte code (.class file)
+
+JVM - JVM stands for java virtual machine it is part of jre software it is responsible for 
+executing java program. jvm will allocate memory required for program execution and jvm will 
+also deallocate the object when it(object) is not in use. jvm will convert byte code into machine 
+code.
+
+JIT stands for just in time, it is a compiler. Jit runs along with the interpretor.JIT is a part of 
+execution engine in jvm architecture, jit runs the repeated code and interpreter runs the code line by 
+line. it is also responsible to convert .class file into machine code, so the performance(of execution 
+engine) become faster. 
+
+for example : if a method is to be called more than once so first time interpreter will 
+interprete this code line by line and from 2nd time when we call the method again 
+jit will compile this whole method no need of interpretor. All it internally takes care.      
+
+      
+
+    ________________________________________
+    |                                       | 
+    |                                       |  
+    |  ________________________________     |                                 
+    |  |                              |     |  
+    |  |  _________________________   |     |   
+    |  |  |                        |  |     |
+    |  |  | _________________      |  |     |
+    |  |  | |                |     |  |     |
+    |  |  | |      JIT       |     |  |     |
+	|  |  | |________________|     |  |     |
+    |  |  |       JVM              |  |     | 
+    |  |  |________________________|  |     |               
+    |  |                              |     |  
+    |  |        JRE                   |     |  
+    |  |______________________________|     |                     
+    |                                       | 
+    |           JDK                         | 
+    |_______________________________________|                                        
+
+    JVM architecture : - 
+                                                              memory area 
+															  allocated by jvm
+        	            ______________                              | 
+	                   |classloader   |                             |
+	                   |______________|                             | 
+	                      |                                         |
+	                      |                                         |
+	   ___________________|_________________________________________↓______________________
+	  |                                                                                   |
+	  |  ______________     ___________    _________    ___________     ______________    |
+	  | |  class       |   | heap      |  | stack   |  |  pc       |   | native       |   |
+      | |  area        |   |           |  |         |  |register   |   | method stack |   |
+      | |______________|   |___________|  |_________|  |___________|   |______________|   |   
+	  |                                                                                   |
+	  |                                                                                   |
+	  |___________________________________________________________________________________|
+                 |
+                 | 
+                 |
+          _______|_________         _________________
+         |  Execution      |       | Native method   |
+         |  Engine(jit)    |_______| interface       |___ java native libraries()
+         |_________________|       |_________________|
+
+
+
+ 	
+	 
+ Class Loader : - it will load .class file from jre to jvm. 
+     class loader are of three types
+	 1 - BootStrap class loader 
+	 2 - Extension class loader
+	 3 - System/Application class loader
+	 
+ Class Area  : - it will store all the class code like method, nonstatic variables and static 
+ variable also.
+
+ Heap :- Object will be stored in heap area . 
+ 
+ Stack :- method execution information will be stored here(means execution flow of code)
+ 
+ Pc register :- it will maintain next line to execute.
+ 
+ Native method stack :- it will allocate seperate memory for threads.
+
+ Execution Engine :- it contains just in time (JIT) compiler and interpreter both  which 
+ is responsible for executing the code and produce the output. 
+
+ Native method interface /Java Native interface:- it will load other libraries into jvm which 
+  is responsible to run the java code. 
+ 
+ 
+Q2 : What is J2EE vs J2ME vs J2SE ? 
+J2EE - J2EE stands for java enterprise edition.it is used for web development.
+ex-spring boot, hibernate, jsp , servlet
+
+J2SE - J2SE stands for java standard edition. it is a platform to create stand alone application
+(that runs on the computer) like vlc ,antivirus. J2SE does not require server.
+
+J2ME - J2ME stands for java micro edition. it is a platform that dedicated to mobile technology.
+example android apps,ios apps.
+
+Q3 : What is opps concept ? 
+Ans : OOPS stands for obejct oriented programming.
+      oops is a programming style that uses object to represent data and methods.
+	  which helps us to design and build application.
+
+Q4 : What is class and Object ? 
+Class : class is a template which is used for declaring variables and methods.
+A class is a blueprint or template used to define the structure of objects.
+It contains variables (state) and methods (behavior) that describe how the object will look and act.
+Object: object is a real time entity which has state(variable) and methods(behaviour/functionality)
+think object is like a container which has some variable x,y,z and some methods.
+example : think i have a hand now here hand is a state/variable and through this hand 
+          in can cook ,play games so these are behaviours means our method or functionalities.
+
+Q5 : what is variables ? Types of variables?
+Variables are used to store some data 
+  3 types of variable are there : 
+   1 - local variables
+   2 - static variable
+   3 - nonstatic / instance variable
+   
+   local variable : declared inside body of the method. Initialising the local variable is
+   necessary. 
+   
+   static variable : declared inside the class outside the methods. it belongs to class it can be 
+   accessed anywhere in the code. Initialising the static variable is not necessary. 
+   
+   nonstatic / instance variable : declared inside the class outside the methods. it can be 
+   accessed by object refrence variable. it is not mandatory to initialize the non static variable.
+   
+   Q : what is primitive and non-primitive datatypes  ? 
+   Ans : primitive datatypes: are simple data types which stores actual values. ex : int,char,float,boolean etc. 
+         non-primitive datatypes : refers to object and can store multiple values or provide functionalities 
+                                   through methods. ex : String, Array etc.	 
+    
+Q6 : What is method ? 
+method is a block of code to perform specefic task. which helps in code reuseability 
+ 
+Q7 : difference between compile time and runtime execution? 
+Compile time execution : time taken by compiler to convert .java file into .class file  
+Run time execution :  the time at which byte code(.class file) is executed.
+
+                compile time                                    runtime
+   .java file ------------------> .class file/ byte code  --------------------> machine code
+   
+     Q : what is compile time error and runtime error ? 
+	 Comile time error : when there is a mistake in the code that the compiler catches before the program runs like syntax error,missing refrences. the program would not run until you fix these errors.
+	 Runtime error : this error occurs while the code is running .the code might be correct but something unexpected occur during the execution like dividing by zero these error cause 
+     the program to crash or behave unexpectedly. this is called run time error.  					 
+Q7 : what is new keyword? 
+it is used to create the object at runtime. objects are stored in heap memory.  
+
+Q8 : how many ways to intialize the object? 
+3 ways to intialize the object 
+   1 - by refrence variable
+   2 - by method
+   3 - by contructors
+think obejct is like a container which has some variables x,y now we have to initialize these 
+variable in 3 different ways 
+   1 - refrence variable 
+       int x ; 
+	   main(){
+	     A a1 = new A();
+         a1.x = 10 ;  		 
+	   }
+    2 - by method
+        public void test(int x){
+		   this.x = x;
+		}     
+    3 - by constructors
+        A(int x){
+		   this.x = x;
+		}
+ 
+Q9 : what are the different ways to create object in java ? 
+Ans : 5 ways to create object in java  
+        1 : by new keyword -> A a1 = new A();
+		
+        2 : by clone method of clonable class -> // object class have clone method 
+		        A a1 = new A();
+		        A a2 = (A) a1.clone();                   
+        
+		3 :	by factory method  -> calling a method and that method returns the object
+		    class A {
+               public static A test() {
+                    return new A();
+               }
+			   main(){
+			     A a1 = test();  
+				 Syso(a1);
+			   }
+            } 
+			
+        4 : by deserialization -> Deserialize an object from a stream using ObjectInputStream.
+		
+		ObjectInputStream in = new ObjectInputStream(new FileInputStream("file.ser"));
+        MyClass obj = (MyClass) in.readObject();
+        
+		5 : by new instance / reflection api -> A a1 = A.class.newInstance();		
+   
+ 
+Q10 : what is serialization and deserialization ? 
+Serialization  - is a mechanism to convert object into byte stream 
+Deserialization - convert bytes stream in to java object 
+
+or
+
+
+Serialization-Converting a Java object into a **byte stream** so it can be saved to a file, sent over a network, or stored in memory.
+Deserialization - Converting the byte stream back into the original Java object.                                                      
+ 
+Q11 : why we need to use serialization and deserialization ? 
+ for further use of the object we use serialization and deserilization . 
+ for example serialization is used to save the state of object to a file so that it can be reuse 
+ later through deserialization we use this otherwise garbage collector destroys the object 
+ when object is not in use.
+ 
+Q12 : what is transient keyword ? 
+we define transient keyword with the variable which tells the variable that not to be serialize.
+for example we use transient keyword with password variable so that password variable 
+cant be serialize.suppose if i did not use transient keyword with password and that password 
+variable gets serialized and we can get that password through deserialization.
+
+or 
+
+Suppose we have a password variable. If we declare it as transient, then while serializing the object, the password will not be saved inside the serialized file. So during deserialization, we cannot retrieve the original password value, which improves security.      
+ 
+					
+Q13 : what is data hiding ? 
+data hiding is used to achive data security we achieve data hiding by making variable private by 
+this we cant achieve one class data into another class. 
+  
+Q 14 : what is non subclass ? 
+if there is no inheritance between the class but we can create object of one class into another 
+class. this non subclass does not have any relation except has-a relationship between them.
+
+
+Q15 : types of oops concept ? 
+     1 - abstraction
+     2 - encapsulation 
+     3 - inheritance
+     4 - polymorphism 
+
+inheritance - whatever is there in parent class child class can aquire functionality of parent class through extends keyword is called inheritance .  
+
+-  Derived class/ Subclass /Child Class 
+-  Base Class / Superclass /Parent Class 
+
+there are two types of relationship between classes 
+1 : is-a relationship(extends keyword is necessary)
+2 : has-a relationship(no need of extends keyoword)
+
+for simple understaing given by raghu sir : 
+----------------from here ----------------------------
+Inheritance (IS-A) :
+  Connect classes using extends / implements
+
+  c--------extends------------c
+  I----------extends-----------I
+  C------------implements---------------I
+  I---------------(NOT POSSIBLE)--------C
+
+*) Association (HAS-A)
+  Creating one class/interface reference inside another class without extends or implements keyword
+  (as instance variable)
+
+class A{}
+interface B{}
+
+class C{
+   int id;
+   A   oa; //HAS-A
+   B   ob; //HAS-A
+}
+
+------------------------------upto here-----------------------
+
+
+| Concept | IS-A                     | HAS-A                |
+| ------- | ------------------------ | -------------------- |
+| Type    | Inheritance              | Composition          |
+| Keyword | `extends` / `implements` | No keyword needed    |
+| Example | Dog **is-a** Animal      | Car **has-a** Engine |
+
+
+is-a relationship(normal inheritance) : by using extend keyword we achive is-a relationship between
+classes 
+
+suppose i have 2 classes A and B. A is parent class and B is child class 
+ 	 class B extends A {
+	    test(){
+		}
+	    main(){
+		  A a1 = new B();//so here refrence of  class A a1 can access the methods of child and 
+		                 // parent class both  
+		   a1.test();
+		}
+	 }
+	 
+	 or 
+			 
+			 class A {
+			void test() {
+				System.out.println("Saurav");  // Output "Saurav"
+			}
+		}
+
+		class B extends A {
+			@Override
+			void test() {
+				System.out.println("Manisha");  // Output "Manisha"
+			}
+
+			public static void main(String[] args) {
+				A a1 = new B();  // Here, 'a1' is a reference to class A, but it points to an instance of class B.
+				a1.test();  // Calls the test() method from class B due to method overriding.
+			}
+		}
+		
+		or 
+		without using @overriding it gives the same output manisha
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+
+class A { 
+    void test() { 
+        System.out.println("Saurav");
+        }
+} 
+class Main extends A {
+    void test() { 
+        System.out.println("Manisha"); 
+}
+public static void main(String[] args)
+{
+    A a1 = new Main();
+    a1.test();
+    
+}
+    
+}		
+
+If both parent and child have the same method (same name + same parameters) → that’s called method overriding.
+The reference type (A) only checks that test() exists. ✅
+
+	 
+	 but sometimes parent class cant access specefic methods of child class 
+	 for example  : here Object class is parent and String is child class 
+	     Object o = new String("saurav");
+         Syso(o.length());//cant access the specefic methods of child class 
+
+
+or 
+
+
+this is the latest explanation 
+class A {
+    void test() {
+        System.out.println("Test in A");
+    }
+}
+
+class B extends A {
+    void test() {
+        System.out.println("Test in B");
+    }
+
+    public static void main(String[] args) {
+        A a1 = new B();
+        a1.test(); // Output: Test in B
+    }
+}
+
+
+If both parent and child have the same method (same name + same parameters) → that’s called method overriding.
+The reference type (A) only checks that test() exists. ✅
+
+The object type (new B()) decides which version runs.
+
+class A {
+} 
+ 
+class B extends A { 
+	 void test() {
+	 System.out.println("Test in B"); 
+ } 
+ public static void main(String[] args) {
+	A a1 = new B(); a1.test(); 
+	}
+ }		
+
+Reason:
+
+a1 is of type A (parent).
+
+Class A does not have a method test().
+
+Compiler only looks at the reference type (A) when checking if a method exists.
+
+So a1.test(); → error: cannot find symbol: method test() in class A
+
+👉 If you want it to work, you must either:
+
+Declare test() in A too, or
+
+Cast a1 to B: 
+
+class A {
+	 void test() {
+	 System.out.println("Test in A");
+	 } 
+ }
+ class B extends A { 
+	public static void main(String[] args) { 
+	A a1 = new B();
+	a1.test(); 
+	} 
+ }
+ 
+Now ✅ it will compile and run fine.
+
+Output will be:
+
+Test in A
+
+
+👉 Why?
+
+Reference is A, object is B.
+
+But B did not override test().
+
+So parent’s (A) test() runs.
+
+If you add test() in B (override), then it will print "Test in B".
+
+Some example of inheritance code 
+
+1 : 
+// Parent Class
+class Room {
+    void showRoom() {
+        System.out.println("This is a Room");
+    }
+}
+
+// Child Class (Inheriting Room)
+class DeluxeRoom extends Room {
+    void showDeluxe() {
+        System.out.println("This is a Deluxe Room");
+    }
+}
+
+// Test Class
+public class Main {
+    public static void main(String[] args) {
+        DeluxeRoom d = new DeluxeRoom();
+        d.showRoom();     // from parent
+        d.showDeluxe();   // from child
+    }
+}
+
+
+2 : 
+// Parent Class
+class Room {
+    String roomNumber;
+    double basePrice;
+
+    public Room(String roomNumber, double basePrice) {
+        this.roomNumber = roomNumber;
+        this.basePrice = basePrice;
+    }
+
+    public void showDetails() {
+        System.out.println("Room Number: " + roomNumber);
+        System.out.println("Base Price: " + basePrice);
+    }
+}
+
+// Child Class 1 (Inheritance)
+class DeluxeRoom extends Room {
+
+    public DeluxeRoom(String roomNumber, double basePrice) {
+        super(roomNumber, basePrice); // Calling parent constructor
+    }
+}
+
+// Child Class 2 (Inheritance)
+class SuiteRoom extends Room {
+
+    public SuiteRoom(String roomNumber, double basePrice) {
+        super(roomNumber, basePrice);
+    }
+}
+
+// Testing Inheritance
+public class Main {
+    public static void main(String[] args) {
+
+        DeluxeRoom deluxe = new DeluxeRoom("D-101", 3000);
+        SuiteRoom suite = new SuiteRoom("S-201", 5000);
+
+        deluxe.showDetails();
+        System.out.println("-----");
+        suite.showDetails();
+    }
+}
+
+
+
+important hirarchy of inheritance : 
+
+                 Inheritance
+                     │
+          ┌──────────┴──────────┐
+          │                     │
+   is-a relationship       has-a relationship
+   (normal inheritance)    (association, without extends keyword)
+   (using extends keyword)    │
+                     ┌────────┴────────┐
+                     │                 │
+              Aggregation       Composition
+           (loose coupling)   (tight coupling)
+
+------------------------explain by raghu sir from here ---------------------------
+
+            HAS-A(creating one class variable into another class is called HAS-A relation ship it is also
+                  Association called as assosication as well)
+                      |
+        -------------------------------------
+        |                                   |
+   Composition                        Aggregation (default)
+ [Strong Relation b/w Entity]     [Loose Relation b/w Entity]
+ex:                               ex:
+student ----------- semmarks      employee ----------- department
+50  AJ             61 ENG 58        10  AA             5012 DEV
+if student is removed marks       if employee is gone dept will still be there  
+should also be removed
+
+in aggregation u are saving the data seperatly but in composition u are saving the data by making strong relaton between entities 
+
+--------------------------upto here------------------------------------
+
+
+ has-a relationship : we achieve has-a realtionship through association  
+ 
+ association means it is a relationship between objects of two seperate classes.
+ 
+ composition and aggregation are two forms of association 
+ 
+ Aggregation -  aggregation repesents has-a relationship.
+                in aggregation one class can have obejct of another class .
+                each class can exist independently.
+                both the classes are not fully dependent 				
+                
+ Composition - composition repesents has-a relationship. one class object contains another class 
+               object and that object is fully dependent on it. 
+
+this is important (study this one only )
+ Association(HAS-A realtionship): it is a relation-ship between two classes 
+there are two types of has a reationship 
+1 - aggregation(weakly coupled) - one object can live without another object. here both the object can exist 
+    independently. ex - a car can live without driver and driver can live without car both are independent.
+	
+	code  - 
+	import java.util.List;
+	import java.util.ArrayList;
+
+	class Car {
+		String model;
+
+		Car(String model) {
+			this.model = model;
+		}
+	}
+
+	class Driver {
+		String name;
+		// Aggregation: Driver has cars, but cars exist independently
+		private List<Car> cars;
+
+		Driver(String name, List<Car> cars) {
+			this.name = name;
+			this.cars = cars;
+		}
+
+		void showCars() {
+			System.out.println(name + " drives:");
+			for (Car c : cars) {
+				System.out.println("- " + c.model);
+			}
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			Car car1 = new Car("Toyota");
+			Car car2 = new Car("Honda");
+
+			List<Car> carList = new ArrayList<>();
+			carList.add(car1);
+			carList.add(car2);
+
+			Driver driver = new Driver("John", carList);
+			driver.showCars();
+		}
+	}
+    
+	Key points:
+
+	Driver has cars → Aggregation.
+
+	Cars (car1, car2) exist independently of the Driver.
+
+	If the Driver object is deleted, the Car objects still exist.
+
+2 - composition(tightly coupled) - one object cannot exist without another object. both object cannot exist 
+    independently. ex - engine cannot exist without car.
+	
+	code - 
+	class Engine {
+    void start() {
+        System.out.println("Engine started");
+     }
+    }
+
+	class Car {
+		// Composition: Engine is part of Car
+		private Engine engine;
+
+		Car() {
+			engine = new Engine(); // Car creates Engine
+		}
+
+		void startCar() {
+			engine.start();
+			System.out.println("Car started");
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			Car car = new Car();
+			car.startCar();
+		}
+	}
+
+	Key points:
+	Engine cannot exist without Car.
+
+	Car is responsible for creating and managing Engine.
+	
+              
+Types of inheritance  : 
+              A
+              |
+              |----->single inheritance
+              |
+              B
+              |
+              |----->multilevel inheritance 
+			  |
+			  | 
+              C
+              /\
+             /  \------> hierarichal inheritance
+            /    \
+           /      \ 
+           D      E
+           \     /
+            \   /-----> multiple inheritance
+             \ /
+              F
+              
+			  
+	-> java supports single ,multilevel and hierarical inheritance 
+      
+	  Q : why java does not support multiple inheritance or what is diamond problem? 
+      because it cause ambiguity problem for example when two classes methods are of same name so it is 
+	  difficult to identify which method is inherited so this problem is known as ambiguity problem.
+	  so by using interface we can resolve this ambiguity problem.
+	  so in interface we can call default/complete method from interface name this will resolve the 
+	  ambiguity problem.
+      call like this  - A.super.test(); // here A is a interface and test() is a default/complete method 
+      in interface  	  
+	  
+	  code  : 
+		  interface A {
+			default void test() {
+				System.out.println("Test method from Interface A");
+			}
+	      }
+
+			interface B {
+				default void test() {
+					System.out.println("Test method from Interface B");
+				}
+			}
+
+		class C implements A, B {
+			// Overriding the test method in class C to avoid ambiguity
+			@Override
+			public void test() {
+				System.out.println("Test method from Class C");
+				A.super.test();  // Explicitly calling the test method from Interface A
+				B.super.test();  // Explicitly calling the test method from Interface B
+			}
+		}
+
+		public class Main {
+			public static void main(String[] args) {
+				C obj = new C();
+				obj.test();  // Calls the overridden method in C and also calls A.super.test() and B.super.test()
+			}
+		}
+
+	  
+	  Q : if two interfaces with the same method having the same method signature but different return 
+         types can a java class implement?	  
+       ans - No it is impossible to implement because it will voilate method overloading concept.
+     	        interface InterfaceA {
+					String getData();  // Return type String
+				}
+
+				interface InterfaceB {
+					int getData();  // Return type int
+				}
+
+				class MyClass implements InterfaceA, InterfaceB {
+					// Compilation error: conflicting return types
+					public String getData() {  // Which return type to use: String or int?
+						return "Hello";
+					}
+				}
+
+       	   
+	  Q : if two interfaces with the same method having the same method signature and having same
+	     return type can a java class implement ?
+       ans - “Yes, one method implementation in the class satisfies both interface methods.”
+
+              or
+
+             “The class provides a single implementation for both interface methods because both methods have the same signature and return type.”
+	   code  : 
+		interface InterfaceA {
+			void show();  // Same method signature
+		}
+
+		interface InterfaceB {
+			void show();  // Same method signature
+		}
+
+		class MyClass implements InterfaceA, InterfaceB {
+			// Implementing the method for both interfaces
+			@Override
+			public void show() {
+				System.out.println("Method from MyClass");
+			}
+		}
+
+		public class Main {
+			public static void main(String[] args) {
+				MyClass obj = new MyClass();
+				obj.show();  // Calls the single implementation of show()
+			}
+		}
+
+Q :  so according to the above code which interface method it will implement?  
+Ans : 
+It implements **both interface methods** with the single `show()` method.
+
+Because:
+
+* Both interfaces have the **same method signature**
+
+  ```java id="m9u6o3"
+  void show();
+  ```
+* JVM/compiler treats them as the **same contract**.
+* So one implementation is enough to satisfy both `InterfaceA` and `InterfaceB`.
+
+Example:
+
+InterfaceA a = new MyClass();
+a.show();
+
+InterfaceB b = new MyClass();
+b.show();
+
+
+Both calls will execute:
+
+
+Method from MyClass
+
+
+So technically:
+
+* `show()` in `MyClass` is implementing:
+
+  * `InterfaceA.show()`
+  * `InterfaceB.show()`
+
+at the same time.
+
+
+	  
+
+Polymorphism - same name with many forms is called polymorphism 
+
+         there are two types of polymorphism 
+         1 - compile time polymorphism / method overloading
+         2 - runtime polymorphism / method overriding 
+
+    method overloading - two methods are set to be overloaded if both the method are having same name
+                         but different arguments types in the same class . No inheritance is required          
+                         to achieve method overloading.
+    Q : why method overloading also called as compile time polymorphism?
+    	which method is to be called is decided by compile time. suppose i have a method 
+        i overload that method during the overload before running the code if the method is 
+        properly overloaded than it will not show error and if the method is not properly overloaded
+        than it will show the error before running the code.		
+		
+    method overriding - whatever is there in the parent class is available to child class but if child 
+	                    class is not satisfied with the parent class methods so it can so it will
+                        override the method but will implement different logic. 
+                        Note - private ,static ,final methods cannot be overrided 	
+
+
+
+Note - inheritance vs polymorphism  
+
+inheritance 
+// Parent class
+class Vehicle {
+    void start() {
+        System.out.println("Vehicle is starting");
+    }
+}
+
+// Child class
+class Car extends Vehicle {
+    void honk() {
+        System.out.println("Car is honking");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Car myCar = new Car();
+        myCar.start();  // inherited from Vehicle
+        myCar.honk();   // specific to Car
+    }
+}
+
+explanation: 
+Car inherits start() method from Vehicle.
+
+Inheritance is about code reuse and "is-a" relationship.
+
+polymorphism this is the example of runtime poymorphism
+
+// Parent class
+class Payment {
+    void processPayment() {
+        System.out.println("Processing generic payment");
+    }
+}
+
+// Child classes
+class RazorpayPayment extends Payment {
+    @Override
+    void processPayment() {
+        System.out.println("Processing Razorpay payment");
+    }
+}
+
+class CreditCardPayment extends Payment {
+    @Override
+    void processPayment() {
+        System.out.println("Processing Credit Card payment");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+   
+		
+		Payment p;
+
+        p = new RazorpayPayment();
+        p.processPayment();  // runs RazorpayPayment's method
+
+        p = new CreditCardPayment();
+        p.processPayment();  // runs CreditCardPayment's method
+		
+		p.processPayment();
+    }
+}
+
+explanation: 
+Same reference, different objects means:
+You have one variable (Payment p) but you can assign it to different objects like RazorpayPayment or CreditCardPayment.
+
+Method executed depends on object type means:
+Even though the variable is Payment, Java looks at the actual object it’s pointing to at runtime and runs that class’s 
+method.	
+
+important : if return type is different
+if return type is different in method overriding :
+class Parent {
+    Number getValue() {
+        return 10;
+    }
+}
+
+class Child extends Parent {
+    @Override
+    Integer getValue() {  // ✅ Integer is subclass of Number, allowed
+        return 20;
+    }
+}
+
+and 
+
+class Parent {
+    Number getValue() {
+        return 10;
+    }
+}
+
+class Child extends Parent {
+    @Override
+    String getValue() {  // ❌ String is NOT a subclass of Number
+        return "Hello";
+    }
+}
+ 
+Polymorphism works with overriding only if the return type is the same or covariant (subclass).
+
+Completely different return types → polymorphism fails.
+
+if return type is different in method overloading :
+
+class Calculator {
+
+    int add(int a, int b) {
+        return a + b;
+    }
+    
+   
+    double add(double a, double b) {  // ✅ different parameters
+        return a + b;
+    }
+
+int add(double a, double b) {//❌invalid if parameters are same as above, only return type changed
+return (int)(a + b);
+} 
+    
+}
+
+
+and 
+
+class Test {
+    int add(int a, int b) { return a+b; }
+    double add(int a, int b) { return a+b; } // ❌ compile error
+}
+
+
+Important : 
+Q : if parent class method is default and child class method is public?
+package pack1;
+class Parent {
+    void show() {                // default access
+        System.out.println("Parent");
+    }
+}
+
+package pack1;
+class Child extends Parent {
+    @Override
+    public void show() {         // ✅ valid: overriding and increasing access
+        System.out.println("Child");
+    }
+}
+
+✅ Works fine — output: Child.
+
+❌ If the child is in a different package, it can’t access the parent’s default method,
+so overriding won’t be possible.
+
+Yes — if the parent class method is default and the child class method is public,
+✅ it will work, only if both classes are in the same package.
+
+Because:
+
+The parent’s default method is visible within the same package.
+
+The child can override it and increase visibility (default → public is allowed).
+
+Important
+Q : if parent class method is public and child class method is default ?  
+Ans :
+If the parent class method is public and the child class method is default,
+❌ it will not work — you’ll get a compile-time error.
+
+Reason:
+
+When overriding, you cannot reduce the visibility of a method.
+
+public → most visible
+
+default → package-level (less visible)
+
+So this is not allowed because you’re making the method less accessible in the child class.
+
+✅ Allowed: default → protected → public (increasing visibility)
+❌ Not allowed: public → protected/default/private (reducing visibility)
+
+class Parent {
+    public void show() {       // public method
+        System.out.println("Parent");
+    }
+}
+
+class Child extends Parent {
+    void show() {              // ❌ default access - compile-time error
+        System.out.println("Child");
+    }
+
+    public static void main(String[] args) {
+        Child c = new Child();
+        c.show();
+    }
+}
+
+so this must be the order - private  <  default  <  protected  <  public
+					
+    
+Abstraction  - abstraction hides the implementation details .we can achieve abstraction by using 
+               abstract class or interface 
+               for ex - ATM screen is visible to you but it hides the logic from you.
+               
+    Abstract class - abstract class is declared with abstract keyword.
+                     to make method incomplete/abstract in abstract class abstract keyword is necessary. 
+                     variable in abstract class can be private,public,final,non-static,static.
+                     you can initialize the variable directly or you can initialize through 
+					 contructor
+                     we cant create object in abstract class.
+					 we can create main method in abstract class. 
+                     we can create complete method in abstract class.
+                     Abstract class does not support multiple inheritance 
+                                abstract class A {
+									// Abstract class A
+								}
+
+								abstract class B {
+									// Abstract class B
+								}
+
+								// This is not allowed in Java
+								class C extends A, B {
+									// Compilation error
+								}
+  					 
+                     
+// initializing the variable through constructor like this             
+// you can initialize the variable directly or you can initialize through constructor
+   
+abstract class Animal {
+    String name;
+
+    // Constructor in abstract class
+    public Animal(String name) {
+        this.name = name;
+    }
+}
+
+class Dog extends Animal {
+    public Dog(String name) {
+        super(name); // Passing the value to the abstract class constructor
+    }
+
+    public void display() {
+        System.out.println("Dog's name: " + name);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog dog = new Dog("Buddy");
+        dog.display();
+    }
+}
+
+ 
+ Q : Can we create an object of an abstract class?
+     No, abstract classes are incomplete and meant to be extended.
+ Q : Why use a constructor in an abstract class?
+    To initialize common fields(like variables) or setup logic that child classes can reuse using super().4
+	
+	abstract class Vehicle {
+    String brand;
+
+    // Constructor in abstract class
+    Vehicle(String brand) {
+        this.brand = brand;
+        System.out.println("Vehicle constructor called - Brand set");
+    }
+
+    abstract void start();
+	}
+
+	class Car extends Vehicle {
+		int speed;
+
+		// Child class constructor calls parent constructor using super()
+		Car(String brand, int speed) {
+			super(brand); // calls Vehicle constructor
+			this.speed = speed;
+		}
+
+		@Override
+		void start() {
+			System.out.println(brand + " car is starting at " + speed + " km/h");
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			Car c = new Car("Tesla", 100);
+			c.start();
+		}
+	}
+
+
+ Q : if we can create constructor in abstract class than why we cant create object in abstract class ? 
+     because some of the methods of abstrct class is incomplete so java says i wont let u create object of something that
+	 is not fully ready.      
+
+	 but the abstract class can have constructor so that child class can reuse and call it during their object creation.
+	 
+	 Q : how child class can reuse abstract class constructor ? 
+	 ans : by uisng super(). when a child class object is created the abstract class constructor is called first to
+	 initialize common properties.
+	 
+	 abstrct class Animal{
+	    Animal(){
+		sout("animal constructor");
+	 }
+	 }
+	 
+	  class Dog extends Animal{
+	    Dog(){
+		super();
+		sout("DOg constructor");
+	 }
+	 }
+	 
+	 outptu - 
+	 animal constructor
+	 dog constructor
+	 
+Q : What is the main purpose of using abstract class ? 
+Ans : 
+Suppose in a payment application all payment methods should have a pay() method.
+So we create an abstract class Payment with abstract method pay().
+Child classes like CreditCardPayment and UPIPayment must implement pay() in their own way.
+Common code like paymentStarted() can be written once in abstract class and reused by all child classes. 
+
+abstract class Payment {
+
+    // abstract method
+    abstract void pay();
+
+    // normal method
+    void paymentStarted() {
+        System.out.println("Payment Started");
+    }
+}
+
+class CreditCardPayment extends Payment {
+
+    @Override
+    void pay() {
+        System.out.println("Payment through Credit Card");
+    }
+}
+
+class UPIPayment extends Payment {
+
+    @Override
+    void pay() {
+        System.out.println("Payment through UPI");
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        CreditCardPayment c = new CreditCardPayment();
+        c.paymentStarted();
+        c.pay();
+
+        UPIPayment u = new UPIPayment();
+        u.paymentStarted();
+        u.pay();
+    }
+}
+
+output : 
+Payment Started
+Payment through Credit Card
+Payment Started
+Payment through UPI
+
+Note : 
+For abstract class if there should be common logic  for all the classes who implements abstract class then we write that things in abstract class which will be common logic for all the class
+This means that we don't need to write same common logic in every class ek abstract class mai likho or baaki classes mai use kro
+
+Better version:
+
+* Abstract class is used when there is some **common logic/common behavior** for all child classes.
+* We write the common code once inside the abstract class and all child classes can reuse it.
+* This avoids writing the same code again and again in every class.
+* It helps in **code reusability** and maintaining common behavior.
+
+Your Hindi line meaning is absolutely correct:
+
+> “Ek abstract class mein common logic likho aur baki classes mein use karo.”
+> “Or jis class ko logic pasand nhi aaya jo abstrct class mai likah hua hai so vo overrride kr ke apna khud se logic change kr sakta hai so this is the benefit of using abstract class “
+
+or
+
+“We can write common logic once inside the abstract class and all child classes can use it. If any child class does not want the same implementation, it can override the method and provide its own logic. This gives both code reusability and flexibility.”
+
+	  
+	Interface - interface in java is used to achieve abstraction there can only be incomplete methods
+                in interface before java 8  but after java 8  we can have both complete and incomplete
+                methods we can make complete method through static keyword and through default keyword
+                (non static method). by default variable in interface is final and static so 
+				initialization of variable is must.Interface does not have constructor because 
+                variable is final and static.
+                In interface you can achieve multiple inheritance 
+                //like this 
+						interface X {}
+						interface Y {}
+
+						class Z implements X, Y {
+							// Multiple inheritance via interfaces
+						}
+ 				
+	
+    Q : why we use abstract class / interface in java ? 
+    Ans - 1 : to achieve abstraction
+          2 : to support multiple inheritance (only for interface)
+          3 : to achieve loose coupling - 
+                                         interface / abstract class 
+                                                   /\
+                                                  /  \
+												 /    \
+												/      \
+          		                            class B    class C
+                B and C are loosely coupled as they are not directly dependent on each other also
+                if we change in B will not reflect to C (because they are not inherited or 
+				tightly coupled)
+
+        Q : Difference between abstract class and interface ? 
+                       abstract class            |        Interface             		
+		1 . abstract class can have abstarct and |  1.interface can have only abstract method   
+		    non abstract method                  |    Since java 8 it can have non abstract method
+         		                                 |    through default and static keyoword. 
+        2 . abstract class does not support      |  2.Interface support multiple inheritance.  
+            multiple inheritance.                |
+        3.  abstract class can have final,       |  3.interface can have only final and staic variable  
+            non final,static and nonstatic       |    so thats why we dont use constructor in interface
+			variable thats why we have cosntrutor|
+			in abstract class                    |
+		4.	an abstract class can have members   |  4. members of interface are public by default. 
+            like private and protected.          |
+            members(members are method and       |
+		    variable)			                 |
+       	5.	an abstract class can extends another|  5. an interface can extends another interface
+            java class and can implement multiple|     and implement multiple interfaces in class.
+            interfaces because that class has    |
+            implemented multiple interfaces. 	 | 		
+		6. abstract class can provide the        |   6. interface cant provide the implementation of 
+			implementation of interface			 |	   abstract class.
+		   										 | 
+        7. abstract class can implement the      |   7. interface cant implement the incomplete method of   
+		   incomplete method 					 |		another interface incomplete method.
+		   
+		   
+Q : can constructor initialize final static variable in interface/abstract class/ class ? 
+    no because static variables belongs to the class and constructor is used to initialize non static variables
+	
+Q : can constructor initialize final non static variable in interface/abstract-class/class ? 
+    Yes, a constructor can initialize a final non-static variable in a class or abstract class, but only once — after that, it cannot be reassigned.
+    But an interface cannot do this because an interface doesn't have constructors and all its variables are already static and final, so they must be initialized when declared.”
+
+Note - suppose in an abstarct class there are 3 incomplete methods and u want to implement only 2 method in a class and 
+       that one method u dont want to implement in a class is this possible to implement in a class?
+       No its not possible in a class if it would be the abstract class than it will be possible
+	    
+	   No, it is not possible in a concrete class.
+       If you don’t want to implement all abstract methods, then the class must be declared as abstract.
+
+abstract class Shape {
+    abstract void draw();
+    abstract void color();
+    abstract void resize();
+}
+
+// ❌ Not allowed – concrete class but missing 1 method
+class Circle extends Shape {
+    public void draw() { System.out.println("Draw Circle"); }
+    public void color() { System.out.println("Color Circle"); }
+    // resize() not implemented – this causes compile error
+}
+
+// ✅ Allowed – class declared as abstract
+abstract class CirclePartial extends Shape {
+    public void draw() { System.out.println("Draw Circle"); }
+    public void color() { System.out.println("Color Circle"); }
+    // resize() left unimplemented
+}
+ 	   
+
+or
+
+```java id="q7m2dx"
+abstract class Payment {
+
+    abstract void pay();
+
+    abstract void refund();
+
+    abstract void checkBalance();
+}
+
+// Child class implementing only 2 methods
+abstract class CreditCardPayment extends Payment {
+
+    @Override
+    void pay() {
+        System.out.println("Payment done");
+    }
+
+    @Override
+    void refund() {
+        System.out.println("Refund done");
+    }
+
+    // checkBalance() not implemented
+}
+```
+
+Explanation:
+
+* `Payment` class has 3 abstract methods.
+* `CreditCardPayment` implemented only 2 methods.
+* Since 1 method is still incomplete, `CreditCardPayment` must also be declared as `abstract`.
+
+											
+	Q : why we use static complete method in interface ? 
+    ans  :because we dont want to share the implemetation with other classes. No class can override a static method.
+          wants to use it can directly call it using the interface name.”
+    
+    coding example :  	
+	interface Payment {
+
+    // abstract method
+    void pay(double amount);
+
+    // static complete method
+    static void showBankRules() {
+        System.out.println("Bank Rules: Minimum amount must be 1 rupee.");
+    }
+}
+
+class UpiPayment implements Payment {
+
+    @Override
+    public void pay(double amount) {
+        System.out.println("Paid " + amount + " using UPI");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        // calling static method
+        Payment.showBankRules();
+
+        // using implementation class
+        Payment payment = new UpiPayment();
+        payment.pay(500);
+    }
+}
+
+
+inheritance , polymorphism  -> these modules uses code reusability
+abstraction , encapsulation -> these modules work on security.  
+
+Q : What is the main purpose of using interface?
+Ans : same answer what we gave in abstarct class main purpose of using abstract class 
+ Interface is used to achieve abstraction in Java.
+It defines a contract/rules that implementing classes must follow.
+Classes implementing the interface must provide method implementation.
+It is mainly used for loose coupling and multiple inheritance.\\
+
+interface Payment {
+
+    void pay(); // abstract method
+}
+
+class CreditCardPayment implements Payment {
+
+    @Override
+    public void pay() {
+        System.out.println("Payment through Credit Card");
+    }
+}
+
+class UPIPayment implements Payment {
+
+    @Override
+    public void pay() {
+        System.out.println("Payment through UPI");
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Payment p;
+
+        p = new CreditCardPayment();
+        p.pay();
+
+        p = new UPIPayment();
+        p.pay();
+    }
+}
+```
+
+Output:
+
+```java id="b5r8wx"
+Payment through Credit Card
+Payment through UPI
+```
+
+
+
+Smart Programming -	
+Abstraction by smart programming  : 
+abstractions can be achived in two ways : 	
+1 : abstrct class 
+2 : interface
+
+Abstract class : 
+1 : a method without body is known as abstract method.
+2 : a method must always be declared in an abstrct class or we can say that if a class has an abstrct method it should be declared abstrct as well
+3 : if a regular class extends an abstrct class  then the class must have to implement all the abstrct methods of abstrct parennt class or it has to be declared abstract as well.
+   
+   Q : Can we create object in abstrct class? 
+   Ans : No if we create the object of abstract class then we can call the methods of abstrct class as well, but the thing
+         is there is no method body then why to call the methods through object so thats why we dont have object of 
+		 abstract class . but we can create the reference of an abstract class , but it must point to child class object .		 
+         
+		ex : abstrct class Animal{
+		     abstrct void makeSound();
+		} 
+		
+		class Dog extends Animal {
+		    void makeSound(){
+			  sop("Bark");
+			}
+			
+			main(){
+			   Animal a = new Dog();// refrence of abstract class we can create but object we will create of child class  
+			   a.makeSound();//bark			   
+			}
+		}
+		
+
+Interface : 
+Interface are similar to abstract class but having all the methods of incomplete type(abstrct type) but it was before 
+java 8 version but after java 8 we can make complete methods in interface by using default and static keyword   		
+
+But from Java 8 onwards, we can write complete methods in an interface using:
+
+->default methods in interface – can be overridden in the implementing class
+ex : suppose another class dont like the logic which is written in interface than the class which are implementing that interface can change there logic 
+or
+Interface gives common default logic, but implementing classes can change it according to their requirement by overriding the default method.
+
+->static methods in interface – belong to the interface class itself
+ex : implemented class should use this logic only interface dont want to give this logic to class to modify so what ever its present in interface in stataic method cant be override and cant be modified and the class which wants to use the can call directly to interface like this suppose 
+
+coding ex : 
+interface Payment {
+
+    static void message() {
+        System.out.println("Payment Started");
+    }
+}
+
+class CreditCardPayment implements Payment {
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Payment.message(); // calling using interface name
+    }
+}
+
+or
+
+Static methods in interface belong to the interface itself. Implementing classes cannot override or modify them. The interface provides fixed/common logic, and any class can use it directly by calling it with the interface name. above code u can see 
+
+by default methods in interface are public abstrct method 
+public abstract void show();//if u dont write public abstract by default compiler will set this automatically
+
+by default variables in interface are public static final 
+public static final int a =0; //if u dont write public static final the compiler will set this automatically.
+ 
+in java 8 they have done changes in interface 
+1 - in java 8 we can make default complete method in interface by using default keyword.
+    default void display(){
+	
+	}
+    to make method complete in interface default keyword is must.
+2 - in java 8 we can create static method in interface.
+     public static void run(){ // in interface if u dont write public access specifier compiler will make it public by 
+	                           // default , so we cant use another access specifier other than public in java8 in interface 
+	 
+	 
+	 }
+	 
+ note - but in java 9 version we can make method as private in interface .
+   interace A{
+     private void run(){
+         sop("a");
+     }
+   }
+
+here we cant create object of interface but we can create refrence of interface and its object must be the class which 
+implements the interface.
+
+    	ex : interface Animal{
+		      void makeSound();
+		} 
+		
+		class Dog implements Animal {
+		    public void makeSound(){
+			  sop("Bark");
+			}
+			
+			main(){
+			   Animal a = new Dog();// interface refrence and dog object   
+			   a.makeSound();//bark			   
+			}
+		}
+	
+
+in inerface we can do multiple inheritance multiple interface implements in one class is called multiple inheritance 
+this is how we can achieve multiple inheritance in java 
+
+like this  :
+
+class A implements B,C {
+} 
+
+
+Q : Why are interface methods public by default and why are private methods introduced in Java 9? Why can’t we use protected or default access modifiers in interfaces?
+Ans : 
+- Interface methods are public by default because interfaces define rules that implementing classes must access and implement.
+- protected, default(package-private), and private access modifiers were not allowed till Java 8 because interface methods should be accessible everywhere.
+- Private methods were introduced in Java 9 to write common internal/helper logic inside interfaces and avoid duplicate code.
+
+Q : after java 9 still default and protected access spoecifiesr still not used in interface why ? 
+Ans : 
+* Interfaces define rules/contracts for implementing classes.
+* So interface methods should be accessible everywhere.
+* `protected` and default(package-private) restrict access to limited places.
+* That’s why Java does not allow them in interfaces.
+
+
+Q : difference between static method vs private method in interface ? 
+Ans : 
+Not exactly.
+Private methods and static methods are different.
+
+### Private method
+
+* Used only for internal/helper logic inside interface.
+* Cannot be accessed outside the interface.
+* Can be called only by default/private/static methods inside same interface.
+
+### Static method
+
+* Belongs to interface itself.
+* Can be called from outside using interface name.
+* Cannot be overridden.
+
+Main difference:
+
+* `private` → hidden internal use only.
+* `static` → publicly accessible utility method.
+
+
+Q : > **Which access modifiers can we use in abstract classes and why?**
+Ans :
+* In abstract classes, we can use all access modifiers:
+
+  * `public`
+  * `protected`
+  * default(package-private)
+  * `private`
+* Because abstract class is a normal class with partial abstraction.
+* So Java allows abstract classes to control method visibility according to requirement.
+
+
+
+Q : if we create the static method in the interface which is a complete method and as we know that this static method in 
+    interface it cant be used by other classes than what is the use we know that we dont want to share the logic of this 
+	static method to other classes then who will use this method this interface will use ?
+Ans : Other classes can use it, but only by calling InterfaceName.method().
+     code : 
+	 interface Validator {
+		static boolean isValidEmail(String email) {
+			return email != null && email.contains("@");
+		}
+	}
+
+	class User {
+		String email;
+
+		User(String email) { this.email = email; }
+
+		void validate() {
+			if (Validator.isValidEmail(email)) {
+				System.out.println("Valid Email");
+			} else {
+				System.out.println("Invalid Email");
+			}
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			User u = new User("test@gmail.com");
+			u.validate();
+		}
+	}
+
+
+Q : when to use abstrct class and interface ? 
+Ans : 
+Use interface when you want to define a contract (just method names, no code).
+
+Use abstract class when you want to share common code + method structure with child classes.
+
+Interface is like a rulebook (no body, just rules).
+
+Abstract class is like a half-built machine (some code is ready, some needs to be added by child).
+
+If you need multiple inheritance, go with interface; Java allows multiple interfaces but only one abstract class.
+
+"Use interface for defining capabilities, and abstract class for code reuse and common logic among related classes.
+ 
+or 
+
+Use Interface when:
+You want to define a set of functionalities that multiple unrelated classes can follow.
+
+Example:
+In an e-commerce app, classes like CreditCardPayment, UPIPayment, and PayPalPayment can all implement a Payment interface:
+
+Use Abstract Class when:
+You want to provide common logic to all child classes that are closely related.
+
+Example:
+In the same app, you have a User abstract class with common code like login(), logout() for Customer, Admin, and Vendor.
+
+
+Simple Rule in Real Projects:
+Use interface for what should be done (rules/capabilities).
+
+Use abstract class for how it's partially done (shared base code).
+
+Q : in real world project which is recommended abstract class or interface ? 
+Ans : 
+“In modern Java, interface is usually preferred because it promotes loose coupling and flexibility. Use abstract class 
+only when code sharing or partial implementation is required
+
+
+Similarities between Abstract class & Interfaces
+
+
+1. Both can contain abstract methods.
+
+2. We cannot create an instance of abstract class & interfaces.
+
+Difference between Abstract class & Interfaces.
+
+Abstract Class                                     |    Interfaces
+                                                   |
+1. Abstract class can have instance                |1. Methods of a Java interface are implicitly abstract and cannot       have    methods that implements a default behavior.        |   implementations.
+                                                   |
+2. An abstract class may contain non-final         |2. Interface contains public, static & final variables only.
+   variables.                                      | 
+                                                   | 
+3. Methods & variables can have any access-modifier|3. Methods & variables are always public
+   i.e. public, protected, default & private       |
+                                                   |
+4. Java abstract class should be extended using    |4. Java interface should be implemented using keyword "implements"
+   keyword "extends".                              |
+                                                   |
+5. An abstract class can extend another Java class |5. An interface can extend another Java interface only 
+   and implement multiple Java interfaces.         |
+
+Interfaces
+
+1. Methods of a Java interface are implicitly abstract and cannot have implementations.
+
+2. Interface contains public, static & final variables only.
+
+3. Methods & variables are always public
+
+4. Java interface should be implemented using keyword "implements"
+
+5. An interface can extend another Java interface only
+
+
+Q : when to use abstract class and interface ?
+Use an abstract class when you want common code + mandatory methods. 
+Use an interface when you just want to define a contract (what must be done) without any shared implementation.
+
+code : Abstract Class (common code + mandatory methods)
+
+You can write some code inside it (common for all), and also declare abstract methods that subclasses must override.
+
+abstract class Payment {
+    void validateUser() {  // common code
+        System.out.println("User validated");
+    }
+    abstract void processPayment(); // mandatory for subclasses
+}
+
+class RazorpayPayment extends Payment {
+    @Override
+    void processPayment() {
+        System.out.println("Payment done via Razorpay");
+    }
+}
+
+class CreditCardPayment extends Payment {
+    @Override
+    void processPayment() {
+        System.out.println("Payment done via Credit Card");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Payment p1 = new RazorpayPayment();
+        p1.validateUser();  // common code
+        p1.processPayment(); // overridden
+
+        Payment p2 = new CreditCardPayment();
+        p2.validateUser();
+        p2.processPayment();
+    }
+}
+
+
+Here, validateUser() is common code (comes from abstract class), and processPayment() is mandatory for subclasses.
+
+code : Interface (only contract, no common code)
+
+Just declares what must be done, but no reusable code.
+
+interface Payment {
+    void processPayment(); // only contract, no code
+}
+
+class RazorpayPayment implements Payment {
+    @Override
+    public void processPayment() {
+        System.out.println("Payment done via Razorpay");
+    }
+}
+
+class CreditCardPayment implements Payment {
+    @Override
+    public void processPayment() {
+        System.out.println("Payment done via Credit Card");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Payment p1 = new RazorpayPayment();
+        p1.processPayment();
+
+        Payment p2 = new CreditCardPayment();
+        p2.processPayment();
+    }
+}
+
+interface Payment {
+    void processPayment(); // only contract, no code
+}
+
+class RazorpayPayment implements Payment {
+    @Override
+    public void processPayment() {
+        System.out.println("Payment done via Razorpay");
+    }
+}
+
+class CreditCardPayment implements Payment {
+    @Override
+    public void processPayment() {
+        System.out.println("Payment done via Credit Card");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Payment p1 = new RazorpayPayment();
+        p1.processPayment();
+
+        Payment p2 = new CreditCardPayment();
+        p2.processPayment();
+    }
+}
+
+
+Here, interface only forces classes to implement processPayment(). No common method like validateUser() is possible. 
+
+Q : where u have used abstract class and interface in your project ? 
+Abstract Class (Hotel Booking Project)
+
+"In my Hotel Booking project, I used an abstract class for payment methods. I created an abstract class Payment with 
+common logic like validateUser(), and an abstract method processPayment(). Subclasses like RazorpayPayment and 
+CreditCardPayment extended it and override processPayment()."
+
+Interface (Card Vault Project)
+
+"In my Card Vault project, I used interfaces to define contracts for services. For example, I created a CardService 
+interface with methods like generateCard() and blockCard(). Different implementations provided their own logic, ensuring 
+loose coupling and flexibility."
+
+
+Q : abstract class sometimes looks like  runtime polymorphism (override) ? 
+Ans : 
+Yes, abstract classes are closely related to **runtime polymorphism** and **method overriding**.
+
+Because:
+
+* Abstract classes usually contain abstract methods.
+* Child classes override those abstract methods with their own implementation.
+* Parent class reference can hold child class object.
+
+Example:
+
+```java id="y6t3pn"
+Payment p = new CreditCardPayment();
+p.pay();
+```
+
+Here:
+
+* `pay()` is overridden in child class.
+* Method call is decided at runtime.
+* So this is runtime polymorphism.
+
+
+Encapsulation  - making the variable private and access it through methods(getter and setter).
+                 we cant access varible directly we access through getter and setter methods.
+
+
+Q : Where u have used these 4 pillars of oops concept in your project(Hotel Management System) ? 
+Ans : 
+Here’s a **simple, human-like explanation** of where you used the 4 OOP pillars in your **Hotel Management System (Booking Project)**.
+
+---
+
+## 🟦 **1. Encapsulation – “Hiding the internal details”**
+
+In your project, you definitely created classes like:
+
+* `Hotel`
+* `Room`
+* `Booking`
+* `Customer`
+
+Inside these classes, you keep variables **private**, like:
+
+```java
+private String customerName;
+private String roomType;
+private double price;
+```
+
+And you use **getters/setters** to access them.
+
+👉 **How to say it in interview-style:**
+
+“In my hotel booking project, I used encapsulation by keeping important data like customer details and room price private inside classes. I exposed only necessary information using getters and setters. This protected data from being changed directly.”Yes, you can absolutely expose only room details and NOT expose customer details just by giving getters/setters to room fields and not giving getters/setters for customer fields.Encapsulation means I decide what data I want to expose and what data I want to hide.
+
+---
+
+Coding example : 
+// --------------------------
+// Customer (Sensitive Data)
+// --------------------------
+class Customer {
+    private String name;     // hidden
+    private String mobile;   // hidden
+
+    Customer(String name, String mobile) {
+        this.name = name;
+        this.mobile = mobile;
+    }
+
+    // ❌ No getters → customer details are NOT exposed
+}
+
+
+
+// --------------------------
+// Room (Allowed to Expose)
+// --------------------------
+class Room {
+    private String roomNumber;   // private but exposed through getter
+    private double price;        // private but exposed through getter
+
+    Room(String roomNumber, double price) {
+        this.roomNumber = roomNumber;
+        this.price = price;
+    }
+
+    // ✔ We expose room details using getters
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+}
+
+
+
+// --------------------------
+// Booking Class (Uses both)
+// --------------------------
+class Booking {
+    private Customer customer;   // hidden
+    private Room room;           // exposed
+
+    Booking(Customer customer, Room room) {
+        this.customer = customer;
+        this.room = room;
+    }
+
+    // ✔ Only expose ROOM details
+    public Room getRoom() {
+        return room;
+    }
+
+    // ❌ Do NOT expose customer
+}
+
+
+
+// --------------------------
+// Main Class (Testing Everything)
+// --------------------------
+public class Main {
+    public static void main(String[] args) {
+
+        Customer customer = new Customer("Amit", "9876543210");
+        Room room = new Room("D-101", 3000);
+
+        Booking booking = new Booking(customer, room);
+
+        // ✔ You can access room details (exposed)
+        System.out.println("Room Number: " + booking.getRoom().getRoomNumber());
+        System.out.println("Room Price: " + booking.getRoom().getPrice());
+
+        // ❌ You cannot access customer details (hidden)
+        // booking.getCustomer().getName();  // Not possible
+    }
+}
+
+
+## 🟦 **2. Inheritance – “Reusing parent class features”**
+
+You may have classes like:
+
+* `Room` → parent
+* `DeluxeRoom`, `SuiteRoom` → child classes
+
+or
+
+* `User` → parent
+* `Admin`, `GuestUser` → child
+
+👉 **Interview-style answer:**
+
+“I used inheritance to avoid repeating code. For example, all room types share common properties like room number, room type, and price. So I created a base `Room` class and extended it into `DeluxeRoom` and `SuiteRoom`. This helped me reuse code.”
+
+---
+Codign example : 
+// Parent class (Base class)
+class Room {
+    int roomNumber;
+    String roomType;
+    double price;
+
+    Room(int roomNumber, String roomType, double price) {
+        this.roomNumber = roomNumber;
+        this.roomType = roomType;
+        this.price = price;
+    }
+
+    public void showRoomDetails() {
+        System.out.println("Room Number: " + roomNumber);
+        System.out.println("Room Type: "roomType);
+        System.out.println("Base Price: " + price);
+    }
+}
+
+// Child class 1
+class DeluxeRoom extends Room {
+
+    DeluxeRoom(int roomNumber, double price) {
+        super(roomNumber, "Deluxe", price);
+    }
+}
+
+// Child class 2
+class SuiteRoom extends Room {
+
+    SuiteRoom(int roomNumber, double price) {
+        super(roomNumber, "Suite", price);
+    }
+}
+
+// Main class to run the program
+public class HotelDemo {
+    public static void main(String[] args) {
+        DeluxeRoom d = new DeluxeRoom(101, 3000);
+        SuiteRoom s = new SuiteRoom(201, 5000);
+
+        System.out.println("Deluxe Room Details:");
+        d.showRoomDetails();
+
+        System.out.println("\nSuite Room Details:");
+        s.showRoomDetails();
+    }
+}
+
+
+## 🟦 **3. Polymorphism – “Same method, different behaviour”**
+
+You might have methods like:
+
+```java
+Room room = new DeluxeRoom();
+room.calculatePrice();
+```
+
+Each room type calculates price differently.
+
+Or actions like:
+
+```java
+User user = new Admin();
+user.login();
+```
+
+👉 **Interview-style answer:**
+
+“I used polymorphism mainly for price calculation and room operations. Different room types calculate the price differently, but the method name is the same — `calculatePrice()`. So the correct method runs based on the object type.”
+
+---
+Coding example : 
+// Parent Class
+class Room {
+    double basePrice;
+
+    Room(double basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    // Method to be overridden
+    double calculatePrice() {
+        return basePrice;
+    }
+}
+
+// Child Class 1
+class DeluxeRoom extends Room {
+
+    DeluxeRoom(double basePrice) {
+        super(basePrice);
+    }
+
+    @Override
+    double calculatePrice() {
+        return basePrice + 500;   // extra charge for deluxe
+    }
+}
+
+// Child Class 2
+class SuiteRoom extends Room {
+
+    SuiteRoom(double basePrice) {
+        super(basePrice);
+    }
+
+    @Override
+    double calculatePrice() {
+        return basePrice + 1500;  // extra charge for suite
+    }
+}
+
+
+// Testing Polymorphism
+public class Main {
+    public static void main(String[] args) {
+
+        Room room1 = new DeluxeRoom(3000);  // parent reference → child object
+        Room room2 = new SuiteRoom(3000);   // parent reference → child object
+
+        System.out.println("Deluxe Room Price: " + room1.calculatePrice());
+        System.out.println("Suite Room Price: " + room2.calculatePrice());
+    }
+}
+
+
+## 🟦 **4. Abstraction – “Showing only what is needed”**
+
+You can have an interface like:
+
+```java
+interface PaymentService {
+    void pay();
+}
+```
+
+And different payment types:
+
+* `CardPayment`
+* `UPIPayment`
+
+Or an abstract class:
+
+```java
+abstract class Room {
+    abstract double calculatePrice();
+}
+```
+
+👉 **Interview-style answer:**
+
+“I used abstraction through interfaces and abstract classes. For example, I created a `PaymentService` interface. The user doesn’t care how card or UPI payment works internally; they just call `pay()`. This hides the complexity.”
+
+---
+
+Coding example : 
+// Abstraction using Interface
+interface PaymentService {
+    void pay(double amount);   // user only knows this method!
+}
+
+// Implementation 1: Card Payment
+class CardPayment implements PaymentService {
+
+    @Override
+    public void pay(double amount) {
+        System.out.println("Processing card payment of ₹" + amount);
+        // internal logic hidden from user
+        System.out.println("Card payment successful!");
+    }
+}
+
+// Implementation 2: UPI Payment
+class UpiPayment implements PaymentService {
+
+    @Override
+    public void pay(double amount) {
+        System.out.println("Processing UPI payment of ₹" + amount);
+        // internal logic hidden from user
+        System.out.println("UPI payment successful!");
+    }
+}
+
+// Main class to run
+public class PaymentDemo {
+    public static void main(String[] args) {
+
+        PaymentService payment1 = new CardPayment(); // abstraction
+        payment1.pay(1500);
+
+        System.out.println();
+
+        PaymentService payment2 = new UpiPayment();  // abstraction
+        payment2.pay(1500);
+    }
+}
+
+
+
+# ✅ **Full Natural Answer (You Can Say This to the Interviewer)**
+
+“In my hotel booking project, I used all four OOP pillars.
+I applied **encapsulation** by keeping customer and room details private inside the classes and exposing them using getters/setters.
+For **inheritance**, I created a base `Room` class and extended it into specific room types like `DeluxeRoom` and `SuiteRoom` to reuse common properties.
+For **polymorphism**, each room type had its own version of the `calculatePrice()` method, so the behaviour changed at runtime.
+And I used **abstraction** by creating interfaces like `PaymentService`, where the user calls just the `pay()` method without knowing the internal logic. So overall, the project is fully built around OOP concepts.”
+
+												 
+Q16 : what is constructor?
+Ans  - the constructor is a special type of method which does not have return type. Constructor 
+       is used to initialize an object. when we are creating object constructor will be called.
+       constructor can public ,private ,default and protected.        
+	   
+	   Q:what is constructor chaining? 
+        -> calling a constructor from another consructor using this() and super() calling statement or by
+		   creating obejct.
+       Q:this() vs super()  
+        -> this() and super() constructor calling statement in java. 
+           this() - calls another constructor within the same class.
+                    it must be first statement in the constructor.
+           super() - calls the constructor of parent class.
+                     it must be first statement in the constructor of child class.
+                     inheritance is must for using super() calling statement. 
+            super() / this() → only inside constructors we can use not in method(static and non-static) and we cant use at  any number of line in constructor it should be first statment in constructor.You can use only one of them (super() or this()), not both together. because then one of them will be second statement.  							   
+ 			
+        Q:super vs this keyword?
+          super keyword : super keyword is used to access parent class members(variable and methods).
+                          can be used in the non static methods and the constructor.
+                          super keyword can be used at any number of line in nonstatic-method or constructor.
+                          cant use super keyword in  static methods.
+						  inheritance is must for using super keyword.
+                          we cant use super keyword in main method because main method is static.						  
+          this keyword  : this keyword is used to access child class members.
+                          can be used in the non static methods and the constructor.		  
+                          this keyword can be used at any number of line in nonstatic  method or constructor.
+                          cant use this keyword in static methods.
+						  we cant use this keyword in main method because main method is static.
+Notes -	In constructor:
+
+		this() or super() (constructor calls) → must be the first line.
+
+		You can’t use both together in the same constructor.
+
+		In non-static methods:
+
+		this and super → can be used on any line, any number of times.				  
+		   Q : can we use super keyword or this keyword in static method ?
+		   Ans : no because super and this keyord refers to objects and static method belongs to class.
+		   
+		   Q : is inheritance is must between the classes for using super and this keyword?
+           ans  : yes for super keyord it is must because super is used to call the parent class method or constructor.
+      		      for this keyword it is not required it works within the same class object. 
+		   
+    Note : We can use this and super keyword and this() and super() calling statement in constructors and non 
+           static methods. we cant use this and super keyword and this() and super() calling statement in 
+           static methods.		   
+Q: types of constructor?
+Ans : 1.Default constructor
+      2.Parameterized constructor
+      3.Copy constructor	  
+        
+Q: what is copy constructor?
+ - it is used to create new object by using the copying of existing object.
+  ex : 
+   class Student {
+	private String name;
+	private int age;
+
+	// Default constructor
+	public Student() {
+		this.name = "";
+		this.age = 0;
+	}
+
+	// Parameterized constructor
+	public Student(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+
+	// Copy constructor
+	public Student(Student student) { //here we pass object 
+		this.name = student.name;    // and it gets the value 
+		this.age = student.age;
+	}
+
+	// Method to display student details
+	public void display() {
+		System.out.println("Name: " + name + ", Age: " + age);
+	}
+
+	public static void main(String[] args) {
+		Student student1 = new Student("John", 20);  // Using parameterized constructor
+		Student student2 = new Student(student1);    // Using copy constructor, here we pass student1
+
+		student1.display(); // Output: Name: John, Age: 20
+		student2.display(); // Output: Name: John, Age: 20
+	}
+}		   
+
+   		
+Q17 : what is default constructor? 
+Ans - if you are not writing any constructor then compiler will generate default constructor which will
+      be added in .class file.
+      the access modifier of the constructor is same as the class modifer means class can be public 
+	  or default so constructor can also be public or default but only in case of default constructor
+	  or else constructor can be of any access modifiers.
+
+Q : Can we use any access specifiers with constructor?
+Ans : yes we can use any access specifiers with constructor public,private, default and protected 	  
+       	  
+Q18: what is IIB and SIB?	   
+Ans - IIB :   IIB stands for instance initialization block it is used to place all instance / nonstatic
+              variable at one place(in block). so the readability of code will be improved. as many times
+              we create object same number of times iib(block) will be called.
+              order will be like this first we create object in main method from here first iib will be 
+			  called then constructor and then rest main method will be executed.
+			  in iib we can write static variable also. 
+      
+      SIB :   SIB stands for static initialization block it is used to place all the static variable 
+              at one place. it runs before the main method. it will execute when the class is loaded.
+              SIB will run before constructor ,iib and main method. before java 1.5 main method is 
+			  not required to run the static block but after java 1.5 we require main method to run
+              static block.
+				
+Q19:Difference between java util package vs java lang package? 
+ans - 
+            java util package                    |         java lang package
+_________________________________________________|__________________________________________________			
+1.java util is a utility package consist         |1.java lang package is a core that includes  
+of various classes and interfaces designed       |fundamental classes and it does not require  
+for performing advance programming task. it      |explicit import statement 
+require explicit import statement.               |ex : String class, Exception class, Object class 
+ex : ArrayList,Scanner class                     |  
+ 
+
+Q20 : What are access specifiers/modifiers.
+Ans : access specifiers/modifiers in programming language determines the visibility and accesibility of a 
+      class ,variable , method.
+	  
+	  Four types of access specifiers are there 
+
+	  1 : private - private will work within the class,it will not work outside the class and this is called as 
+                    data hiding. When you make a variable private and that variable cannot be accessed outside 
+				    the class that is termed as data hiding.
+                    So if you make variable,method and constructor private you cannot access outside the class					
+      
+	  2 : default - if you dont write any access specifiers with variable ,class and methods than that is 
+	                default.If you make the variable,method,constructor and class  default then you can access 
+					inside the same package and class only.
+
+      3 : protected - If you make a variable,method and constructor protected then you can access inside same 
+	                  package, class only and in different package through inheritance only(means subclass).
+
+      4 : public -  If you make a varibale,method,constructor and class public then you can access inside 
+	                same package,class only and in different package also.	  
+                    
+					
+
+                               private   default   protected   public
+_______________________________________________________________________            
+same class                    |  yes   |   yes  |    yes    | yes     | 
+______________________________|________|________|___________|_________|            
+same package sub class        |  no    |   yes  |    yes    | yes     | 
+______________________________|________|________|___________|_________|       
+same class non subclass       |  no    |   yes  |    yes    | yes     | 
+______________________________|________|________|___________|_________|            
+differnt package sub class    |  no    |   no   |    yes    | yes     | 
+______________________________|________|________|___________|_________|            
+differnt package non subclass |  no    |   no   |    no     | yes     |
+______________________________|________|________|___________|_________|
+
+
+Q21 : What are sub-class and non subclass?
+Ans - Subclass :  sub-class is nothing but just an inheritance and you can access the parent class variable 
+                  through child class objects/variables.
+            				  
+        for ex: 
+		code  : 
+		        class A {
+		           int x = 10; 
+				   public void test(){
+				     Syso("test");
+				   } 
+		        }
+          _________________________
+		  
+                class B extends A{
+				  
+				  psvm(){
+				    B b1 = new B();
+					Syso(b1.x);
+					b1.test();
+					
+				  }
+				   
+				}				
+				
+	NonSubclass : A NonSubclass refers to a class that does not extend or inherit from another class, but still 
+	              accesses the variables and methods of another class by creating an instance (object) of that 
+				  class.
+     
+    for ex : 
+    code - 		class A {
+		           int x = 10; 
+				   public void test(){
+				     Syso("test");
+				   } 
+		        }
+          _________________________
+		  
+                class B {
+				  
+				  psvm(){
+				    A a1 = new A();
+					Syso(a1.x);
+					a1.test();
+					
+				  }
+				   
+				}	
+          	
+     Access specifer on class  - a class cannot be private and protected it can be only pulic and default.
+	 Q: can we inherit constructor ? 
+	 Access specifer on constructor - constructors are never inherited thats why they can be accessed using 
+	                                  super().
+									  
+									  
+Q 22 : Which method is used to convert string into integer and integer into string  ?
+Ans  : String to int: Use Integer.parseInt(String) method.
+
+       String str = "123";
+       int num = Integer.parseInt(str);  // Converts string to int
+	   
+	    int to String: Use String.valueOf(int) or Integer.toString(int) methods.
+		
+   	    int num = 123;
+		String str = String.valueOf(num);  // Converts int to string
+		// OR
+		String str2 = Integer.toString(num);  // Converts int to string
+		
+
+Q 23 : What is Wrapper class ? 
+Ans :  it is a class which convert primitive datatype into non primitive data type and vice versa. we can use 
+       inbuilt methods with non-primitive datatype.
+       
+   Integer---------
+   Float          |
+   Long           |----> these are basically objects(so wrapper class converts primitive datatype into objects) 
+   Double         |----> these are wrapper classes and it is immutable(we cant change)
+   Byte           |----> these are non-primitive datatype
+   Character      |---->   
+   Boolean________|
+
+    Q : is wrapper class is non-primitive datatype ? 
+	Ans -  Yes , because with non-primitive datatype we can use in built methods.
+	
+	Q : is wrapper class immutable in nature ? 
+	Ans : yes ,  because  They are shared, used as keys, and must be thread-safe.If they could change, Java programs would break. 
+
+    Q : why we use wrapper class ? 
+    Ans - because we need wrapper class in Collection. Collection can only work with non-primitive datatype
+          (like wrapper class or string class).
+          Wrapper class and string class are basically objects.
+          		  
+	
+	Q : How to convert primitive to non-primitive -->(this is also called boxing)  ?
+	Ans - int x = 20; // primitive datatype
+          // ways to convert primitive datatype to non-primitive datatype
+		  Integer y = x ; 
+          Integer y1 = Integer.valueOf(x); 		  
+		  Integer y2 = new Integer(x);// this is deprecated since java 9 but it will work 
+		  
+	Q : How to convert non-primitive/wrapper  to primitive -->(this is also called unboxing) ? 
+	Ans -         
+	            Integer x = 20;
+				// Method 1: Using intValue() method
+				int y1 = x.intValue();
+				// Method 2: Using Autounboxing
+				int y2 = x;
+				// Printing the results
+				System.out.println("Using intValue(): " + y1);   // Output: 20
+				System.out.println("Using Autounboxing: " + y2); // Output: 20
+          		  
+Q22 : What is marker interface ? 
+Ans : Marker interface is a interface which has not any methods or fields(variable).
+      we can say it is a interface which is empty.
+	  
+	  It is used to indicate that the class which implements marker interface has some specefic task or behaviour
+	  ex : clonable interface , serializable interface
+      
+      Clonable interface does not have any method or fields(variable) but it mark the class a capable of being 
+      cloned but it is using clone method of Object class(Object.clone).
+
+      for serializable interface we use file handling method, serializable interface does not have any method
+      or variable.
+	  
+Q23 : final vs finally vs finalize ? 
+Ans : final - final is a keyword which can be use with variable, class and method .when it is used with variable
+              we cant change the variable value once the value is assigned. 
+              final int a = 10; 
+                      a =20 ;// we cant do this 
+             
+        and when final keyword is used with methods then we cant override that method . 
+        and when final keyword is used with class then we cant inherit that class.
+		
+      finally - finally is a block which is extension of try-catch block. finally block is used to keep the 
+	            necessary code. this code will be executed wheather exception occurs or not. whatever is there
+                in finally block will run for sure.
+
+      finalize - finalize is method which is available in object class used by garbage collector before 
+	             destryoing the used object.
+                 finalise() method first clean up the resource/value which is assigned to object. then garbage 
+                 collector comes into picture to destroy the object . finalize() method is used by garbage 
+                 collector only.
+                 The finalize() method was used in Java to clean up resources/value before an object is deleted 
+				 from memory. then garbage collector comes into picture to destroy the object.finalise() method 
+				 is used by garbage collector.
+
+				 or 
+
+				 finalize() does the cleanup, and after that the Garbage Collector destroys the object.
+				 here cleanup means Closing a file, Closing a database connection, Closing a network connection
+
+
+Q24 : What is Object class ?
+Ans : Object class is supermost class for all the classes available in java. Every class in java inherit from 
+      Object class.
+      
+      Methods of Object class : 
+      1 - toString() - convert object into string.
+
+      code -
+	        class Person {
+			String name;
+			int age;
+
+			Person(String name, int age) {
+				this.name = name;
+				this.age = age;
+			}
+
+			@Override
+			public String toString() {
+				return "Person{name='" + name + "', age=" + age + "}";
+			}
+		    }
+
+			public class Main {
+				public static void main(String[] args) {
+					Person p = new Person("Alice", 30);
+					System.out.println(p.toString());  // Output: Person{name='Alice', age=30}
+				}
+			}
+ 	  
+	  2 - equals() - compare two objects memory address.
+        
+        code -
+                public class Main {
+   
+				public static void main(String[] args) {
+					// Non-primitive (Wrapper class)
+					Main m1 = new Main();
+					Main m2 = new Main();
+				System.out.println(m1.equals(m2));//false(because it is comparing memory addresses of m1 and m2)
+				}
+
+
+			} 		
+        
+        string class has .equals() method also but it compares content.
+		== - > if we use in string then it compares the address.
+
+        String str1 = new String("hello");
+		String str2 = new String("hello");
+
+		System.out.println(str1.equals(str2)); // true (String's .equals() compares content)
+		System.out.println(str1 == str2);      // false (== compares memory addresses)
+		
+
+      3 - hashcode() - convert memory refrence to integer values. hashCode is used to find bucket number in 
+	                   hashmap which is used in hashing technique.
+
+      4 - clone() - create and returns a copy of object
+
+      5 - getClass() - returns the runtime class of the object.	  
+	      
+		  code  - 
+                  import java.util.*;
+
+					public class Main {
+					   
+						public static void main(String[] args) {
+							// Non-primitive (Wrapper class)
+        					Main hotel = new Main();
+		        			System.out.println(hotel.getClass());//class Main
+							System.out.println(hotel.getClass().getName());//Main
+					}
+
+
+					}		  
+					
+	  6 - wait() - will learn in multithreading
+      
+	  7 - notify() - will learn in multithreading
+
+      8 - notifyAll() - will learn in multithreading	  
+	  
+	  9 - finalize()
+	  
+Q25 : difference between map vs flatmap ? 
+Ans : map() and flatmap() both are methods of stream interface and both perform intermediate operation.
+      
+      map()                                   |                      flatmap()
+______________________________________________|___________________________________________________________________ 
+1 - one to one map occurs in map.             |  1 - one to many occurs flatmap.   
+2 - only performs mapping                     |  2 - perform mapping as well as flattening(bring all to one place)	  
+
+Q26 : What is class up casting ? 
+Ans : here we store object of child class into parent class refrence value. class up casting is only possible 
+      when inheritance is there between the classes. In upcasting, we can access only the parent class members (and overridden methods) 
+     
+	 code - 
+	    
+	     class Animal {
+			void sound() {
+				System.out.println("Animal makes a sound");
+			}
+		}
+
+		class Dog extends Animal {
+			void sound() {
+				System.out.println("Dog barks");
+			}
+		}
+
+		public class Main {
+			public static void main(String[] args) {
+				Animal obj = new Dog(); // Upcasting
+				obj.sound(); //Dog barks
+			}
+		}
+		
+     //here in this example Object class is the parent class of StringBuilder class but Object class  
+	 //cant call specefic methods of child class.
+	  Obejct o = new StringBuilder("saurav");
+	  Syso(o.length);//we cant  access child class methods
+	  
+	  ex : 
+	      package p18;
+
+			public class A {
+				 public void m() {
+					 System.out.println("A");
+				 }
+			}
+_______________________________________________________________________
+	  
+	     package p18;
+
+			public class B extends A {
+				 public void m() {
+					 System.out.println("B");
+				 }
+			}
+_______________________________________________________________________
+
+
+       package p18;
+
+		public class C extends B{
+			public void m() {
+			 System.out.println("C");
+			}
+		}
+_______________________________________________________________________
+
+package p18;
+
+public class Test extends C{
+	public void m() {
+		System.out.println("Test");
+	}
+    public static void main(String[] args) {
+		A a1 = new A();
+		a1.m();//o/p is A
+		// through parent class refrence we can call child class methods or variable 
+		// because object is made of child class. 
+		A a2 = new B();
+		a2.m();//o/p is B
+		A a3 = new C();
+		a3.m();//o/p is C
+		
+	    C c1 = new C();
+	    c1.m();//o/p is C
+	    ((B)c1).m();//o/p is C-> calling from B class refrence like this B b1 = new C();// because object is made of C
+	    ((A)(B)c1).m();//o/p is C->  A a1 = new C();// this typecasting is only possible when inheritance is there between
+		                                 //   classes 
+	    
+	    Test t1 = new Test();
+	    t1.m();//o/p is Test
+	    ((B)(C)t1).m();//o/p is Test->B a1 = new Test();
+	    ((A)(B)(C)t1).m();//o/p is Test->A a1 = new Test();		
+	}
+}
+	  
+ 	  output -  A
+				B
+				C
+				C
+				C
+				C
+				Test
+				Test
+				Test
+
+Q27 : What is method chaining? 
+Ans : In method chaining through only one object we can call more than one method in a class and it form chain 
+      like structure. 
+
+      ex :
+      code - 
+                package p19;
+
+				public class A {
+					public A m() {
+						return this;
+					}
+					public A n() {
+						return this;
+					}
+					public void test() {
+						System.out.println("saurav");
+					}
+					public static void main(String[] args) {
+					  A a1 = new A();
+					  a1.m().n().test();
+						
+					}
+				}
+  	  
+	  output - saurav
+
+Q28 : is java Fully object-oriented programming language?
+Ans : Java is not fully object-oriented because it uses primitive types (like int, char, etc.) which are not       
+      objects. However, most of its features, like classes, inheritance, and polymorphism, follow object-oriented
+	  principles.
+
+Q29 : deep copy vs shallow copy ? 
+Ans : Deep copy is a technique to copy data to new memory location.
+
+Why we use deep copy ? 
+To duplicate the data because when u are unsure about the source/address because it can be removed address can be removed 
+Uncertainty in memory location thats why we use deep copy 
+
+
+Shallow copy is a technique to refer to the data at readily available memory location 
+A shallow copy means: it copies the object, but not deeply.
+But if the object has references to other objects, then only the reference is copied, not the actual object.
+So → both original and copy will point to the same inner object.
+
+Why do we use shallow copy? 
+No need to duplicate the data
+
+
+Q30 : this is for this questions 
+
+    class A{
+	int x = 10; 
+	   test(){//this is non static method 
+	    sop("a");
+	   }
+	}
+	
+	class B extends A{
+     int x = 20; 	
+	test(){//this is non static method 
+	      sop("b");
+	   }
+	}
+	
+	class main{
+	  main(){
+	  A a1 = new B(); // always remember child class ka hi object banta hai and refrence parent class ka hi rhega  
+	  a1.test();//b
+	  sop(a1.x);//10
+	  }
+	}
+	
+	
+	or
+	
+	package interview_puzzels;
+
+	public class A {
+		int x = 10;
+		static int y = 30 ;
+		public void test(){
+			System.out.println("a");
+		}
+		public static void test1(){
+			System.out.println("A");
+		}
+	}
+	
+	package interview_puzzels;
+
+	public class B extends A{
+		int x = 20;
+		static int y = 40 ;
+		public void test(){
+			System.out.println("b");
+		}
+		public static void test1(){
+			System.out.println("B");
+		}
+	}
+
+
+    package interview_puzzels;
+
+	public class main {
+		public static void main(String[] args) {
+			A a1 = new B();
+			a1.test();b
+			System.out.println(a1.x);10
+			System.out.println(A.y);30
+			A.test1();A
+		}
+	} 
+
+   or
+   
+
+# 4. Child specific methods cannot be called directly
+
+Example:
+
+
+class Animal {
+
+    void sound() {
+    }
+}
+
+class Dog extends Animal {
+
+    void bark() {
+        System.out.println("Barking");
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Animal a = new Dog();
+
+        // a.bark(); ❌ compile time error
+    }
+}
+```
+
+Reason:
+
+* Parent reference knows only parent class members. because if there would be a bark() method in parent class we wont get any compilation error 
+or
+Parent reference knows only parent class members. So a.bark() gives compile-time error because bark() is not present in Animal class. If bark() were present in parent class, then there would be no compilation error.”
+
+	
+
+Note - Static  method and variable(static and nonstatic) are called through reference variable and they call the items of parent class and the non static methods are called based  on object(whose object is created).   
+	  
+	  
+	  or
+	  
+	  Non-static methods are called based on the object created → supports overriding.
+
+      Instance variables and static members (methods/variables) are accessed based on the reference type (class) → 
+	  no overriding, only hiding.
+
+	  or  
+
+	  ✔ Static methods → reference type
+      ✔ Static variables → reference type
+      ✔ Non-static variables → reference type
+      ✔ Non-static methods → object type (runtime polymorphism)
+
+
+
+
+Q : why we need to  create static and default method in interface? 
+Ans :
+
+
+
+
+# ✅ **Static vs Default Method (Simple Explanation)**
+
+### ✔ **Default Method → shared logic for all classes** no need to do the seperate implementation in all the classes 
+so thats why we write the code in interface 
+
+* Inherited by child classes
+* Can be overridden
+* Called using **object**
+if we want we can override it and change the logic
+
+Example:
+
+```java
+p.sendNotification();
+```
+
+This is meant for **common logic** that all classes can use.
+
+---
+
+### ✔ **Static Method → helper/utility method**
+
+* **NOT inherited** by child classes
+* **Cannot be overridden**
+* Called using **interface name only**
+we cant override and cannot change the logic 
+Example:
+
+```java
+PaymentService.validate();
+```
+
+This is meant for **utility logic** (like validation, formatting), not for object behavior.
+
+---
+
+# ⭐ **Simple Analogy (Very Easy)**
+
+### 🟦 Default method → “common rule for all classes”
+
+Like: All rooms have a *cleaning fee*, so it's common for everyone.
+
+### 🟧 Static method → “separate helper function”
+
+Like: A *calculator* kept outside that everyone can use, but it doesn’t belong to any one room.
+
+---
+
+# ⭐ Final One-Line Difference
+
+**Default = inherited, used by object
+Static = not inherited, used by interface name** “A tool kept inside the interface; not inherited.”
+
+---
+

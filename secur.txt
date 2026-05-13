@@ -1,0 +1,57 @@
+step 1 : first we add dependencies in pom.xml file
+step 2 : create application.properties file and we add some some configurations
+step 3 : and here we create few of the entity classes like UserEntity, LoginRequest , TokenResponse 
+step 4 : and here we create a repo interface  UserRepository.java
+step 5 : here we create AuthController.java class in this class here if user comes for first time he will register so he will go to register url and so for that 
+         he will give username and password and it goes to AuthService.java class which will talk to userrepository interface if user alredy present so we will throw   
+         exception user already exist and if user does not there in the db then we will save that user along with the password in db. by this user is saved in db 
+         with the passwword in encrypted format so it takes the password from the user and we use use PasswordEncoder to encrpth the password and store the encrpted 
+         passwrod in db so we use bean of PasswordEncoder interface o that we create a seperate class appconfig.java class which is annotated with @Configuration 
+         on class level and here we create bean of PasswordEncoder which help us to encrypt the password. then will save the user in db with encrypted password. 
+         At the time of registration → BCrypt is used to hash the password and store it
+         At the time of login → BCrypt is used again to hash the raw password and compare it
+step 6 : and now user wants to check wether i have register successfully or not he will do login url present in authcontroller it will take id and password and
+         we will go to auth service in this we have injected the bean of AuthenticationManager(interface) and we will pass our username and password in 
+         AuthenticationManager and tell AuthenticationManager to check wether the password is correct or not so it will encrypt the password and matches with the db 
+         wheater this user is having password correct or not with the help of UserDetailsService interface (it checks internally we dont need to create seperatly)
+         it will manage by its own. if password matches then it will go to JwtService class and ask for generate access token and refresh token and it return
+         us access token and reresh token. 
+step 7 : and now suppose user wants to order something suppsoe he wnt to order shoes so he will call url of order and  pass the id /order/id this url is presnt in 
+         OrderController.java class and along with this request we pass the access token as well in postman (Authorization tab → select → Bearer Token) 
+         so to call the api we will pass the access token and to again generate the access token we will use refresh token.
+         so here we pass the access token and like this  
+         when u hit in postman GET /orders/5 Authorization: Bearer <token> 
+         Spring Security intercepts the request BEFORE controller. Your JwtAuthFilter runs before OrderController. 
+         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class) this line is configured inside securityconfig.java file.
+         This line is configured inside SecurityConfig.java and ensures that every request first passes through your JwtAuthFilter before reaching any                  
+         controller.
+step 8 : in jwtauthfilter class we inject the bean of CustomUserDetailsService class and jwtservice class as well 
+         but first we we remove the bearer word from token in jwtauthfilter class and gives token to jwtservice class means we will inject the bean of 
+         jwtservice in jwtauthfilter and call the method extrctusername which is present in jwtservice and which extract username and gives us the username to us 
+         and it come again in jwtauthfilter and whenit gives us the username we will call CustomUserDetailsService which is injected in our jwtauthfiler class 
+         and we will call method of CustomUserDetailsService  which is loaduserbyusername and this method will check 
+         Does this username exist in DB?
+         If yes → return the UserDetails object
+         If no → throw error    
+         It returns a UserDetails object containing:
+	✔ username
+	✔ encrypted password (not checked again)
+	✔ roles/authorities
+	✔ account status (enabled/disabled/locked)
+
+         What it does NOT do
+	loadUserByUsername() does NOT:
+
+	❌ validate password
+	❌ compare password
+	❌ check JWT token
+	❌ generate token
+
+        and then it call the method of jwtservice which is istokenvalid from jwtauthservice and we pass the token in it and jwtservcie method check weather token is is still valid 
+        or not is token valid  
+         
+
+        and after this now it will process our order api which goes to order controller and it calls order service and order services use orderrepos interface to connect to db and do the 
+        crud operations (as needed)
+
+  

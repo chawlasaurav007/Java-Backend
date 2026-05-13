@@ -1,0 +1,1457 @@
+Q : what is collection ? 
+ans : A Collection in Java stores a group of objects.
+
+Q1 : Differnce between Collection and Collections ?
+Ans  : 
+        Collection                               |                 Collections
+_________________________________________________|__________________________________________________
+1 . It is a root interface in Java that defines  |1.It is a utility class in Java that provides 
+a group of objects (like lists, sets, or queues).|static methods to operate or manipulate
+                                                 | collection (like sorting, searching, etc.).
+ex : List<String> l = new ArrayList<>();		 |ex : Collections.sort(list);  
+     (l is a type of Collection of object)       |(sorts the list using a static method from the
+                                                 | Collections class)
+                                                 |
+   ex : suppose i have a list of 4 objects
+        List<Integer> l = Arrays.asList(4,1,3,2);
+                      |		
+                      ↓
+                so Here l is collection (which contains group of objects).
+         	
+            Collections.sort(l); // Collections has several methods for collection.			
+ 
+Q2 : why do we need Collection ? 
+Ans : Array is collection of fixed number of homogenous data elements(all data are of one type). 
+      The main advantage of array is we can represent multiple value with a single variable so 
+	  that reusabilty of the code will be improved.
+
+      or  
+
+	  Collection in programming help us store and manage groups of data efficiently, like lists, sets, or maps.
+	  They make it easier to organize, access, and manipulate multiple data items without creating separate 
+	  variables for each one.
+	  
+Q3 : Limitations of array? 
+Ans  : Array is fix in size ,once we create one array with some size there is no chance of 
+       increasing and decreasing its size. Array can hold Homogeneous data element.
+       redimate methods support is not available for every requirment like cant add value in array.
+	   
+	   array is not implemented based on some data structure while Collection is based on some 
+	   data structure.
+	   means 
+	   array is fixed in size so no data structure support for array 
+       but ArrayList is growable in size so data structure supports Collection.
+
+       
+       Student s[] = new Student[1000];
+       s[0] = new Student(); // this is correct 
+       s[1] = new Customer(); // it will not take customer value because we have created student 
+	                          // object so it is homogenous in nature.     	   
+       
+      we resolve this by using Object class array or we can solve this by arrayList which is 
+	  heterogeneous(different types).
+
+      Creating array using Object class: 
+      
+            Object o[] = new Object[1000];
+         	o[0] = new Student();
+            o[1] = new Customer();
+			
+		// like this  
+					class Student {
+						String name = "John";
+					}
+
+					class Customer {
+						String name = "Alice";
+					}
+
+					public class Main {
+						public static void main(String[] args) {
+							Object o[] = new Object[1000];
+							o[0] = new Student();  // Assigning a Student object to the array
+							o[1] = new Customer(); // Assigning a Customer object to the array
+
+							// Accessing the objects and printing their names
+							Student student = (Student) o[0];
+							Customer customer = (Customer) o[1];
+
+							System.out.println("Student name: " + student.name);
+							System.out.println("Customer name: " + customer.name);
+						}
+					}
+		
+Q4 : difference between array vs Collection/ArrayList ? 
+Ans :  array                                         |                  Collection/ArrayList
+_____________________________________________________|_________________________________________________
+1.fix in size                                        |1.growable in size or we can say variable in size     
+2.homogenous                                         |2.homogenous and heterogeneous both
+3.does not have data structure support               |3.have data structure support(It already has ready-made methods like add(), remove(), contains(), size() to 
+(It doesn’t have features like add, remove,          |  manage data easily.)
+search,sort, etc. — you have to write that logic     |
+yourself.). Means array does not have inbuilt method |       
+4.with respect to performance array is better        |4.with respect to performance it is slower than   
+  than collection.                                   |  array because arraylist copies data(will see 
+                                                     |   internal working of arrayList bit later)
+                                                     |
+Q5: Differnce between Array vs Arrays?  
+Ans : array: A built-in data structure in Java that holds fixed-size elements of the same type 
+     (e.g., int[] arr = new int[5];).
+      Arrays: A utility class in the java.util package that provides static methods to manipulate 
+	  array.
+	  (e.g., Arrays.sort(arr);).
+
+	
+Q6: What is Collection framework? 
+Ans  : it defines interfaces and classes which can be used to represent a group of object in single 
+       entity(class or interface).
+       so if we want to represent group of object as a single entity we should go for Collection.
+       entity are ArrayList,LinkedList,..... and many more.
+
+       code : 
+       package p4;
+
+		import java.util.ArrayList;
+
+		class Student {
+			String name;
+
+			Student(String name) {
+				this.name = name;
+			}
+
+			@Override
+			public String toString() {// it is a method of Object Class toString returns a 
+			                          // readable description of the Student object.
+				return  name ;
+			}
+			
+			
+		}
+
+		public class Main {
+			public static void main(String[] args) {
+				ArrayList<Object> list = new ArrayList<>();// so here list stores the collection of 
+				                                           // objects
+
+				// Adding different types of objects
+				list.add(42); // Adding an Integer
+				list.add(new Student("Alice")); // Adding a Student object
+				list.add("saurav");
+				// Displaying elements
+				for (Object obj : list) {
+					System.out.println(obj);
+				}
+			}
+		}
+	   
+	   output : 42
+				Alice
+				saurav
+				
+				or 
+				
+		code  : 
+              
+            import java.util.*;
+
+			public class Main {
+				public static void main(String[] args) {
+					// Create a list that can store multiple types of data
+					List<Object> list = new ArrayList<>();
+					
+					// Add different types of objects
+					list.add(42);          // Integer
+					list.add("Hello");     // String
+					list.add(3.14);        // Double
+					
+					// Access and print elements
+					for (Object obj : list) {
+						System.out.println(obj);
+					}
+				}
+			}
+			
+        output : 42
+				 Hello
+				 3.14
+			
+
+Q 7 : Collection frame work hierarchy ? 
+ans : 
+                        Iterable(Interface) - iterable is the root interface for all the collection 
+                            |                 classes
+                            |
+                            |
+                            |
+                         Collection(Interface) - Collection extends Iterable interface 
+                             |
+                             |
+ ____________________________|______________________________________
+ |                           |                                      |
+ |                           |                                      |
+ |                           |                                      |
+List(Interface)         Queue(Interface)---------                 Set(Interface)---  
+ |                       |(fifo)                |                   |             |-Hashset(class)
+ |                       |                      |                   |             |    
+ |-ArrayList(class)    Deque(interface)         |                   |             |-LinkedHashSet
+ |                       |                      |                   |                 (class) 
+ |-LinkedList(class)-----|                      |                SortedSet(Interface)
+ |                       |                 PriorityQueue            |
+ |-Vector(class)         |                   (class)                |
+     |               ArrayDeque(class)                              |
+     |                                                            TreeSet(class)  
+     |
+   stack(class)-lifo  
+
+	           
+explanation  :
+-Iterable interface is a base root interface of all Collection classes
+-Collection Interface extends Iterable interface. so it has methods of Iterable Interface 
+-Collection interface having 3 interfaces List, Queue , Set
+-List haivng implementation of classes like ArrayList,LinkedList,Vector-->Stack(extends vector)   
+-Queue having implementation classes like PriorityQueue ,ArrayDeque
+-Set having implemetation classes like Hashset,LinkedHashSet,TreeSet.
+
+
+Q 8 : What is List Interface ?
+Ans - 1 : List stores duplicate element.
+      2 : It can have multiple null values.
+      3	: It maintains insertion order.
+      4 : List implements classes like ArrayList,LinkedList,Vector
+          like this  :
+          List<Integer> l = new ArrayList<>();
+          List<Integer> l = new LinkedList<>(); 
+          List<Integer> l = new Vector<>(); 
+
+         and we can write like this also 
+		  ArrayList<Integer> l = new ArrayList<>();		 
+		  l.add(1);
+		  l.add(2);
+		  l.add(3);
+         		or  
+	     List<Integer> l = Arrays.asList(1,2,3,4,5);
+		        or
+	     List<Integer> l = List.of(1, 2, 3, 4, 5);
+         
+Q9 : What is ArrayList ?
+Ans : ArrayList is growable in size. ArrayList allows random access because they work on index.
+         List<Integer> l = List.of(1, 2, 3, 4, 5);
+          l.get[2]; //  3 	  
+		   
+Q10 : What are generics ? 
+Ans  : generic allow you to have only one type of object in collection.
+       
+         List<Integer> l = new ArrayList<>(); // now this list will take only Integer value
+		 but,
+         
+		 as we know ArrayList is heterogeneous so we can take multiple types of values
+         by using ? or writing Object 		 
+		 so  by using this it can take all the values like string,char,integer,float
+         ? - List<?> l = new ArrayList<?>();		 
+		 Object - List<Object> l = new ArrayList<Object>();
+
+
+Q11 :How many ways are there to Iterate ArrayList? 
+Ans : so there are 4 ways to iterate arrayList : 
+    1 : Iterator - it can traverse elements in forward direction only.
+      	ArrayList<Integer> l = new ArrayList<>();		 
+	     l.add(1);
+         l.add(2);
+         l.add(3);
+        Iterator itr =  l.iterator();
+        while(itr.hasNext()){
+		  Syso(itr.next());
+		}
+		
+	2 : forEach loop - 	
+ 		ArrayList<Integer> l = new ArrayList<>();		 
+	     l.add(1);
+         l.add(2);
+         l.add(3);
+		 
+		 for(Integer x: l){// if generic of List or ArrayList is Integer so Integer will come 
+		   Syso(x);
+		 }
+		 
+	3: 	for loop - you will have size and get method 
+        
+	     ArrayList<Integer> l = new ArrayList<>();		 
+	     l.add(1);
+         l.add(2);
+         l.add(3);
+	     
+		 for(int i=0;i<l.size();i++){
+		    Syso(l.get(i));
+		 }
+		 
+    4: forEach By using lambdas expression : 
+         ArrayList<Integer> l = new ArrayList<>();		 
+	     l.add(1);
+         l.add(2);
+         l.add(3);
+	     
+         l.forEach(x->syso(x));	
+
+
+    5 : 
+    ListIterator is a special type of iterator for lists in Java that lets you traverse in both directions.
+
+	Key points (short & simple):
+
+	Can move forward (next()) and backward (previous()).
+
+	Can add, remove, or update elements while iterating.
+
+	Works only with List (ArrayList, LinkedList, etc.), not with general Set or Map.	
+
+    differecen between 
+
+    | Feature                   | `Iterator`                     | `ListIterator`                                          |
+	| ------------------------- | ------------------------------ | ------------------------------------------------------- |
+	| **Direction**             | Forward only (`next()`)        | Forward (`next()`) & backward (`previous()`)            |
+	| **Supported collections** | Any Collection (`List`, `Set`) | Only `List` (`ArrayList`, `LinkedList`)                 |
+	| **Modification**          | Can `remove()` element         | Can `add()`, `remove()`, `set()` (update element)       |
+	| **Index info**            | No                             | Yes, can get index with `nextIndex()`/`previousIndex()` |
+    
+
+    
+	
+  code : 
+     Collection of user defined object using ArrayList by using Arrays.asList()
+	 Arrays.asList() - Arrays.asList() is a utility method in Java that converts an array into a List.This allows
+	 you to work with 
+	 the array as a List, enabling the use of List-specific methods. 
+     package p5;
+
+		import java.util.Arrays;
+		import java.util.List;
+        
+		public class Student {
+			int id; 
+			String name; 
+			String email;
+			
+			public Student(int id, String name, String email) {
+				this.id = id;
+				this.name = name;
+				this.email = email;
+			}
+
+			public int getId() {
+				return id;
+			}
+
+			public void setId(int id) {
+				this.id = id;
+			}
+
+			public String getName() {
+				return name;
+			}
+
+			public void setName(String name) {
+				this.name = name;
+			}
+
+			public String getEmail() {
+				return email;
+			}
+
+			public void setEmail(String email) {
+				this.email = email;
+			}
+
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				List<Student> l = Arrays.asList(new Student(1,"saurav","saurav@gmail.com"),
+												new Student(2,"das","das@gmail.com"),
+												new Student(1,"ashish","ashish@gmail.com"));
+				for(Student x : l) {
+					System.out.println(x.getId()+" "+x.getName()+" "+x.getEmail());
+				}
+			}
+		}	 
+		
+	code : by using l.add() method 
+    package p5;
+
+	import java.util.ArrayList;
+	import java.util.Arrays;
+	import java.util.List;
+
+	public class Student {
+		int id; 
+		String name; 
+		String email;
+		
+		public Student(int id, String name, String email) {
+			this.id = id;
+			this.name = name;
+			this.email = email;
+		}
+
+		public int getId() {
+			return id;
+		}
+
+		public void setId(int id) {
+			this.id = id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public static void main(String[] args) {
+			// TODO Auto-generated method stub
+			List<Student> l = new ArrayList<Student>();
+			l.add(new Student (1,"saurav","saurav@gmail.com"));
+			l.add(new Student (2,"ashish","ashish@gmail.com"));
+			l.add(new Student (3,"das","das@gmail.com"));
+			
+			for(Student x : l) {
+				System.out.println(x.getId()+" "+x.getName()+" "+x.getEmail());
+			}
+		}
+	}
+	
+	code: taking input from the user 
+        package p5;
+
+		import java.util.ArrayList;
+		import java.util.Arrays;
+		import java.util.List;
+		import java.util.Scanner;
+
+		public class Student {
+			int id;
+			String name;
+			String email;
+
+			public Student(int id, String name, String email) {
+				this.id = id;
+				this.name = name;
+				this.email = email;
+			}
+
+			public int getId() {
+				return id;
+			}
+
+			public void setId(int id) {
+				this.id = id;
+			}
+
+			public String getName() {
+				return name;
+			}
+
+			public void setName(String name) {
+				this.name = name;
+			}
+
+			public String getEmail() {
+				return email;
+			}
+
+			public void setEmail(String email) {
+				this.email = email;
+			}
+
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				List<Student> l = new ArrayList<Student>();
+
+				Scanner s = new Scanner(System.in);
+				
+
+				for (int i = 0; i < 3; i++) {
+					int x = s.nextInt();
+					String y = s.next();
+					String z = s.next();
+					l.add(new Student(x, y, z));
+				}
+				for (Student g : l) {
+					System.out.println(g.getId() + " " + g.getName() + " " + g.getEmail());
+
+				}
+
+				s.close();
+			}
+		}
+  	
+	 List<Student> l = new ArrayList<Student>(10);
+	                                           |
+											   ↓
+											  here 10 is not the size it is the capacity
+											  upto 10 elements we can fill
+
+        ArrayList<Integer> l = new ArrayList<Integer>(10);//it means that this arraylist has a capacity to store 10 elements
+        System.out.println(l.size());//0										  
+
+Q12 : Internal working of ArrayList?
+Ans : when ArrayList overrides its capacity then it will create new object and the size will be 
+      increased by 50% and it copies all the value to new list. but here refrence of list will be 
+      same because the changes will be happen in that container only and the older list will go 
+	  into garbage collection. and now it will point to new list.which is 50% greater than older 
+	  list.
+ 	  
+
+Q13 : What is LinkedList?
+Ans : LinkedList class uses doubly LinkedList to store the elements it provide a LinkedList	data
+      structure.
+
+    1 : java LinkedList class can contain dupilcate elements.
+    2 : Java LinkedList class maintains insertion order
+		Elements are stored and retrieved in the same order in which they were added.
+		If you insert elements in a specific sequence (e.g., 1, 2, 3), 
+		they will be retrieved in that same sequence (1, 2, 3) when you iterate over the list.
+		code : 
+		package p5;
+		import java.util.LinkedList;
+
+		public class B {
+
+				public static void main(String[] args) {
+					// Create a LinkedList of integers
+					LinkedList<Integer> list = new LinkedList<>();
+
+					// Add elements to the LinkedList
+					list.add(10);
+					list.add(20);
+					list.add(30);
+
+					// Print the elements in the LinkedList
+					System.out.println("Elements in the LinkedList: ");
+					for (Integer number : list) {
+						System.out.println(number);
+					}
+				}
+			}
+			
+			output :Elements in the LinkedList: 
+					10
+					20
+					30 
+
+    3 : java LinkedList class is non-synchronised(not thread safe)
+    4 : java LinkedList class manipulation is fast because no shifting needs to occur.
+	    LinkedList: Each element is stored in a node, which is linked to the next and previous 
+		nodes. When you add or remove an element, you just update the links (pointers) between
+		the nodes.
+        ArrayList: Adding or removing an element in the middle requires shifting all subsequent 
+		elements to maintain order. 
+    5 : java LinkedList class can be used as a list , stack, queue.(means LinkedList can use 
+	     stack ,queue, List methods). 
+         example 1 : using List methods
+		                LinkedList<String> list = new LinkedList<>();
+						list.add("Apple");
+						list.add("Banana");
+						System.out.println(list.get(1)); // Output: Banana
+    
+	    example 2 : using Stack methods
+		                LinkedList<String> stack = new LinkedList<>();
+						stack.push("Apple");
+						stack.push("Banana");
+						System.out.println(stack.pop()); // Output: Banana
+
+      
+        example 3 : using Queue methods
+                    LinkedList<String> queue = new LinkedList<>();
+					queue.offer("Apple");
+					queue.offer("Banana");
+					System.out.println(queue.poll()); // Output: Apple
+		
+		
+		you can use generics also means can store any type of data like int ,char ,string,float 
+        in LinkedList		
+        		
+		List<?> l = new LinkedList<?>();
+		l.add(10);
+		l.add("saurav");
+		
+Q14 : Internal working of LinkedList?		
+Ans : In LinkedList each element stored in a node and node consist of two parts 
+       1 - data
+	   2 - address of next node 
+
+    1st node in LinkedList called head node and last node stores null refrence value.  	   
+
+
+Q15 : Diffenece between ArrayList vs LinkedList ? 
+Ans : 
+
+           ArrayList                               |              LinkedList
+___________________________________________________|________________________________________________
+1 : ArrayList uses Dynamic array to store elemenst.|1 : LinkedList internally uses doubly linked  
+(A dynamic array is an array that can grow or      |    list to store element. 
+shrink in size during runtime.) for shrink the     |
+we use l.remove(1) and for grow we use l.add()     | 
+2 : manipulation in ArrayList is slow because      |2 : It uses doublyLinkedList so no shifting is     
+    it internally uses array. If any element       |    required in memory and they are not  
+	removed from array all the elements are shifted|    continuous in memory.
+	in memory because they are continuous.         |
+3 : Uses index-based traversal.	                   |3 : Uses node-based traversal
+4 : ArrayList better for storing and accessing     |4 : LinkedList better for manipulating 
+    (reading and retrival of data)                 |    (insert , delete).
+5 : Fast for accessing elements (O(1)) through     |5 : Slower for accessing elements (O(n)).
+    particular index.                              |    to access element in LinkedList 
+                                                   |    need to traverse from head node to 
+												   |    paricular node. 
+	                                               |
+6 : methods of arraylist is non-synchronised. 	   |6 : methods of LinkedListlist is 
+                                                   |    non-synchronised(just like ArrayList).										   
+                                                   |
+Q16 : What is vector ? 
+Ans : Vector is just similar like ArrayList. But the methods of Vector are synchronised.
+ 
+												   
+Syntax : Vector <String> v = new Vector<String>();
+         v.add("ashish");
+         v.add("saurav");
+         for(String x : v){
+		   Syso(x);
+		 }
+
+Q17 : What is Stack? 
+Ans : Stack extends Vector class .It Implements LIFO data-structure. Stack contains all the methods 
+      of vector class and it provide methods like push(),pop(),peek()(retrive top element without
+	  removing it). Stack allows null value and duplicate value also.
+      
+Syntax : Stack<String> s = new Stack<String>();
+         s.push("saurav");
+         s.push("aman");
+         s.push("ashish");
+		 
+		 s.pop();//removes ashish
+		 
+		 Syso(s.peek());//Output-  aman//peek() - give top element of the stack it will not remove
+		 
+		 Syso(s);//output - [saurav ,aman]
+         		 
+Q18 : What is Queue?
+Ans : Queue follows FIFO data-structure. Queue has implementation like PriorityQueue and ArrayDeque
+      Queue does not allow null value. Queue store duplicate value.
+
+    Syntax : Queue<String> q1 = new PriorityQueue<String>();
+             Queue<String> q1 = new ArrayDeque<String>();
+
+Q19 : What is Set? 
+Ans : Set is an interface which does not maintain insertion order. Set does not store duplicate 
+      value only unique value it stores. it allows only one null value.set does not store in key-value pair.
+
+Q20 : what is hashset? 
+Ans  : HashSet is an implementation class of set interface. hashset does not maintain insertion 
+       order. Hashset does not store duplicate value. it contains only one null value. methods of
+	   HashSet is non synchronized. HashSet is best for search operation. HashSet will give 
+	   random output.
+       
+	   code  : 
+		        Set<String> s = new HashSet<>();
+
+		        s.add("one");
+		        s.add("two");
+		        s.add("three");
+		        s.add("four");
+		        s.add("five");
+		        s.add(null);
+		        s.add(null);
+		        s.add("one");    
+		   
+		   
+		        for (String x : s) {
+		            System.out.println(x); 
+		        }
+              
+            output :null
+					four
+					one
+					two
+					three
+					five			  
+        // see here it gives random output and no duplication in output
+		
+    Q : internal working of hashset?
+    ans : 1 : HashSet relies on a HashMap to store elements, where the elements are stored as keys, and a dummy 
+	          value (like PRESENT) is used as the value.	
+		  2 : When adding an element, HashSet uses the element's hashCode() to find the appropriate bucket.
+				-> If the bucket already has elements (collision), equals() checks for duplicates. 
+		  3 : so overall when you write s.add(10); it internally calls hashmap map.put() method which return 
+              answer in boolean if value comes for first time than add the value (true) and if the value comes
+              second time same than it will return false.
+		  4 : When a collision happens in a HashSet, internally in the HashMap, a LinkedList is formed to store multiple 
+		      elements in the same bucket.	  
+            set.add(10);// it internally calls hashmap method map.put 
+			
+			public boolean add(E e){// here e is value like 10
+			    return map.put(e,present)==null;
+			}
+             
+        or 
+
+HashSet internally uses a HashMap.
+Whenever we add an element, HashSet calculates its hashcode and finds a bucket.
+Inside that bucket, it checks with equals() to make sure the element is not already present.
+If it’s a duplicate, it is not added.
+If it’s new, HashSet stores it as a key in the internal HashMap with a dummy value.
+This is why HashSet is fast and does not allow duplicates.”
+Yes, HashSet forms a LinkedList inside the same bucket when two elements get the same bucket number using hashCode(). Because internally HashSet uses a HashMap, and HashMap stores collided elements in a LinkedList.”
+
+
+        or
+
+        HashSet uses HashMap internally.
+		It puts elements as keys in buckets using hashcode.
+		It checks duplicates using equals().
+		That’s why HashSet doesn’t allow duplicate values and is very fast.
+		equals() checks if the item is already inside.
+        If yes → skip.
+        If no → add.”
+
+
+Q21 : What is LinkedHashSet?
+Ans : It maintains insertion order. It does not contain duplicate values. It contains only one null
+      value.LinkedHashSet methods are non- synchronised.
+      
+    code : 	   Set<String> s = new LinkedHashSet<String>();
+
+		        s.add("one");
+		        s.add("two");
+		        s.add("three");
+		        s.add("four");
+		        s.add("five");
+		        s.add(null);
+		        s.add(null);
+		        s.add("six");
+		        s.add("one");    
+		        
+		        for (String x : s) {
+		            System.out.println(x);  
+		        }
+		
+        // in which order u gave input in that order output comes no duplication in output.		
+		output :one     
+				two
+				three
+				four
+				five
+				null
+				six	
+				
+Q22 : What is TreeSet?
+Ans : It is similar like Hashset and LinkedHashSet but it stores the data in ascending order.
+      It maintains ascending order. Methods of TreeSet are non-synchronised. TreeSet does not 
+	  contain null value if u write it will give null pointer exception. 
+	  
+	  
+	  code : Set<String> s = new TreeSet<String>();
+
+		        s.add("one");
+		        s.add("two");
+		        s.add("three");
+		        s.add("four");
+		        s.add("five");
+		        
+		        s.add("six");
+		        s.add("one");    
+		 
+		        for (String x : s) {
+		            System.out.println(x);  
+		        }
+				// give output in ascending order
+				output :five
+						four
+						one
+						six
+						three
+						two 
+
+Q23 : What is Map hierarchy and what is map? 
+Ans  :          
+                Map(interface)
+                     |
+                     |
+                     |
+         ____________|_____________
+         |                        |
+         |                        |
+         |                        |
+         |                        |
+         |                        |
+    SortedMap(interface)       HashMap(class)
+         |                        |         
+         |                        |         
+         |                        |         
+         |                        |         
+      TreeMap(class)           LinkedHashMap(class)         
+         
+
+
+
+   Map : Map is an interface which stores element as a key-value pair . Each key and value pair is 
+   known as Entry. Map contains unique keys Map does not allow duplicate keys. But map can 
+   have duplicate values. HashMap ,LinkedHashmap and TreeMap implements Map interface. 
+
+   HashMap : HashMap allows one null key and many null values. can give answer in any order.
+             HashMap is non-synchronized.   
+             
+			 for all generics : we can give mix values
+			 HashMap<?,?> map = new HashMap<>();
+			 HashMap<Object,Object> map = new HashMap<>();
+             we can give mix values like this
+			 map.put(1.2,"a");
+			 map.put("saurav",1);
+						
+   	   code - import java.util.HashMap;
+
+				public class Main {
+					public static void main(String[] args) {
+						HashMap<String, String> map = new HashMap<>();
+						
+						map.put(null, "value1");   // Null key allowed
+						map.put("key1", null);     // Null value allowed
+						map.put("key2", null);     // Another null value allowed
+
+						System.out.println(map);   // Output: {null=value1, key1=null, key2=null}
+					}
+				}
+
+
+    code - map does not maintain insertion order.it can give output in any order  
+			import java.util.HashMap;
+			import java.util.Map;
+
+			public class Main {
+				public static void main(String[] args) {
+					Map<String, Integer> map = new HashMap<>();
+					
+					map.put("one", 1);
+					map.put("two", 2);
+					map.put("three", 3);
+					map.put("four", 4);
+					
+					// Iterating over the map
+					for (Map.Entry<String, Integer> entry : map.entrySet()) {
+						System.out.println(entry.getKey() + ": " + entry.getValue());
+					}
+					//or we can iterate like this also
+					  for(Map.Entry m : map.entrySet()){  
+					   System.out.println(m.getKey()+": "+m.getValue());  
+					  }
+				}
+			}
+
+	    output :four: 4
+				one: 1
+				three: 3
+				two: 2
+				
+		Map.Entry : it stores in key-value pair because HashMap does not iterate so we iterate 
+		through Entry Class.
+   		
+		map.entrySet() : return set view of the mapping(it will contain the entries in set).
+		
+        note  - 
+		entrySet() → gives you a set of all key-value pairs from the map.
+		entry → represents one key-value pair from that set.
+		entry.getKey() → the key.
+		entry.getValue() → the value.
+		Map.Entry - Map.Entry is like a mini-object that stores one key and its value together from a Map.One Map.Entry is 
+		(A, 1) Another Map.Entry is (B, 2)
+				
+		LinkedHashMap : LinkedHashMap allows one null key and many null values. LinkedHashMap 
+		Follows insertion order.  LinkedHashMap is non-synchronized	
+ 
+        code : 
+		import java.util.LinkedHashMap;
+
+		public class Main {
+			public static void main(String[] args) {
+				LinkedHashMap<String, String> map = new LinkedHashMap<>();
+				
+				map.put(null, "value1");    // Null key allowed
+				map.put("key1", null);      // Null value allowed
+				map.put("key2", null);      // Another null value allowed
+
+				System.out.println(map);    // Output: {null=value1, key1=null, key2=null}
+			}
+		}
+
+ 		code  : 
+		import java.util.LinkedHashMap;
+		import java.util.Map;
+
+		public class Main {
+			public static void main(String[] args) {
+				Map<String, Integer> map = new LinkedHashMap<>();
+				
+				map.put("one", 1);
+				map.put("two", 2);
+				map.put("three", 3);
+				map.put("four", 4);
+				
+				// Iterating over the map
+				for (Map.Entry<String, Integer> entry : map.entrySet()) {
+					System.out.println(entry.getKey() + ": " + entry.getValue());
+				}
+			}
+		}
+        order : one: 1
+				two: 2
+				three: 3
+				four: 4 
+				
+	TreeMap : TreeMap does not allow null key and can allow many null values.
+              In TreeMap it gives output in ascending order according to key.
+			  TreeMap is non-synchronized.
+
+            code - 
+			import java.util.TreeMap;
+
+			public class Main {
+				public static void main(String[] args) {
+					TreeMap<String, String> map = new TreeMap<>();
+					
+					// This will throw NullPointerException (null key is not allowed)
+					// map.put(null, "value1");
+
+					map.put("key1", null);   // Null value is allowed
+					map.put("key2", null);   // Another null value is allowed
+					map.put("key3", "value3");
+					
+					System.out.println(map); // Output: {key1=null, key2=null, key3=value3}
+				}
+			}
+			  
+			  
+			code -   
+
+			import java.util.TreeMap;
+
+			public class Main {
+				public static void main(String[] args) {
+					TreeMap<String, Integer> map = new TreeMap<>();
+					
+					map.put("banana", 3);
+					map.put("apple", 1);
+					map.put("cherry", 2);
+					
+					// Iterating over the map
+					for (Map.Entry<String, Integer> entry : map.entrySet()) {
+						System.out.println(entry.getKey() + ": " + entry.getValue());
+					}
+				}
+			}
+			
+output - 
+apple: 1  
+banana: 3  
+cherry: 2	
+
+Q24 : Internal working of HashMap ? 
+Ans : Explain this in interview : 
+      Map stores elements as key-value pair we use put method to insert key-value pair.
+      Internally map uses an array of bucket to store elements. Each element of array is known as 
+      Bucket. Bucket contains node, node contains 4 things hashcode, key,value,	and next node 
+	  address.To calculate Bucket index we use hashcode on key with bucket length to get bucket
+      index on which bucket index the data should be stored. suppose we have bucket length of 16
+	  which is actually a by default length of the array of bucket.if the load factor crosses 75% 
+	  than means total we have 16 buckets and we have filled 12 bucket which is 75% of 16 so now 
+      buckets will be resize doubled to 32.
+      
+	  This is for understanding what it uses internally : 
+	  
+      Hashing : Hashing is the process of converting an object into integer by using the method 
+                hashcode.
+      equals : equals methods is used to check wheather two objects are equal or not. this is 
+                provided by object class. 
+      
+      Bucket :bucket is an element of HashMap array is used to store nodes.
+	          array has bucket and bucket has nodes. 
+              node consist  4 things : hash value , key , value , next node address or null.
+             			 
+	  Collision : When two key points the same the bucket index, this is called collision. 
+      
+	  Each bucket can hold multiple entries in the form of a linked list or a tree structure.
+	  
+      There are two Scenerios : 
+      1 : here equals method is used to compare keys. If both key are same older value 
+          will be replaced by new value
+      2 : If u got the same bucket index but keys are not equals then new node is added to 
+	      previous node at the same bucket index .
+
+	      or
+
+	  “In HashMap, if two keys have the same hash and equals() returns true, the old value is replaced. But if equals() returns false, HashMap creates a new node in the same bucket using a LinkedList (or Tree).    
+       
+Internal HashMap Index Calculation & Collision Handling
+🔹 1. Index Formula:
+index = (hashCode(key) & (n - 1))
+n = current capacity of the HashMap (e.g., 16 by default)
+
+& - ensures the index is always within array bounds.
+
+🔹 2. If key is null:
+HashMap allows one null key.
+
+It is always stored in bucket at index 0(1st bucket).
+
+🔹 3. Collision Handling:
+If multiple keys land in the same bucket, they are first stored as a linked list.
+
+If the number of nodes in that bucket exceeds 8 (TREEIFY_THRESHOLD), and the capacity is at least 64,
+ the linked list is converted into a balanced binary tree (BST) to speed up lookup.
+ 
+ 
+Q25 : what is Concurrent Hashmap ?	
+Ans : during the iteration we cant change the value in hashmap if we change it shows 
+      ConcurrentModificaionException . but ConcurrentHashMap allows us to modify the map during 
+	  the iteration.ConcurrentHashMap are synchronized. ConcurrentHashMap does not allow any null 
+	  key or null value. key is unique and values can be duplicate. 
+	  It handel the ConcurrentModificationException. 
+	  
+	  ConcurrentHashMap heirarchy : 
+	             Map(interface)
+                     |
+                     |
+                     |
+                     |
+              ConcurrentMap(interface)
+                     |
+                     |
+                     |
+              ConcurrentNavigableMap(interface)
+                     |
+                     |
+                     |
+              ConcurrentHashMap(class)
+
+     Syntax : ConcurrentHashMap<Integer,Integer> m = new ConcurrentHashMap<Integer,Integer>();
+
+why it is throwing ConcurrentModificaionException?- becauses it changes the structure of original 
+hashmap. so iterator is fail-fast iterator.	 
+    Code  : 
+	    public static void main(String[] args) {
+		
+			Map<Integer,String> m = new HashMap<>();
+			m.put(1, "saurav");
+			m.put(2, "aman");
+			m.put(3, "ashish");
+			
+			for(Map.Entry<Integer, String> x:m.entrySet() ) {
+				m.put(4, "das");
+				System.out.println(x);
+			}        
+	}
+	
+	output  - if you add during the iteration this it will show you ConcurrentModificaionException.
+
+            So better use ConcurrentHashMap. like this
+			
+why it does not throw ConcurrentModificaionException?- because  ConcurrentHashMap splits the map 
+into parts. When you change one part, only that part is locked, so other parts are still 
+accessible.so iterator is fail-safe iterator.
+        code  : 
+		public static void main(String[] args) {
+	
+			Map<Integer,String> m = new ConcurrentHashMap<>();
+			m.put(1, "saurav");
+			m.put(2, "aman");
+			m.put(3, "ashish");
+			
+			for(Map.Entry<Integer, String> x:m.entrySet() ) {
+				m.put(4, "das");
+				System.out.println(x);
+			}
+			
+	   }
+		output -1=saurav
+				2=aman
+				3=ashish
+				4=das	
+				
+here during the iteration we enter the value so it does not show us ConcurrentModificaionException.
+so better to use ConcurrentHashMap.
+
+
+Similarly during the iteration of ArrayList if we add the value it shows us the 
+ConcurrentModificaionException.
+Why is shows ConcurrentModificaionException because we are iterating in the original arraylist.
+so iterator is fail fast iterator.
+like this
+
+ 
+code  - 
+        public static void main(String[] args) {
+		List<Integer> l = new ArrayList<>();
+		l.add(1);
+		l.add(2);
+		l.add(3);
+		
+		for(Integer x : l) {
+			l.add(4);
+			System.out.println(x);
+		}		
+	    }
+        output - it shows ConcurrentModificaionException. 
+	    
+so we solve this by using CopyOnWriteArrayList.
+now here it does not show ConcurrentModificaionException because it copies the arrayList items 
+it does not modify original arraylist it modify on copied list. so iterator is fail safe iterator.
+
+like this :
+ code  - 
+       	public static void main(String[] args) {
+		List<Integer> l = new CopyOnWriteArrayList<>();
+		l.add(1);
+		l.add(2);
+		l.add(3);
+		
+		 for(Integer x : l) {
+			l.add(4);
+			System.out.println(x);
+		 }	
+	    }
+		
+		output - 1
+		         2
+				 3
+		and here no ConcurrentModificaionException will be thrown 		 
+		
+Q26: Difference between HashMap vs ConcurrentHashMap ? 
+Ans :
+          HashMap                               |                  ConcurrentHashMap        
+________________________________________________|_________________________________________________    
+1.HashMap can store null key or null value      |1. ConcurrentHashMap does not store null key or 
+                                                |   null value   	
+2.HashMap is not thread safe.                   |2.ConcurrentHashMap is thread safe.
+3.methods of HashMap is non-synchronised        |3.methods of ConcurrentHashMap is synchronised.
+4.the iterator in HashMap is fail-fast          |4.the itereator in ConcurrentHashMap is fail-safe
+                                                |
+
+Q:fail-fast vs fail-safe ? 
+	Fail Fast and Fail Safe are ways of handling errors or failures in a program.
+
+	Fail Fast:
+
+	Stops immediately when an error is found.
+
+	Example: A list iterator throws an exception if the list is modified while iterating.
+
+
+	Fail Safe:
+
+	Continues working even when there is an error.
+
+	Example: A concurrent collection (like CopyOnWriteArrayList) allows safe iteration even if modified.
+
+
+	In short:
+
+	Fail Fast: Detects issues early and stops.
+
+	Fail Safe: Handles issues without stopping.												
+	
+	fail-fast : during the iteration of hashmap ConcurrentModificaionException can happen during 
+				the iteration is called fail fast.
+	fail-safe : during iteration in ConcurrentHashMap it does not throw ConcurrentModificaionException
+				
+Q27	: Difference between Comparable vs Comparator? 
+Ans : Both Comparable and Comparator are interface
+    
+             Comparable                         |                  Comparator              	
+________________________________________________|_________________________________________________
+1.Comparable can sort the collection on the     |1.Comparator can sort the collection on basis
+  basis of single element suppose there are 10  |  of multiple elements such as id,name and prize.  
+  objects with id,name,price and we are sorting |  suppose we have 10 objects with values id,name and prize
+  through id only (so on the basis of single    |  suppose i want to sort according to prize so pass   
+  element we are sorting which is id).          |  the object of prize class in sort method so it will go to 
+                                                |  prizeCompartor class which we have made and that implements
+                                                |  compare method which we have to write our sorting logic 
+                                                |  and it will sort according to prize.												   
+2.Comparable has compareTo() methods to sort the|2.Comparator has compare() method to sort the   
+  elements.                                     |  elements.           
+                                                |
+
+or
+
+| Feature                 | Comparable       | Comparator         |
+| ----------------------- | ---------------- | ------------------ |
+| Sorting logic location  | Inside the class | Outside the class  |
+| Method                  | `compareTo()`    | `compare()`        |
+| Number of sorting rules | Only one         | Many possible      |
+| Interface type          | Functional? ❌   | Functional ✔ (SAM) |
+
+
+| Number of sorting rules | Only one         | Many possible      |
+this above line means - 
+only one - sort by id 
+many possible - sort by name ,id age
+                                                
+Q28 : Why do we need comparator and comaparable interface even if we have Arrays.sort() method?
+Ans  -yes we already have Arrays.sort() method to sort the array still we need to comaparable and comparator 												
+      because Arrays.sort() method works on number/primitive objects it cannot sort your custom objects
+	  (like employee class object)but through Comparator and Comparable interfaces we can sort our customs 
+	  objects.
+	  
+	  //Applying Arrays.sort method on primitive datatypes(int) it will work here fine 
+	  int arr[] = {4,1,5,9};
+	  Arrays.sort(arr);
+	  for(int i=0;i<arr.length;i++){
+	    System.out.println(arr[i]);
+	  }
+	  
+	  //but if we use Arrays.sort method on custom object it will show us an exception 
+      //so this code will not work  
+	  
+	  package p20;
+
+		import java.util.Arrays;
+
+		public class Employee {
+			int id ; 
+			String name ;
+			
+			Employee(int id , String name){
+				this.id = id ; 
+				this.name = name ;
+			}
+			
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				Employee e[] = new Employee[5];
+				e[0] = new Employee(4,"saurav");
+				e[1] = new Employee(1,"ashu");
+				e[2] = new Employee(5,"das");
+				e[3] = new Employee(9,"nishant");
+				
+				Arrays.sort(e);
+				
+		//        for(Employee emp : e) {
+		//        	System.out.println(emp);	
+		//        }
+				  
+				for(int i=0;i<e.length;i++)
+				{
+					System.out.println(e[i]);
+				}
+			}
+
+		}
+		
+		
+		// so to resolve this exception we will use comparable(allows using one thing(suppose id) we are sorting 
+       	// through id) 
+		// on the basis of one thing we are sorting which is id if you want you can sort it with name also 
+		package p20;
+
+		import java.util.Arrays;
+
+		public class Employee implements Comparable<Employee> {
+			int id;
+			String name;
+
+			Employee(int id, String name) {
+				this.id = id;
+				this.name = name;
+			}
+
+			// Implement the compareTo method to sort by id
+			@Override
+			public int compareTo(Employee other) {
+				return this.id - other.id; // Sort by id in ascending order
+			}
+
+			@Override
+			public String toString() {
+				// TODO Auto-generated method stub
+				return "id=" + id + " "+ "name=" + name  ;
+			}
+			public static void main(String[] args) {
+				Employee[] e = new Employee[5];
+				e[0] = new Employee(4, "saurav");
+				e[1] = new Employee(1, "ashu");
+				e[2] = new Employee(5, "das");
+				e[3] = new Employee(9, "nishant");
+				e[4] = new Employee(2, "john");
+
+				// Sort the array
+				Arrays.sort(e);// it internaly calls the compareTo() method 
+				
+				
+				// Print the sorted array using a normal for loop
+				for (int i = 0; i < e.length; i++) {
+					System.out.println(e[i]);// when you write this it internally calls toString() method
+				}                            // and you have to @Override this method else it will not print 
+                                             // the output				
+			}
+		}
+
+output :id=1 name=ashu
+		id=2 name=john
+		id=4 name=saurav
+		id=5 name=das
+		id=9 name=nishant
+
+	  // now we will sort by using Comparator 
+Student.java
+	  package p21;
+
+
+		public class Student  {
+			int id ; 
+			String name ; 
+			int age ; 
+			Student(int id,String name,int age){
+				this.id = id ; 
+				this.name = name;
+				this.age = age;
+			}
+		}
+_____________________________________________________________________________________  
+NameComparator.java
+package p21;
+
+import java.util.Comparator;
+
+public class NameComparator implements Comparator<Student> {
+
+	@Override
+	public int compare(Student o1, Student o2) {
+		// TODO Auto-generated method stub
+		return o1.name.compareTo(o2.name);
+	}
+
+}
+_____________________________________________________________________________________
+AgeCompator.java
+package p21;
+
+import java.util.Comparator;
+
+public class AgeCompator implements Comparator<Student> {
+
+	@Override
+	public int compare(Student o1, Student o2) {
+		// TODO Auto-generated method stub
+	    return  o1.age-o2.age;
+
+	}
+
+}
+_____________________________________________________________________________________
+   
+	  package p21;
+
+
+import java.util.Arrays;
+
+
+public class Test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//if we are using arraylist then use Collections.sort() methods because it works on the Collection
+		// and Arralist is a part of collection  
+//		ArrayList<Student> a1 = new ArrayList<Student>();
+//		a1.add(new Student(3, "saurav", 25));
+//		a1.add(new Student(7, "ashu", 28));
+//		a1.add(new Student(9, "billo", 21));
+        Student s[] = new Student[3];
+        s[0] = new Student(3, "saurav", 25);
+        s[1] = new Student(7, "ashu", 28);
+        s[2] = new Student(9, "billo", 21);
+		// sorting by name
+		Arrays.sort(s, new NameComparator());// passing to NameComparator
+		System.out.println("sorting by name");
+		for (Student st : s) {
+			System.out.println(st.id + " " + st.name + " " + st.age);
+		}
+		
+		Arrays.sort(s, new AgeCompator());// passing to AgeCompator
+		System.out.println("sorting by age");
+		for (Student st : s) {
+			System.out.println(st.id + " " + st.name + " " + st.age);
+		}
+
+	}
+
+}
+
+output -    sorting by name
+			7 ashu 28
+			9 billo 21
+			3 saurav 25
+			sorting by age
+			9 billo 21
+			3 saurav 25
+			7 ashu 28
+			
+	Note  :  Arrays.sort() in Java internally calls compare or compareTo method	
+	  
+Here’s a table summarizing whether the methods in each of these Java collection classes are synchronized or not:
+	  
+	  Collection Type	Class/Interface	Synchronized Methods
+         Array	           Array	          No
+		 
+         List	          ArrayList	          No
+                          LinkedList	      No
+                            Vector	         Yes
+                             Stack	         Yes
+							 
+         Queue	            Queue	          No
+                            Deque	          No
+                          ArrayDeque	      No
+						  
+          Set	             Set	          No
+                          SortedSet           No
+                           TreeSet	          No
+                           HashSet	          No
+                         LinkedHashSet	      No
+						 
+	     Map	           Map	              No
+                         SortedMap	          No
+                          HashMap	          No
+                          TreeMap	          No
+                       LinkedHashMap	      No
+                         Hashtable	         Yes			
+                       ConcurrentMap	      No
+                   ConcurrentNavigableMap	  No
+                     ConcurrentHashMap	     Yes (thread-safe)				 
+						 
+	Note : only vector ,stack , hashtable and ConcurrentHashMap are synchronised and thread safe rest all are 
+	       non synchronised					 
+		   
+Q29 : hashtable vs hashmap
+
+Ans - 
+| Feature              | **HashMap**                              | **Hashtable**                                       |
+| -------------------- | ---------------------------------------- | --------------------------------------------------- |
+| **Thread Safety**    | Not thread-safe                          | Thread-safe (synchronized methods)                  |
+| **Performance**      | Faster (no synchronization)              | Slower (because of synchronization)                 |
+| **Null Keys/Values** | Allows 1 null key & multiple null values | ❌ Does NOT allow any null key or null value         |
+| **Introduced In**    | Java 1.2 (part of Collections)           | Java 1.0 (legacy class)                             |
+| **Usage Today**      | Preferred in modern applications         | Rarely used, mostly replaced by `ConcurrentHashMap` |
+| **Package**          | `java.util`                              | `java.util`                                         |
+
+	Note : Hashtable implements the Map interface.
+ 	      Map<Integer, String> table = new Hashtable<>();
+
+HashMap uses LinkedList first and converts to a tree when collisions exceed a threshold.
+Hashtable always uses LinkedList and does not support tree structure.” 	
+
+Internal working of hashtable  : it is same like hashmap  
+

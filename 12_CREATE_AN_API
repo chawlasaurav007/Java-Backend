@@ -1,0 +1,327 @@
+# MySQL Database Configuration
+spring.application.name=springboot-backned
+spring.datasource.url=jdbc:mysql://localhost:3306/java__guide
+spring.datasource.username=root
+spring.datasource.password=saurav
+#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+
+# Hibernate JPA Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+------------------------------------------------------------------------------------------------------------------
+package net.javaguide.springboot_backned.Entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="Employees")
+public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "email")
+    private String email;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
+------------------------------------------------------------------------------------------------------------------
+
+package net.javaguide.springboot_backned.Repository;
+
+import net.javaguide.springboot_backned.Entity.Employee;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface EmployeeRepository extends JpaRepository<Employee,Long> {
+    // all crud database methods are there now in EmployeeRepository
+}
+------------------------------------------------------------------------------------------------------------------
+package net.javaguide.springboot_backned.Controller;
+
+import net.javaguide.springboot_backned.Entity.Employee;
+import net.javaguide.springboot_backned.Repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/v1/employees")
+public class EmployeeController {
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @GetMapping("/getAllEmployee")
+    public List<Employee> getAllEmployee(){
+        return employeeRepository.findAll();
+    }
+
+    @PostMapping("/saveEmployee")
+    public Employee createEmployee(@RequestBody Employee employee){
+          return employeeRepository.save(employee);
+    }
+
+    @GetMapping("/getEmployeeById/{id}")
+    public Employee getEmployeeById(@PathVariable Long id){
+        Optional<Employee> e = employeeRepository.findById(id);//using Optional because it can send us null if employee is not present
+        if(e.isPresent()) {
+            return e.get();
+        }
+        //if not present throw exception or  return null
+        //throw new RuntimeException("Employee not found with ID: " + id);// use this if you made the custom exception class
+        //or
+        return null;
+    }
+
+    @PutMapping("/updateEmployee/{id}")
+    public Employee updateEmployee(@PathVariable Long id,@RequestBody Employee employeeDetails){
+        Optional<Employee> e = employeeRepository.findById(id);
+        if(e.isPresent()) {
+            Employee emp = e.get();
+            emp.setFirstName(employeeDetails.getFirstName());
+            emp.setLastName(employeeDetails.getLastName());
+            emp.setEmail(employeeDetails.getEmail());
+            employeeRepository.save(emp);
+            return emp;
+        }
+
+        //throw new RuntimeException("Employee not found with ID: " + id);
+        //or
+        return null;
+    }
+
+    @DeleteMapping("/deleteEmployeeById/{id}")
+    public Employee deleteEmployeeById(@PathVariable Long id){
+        Optional<Employee> e = employeeRepository.findById(id);
+        if(e.isPresent()){
+            Employee emp = e.get();
+            employeeRepository.deleteById(id);
+            return emp;
+        }
+        return null;
+    }
+
+}
+
+
+pom.xml file
+
+<dependencies>
+
+    <!-- Spring Boot Starter Web (for REST APIs) -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- Spring Boot Starter Data JPA (for JPA + Hibernate) -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <!-- MySQL Driver (for MySQL connection) -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+
+    <!-- Lombok (for @Getter, @Setter, etc.) -->
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <optional>true</optional>
+    </dependency>
+
+    <!-- Spring Boot DevTools (optional - for hot reload during development) -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+        <scope>runtime</scope>
+        <optional>true</optional>
+    </dependency>
+
+    <!-- Spring Boot Test (optional - for writing test cases) -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+</dependencies>
+
+
+
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Another example of creating an api  
+
+
+### ✅ Full CRUD Example (Entity + Service + Controller) Using `ResponseEntity`
+
+---
+
+## **1. Entity Layer**
+
+```java id="e1t7xa"
+@Entity
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String name;
+    private String email;
+
+    public User() {}
+
+    public User(Integer id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+}
+```
+
+---
+
+## **2. Repository Layer**
+
+```java id="c2p4mz"
+@Repository
+public interface UserRepository extends JpaRepository<User, Integer> {
+}
+```
+
+---
+
+## **3. Service Layer**
+
+```java id="f8n2ld"
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository repo;
+
+    public User createUser(User user) {
+        return repo.save(user);
+    }
+
+    public User getUser(Integer id) {
+        return repo.findById(id).orElse(null);
+    }
+
+    public User updateUser(Integer id, User user) {
+        User existing = repo.findById(id).orElse(null);
+        if (existing != null) {
+            existing.setName(user.getName());
+            existing.setEmail(user.getEmail());
+            return repo.save(existing);
+        }
+        return null;
+    }
+
+    public void deleteUser(Integer id) {
+        repo.deleteById(id);
+    }
+}
+```
+
+---
+
+## **4. Rest Controller Layer**
+
+```java id="p9v3rs"
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+    @Autowired
+    private UserService service;
+
+    @PostMapping
+    public ResponseEntity<User> create(@RequestBody User user) {
+        return new ResponseEntity<>(service.createUser(user), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> get(@PathVariable Integer id) {
+        return new ResponseEntity<>(service.getUser(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> update(@PathVariable Integer id, @RequestBody User user) {
+        return new ResponseEntity<>(service.updateUser(id, user), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
+        service.deleteUser(id);
+        return new ResponseEntity<>("User Deleted", HttpStatus.OK);
+    }
+}
+```
+
+---
+
+### 🎯 Interview Summary
+
+👉 **Entity → DB Table Mapping**
+👉 **Repository → DB Operations**
+👉 **Service → Business Logic**
+👉 **Controller → Handle Client Requests**
+
+If you want, I can give you this same code with **Exception Handling + DTO + Best Practices** (interview-level production version).
+

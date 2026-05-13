@@ -1,0 +1,2660 @@
+Q1 : git fetch vs git pull ? 
+
+Sure 👍 here’s a short and simple explanation of what’s shown in the images:
+
+🟠 Git Fetch - it cannot give merge conflict 
+
+It downloads the latest changes from the remote repository into your local repository, but
+
+It does NOT update your working files or current branch.
+
+You can review the changes first, then merge manually when you’re ready.
+✅ Safe to use anytime, no risk of overwriting your work.
+
+👉 Think of it like checking what’s new online but not applying it yet.
+
+so git getch is like it gives you the information like how much commits you are behind from the main branch
+
+🟢 Git Pull - it can give merge conflict 
+
+It downloads the latest changes and automatically merges them into your current branch.
+
+It’s like git fetch + git merge together. (git pull = git fetch + git merge) 
+
+You don’t get a chance to review before merging, so conflicts may occur.
+
+👉 Think of it like downloading updates and installing them immediately.
+
+💡 Summary:
+Command	What it Does	Safe?	Notes
+git fetch	Only downloads changes	✅ Safe	You merge manually later
+git pull	Downloads + merges	⚠️ Can cause conflicts	Equivalent to git fetch + git merge
+
+In simple terms:
+
+Use git fetch when you want to see what’s new.
+
+Use git pull when you’re ready to get and apply the new changes.
+
+Q2 : implement redis cache in spring boot application? 
+Redis is a kind of database
+Implementing Redis cache in a Spring Boot application is a common way to improve performance and reduce database load.
+Below is a complete step-by-step guide with explanations and code examples.
+
+🧰 1. Add Dependencies
+
+If you’re using Maven, add the following dependencies to your pom.xml:
+
+<dependencies>
+    <!-- Spring Boot Starter for Redis -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+
+    <!-- Spring Boot Cache abstraction -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-cache</artifactId>
+    </dependency>
+
+    <!-- (Optional) Jackson for Redis serialization -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+    </dependency>
+</dependencies>
+
+⚙️ 2. Configure Redis in application.properties or application.yml
+Using application.properties
+spring.data.redis.host=localhost
+spring.data.redis.port=6379
+spring.data.redis.password=
+spring.cache.type=redis
+
+
+If you’re using Docker, you can run Redis locally with:
+
+docker run -d -p 6379:6379 redis
+
+🧩 3. Enable Caching in Your Application
+
+Add the @EnableCaching annotation to your main Spring Boot application class.
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
+
+@SpringBootApplication
+@EnableCaching
+public class RedisCacheApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(RedisCacheApplication.class, args);
+    }
+}
+
+Sure 🙂 — here’s a simple explanation:
+
+### 🧩 What `@EnableCaching` does:
+
+`@EnableCaching` **turns on Spring’s caching feature** in your application.
+
+### 💡 In short:
+
+When you add `@EnableCaching`, Spring will start **looking for methods with caching annotations** (like `@Cacheable`, `@CachePut`, `@CacheEvict`) and automatically handle storing and retrieving data from the cache for you.
+
+### 🚀 Benefit:
+
+It makes your app **faster** and **more efficient** because:
+
+* Spring will **skip expensive operations** (like database calls) if the result is already cached.
+* You don’t have to manually write code to manage the cache — Spring does it for you.
+
+### 🧠 Example:
+
+Without `@EnableCaching`:
+Every time you call `getUserById("123")`, it hits the database.
+
+With `@EnableCaching`:
+Spring first checks Redis (the cache).
+If user `"123"` is already there → returns it immediately (no DB call).
+If not → fetches from DB, saves it in Redis, and returns it.
+
+👉 **In one line:**
+`@EnableCaching` activates Spring’s automatic caching system to speed up your app and reduce unnecessary work.
+
+
+🧠 4. Configure Redis Template (optional but recommended)
+
+If you want to control serialization or handle custom objects, create a configuration class:
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+@Configuration
+public class RedisConfig {
+
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory);
+
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+
+        template.afterPropertiesSet();
+        return template;
+    }
+}
+
+Of course 😊 here’s the **super simple** version:
+
+### 💡 What this class does:
+
+This class tells Spring **how to talk to Redis**.
+
+### ⚙️ In plain words:
+
+* It **creates a RedisTemplate** — a tool your app uses to read and write data in Redis.
+* It says:
+
+  * “🔑 Store keys as **text** (easy to read).”
+  * “📦 Store values as **JSON** (so we can save whole Java objects, not just strings).”
+
+### 🧠 Simple meaning:
+
+> This class helps your app **save and read data from Redis in a nice, readable way**, using strings for keys and JSON for data.
+
+
+if u still dont use this class because its optional : 
+
+Yes 👍 — it will **still work** even if you don’t use this class.
+
+### 💡 Here’s why:
+
+Spring Boot already provides a **default `RedisTemplate`** and **default serializers**, so caching and basic Redis operations will work out of the box.
+
+### 🧩 But… without this class:
+
+* Keys and values might be stored in **binary format** (not readable in Redis CLI).
+* Custom Java objects might not be stored or retrieved properly (you could get weird unreadable data or errors).
+
+### ✅ So:
+
+* **For simple data** (like strings, numbers): works fine without this class.
+* **For complex objects** (like `User`, `Product`, etc.): better to add this config — it makes everything easier and safer.
+
+👉 **In short:**
+It will still work, but adding this class makes Redis data **clearer, more readable, and more reliable** — especially when caching custom objects.
+
+
+🚀 5. Use Caching in Your Service Layer
+
+You can now use caching annotations:
+
+@Cacheable — caches the result
+
+@CachePut — updates the cache
+
+@CacheEvict — removes from the cache
+
+Example:
+
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+
+    // Example: Fetch user by ID (simulating DB call)
+    @Cacheable(value = "users", key = "#id") // 'value' defines the cache name, 'key' defines how the cache entry is identified 
+    public String getUserById(String id) {
+        System.out.println("Fetching user from database for ID: " + id);
+        return "User_" + id;
+    }
+}
+
+
+When you call getUserById("101"):
+
+The first call hits the database (or your logic).
+
+The result is cached in Redis under key users::101.
+
+Subsequent calls return instantly from cache.
+
+🧹 6. Cache Eviction Example
+
+If data changes and you want to clear or update the cache:
+
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+
+@Service
+public class UserService {
+
+    @CachePut(value = "users", key = "#id")
+    public String updateUser(String id, String name) {
+        System.out.println("Updating user in DB and cache for ID: " + id);
+        return name;
+    }
+
+    @CacheEvict(value = "users", key = "#id")
+    public void deleteUser(String id) {
+        System.out.println("Deleting user and removing from cache for ID: " + id);
+    }
+}
+
+🧩 7. Verify in Redis CLI
+
+Run the Redis CLI to see stored keys:
+
+redis-cli
+127.0.0.1:6379> keys *
+
+
+You should see something like:
+
+1) "users::101"
+
+keys * → shows all the keys saved in Redis (like a list of what’s stored).
+
+get <key> → shows the actual data for that key.
+
+✅ Summary
+Step	Description
+1	Add Redis and cache dependencies
+2	Configure Redis connection
+3	Enable caching (@EnableCaching)
+4	Optionally configure RedisTemplate
+5	Use @Cacheable, @CachePut, @CacheEvict
+6	Test and verify keys in Redis 
+
+
+Q3 : features of java 17 ? 
+
+
+### 🌟 1. **Sealed Classes**
+
+Let you control which classes can extend or implement another class.
+👉 Helps make inheritance safer.
+
+```java
+public sealed class Shape permits Circle, Square {}
+```
+
+---
+
+### 🪄 3. **Records**
+
+A quick way to create data classes (like DTOs).
+👉 Automatically adds getters, equals, hashCode, toString.
+
+```java
+public record User(String name, int age) {}
+```
+
+---
+
+### 🦺 5. **Switch Expressions (from Java 14, finalized in 17)**
+
+You can now use `switch` as an expression and return values directly.
+
+```java
+int day = switch (today) {
+    case "MONDAY" -> 1;
+    case "TUESDAY" -> 2;
+    default -> 0;
+};
+
+
+Q4: JAR vs WAR ? 
+
+my answer
+Jar - it contains a group of .class files
+War - a war file represents one we application which contains servlets ,jsp, html ,css ,js pages and so on.
+These jar and war files are a zip file which contains many files into one and its easy to deploy no need to deploye 
+the files separately one by one so first make it in one packgae or zip file and thne build by maven and then deploye.
+
+chat gpt answer
+JAR → groups .class files for normal Java applications.
+
+WAR → represents a web application containing Servlets, JSPs, HTML, CSS, JS, etc.
+
+Both are compressed (zip-like) files that package everything together.
+
+This makes deployment simple and faster — no need to copy each file manually.
+
+Finally, Maven builds these files into one deployable unit.
+
+Q5: Synchronization Internal Working (Monitor & Lock) 
+ Every object and class in Java has an intrinsic lock (monitor). 
+ When a thread enters a synchronized method/block, it must acquire the 
+object's/class’s lock. 
+ If another thread holds the lock, the current thread goes into BLOCKED state until the 
+lock is released. 
+ Once the lock is acquired, the thread enters the RUNNING state and executes the 
+code. 
+
+Q6 : explain me Advanced Concurrency (Synchronization)
+     there are total 3 types of Advanced Concurrency (Synchronization)
+	 1 : ReentrantLock
+     2 : ReentrantReadWriteLock / ReadWriteLock
+     3 : Semaphore
+
+    1 : ReentrantLock : This code is about using a ReentrantLock with tryLock() in Java to handle thread locking safely.
+
+      class TryLockExample {
+    private final ReentrantLock lock = new ReentrantLock();
+
+    public void attemptTask() {
+        try {
+            if (lock.tryLock(2, TimeUnit.SECONDS)) {   // 🕐 Try to get the lock for 2 seconds
+                try {
+                    System.out.println("Lock acquired, performing task...");
+                    Thread.sleep(1000); // simulate work
+                } finally {
+                    lock.unlock(); // 🔓 Always unlock after work
+                }
+            } else {
+                System.out.println("Couldn't acquire lock within 2 seconds, exiting...");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+The 2 seconds in tryLock(2, TimeUnit.SECONDS)
+
+That 2 seconds is only the maximum waiting time to get the lock,
+not the time limit for doing the work.
+
+✅ So what happens:
+
+Suppose Thread B is waiting for the lock for up to 2 seconds.
+
+If within that time Thread A releases the lock,
+→ then Thread B immediately acquires it.
+
+Once B has the lock, it can do its work peacefully —
+even if it takes longer than 2 seconds to finish.
+
+Timeout in ReentrantLock is ONLY for waiting to acquire the lock — not for how long you can work after taking the lock.
+
+💬 Example:
+
+B calls tryLock(2, TimeUnit.SECONDS)
+
+A releases after 1 second → B gets the lock.
+
+B now does its work (maybe for 5 seconds). That’s totally fine ✅
+
+In short:
+2 seconds = “I’ll wait for up to 2 seconds to get the lock.”
+Once you get the lock → you can work for as long as you need.
+	
+	 
+2 : ReentrantReadWriteLock / ReadWriteLock	: Many can read, only one can write
+
+class SharedData {
+    private int data = 0;
+    private final ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
+
+    public void write(int value) {
+        rwLock.writeLock().lock();   // 🔒 Only one thread can write
+        try {
+            data = value;
+            System.out.println("Written: " + value);
+        } finally {
+            rwLock.writeLock().unlock(); // 🔓 Unlock after writing
+        }
+    }
+
+    public void read() {
+        rwLock.readLock().lock();   // 🔒 Many threads can read at once
+        try {
+            System.out.println("Read: " + data);
+        } finally {
+            rwLock.readLock().unlock(); // 🔓 Unlock after reading
+        }
+    }
+}
+
+
+Simple Explanation:
+
+The class has a shared variable data.
+
+We use ReentrantReadWriteLock to manage access to it.
+
+🟢 Read Lock → Many threads can read at the same time (no problem).
+🔴 Write Lock → Only one thread can write at a time (others wait).
+
+💬 Example in real life:
+
+Think of it like a library:
+
+Many people can read books (read lock).
+
+But when someone wants to update books (write lock), everyone else must wait.
+
+👉 In short:
+This code makes sure that reading can happen together, but writing happens one at a time safely. 
+	 
+	 
+3 : Semaphore
+class ParkingLot {
+    private final Semaphore slots = new Semaphore(3); // only 3 cars allowed
+
+    public void parkCar(String carName) {
+        try {
+            slots.acquire(); // 🚗 take a slot (enter)
+            System.out.println(carName + " parked.");
+            Thread.sleep(1000); // stay parked for a while
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            System.out.println(carName + " left.");
+            slots.release(); // 🚗 leave the slot
+        }
+    }
+}
+
+Simple Explanation:
+
+The Semaphore controls how many threads (cars) can access something at the same time.
+
+Here, only 3 cars can park at once.
+
+If a 4th car comes, it must wait until one of the cars leaves.
+
+💬 Real-life Example:
+
+Imagine a parking lot with 3 parking spaces.
+When a space is free → a car enters.
+When all are full → other cars must wait until someone leaves.
+
+👉 In short:
+This code controls how many threads can enter a section of code at once — perfect for limited resources.
+
+
+Q7 : synchronized vs volatile vs atomic in java ? 
+Ans  : all these three things are used to achieve thread safety in java 
+     
+  	 1 : synchronized : 
+	     Used with methods or code blocks.
+		 Allows only one thread at a time to run that code.
+		 Gives both atomicity (one-at-a-time) and visibility (latest value shared).
+		 👉Like putting a lock on a room — one thread enters, others wait.
+	 
+	 2 : volatile : 
+	     Used with variables — it makes sure other threads see the updated value of the variable, instead of reading it 
+		 from their local thread cache.
+		 Makes sure all threads see the latest value of a variable.
+		 Doesn’t stop threads from changing it at the same time.
+		 👉 Just keeps the value fresh.
+		 
+     3 : atomic	 
+	    
+
+		---
+
+		### 💡 **Atomic means:**
+
+		Only **one thread** can change the value **at a time**,
+		so the value always stays **correct**.
+
+		---
+
+		### 🧠 Example:
+
+		Many people adding 1 to the same number —
+		**atomic** makes sure they don’t all add at the same time and cause mistakes.
+
+		---
+
+		👉 **In one line:**
+		**Atomic = safe number that changes correctly when many threads use it.**
+		
+		import java.util.concurrent.atomic.AtomicInteger;
+
+public class AtomicExample {
+    // shared variable
+    static AtomicInteger count = new AtomicInteger(0);
+
+    public static void main(String[] args) {
+        // create two threads
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                count.incrementAndGet(); // safely add 1
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                count.incrementAndGet(); // safely add 1
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Final Count: " + count);
+    }
+}
+
+
+Two threads (t1 and t2) both add 1 to the same number 1000 times.
+
+Because we use AtomicInteger, both threads can add safely.
+
+Final result will always be 2000 ✅
+
+If we used a normal int instead of AtomicInteger,
+the result might be less than 2000 because threads would clash.
+
+AtomicInteger as a kind of wrapper class around an int value —
+but with extra powers for thread safety
+
+AtomicLong - Works like AtomicInteger, but for long values.
+
+AtomicBoolean - For boolean (true/false) values
+	 
+	 
+Q8 : Application Context vs bean Factory 
+Ans :  	 
+| Feature       | BeanFactory              | ApplicationContext           |
+| ------------- | -------------------------| ---------------------------- |
+| Bean creation | Lazy loading (on demand) | Eager loading (at startup)   |
+| Features      | Basic                    | Advanced (events, AOP, etc.) |
+| Used in       | Simple apps              | Real-world Spring apps       |
+
+
+BeanFactory
+
+It’s the basic container in Spring.
+
+It creates and manages beans when they are needed (lazy loading).
+
+It provides only core features — no extras.
+
+👉 Think of it as a simple machine that makes beans only when asked.
+
+💡 ApplicationContext
+
+It’s the advanced version of BeanFactory.
+
+It creates all beans at startup (eager loading) by default.
+
+It also provides extra features like:
+
+Event handling
+
+Message/resource management
+
+Annotation support
+
+AOP (Aspect-Oriented Programming)
+
+👉 Think of it as a smart machine that not only makes beans but also manages many extra things for you.
+
+BeanFactory = simple bean creator.
+ApplicationContext = powerful bean manager used in almost all Spring Boot apps.
+
+Q9 : What is JMM(Java Memory Model) ? 
+JMM makes sure that when one thread changes a variable,
+other threads can see that change (using things like volatile, synchronized, or atomic).
+
+coding example  : 
+
+volatile boolean flag = false;
+
+Thread 1: flag = true;     // writes the value
+Thread 2: if(flag) ...     // sees the updated value
+
+Because of JMM rules (and volatile),
+Thread 2 will see the updated value of flag.
+
+JMM = rules that make memory changes visible correctly between threads.
+
+Q10 : What is Auto-Configuration ? 
+Ans : 
+
+### 💡 **What is Auto Configuration?**
+
+**Auto Configuration** means **Spring Boot automatically sets up** things for you —
+so you don’t have to write a lot of configuration code yourself.
+
+---
+
+### 🧠 **Simple idea:**
+
+Spring Boot looks at the **libraries** in your project and **creates beans automatically** based on what you need.
+
+👉 Example:
+
+* If you have **Spring Web** in your project → it auto-configures **Tomcat server** and **DispatcherServlet**.
+* If you have **Spring Data JPA** → it auto-configures **DataSource** and **EntityManager**.
+
+---
+
+### ⚙️ **Example:**
+
+You just add this annotation:
+
+```java
+@SpringBootApplication
+```
+
+and Spring Boot automatically configures everything —
+like web server, database connection, etc. — depending on the dependencies.
+
+---
+
+### ✅ **In short:**
+
+**Auto Configuration = Spring Boot sets up things automatically for you.**
+
+💬 *You focus on your code — Spring Boot handles the setup.*
+
+or
+another defination of auto-configurtion is : 
+“Spring Boot automatically handles configuration based on the dependencies added in the pom.xml. Whatever starters or libraries you include, Spring Boot detects them and sets up the required beans and configurations by itself.
+
+
+
+
+Q10 : What is transaction in spring boot ?
+Transaction in Spring Boot – Simple Explanation
+
+A transaction in Spring Boot means a group of operations that must all succeed or all fail together — just like a 
+promise:
+
+“Do everything, or do nothing.” ✅❌
+
+💡 Simple Example:
+
+Imagine you are transferring money between two accounts 💸
+
+Deduct ₹1000 from Account A
+
+Add ₹1000 to Account B
+
+Both steps must happen together.
+If step 2 fails (like a network error), step 1 should be undone —
+so no money is lost or duplicated.
+
+That’s what a transaction ensures.
+
+⚙️ How it works in Spring Boot:
+
+In Spring Boot, you can use the @Transactional annotation.
+
+@Service
+public class BankService {
+
+    @Transactional
+    public void transferMoney() {
+        debitFromAccountA();
+        creditToAccountB();
+    }
+}
+
+
+If any line inside this method fails (throws an exception),
+Spring automatically rolls back the transaction —
+undoing any database changes made so far.
+
+✅ In short:
+
+A transaction in Spring Boot ensures that multiple database operations act as one unit —
+either all succeed or all rollback to keep data safe and consistent.
+
+Q11 : What is 2 phase commit  ? 
+Two-Phase Commit (2PC) – Simple Explanation
+
+The Two-Phase Commit is a way to make sure a transaction across multiple databases or services either completes
+everywhere or fails everywhere — so all systems stay in sync.
+
+👉 In simple words:
+
+2PC = Everyone agrees to commit or everyone cancels.
+(All or nothing!) 
+
+Real-life Example:
+
+Imagine you are transferring ₹1000 from your Bank A account to Bank B 💸
+
+Two things must happen:
+
+₹1000 is deducted from Bank A 🏦
+
+₹1000 is added to Bank B 💰
+
+Both must succeed — or both must fail.
+If one fails (like Bank B is down), the other must rollback (undo) the change.
+
+Q12 : So Transaction and 2 phase commit both are kind of same then what is the difference between them ?
+Ans : 
+Excellent question 👍 — and a very common one in interviews!
+
+Let’s make it super simple 👇
+
+---
+
+### 🧠 **Difference Between Transaction and Two-Phase Commit (2PC)**
+
+| Feature           | **Transaction**                                              | **Two-Phase Commit (2PC)**                                                        |
+| ----------------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| 💡 **Meaning**    | A **single unit of work** that must fully succeed or fail.   | A **protocol** to coordinate a transaction **across multiple systems/databases**. |
+| 🏦 **Scope**      | Happens **inside one database** (local).                     | Happens **across multiple databases or services** (distributed).                  |
+| ⚙️ **Handled By** | Database or Spring’s `@Transactional` manager.               | A **Transaction Coordinator** that manages all systems.                           |
+| 🔁 **Phases**     | One step → commit or rollback.                               | Two steps → **Prepare** and **Commit** (or rollback).                             |
+| 🔒 **Example**    | Transfer money between two accounts in the **same bank DB**. | Transfer money from **Bank A DB** to **Bank B DB** — two separate databases.      |
+| 🧩 **Rollback**   | Simple rollback handled by one DB.                           | Coordinator ensures rollback across all DBs if any one fails.                     |
+
+---
+
+### 💬 **Simple way to remember:**
+
+> * **Transaction** = All-or-nothing **inside one system**.
+> * **Two-Phase Commit (2PC)** = All-or-nothing **across many systems**.
+
+---
+
+### 💡 Example:
+
+* **Transaction:** Deduct and add money between two accounts in **the same database**.
+* **2PC:** Deduct money from Bank A’s database and add it to Bank B’s database → needs coordination between both.
+
+---
+
+### ✅ **In short:**
+
+> A **transaction** keeps data consistent **within one system**,
+> while a **2-phase commit** keeps data consistent **across multiple systems**.
+
+
+Q13 : What is saga design pattern and it saga design pattern types ? 
+Ans : this is my  explaination : 
+saga design pattern means iam telling one example tell me if iam correct or not suppose i want to go for a picnic to goa
+from delhi for that i visited a website mmt.com and now this website has all the bookings like flight booking , hotel 
+booking , taxi booking suppose i booked all three and they are all synced with each other now suppose the taxi booking
+get fail means he would not be there with me in entire goa journey so for that my trip is wasted so what is the use to
+go goa for picnic so automatically flight and hotel booking also gets cancelled. 
+
+chat gpt explaination : 
+
+✅ **Yes! You got it absolutely correct! 🎯**
+
+That’s a **perfect real-life example** of the **Saga Design Pattern** 👏
+
+Let’s restate it clearly with your story 👇
+
+---
+
+### 🌴 **Your Example (Goa Trip Booking) and Saga Pattern:**
+
+You go to **MMT.com** and start a **trip booking transaction** that includes:
+
+1. **Flight booking** ✈️
+2. **Hotel booking** 🏨
+3. **Taxi booking** 🚖
+
+All three are separate **services (microservices)** working together.
+
+Now:
+
+* If **all succeed**, the saga **completes successfully** ✅
+* But if **one fails** (e.g., taxi booking ❌), then Saga says —
+  “Okay, undo the previous successful steps.”
+
+So it will automatically:
+
+* **Cancel the hotel booking**, and
+* **Cancel the flight booking**,
+
+to keep everything **consistent** (no partial trip).
+
+---
+
+### 💡 In short:
+
+> You understood it perfectly —
+> **Saga Pattern ensures data consistency** across multiple services by using **compensating actions** when one step
+ fails.
+
+So yes 👍
+Your **Goa trip example** is **exactly how the Saga Design Pattern works** in real life!
+
+types of saga desing pattern  : 
+Of course 😊 — here’s an even **simpler explanation** 👇
+
+---
+
+### ⚙️ **Types of Saga Design Pattern (very easy)**
+
+There are **2 types** 👇
+
+---
+
+### 🧭 **1️⃣ Orchestration-based Saga**
+
+* There is **one central boss (Orchestrator)**.
+* It tells each service what to do — one by one.
+* If something fails, the boss tells others to **undo** their work.
+
+🧠 *Think of it like:*
+A **trip planner** who says:
+“Book flight → then hotel → then taxi”
+If taxi fails → “cancel hotel → cancel flight”
+
+---
+
+### 🔔 **2️⃣ Choreography-based Saga**
+
+* There is **no boss**.
+* Each service **listens to events** and reacts.
+* If one fails, it sends an event so others know to **cancel themselves**.
+
+🧠 *Think of it like:*
+All services **talk to each other automatically** —
+when flight is booked, hotel books itself, then taxi books, etc.
+If taxi fails → it sends a message → flight and hotel cancel.
+
+---
+
+### 🧩 **Simple difference**
+
+| Type             | Who controls the flow? | Example                                       |
+| ---------------- | ---------------------- | --------------------------------------------- |
+| 🧭 Orchestration | One central service    | “Trip Manager” controls booking steps         |
+| 🔔 Choreography  | Services themselves    | Services react to events (no central control) |
+
+---
+
+### ✅ **In one line:**
+
+> **Orchestration** → One boss gives orders 👨‍💼
+> **Choreography** → Everyone follows the music 🎶 (events)/everyone knows their role and reacts to events
+
+---
+
+Would you like me to give a **tiny real Java example** of each (just 10 lines each)?
+
+
+
+Q14 : So What is the difference between transaction vs 2 phase commit vs saga design pattern ?
+Ans : 
+| Concept                     | Works Where                           | Description                                                                                                 |
+| --------------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| 🧩 **Transaction**          | Inside **one database/system**        | All steps succeed or fail together. (e.g., Spring @Transactional)                                           |
+| ⚙️ **2-Phase Commit (2PC)** | Across **multiple databases/systems** | Coordinates all databases to commit or rollback **at the same time** (distributed transaction).             |
+| 🔄 **Saga Design Pattern**  | Across **microservices**              | Each service commits its own data; if something fails, run **compensating actions** to undo previous steps. |
+
+Note - 2-Phase Commit (2PC) is mainly used in a monolithic system that has multiple databases.
+
+saga design pattern > 2 phase commit > transacation - this will be the order 
+
+Q : Can we use multiple databases with a single monolithic application ? 
+Ans - yes 
+coding example : 
+Excellent question 👍 — yes, absolutely!
+✅ A **single Spring Boot application** *can connect to multiple databases*.
+
+This is actually pretty common — for example:
+
+* One DB for **users**, another for **orders**.
+* Or in your case, one DB for **accounts**, another for **transaction history**.
+
+Let’s go step by step 👇
+
+---
+
+## 🧩 Example: One Spring Boot app, two MySQL databases
+
+### 🏗️ Project setup
+
+We’ll connect:
+
+* `db1` → customer/account database
+* `db2` → transaction/history database
+
+---
+
+### ⚙️ **1. application.properties**
+
+```properties
+# First Database (Accounts)
+spring.datasource.accounts.url=jdbc:mysql://localhost:3306/accounts_db
+spring.datasource.accounts.username=root
+spring.datasource.accounts.password=admin
+spring.datasource.accounts.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# Second Database (Transactions)
+spring.datasource.transactions.url=jdbc:mysql://localhost:3306/transactions_db
+spring.datasource.transactions.username=root
+spring.datasource.transactions.password=admin
+spring.datasource.transactions.driver-class-name=com.mysql.cj.jdbc.Driver
+```
+
+---
+
+### 💻 **2. Configuration for Accounts Database**
+
+```java
+@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+    basePackages = "com.example.repo.accounts",
+    entityManagerFactoryRef = "accountsEntityManagerFactory",
+    transactionManagerRef = "accountsTransactionManager"
+)
+public class AccountsDBConfig {
+
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource.accounts")
+    public DataSource accountsDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = "accountsEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean accountsEntityManagerFactory(
+            EntityManagerFactoryBuilder builder) {
+        return builder
+                .dataSource(accountsDataSource())
+                .packages("com.example.model.accounts")
+                .persistenceUnit("accountsPU")
+                .build();
+    }
+
+    @Bean(name = "accountsTransactionManager")
+    public PlatformTransactionManager accountsTransactionManager(
+            @Qualifier("accountsEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
+    }
+}
+```
+
+---
+
+### 💻 **3. Configuration for Transactions Database**
+
+```java
+@Configuration
+@EnableJpaRepositories(
+    basePackages = "com.example.repo.transactions",
+    entityManagerFactoryRef = "transactionsEntityManagerFactory",
+    transactionManagerRef = "transactionsTransactionManager"
+)
+public class TransactionsDBConfig {
+
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource.transactions")
+    public DataSource transactionsDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = "transactionsEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean transactionsEntityManagerFactory(
+            EntityManagerFactoryBuilder builder) {
+        return builder
+                .dataSource(transactionsDataSource())
+                .packages("com.example.model.transactions")
+                .persistenceUnit("transactionsPU")
+                .build();
+    }
+
+    @Bean(name = "transactionsTransactionManager")
+    public PlatformTransactionManager transactionsTransactionManager(
+            @Qualifier("transactionsEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
+    }
+}
+```
+
+---
+
+### 🧠 **4. Repositories & Entities**
+
+You simply separate packages:
+
+* Entities in `com.example.model.accounts`
+* Entities in `com.example.model.transactions`
+* Repositories in `com.example.repo.accounts` and `com.example.repo.transactions`
+
+Example:
+
+```java
+// com.example.model.accounts.Account.java
+@Entity
+public class Account {
+    @Id
+    private Long id;
+    private String name;
+    private Double balance;
+}
+
+// com.example.model.transactions.Transaction.java
+@Entity
+public class Transaction {
+    @Id
+    private Long id;
+    private String type;
+    private Double amount;
+}
+```
+
+---
+
+### 🔄 **5. Service Example**
+
+You can use both databases in the same service:
+
+```java
+@Service
+public class BankService {
+
+    @Autowired
+    private AccountRepository accountRepo;
+
+    @Autowired
+    private TransactionRepository transactionRepo;
+
+    @Transactional // you can also specify which transaction manager to use
+    public void transferMoney(Long accountId, Double amount) {
+        Account acc = accountRepo.findById(accountId).orElseThrow();
+        acc.setBalance(acc.getBalance() - amount);
+        accountRepo.save(acc);
+
+        Transaction tx = new Transaction();
+        tx.setType("DEBIT");
+        tx.setAmount(amount);
+        transactionRepo.save(tx);
+    }
+}
+```
+
+---
+
+### ✅ **In short**
+
+* Yes — **one Spring Boot app can have multiple databases**.
+* You define **separate DataSources**, **EntityManagerFactories**, and **TransactionManagers**.
+* Then you decide which repo uses which DB.
+
+---
+
+Would you like me to extend this with a **2-phase commit (XA transaction)** setup for those two databases too? That would show how both DBs commit or rollback together.
+
+
+and now suppose if you have multiple databases connected to single monlithic application and u want to 
+use only one database then use @primary annotation the Db config class  like this which u want to use this DB 
+suppose u want to use account DB to be used by default so write code like this 
+@Configuration
+@EnableJpaRepositories(
+    basePackages = "com.example.repo.accounts",
+    entityManagerFactoryRef = "accountsEntityManagerFactory",
+    transactionManagerRef = "accountsTransactionManager"
+)
+public class AccountsDBConfig {
+
+    @Primary  // ✅ This makes it the default DataSource
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource.accounts")
+    public DataSource accountsDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Primary
+    @Bean(name = "accountsEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean accountsEntityManagerFactory(
+            EntityManagerFactoryBuilder builder) {
+        return builder
+                .dataSource(accountsDataSource())
+                .packages("com.example.model.accounts")
+                .persistenceUnit("accountsPU")
+                .build();
+    }
+
+    @Primary
+    @Bean(name = "accountsTransactionManager")
+    public PlatformTransactionManager accountsTransactionManager(
+            @Qualifier("accountsEntityManagerFactory") EntityManagerFactory emf) {
+        return new JpaTransactionManager(emf);
+    }
+}
+
+
+and suppose if i want to use transaction DB further then i can use @Qualifier anntation for this 
+
+| Situation                            | What to do                      |
+| ------------------------------------ | ------------------------------- |
+| Only one database                    | No need for `@Primary`          |
+| Multiple databases, want one default | ✅ Add `@Primary`               |
+| Need to use another DB sometimes     | Use `@Qualifier("otherDbBean")` |
+
+| Action                         | Result                                                                |
+| ------------------------------ | --------------------------------------------------------------------- |
+| `@Primary` on Accounts DB      | Makes it the **default** for repositories or beans without qualifiers |
+| Transactions DB config present | Still available — but must be used explicitly by using @Qualifier     |
+| No qualifier used anywhere     | Only **Accounts DB** will be used                                     |
+
+
+Note - 
+so for 2 phase commit it uses @transaction annotation and for saga desing pattern You can (and should) use
+@Transactional inside each individual service, but NOT across the entire saga (multiple services).
+
+Saga pattern = @Transactional inside each service (local) + manual compensation across services.
+
+
+Q : what is decomposition design pattern ? 
+Ans : 
+Sure 😊
+
+### 🧠 **Decomposition Design Pattern – Simple Explanation**
+
+The **Decomposition Design Pattern** means **breaking a big system or problem into smaller, easier parts** 
+(modules or services) so each part can be built, tested, and maintained separately.
+
+👉 In simple words:
+
+> **Decomposition = Divide and conquer** — split a large problem into smaller, manageable pieces.
+
+---
+
+### 💡 **Real-life Example:**
+
+Think of a restaurant 🍽️:
+
+* The **chef** cooks
+* The **waiter** serves
+* The **cashier** handles bills
+
+Each has a **separate role**, but they all work together to run the restaurant efficiently.
+That’s decomposition — each part does one job well.
+
+---
+
+### 🧩 **In software design:**
+
+You can decompose a large application by:
+
+1. **Functional decomposition** → split by features (e.g., Login, Payment, Orders)
+2. **Service decomposition** → split into **microservices** (e.g., User Service, Product Service)
+3. **Layered decomposition** → split by layers (UI, Business Logic, Database)
+
+---
+
+### ✅ **In short:**
+
+> **Decomposition Pattern = Breaking a big system into smaller, independent, reusable parts.**
+> It makes the system **simpler to build, test, and maintain**.
+
+
+Q15 : what is CQRS design pattern  ? 
+Ans : 
+Sure 😊
+
+### 🧠 **CQRS Design Pattern – Simple Explanation**
+
+**CQRS** stands for **Command Query Responsibility Segregation**.
+
+👉 In simple words:
+
+> **CQRS means splitting read and write operations** into **separate parts** of your system —
+> one for **updating data (commands)** and another for **reading data (queries)**.
+
+---
+
+### 💡 **Simple Example:**
+
+Imagine you have an app for managing orders 🛒
+
+* When you **place an order**, you’re **writing** data → **Command**
+* When you **view order details**, you’re **reading** data → **Query**
+
+In normal systems, both use the same model or database.
+But in **CQRS**, they are **separated** for better performance and scalability.
+
+---
+
+### 🧩 **Key Idea:**
+
+* **Command side** → Handles *create, update, delete* (changes data).
+* **Query side** → Handles *read* operations (fetches data).
+* Each can have its **own database or model** optimized for its job.
+
+---
+
+### 💬 **Real-life Analogy:**
+
+Think of a restaurant 🍽️
+
+* **Waiter** takes orders → *Command (write)*
+* **Customer** checks menu → *Query (read)*
+  Two separate actions — one changes state, one just reads information.
+
+---
+
+### ✅ **In short:**
+
+> **CQRS Pattern = Separate the read and write logic** of your application
+> to make it **faster, cleaner, and more scalable** — especially useful in **microservices** or **event-driven
+ systems**.
+
+
+Create, Update, Delete Has its own write DB - menas these 3 things will have only one DB 
+and for read the data we have a seperate db
+
+Q: Why we use CQRS Design Pattern?
+
+👉 Because reading data and writing data have different needs —
+and separating them makes the system faster, simpler, and more scalable
+
+Q16 : RestTemplate vs WebClient vs Feign Client vs Kafka ? 
+Ans : 
+| Method              | Type      | Sync/Async   | Used For               | Example           |
+| ------------------- | --------- | ------------ | ---------------------- | ----------------- |
+| 🧱 **RestTemplate** | HTTP      | Synchronous  | Simple old-style calls | A → B (waits)     |
+| ⚡ **WebClient**    | HTTP      | Asynchronouss | Modern, non-blocking   | A → B (reactive) |
+| 🧩 **Feign Client** | HTTP      | Synchronous  | Easy declarative calls | Interface-based   |
+| 🔊 **Kafka**        | Messaging | Asynchronous | Event-driven systems   | Publish/Subscribe |
+
+
+| Method           | Library                                            | Type  | Common Methods                                             | Communication |
+| ---------------- | -------------------------------------------------- | ----- | ---------------------------------------------------------- | ------------- |
+| **RestTemplate** | `org.springframework.web.client`                   | Sync  | `getForObject()`, `postForObject()`, `put()`, `delete()`   | HTTP          |
+| **WebClient**    | `org.springframework.web.reactive.function.client` | Async | `get()`, `post()`, `retrieve()`, `bodyToMono()`, `block()` | HTTP          |
+| **Feign Client** | `spring-cloud-openfeign`                           | Sync  | Interface methods (`@GetMapping`, `@PostMapping`)          | HTTP          |
+| **Kafka**        | `spring-kafka`                                     | Async | `kafkaTemplate.send()`, `@KafkaListener`                   | Messaging     |
+
+Perfect 👏 You’re asking how to **call another microservice** (like `order-service`) using
+👉 `RestTemplate` and 👉 `WebClient`.
+
+Let’s explain both clearly with **simple examples** 👇
+
+---
+
+## 🧱 **1️⃣ Using RestTemplate (Old, Synchronous Way)**
+
+### 🎯 Scenario:
+
+You are in **Customer Service**, and you want to call **Order Service** to get order details.
+
+---
+
+### ✅ **Step 1: Producer (Order Service)**
+
+```java
+// OrderController in Order Service
+@RestController
+@RequestMapping("/orders")
+public class OrderController {
+
+    @GetMapping("/{id}")
+    public Order getOrderById(@PathVariable Long id) {
+        return new Order(id, "Laptop", 50000);
+    }
+}
+```
+
+---
+
+### ✅ **Step 2: Consumer (Customer Service)**
+
+```java
+@Service
+public class CustomerService {
+
+    RestTemplate restTemplate = new RestTemplate();
+
+    public Order getOrderDetails(Long orderId) {
+        // URL of Order Service
+        String url = "http://localhost:8081/orders/" + orderId;
+
+        // Call another microservice using RestTemplate
+        return restTemplate.getForObject(url, Order.class);
+    }
+}
+```
+
+✅ **Common Methods of RestTemplate:**
+
+| Method                                   | Description    |
+| ---------------------------------------- | -------------- |
+| `getForObject(url, classType)`           | GET request    |
+| `postForObject(url, request, classType)` | POST request   |
+| `put(url, request)`                      | PUT request    |
+| `delete(url)`                            | DELETE request |
+
+---
+
+## ⚡ **2️⃣ Using WebClient (Modern, Reactive Way)**
+
+### ✅ **Step 1: Producer (Order Service)**
+
+Same as before 👆
+
+---
+
+### ✅ **Step 2: Consumer (Customer Service)**
+
+```java
+@Service
+public class CustomerService {
+
+    private final WebClient webClient;
+
+    public CustomerService() {
+        // URL of Order Service
+        this.webClient = WebClient.create("http://localhost:8081");
+    }
+
+    public Order getOrderDetails(Long orderId) {
+        return webClient.get()
+                .uri("/orders/{id}", orderId)
+                .retrieve()
+                .bodyToMono(Order.class)
+                .block(); // block() makes it synchronous
+    }
+}
+```
+
+✅ **Common Methods of WebClient:**
+
+| Method                                     | Description                   |
+| ------------------------------------------ | ----------------------------- |
+| `.get()`, `.post()`, `.put()`, `.delete()` | HTTP verbs                    |
+| `.uri("/path")`                            | API endpoint                  |
+| `.retrieve()`                              | Executes the request          |
+| `.bodyToMono(Class)`                       | Maps response body            |
+| `.block()`                                 | Waits for response (optional) |
+
+---
+
+### 🧩 In simple words:
+
+| Aspect       | RestTemplate          | WebClient                              |
+| ------------ | --------------------- | -------------------------------------- |
+| Type         | Synchronous           | Asynchronous (non-blocking)            |
+| Style        | Old (deprecated)      | Modern (recommended)                   |
+| Typical Use  | Simple internal calls | Reactive microservices                 |
+| Example Call | `getForObject()`      | `.get().uri().retrieve().bodyToMono()` |
+
+---
+
+"http://localhost:8081/orders/" this is the URL of order service and consumer service is using this url in Consumer
+Service to get connected with this order service using rest template and webclient.
+
+| Service              | Role     | Port   | Description                     |
+| -------------------- | -------- | ------ | ------------------------------- |
+| **Order Service**    | Producer | `8081` | Provides APIs (e.g. `/orders`)  |
+| **Customer Service** | Consumer | `8080` | Calls Order Service to get data |
+
+
+Feign client  : 
+@FeignClient(name = "order-service")
+public interface OrderClient {
+    @GetMapping("/orders/{id}")
+    Order getOrder(@PathVariable("id") Long id);
+
+    @PostMapping("/orders")
+    Order createOrder(@RequestBody Order order);
+}
+
+// Usage:
+@Autowired
+private OrderClient orderClient;
+
+// 👉 Call directly like a normal method
+Order order = orderClient.getOrder(1L);
+Order newOrder = orderClient.createOrder(new Order("Phone", 30000));
+
+You don’t call methods manually — you define an interface and Feign does the rest.
+
+Kafka  : 
+
+// 👉 Producer (send message)
+@Autowired
+private KafkaTemplate<String, String> kafkaTemplate;
+
+public void sendOrderEvent(String order) {
+    kafkaTemplate.send("order-topic", order);
+}
+
+// 👉 Consumer (receive message)
+@KafkaListener(topics = "order-topic", groupId = "group_id")
+public void consumeOrder(String message) {
+    System.out.println("Received order event: " + message);
+}
+
+kafkaTemplate.send(topic, message) → to send messages
+
+@KafkaListener → to receive messages
+
+
+Q : What is Hikari CP(Connection Pool)  ? 
+Sure 😊 here’s the **easiest** explanation 👇
+
+---
+
+### ⚡ **HikariCP (Hikari Connection Pool)**
+
+**HikariCP** is a **connection pool** — it manages **database connections** for your Spring Boot app.
+
+---
+
+### 💡 Simple meaning:
+
+> It keeps a few **database connections ready** so your app doesn’t have to create a new one every time.
+
+Creating a DB connection is **slow**, so HikariCP keeps them **open and reused** — making your app **much faster** 🚀.
+
+---
+
+### 🧠 Example:
+
+Without HikariCP →
+Every time you ask for data, it opens a new DB connection (slow 😴).
+
+With HikariCP →
+It reuses an already open connection from the pool (fast ⚡).
+
+---
+
+### 💬 Real-life example:
+
+Think of a restaurant 🍽️
+Instead of hiring a new waiter for every customer, you have a **team of waiters** (a pool) ready to serve.
+
+---
+
+### ✅ In short:
+
+> **HikariCP = A fast and smart way to reuse database connections instead of creating new ones every time.**
+
+---
+
+Would you like a **small diagram** showing how HikariCP reuses connections?
+
+Q : Young generation vs Old Generation ? 
+Ans  : 
+Sure 😊 here’s the **simplest explanation** 👇
+
+---
+
+### 🧠 **Young Generation vs Old Generation (in Java Garbage Collection)**
+
+When Java creates objects, they are stored in a memory area called the **Heap**.
+The heap is divided into **two main parts**:
+👉 **Young Generation**
+👉 **Old Generation**
+
+---
+
+### 🌱 **Young Generation**
+
+* New objects are created here.
+* It’s small and fills up quickly.
+* When it gets full, **Minor Garbage Collection** runs — removes unused (dead) objects.
+* Surviving objects move to the **Old Generation** after staying alive for a while.
+
+💬 Example:
+Like a **nursery** — new babies (objects) are born here.
+If they survive (are still used), they “grow up” and move to the adult area (old generation).
+
+---
+
+### 🌳 **Old Generation**
+
+* Stores **long-lived objects** that survived multiple garbage collections.
+* Garbage collection here is slower and called **Major (or Full) GC**.
+* Happens less often but takes more time.
+
+💬 Example:
+Like the **adult section** — only mature objects live here, and cleanup takes longer.
+
+---
+
+### ✅ **In short:**
+
+| Area                | What it stores          | GC Type  | Frequency          |
+| ------------------- | ----------------------- | -------- | ------------------ |
+| 🌱 Young Generation | New short-lived objects | Minor GC | Happens often      |
+| 🌳 Old Generation   | Long-lived objects      | Major GC | Happens less often |
+
+---
+
+Would you like me to explain the **flow** (how objects move from young → old → GC) with a small diagram?
+
+
+Q : SQL V/S NoSQL ? 
+Ans : 
+
+| Point               | **SQL**                                                | **NoSQL**                                        |
+| ------------------- | ------------------------------------------------------ | ------------------------------------------------ |
+| 📋 **Data storage** | In **tables** (rows & columns)                         | In **JSON-like documents** or **key-value** form |
+| 🧱 **Structure**    | **Fixed** – you must define columns before saving data | **Flexible** – you can add new fields anytime    |
+| 🔗 **Relations**    | Can connect data using **JOINs**                       | Usually **no joins**, data kept together         |
+| ⚙️ **Scaling**      | Grows by making one server stronger 💪                 | Grows by adding more servers 🧩                  |
+| 🧮 **Good for**     | Banking, billing, structured data                      | Social media, big data, fast apps                |
+| 🗄️ **Examples**    | MySQL, PostgreSQL                                      | MongoDB, Cassandra, Redis                        |
+
+---
+
+### 💬 **Simple Example:**
+
+* **SQL** → Like an **Excel sheet** — fixed columns (Name, Age, City).
+* **NoSQL** → Like a **collection of JSON files** — every file can be different.
+
+---
+
+### ✅ **In one line:**
+
+> **SQL** = Organized, structured data.
+> **NoSQL** = Flexible, fast, handles lots of data easily.
+
+
+Q : jdbc vs jpa vs hibernte vs spring data jpa ? 
+Ans : 
+Perfect 👍 — here’s the difference between **JDBC**, **JPA**, **Hibernate**, and **Spring Data JPA** in **short and simple terms:**
+
+---
+
+### 🧱 **1. JDBC (Java Database Connectivity)**
+
+* It’s the **lowest level**.
+* You write **SQL queries manually** in Java.
+* You handle **connections, statements, and result sets** yourself.
+  👉 **Example:**
+
+```java
+Connection con = DriverManager.getConnection(...);
+PreparedStatement ps = con.prepareStatement("SELECT * FROM users");
+ResultSet rs = ps.executeQuery();
+```
+
+🟡 **You do everything manually.**
+
+---
+
+### 🧩 **2. JPA (Java Persistence API)**
+
+* It’s **just a specification** (set of rules).
+* Defines **how to map Java objects → database tables**.
+* **No actual implementation** — it needs a tool (like Hibernate) to work.
+It defines how Java objects should be stored in a database — but doesn’t do it itself.
+
+🟡 **Think of JPA as a “set of guidelines.”**
+
+---
+
+### ⚙️ **3. Hibernate**
+
+* It’s a **framework** that **implements JPA**.
+* Handles SQL generation, connection management, caching, etc.
+* Converts Java objects to database records automatically (ORM).
+*It actually does the work of saving and fetching data from the database — by following JPA’s rules.
+*hibernate is a orm which help us to do crud operation
+*It helps you store, read, update, and delete data from the database using Java objects —without writing SQL queries
+ manually.
+*Hibernate = ORM tool that helps do CRUD operations on database using Java objects (no need to write SQL).  
+ 
+  👉 You write less SQL.
+
+🟢 **Hibernate = JPA in action.**
+
+---
+
+### 🚀 **4. Spring Data JPA**
+
+*Means jpa is having some internal methods inside them in jparepository interface these methods are like already 
+ created by spring data jpa with queries and hibenate runs these methods.
+
+* It’s built **on top of Hibernate + JPA**.
+* You **don’t even need to write queries** — it generates them automatically.
+  👉 Example:
+
+```java
+public interface UserRepository extends JpaRepository<User, Long> {
+    List<User> findByName(String name);
+}
+```
+
+or 
+
+this code is of spring data jpa code - 
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    @Query("SELECT u FROM User u WHERE u.name = :name")
+    User findByName(@Param("name") String name);
+}
+
+But — under the hood — Spring Data JPA uses Hibernate to run these queries.
+
+🟢 **Spring Data JPA = Less code + uses Hibernate behind the scenes.**
+
+Spring Data JPA gives you ready-made interfaces (like JpaRepository)
+that already have built-in CRUD methods, such as:
+save()
+findById()
+findAll()
+deleteById()
+
+
+Hibernate is the actual implementation that runs these methods.
+When you call save() or findAll(), Hibernate generates the SQL queries and executes them on your database.
+
+---
+
+### 🧠 **In short:**
+
+| Layer               | What it is                 | You write SQL? | Who manages ORM?     |
+| ------------------- | -------------------------- | -------------- | -------------------- |
+| **JDBC**            | Low-level database API     | ✅ Yes          | ❌ You                |
+| **JPA**             | Specification (guidelines) | ⚠️ Optional    | ❌ Needs impl         |
+| **Hibernate**       | JPA Implementation         | ❌ No           | ✅ Hibernate          |
+| **Spring Data JPA** | Wrapper over Hibernate     | ❌ No           | ✅ Spring + Hibernate |
+
+---
+
+Would you like me to show a **simple example using all four** (same query written in JDBC, JPA, Hibernate, and Spring Data JPA)?
+
+Spring Data JPA internally uses Hibernate, JPA, and JDBC 
+
+✅ **Yes! You are 100% correct.** 👏
+
+Here’s how it works **under the hood** in simple steps 👇
+
+---
+
+### 🧩 **Spring Data JPA Stack (Inside Flow)**
+
+**1️⃣ Spring Data JPA**
+
+* You just write interfaces like `UserRepository extends JpaRepository`.
+* Spring Data JPA auto-generates queries and handles everything for you.
+
+⬇️ (Internally uses)
+
+**2️⃣ JPA (Java Persistence API)**
+
+* Acts as a **set of rules/specification** that defines how Java objects should be mapped to DB tables.
+
+⬇️ (Needs implementation)
+
+**3️⃣ Hibernate**
+
+* **Implements JPA.**
+* Actually performs the ORM (Object–Relational Mapping).
+* Converts your Java objects to SQL queries automatically.
+
+⬇️ (At the lowest level)
+
+**4️⃣ JDBC**
+
+* Hibernate finally uses **JDBC** to send the SQL queries to the **database** and fetch results.
+
+---
+
+### 🧠 In short:
+
+> **Spring Data JPA → uses JPA → implemented by Hibernate → which uses JDBC → to talk to Database**
+
+---
+
+**Example flow:**
+You call:
+
+```java
+userRepository.findAll();
+```
+
+➡ Spring Data JPA creates query
+➡ JPA defines how to map `User` entity
+➡ Hibernate builds SQL query
+➡ JDBC executes it in the database
+
+---
+
+So your statement —
+
+> “Spring Data JPA internally uses Hibernate, JPA, and JDBC”
+
+✅ **is absolutely correct.**
+
+
+Spring boot api code  - 
+Perfect 👍 Let's build a **complete Spring Boot project from scratch** using **Spring Data JPA**, including CRUD operations and one custom finder (`findByAddress`) — all **step-by-step** and **easy to follow**.
+
+---
+
+## 🧱 Project: `UserManagement`
+
+### 🧰 **Tech Stack**
+
+* Spring Boot
+* Spring Data JPA
+* H2 Database (in-memory DB, no setup needed)
+* Hibernate (auto-used by Spring JPA)
+
+---
+
+## 📁 Project Structure
+
+```
+UserManagement/
+ ├── src/main/java/com/example/usermanagement/
+ │     ├── controller/
+ │     │     └── UserController.java
+ │     ├── model/
+ │     │     └── User.java
+ │     ├── repository/
+ │     │     └── UserRepository.java
+ │     ├── service/
+ │     │     └── UserService.java
+ │     └── UserManagementApplication.java
+ └── src/main/resources/
+       └── application.properties
+```
+
+---
+
+## 🧩 1️⃣ `UserManagementApplication.java`
+
+```java
+package com.example.usermanagement;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class UserManagementApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(UserManagementApplication.class, args);
+    }
+}
+```
+
+---
+
+## 🧩 2️⃣ `User.java` (Model)
+
+```java
+package com.example.usermanagement.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private String email;
+    private String address;
+
+    public User() {}
+
+    public User(String name, String email, String address) {
+        this.name = name;
+        this.email = email;
+        this.address = address;
+    }
+
+    public Long getId() { return id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+}
+```
+
+---
+
+## 🧩 3️⃣ `UserRepository.java`
+
+```java
+package com.example.usermanagement.repository;
+
+import com.example.usermanagement.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    
+	// No code needed — Spring Data JPA provides save(), findById(), findAll(), deleteById()
+    
+	// Spring Data JPA automatically creates this query
+	//you are not writing the SQL or JPQL query yourself —
+    //Spring Data JPA automatically generates the query for you at runtime based on the method name.
+	List<User> findByAddress(String address);
+	
+	or
+	
+	// ✅ Custom manual JPQL query
+	@Query("SELECT u FROM User u WHERE u.address = :address")
+    List<User> findUsersByAddress(@Param("address") String address);
+	
+	or
+	
+	//If you wanted to write a native SQL query instead, you can do this:
+	@Query(value = "SELECT * FROM user WHERE address = :address", nativeQuery = true)
+    List<User> findUsersByAddressNative(@Param("address") String address);
+	
+	Note - 
+	where is this query actually written?
+
+	✅ It’s not written by you anywhere.
+	✅ It’s generated dynamically by Spring Data JPA using:
+
+	the method name pattern (like findBy, findByNameAndEmail, etc.)
+
+	the entity fields (like address in your User class)
+
+| What you write                                  | What Spring Data JPA does             |
+| ----------------------------------------------- | ------------------------------------- |
+| `findByAddress(String address)`                 | Automatically builds a JPQL query     |
+| `findByNameAndEmail(String name, String email)` | Builds query with multiple conditions |
+| `save(user)`                                    | Inserts or updates record             |
+| `findAll()`                                     | Runs `SELECT * FROM User`             |
+| `deleteById(id)`                                | Runs `DELETE FROM User WHERE id = ?`  |
+
+
+}
+```
+
+---
+
+## 🧩 4️⃣ `UserService.java`
+
+```java
+package com.example.usermanagement.service;
+
+import com.example.usermanagement.model.User;
+import com.example.usermanagement.repository.UserRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UserService {
+
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    // CREATE or UPDATE
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
+
+    // READ all
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    // READ by ID
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    // READ by address (custom method)
+    public List<User> getUsersByAddress(String address) {
+        return userRepository.findByAddress(address);
+    }
+
+    // DELETE
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+}
+```
+
+---
+
+## 🧩 5️⃣ `UserController.java`
+
+```java
+package com.example.usermanagement.controller;
+
+import com.example.usermanagement.model.User;
+import com.example.usermanagement.service.UserService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    // CREATE
+    @PostMapping
+    public User createUser(@RequestBody User user) {
+        return userService.saveUser(user);
+    }
+
+    // READ all
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    // READ by ID
+    @GetMapping("/{id}")
+    public Optional<User> getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
+    }
+
+    // READ by address
+    @GetMapping("/address/{address}")
+    public List<User> getUsersByAddress(@PathVariable String address) {
+        return userService.getUsersByAddress(address);
+    }
+
+    // DELETE
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return "User deleted successfully!";
+    }
+}
+```
+
+---
+
+## 🧩 6️⃣ `application.properties`
+
+```properties
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.h2.console.enabled=true
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update
+```
+
+---
+
+## 🚀 **Run the Project**
+
+Start the Spring Boot app and test with:
+
+### 🧪 **API Endpoints**
+
+| Action               | Method | Endpoint               | Example Body                                                        |
+| -------------------- | ------ | ---------------------- | ------------------------------------------------------------------- |
+| Create User          | POST   | `/users`               | `{ "name": "John", "email": "john@gmail.com", "address": "Delhi" }` |
+| Get All Users        | GET    | `/users`               | —                                                                   |
+| Get User by ID       | GET    | `/users/1`             | —                                                                   |
+| Get Users by Address | GET    | `/users/address/Delhi` | —                                                                   |
+| Delete User          | DELETE | `/users/1`             | —                                                                   |
+
+---
+
+Would you like me to add **Swagger UI** to make testing all endpoints super easy in a browser (no Postman needed)?
+
+
+Q : difference between JPQL Query vs Native Sql Query? 
+
+| Type                 | How it works                                           | Example                                                                         |
+| -------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------- |
+| **Derived query**    | Spring generates query from method name                | `findByAddress(String address)`                                                 |
+| **JPQL query**       | You write custom JPQL with `@Query`                    | `@Query("SELECT u FROM User u WHERE u.address = :address")`                     |
+| **Native SQL query** | You write raw SQL with `@Query(..., nativeQuery=true)` | `@Query(value="SELECT * FROM user WHERE address = :address", nativeQuery=true)` |
+
+
+When to use @Query
+
+Use it when:
+
+You need a complex query (joins, conditions, aggregations)
+
+Spring Data’s method naming can’t express your logic easily
+
+@Repository 
+public interface UserRepository extends JpaRepository<User, Long> 
+{
+ @Query("SELECT u FROM User u WHERE u.address = :address") 
+ List<User> findUsersByAddress(@Param("address") String address);
+ }  
+ 
+this above code is also spring data jpa
+
+Note-so spring data jpa allows you to write the sql query if u want with the use of @Query annotation and if u dont
+want to write spring data jpa will handel by itself
+
+| Option                                   | What happens                                                                                                       | Example                                                     |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- |
+| ✅ **Let Spring handle it automatically** | You just define method names like `findByName`, `findByEmail` — Spring Data JPA **creates the SQL query for you**. | `List<User> findByAddress(String address);`                 |
+| 🧑‍💻 **Write the query yourself**       | If you need a complex or custom query, you can write it using `@Query`.                                            | `@Query("SELECT u FROM User u WHERE u.address = :address")` |
+
+
+Spring Data JPA = flexibility.
+It can auto-generate queries or let you write your own — both use Hibernate under the hood.
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    // ✅ Auto-generated query
+    List<User> findByAddress(String address);
+
+    // ✅ Custom JPQL query
+    @Query("SELECT u FROM User u WHERE u.address = :address")
+    List<User> findUsersByAddress(@Param("address") String address);
+
+    // ✅ Native SQL query
+    @Query(value = "SELECT * FROM user WHERE address = :address", nativeQuery = true)
+    List<User> findUsersByAddressNative(@Param("address") String address);
+	
+	//All three methods above are Spring Data JPA —
+    //only the query-writing style is different.
+
+    //Spring Data JPA gives you auto-generated queries,
+    //but you can also write your own custom queries using @Query if needed.
+}
+
+
+and 
+
+No worries 😊 — let’s make it **super, super easy** 👇
+
+---
+
+### 🔹 **JPQL (Java Persistence Query Language)**
+
+* You write queries **using Java class names** (entities) and **their variables**.
+* You **don’t talk directly to the database**, Hibernate does that for you.
+
+🧠 Think of it like:
+
+> “I’ll talk to my Java objects — Hibernate, you handle the SQL part.”
+
+✅ Example:
+
+```java
+@Query("SELECT u FROM User u WHERE u.name = :name")
+```
+
+Here:
+
+* `User` = your **Entity class name**, not the table name.
+* `name` = field in your Java class.
+
+Hibernate converts this to SQL internally:
+
+```sql
+SELECT * FROM users WHERE name = ?
+```
+
+---
+
+### 🔹 **Native SQL Query**
+
+* You write **real SQL** — directly as your database understands it.
+* No conversion by Hibernate — you control everything.
+
+✅ Example:
+
+```java
+@Query(value = "SELECT * FROM users WHERE name = :name", nativeQuery = true)
+```
+
+Here:
+
+* `users` = **table name** in your database.
+* `name` = **column name** in that table.
+
+---
+
+### 🧩 **In one line:**
+
+> 🔸 **JPQL** → Works with **Entity classes and fields** (Java world).
+> 🔸 **Native SQL** → Works with **Tables and columns** (Database world).
+
+---
+
+### 💬 Analogy:
+
+It’s like the difference between:
+
+* Talking to your **friend (Java)**, and they talk to the **store owner (database)** for you → **JPQL**
+* Talking **directly** to the **store owner (database)** → **Native SQL**
+
+---
+
+Would you like me to show both queries for the **same use case** side-by-side (JPQL vs Native SQL)? That makes it even
+clearer.
+
+| Feature                   | Who writes the query? | When to use?                                    |
+| ------------------------- | --------------------- | ----------------------------------------------- |
+| **Derived Query Methods** | Spring automatically  | Simple queries like `findByName`, `findByEmail` |
+| **@Query JPQL**           | You write it          | When logic is complex                           |
+| **@Query native SQL**     | You write it          | When DB-specific queries are needed             |
+
+
+
+Q : What is virtual thread vs platform thread? 
+Ans : 
+
+Perfect question 👏 Let’s make it **super simple** 👇
+
+---
+
+### 🧩 **Platform Thread vs Virtual Thread**
+
+| Feature              | **Platform Thread**                               | **Virtual Thread**                         |
+| -------------------- | ------------------------------------------------- | ------------------------------------------ |
+| **What it is**       | Normal Java thread (traditional)                  | Lightweight thread (new in Java 19+)       |
+| **Created by**       | Operating System (OS)                             | Java Virtual Machine (JVM)                 |
+| **Memory usage**     | Heavy — each thread takes a lot of memory (~1 MB) | Very light — only a few KB per thread      |
+| **How many can run** | Limited (few thousands max)                       | Can create thousands or even millions      |
+| **Speed**            | Slower to create and switch                       | Very fast and scalable                     |
+| **Best for**         | CPU-heavy tasks                                   | I/O-heavy tasks (like web calls, DB calls) |
+
+---
+
+### 💬 **In short:**
+
+> 🧠 **Platform threads** = old, heavy, OS-managed threads.
+> ⚡ **Virtual threads** = new, super-light Java-managed threads (Project Loom).
+
+---
+
+### 💡 **Simple Example:**
+
+If your app needs to handle 10,000 users:
+
+* Platform threads → ❌ Might run out of memory
+* Virtual threads → ✅ Easily possible
+
+---
+
+### 🧠 Analogy:
+
+> Platform thread = a full truck 🚛 (heavy, strong but few)
+> Virtual thread = a scooter 🛵 (light, many can run together)
+
+   Q : what is the meaning of hign throughput concurrent application ? 
+   Great question 👏 Let’s make it super easy 👇
+
+---
+
+### 🧠 **High Throughput Concurrent Application — Simple Meaning**
+
+* **Throughput** = how much work your app can do per second (like how many requests or transactions it can handle).
+* **Concurrent** = doing many things **at the same time** (not one after another).
+
+---
+
+### 💬 So in simple words:
+
+> A **high throughput concurrent application** is one that can handle **lots of tasks or users at the same time**
+> — **quickly and efficiently** — without slowing down.
+
+---
+
+### 💡 Example:
+
+Imagine a website:
+
+* **Low throughput** → handles only 10 users/second
+* **High throughput** → handles 10,000 users/second 🚀
+
+---
+
+### 🧩 **In short:**
+
+> ⚡ “High throughput” = **fast**
+> 🤹 “Concurrent” = **many at once**
+> Together = a system that is **fast even with many users working at the same time**
+
+
+Note - 
+Virtual threads are not faster threads; they do not run code any faster than platform threads. They exist to provide
+scale (higher throughput), not speed (lower latency). this the above line is from oracle documnets and u told that
+virtual threads are faster
+
+💯 Excellent catch — you’re absolutely right 👏
+
+Let’s clear this up perfectly and simply 👇
+
+---
+
+### 🧠 The **truth** about Virtual Threads vs Platform Threads
+
+Oracle is correct ✅ —
+**Virtual threads are NOT faster in execution**, they just help your app **handle more work at once**.
+
+---
+
+### 🔹 **Platform threads**
+
+* Are **heavyweight** (each uses OS resources).
+* You can run only a **limited number** of them (like a few thousand).
+
+### 🔹 **Virtual threads**
+
+* Are **lightweight**, created and managed by the **JVM**, not the OS.
+* You can create **millions** of them.
+* But — each one still runs on a **real platform thread underneath**.
+
+---
+
+### 💬 So:
+
+> Virtual threads don’t **make your code run faster**,
+> they just let you run **more tasks at the same time** —
+> which means **higher throughput (more total work done)**, not **lower latency (faster response)**.
+
+---
+
+### 💡 Analogy:
+
+Think of:
+
+* Platform threads = 10 big trucks 🚛 — carry heavy loads, but only 10 at a time.
+* Virtual threads = 1,000 scooters 🛵 — each slower, but you can send many together.
+
+👉 The total goods delivered per second (**throughput**) is higher,
+but each scooter doesn’t go faster than a truck (**speed per task** is the same).
+
+---
+
+### ✅ Final takeaway:
+
+* ⏩ **Speed (latency)** — same for both
+* 🚀 **Scalability (throughput)** — much higher with **virtual threads**
+
+
+Q : What is circular dependency ? 
+Ans : 
+Sure 😊
+
+### 🔁 **Circular Dependency — Simple Explanation**
+
+A **circular dependency** happens when **two or more beans depend on each other** — forming a **loop**.
+
+---
+
+### 💡 Example:
+
+```java
+@Service
+public class AService {
+    @Autowired
+    private BService bService;
+}
+
+@Service
+public class BService {
+    @Autowired
+    private AService aService;
+}
+```
+
+👉 Here:
+
+* `AService` needs `BService`
+* `BService` needs `AService`
+
+So Spring doesn’t know **which one to create first** — this causes a **circular dependency error**.
+
+---
+
+### ⚠️ **Error example:**
+
+```
+BeanCurrentlyInCreationException: Error creating bean with name 'AService'...
+```
+
+---
+
+### ✅ **Simple Fixes:**
+
+1. Use `@Lazy` on one of the dependencies:
+
+   ```java
+   @Autowired
+   @Lazy
+   private BService bService;
+   ```
+
+   ➜ Tells Spring to create it **later**, breaking the loop.
+
+2. Or **restructure code** so they don’t depend directly on each other.
+
+---
+
+### 🧠 **In short:**
+
+> Circular dependency = When two beans depend on each other and Spring can’t decide which to create first.
+
+
+Q: what is @Transient ? 
+ans- @Transient is used in JPA (Hibernate) to tell Spring not to save that field in the database.
+@Entity
+public class User {
+    @Id
+    private Long id;
+    private String name;
+
+    @Transient
+    private int ageInYears;  // ❌ Not saved in DB
+}
+
+
+id and name → saved in the database ✅
+
+ageInYears → only in Java memory, not stored in the DB ❌
+
+Q : Integrate email service in a Spring Boot project? 
+Ans : 
+Here is the **short + simple** explanation to integrate **email service** in a Spring Boot project 👇
+
+---
+
+# ✅ **1. Add dependency**
+
+Add this in your `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
+```
+
+---
+
+# ✅ **2. Add email configuration in application.properties**
+
+Use your Gmail or company SMTP details:
+
+```properties
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=yourgmail@gmail.com
+spring.mail.password=your-app-password
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+```
+
+⚠️ For Gmail, create **App Password** (not your real password).
+
+---
+
+# ✅ **3. Create an Email Service Class**
+
+This class will send the mail.
+
+```java
+@Service
+public class EmailService {
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    public void sendEmail(String to, String subject, String body) {
+
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(to);
+        msg.setSubject(subject);
+        msg.setText(body);
+
+        mailSender.send(msg);
+    }
+}
+```
+
+---
+
+# ✅ **4. Call the email service from Controller**
+
+Example:
+
+```java
+@RestController
+public class TestController {
+
+    @Autowired
+    private EmailService emailService;
+
+    @GetMapping("/send")
+    public String sendMail() {
+        emailService.sendEmail(
+            "receiver@gmail.com",
+            "Hello",
+            "This is a test email"
+        );
+        return "Email Sent!";
+    }
+}
+```
+
+---
+
+# 🎯 **Summary (Super Simple Version)**
+
+1. Add mail dependency
+2. Add SMTP details in properties
+3. Create EmailService → use JavaMailSender
+4. Call service → email sent
+
+---
+
+If you want, I can also show you:
+✔ How to send email with **HTML template**
+✔ How to send **attachments**
+✔ How to send email using **AWS SES**
+✔ How to send email using **SendGrid**
+Just tell me!
+
+“In my project, I integrated an email service using Spring Boot MailSender.
+First, I added the spring-boot-starter-mail dependency. Then I configured the SMTP details like host, port, username,
+and password in application.properties.
+
+After that, I created a service class where I injected JavaMailSender. Using this, I built a SimpleMailMessage object 
+and set the receiver address, subject, and body. Finally, I called mailSender.send() to send the email.
+
+I exposed a simple API to trigger the email, and whenever my backend logic required — like user signup, password reset,
+or notifications — I called this service to send emails automatically.”
+
+GET http://localhost:8080/send - hit this postman 
+
+ 
+Q: What is spring cloud ? 
+Ans : 
+“Spring Cloud” is a set of tools built on top of Spring Boot that helps you easily create microservices.
+
+Simple meaning:
+
+Spring Cloud gives ready-made features so your microservices can talk to each other, discover each other, handle
+failures, and manage configuration — without you writing everything from scratch.
+
+In layman terms:
+
+Imagine you have many small apps (microservices).
+Spring Cloud works like a manager that helps them:
+
+Find each other (Service Discovery – Eureka)
+
+Share common settings (Config Server)
+
+Call each other safely (OpenFeign)
+
+Handle failures (Circuit Breaker – Resilience4j)
+
+Route requests properly (API Gateway) 
+
+
+Q : what steps to follow for development of microservices? 
+In microservice development… I normally follow a clear step-by-step approach. [pause]
+
+First… I start with domain breakdown — I identify the business modules and split them into small independent 
+services… like user service, booking service, payment service etc. [pause]
+
+Second… I design clear REST APIs for each microservice… with proper request and response models. [pause]
+
+Third… each microservice gets its own database… so that services stay loosely-coupled and scalable. [pause]
+
+Fourth… I implement communication between services… normally using REST APIs or message broker like Kafka… to make
+them async and reliable. [pause]
+
+Fifth… I add centralized configuration, logging, and monitoring… using config server, ELK, Zipkin etc. [pause]
+
+Finally… I use Docker + CI/CD for deploying each microservice independently… so we can scale and release features 
+faster."
+
+Q : Main Components of microservice and steps to build microservices ? 
+Ans : 
+"In microservices… the main components are — API Gateway… Config Server… Service Registry like Eureka… Individual
+microservices with their own DB… and Central logging + monitoring tools. [pause]
+
+And the high-level steps I follow are —
+
+Break the domain into small business services. [pause]
+
+Design REST contracts for each service. [pause]
+
+Give each service its own database. [pause]
+
+Implement service discovery — so services can find each other dynamically. [pause]
+
+Use API Gateway for routing, auth, rate limit. [pause]
+
+Add central config + centralized logging. [pause]
+
+Containerize using Docker… and deploy through CI/CD. [pause]
+
+Q : How to change the API Versioning ?
+Ans :
+
+@RestController
+@RequestMapping("/api/v1")
+public class UserControllerV1 {
+    @GetMapping("/user")
+    public String getUserV1() {
+        return "User API V1";
+    }
+}
+
+@RestController
+@RequestMapping("/api/v2")
+public class UserControllerV2 {
+    @GetMapping("/user")
+    public String getUserV2() {
+        return "User API V2 with new fields";
+    }
+}
+
+
+localhost:8080/api/v1/user
+
+localhost:8080/api/v2/user
+
+Great question — and you’re thinking correctly.
+Let me explain **with the correct logic** in very simple terms.
+
+---
+
+# 🛒 Think again about the price list example
+
+### ✔️ **Old customers using V1**
+
+They know only the old list.
+If you suddenly replace it with a new list → they get **confused**, not because of price, but because the **structure or format changes**.
+
+👉 In API versioning, it’s NOT about *price change*.
+👉 It’s about **format change**.
+
+Let me fix the analogy to match API behavior.
+
+---
+
+# ✅ Correct Analogy (Very Simple)
+
+### V1 Price List:
+
+```
+ItemName: Milk, Price: 20
+```
+
+### V2 Price List:
+
+```
+Name: Milk, MRP: 25, Discount: 2, FinalPrice: 23
+```
+
+The **format changed** (field names, structure).
+
+If an old customer (old app) expects `ItemName` and `Price`,
+but suddenly you change it to `Name` and `MRP`,
+their system breaks. ❌
+
+---
+
+# 🎯 API Versioning is about:
+
+❌ NOT price
+✔️ YES format (data structure)
+
+---
+
+# ⭐ Benefit of Versioning (Easiest Explanation)
+
+**Old apps expect old data format → let them use /v1**
+**New apps want more data → they use /v2**
+
+So nobody breaks. Everything works smoothly. ✔️
+
+---
+
+If you want, I can explain with a real API JSON example also.
+
+
+Q : What is the life cycle of the bean  ? 
+Q : in code where is ioc container present ? 
+Q : where u have used @bean in project  - in model mapper (i used model mapper) nd create a seperate bean for it in config class annotated by 
+                                           @Configuration class inside we write the method to create a bean for model mapper and 
+                                           which is anntoated by @bean 

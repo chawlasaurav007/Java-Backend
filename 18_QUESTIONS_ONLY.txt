@@ -1,0 +1,418 @@
+CORE JAVA
+
+Q1 : What is JDK vs JRE vs JVM vs JIT? 
+Q2 : Explain JVM Architecture ? 
+Q3 : What is J2EE vs J2ME vs J2SE ?  
+Q4 : What is OOPS concept ?
+Q5 : What is class and Object ?  
+Q6 : what is variables ? Types of variables?
+Q7 : what is primitive and non-primitive datatypes  ? 
+Q8 : What is method ?
+Q9 : difference between compile time and runtime execution?
+Q10 : what is compile time error and runtime error ?
+Q11 : what is new keyword?
+Q12 : how many ways to intialize the object?
+Q13 : what are the different ways to create object in java ? 
+Q14 : what is serialization and deserialization ? 
+Q15 : why we need to use serialization and deserialization ?
+Q16 : what is transient keyword ?
+Q17 : what is data hiding ? 
+Q18 : what is non subclass ?
+Q19 : types of oops concept ? Explain Each and every pillars of oops?
+Q20 : is-a relation-ship vs has-a relation-ship(association)(and its types) ?
+Q21 : Types of inheritance ?    
+Q22 : why java does not support multiple inheritance or what is diamond problem?
+Q23 : if two interfaces with the same method having the same method signature but different return 
+      types can a java class implement?
+Q24 : if two interfaces with the same method having the same method signature and having same
+      return type can a java class implement ?
+Q25 : why method overloading also called as compile time polymorphism?
+Q26 : if parent class method is default and child class method is public? will it work ? 
+Q27 : if parent class method is public and child class method is default ? will it work ?
+Q28 : Can we create an object of an abstract class?
+Q29 : Why use a constructor in an abstract class?
+Q30 : if we can create constructor in abstract class than why we cant create object in abstract                     
+      class?
+Q31 : how child class can reuse abstract class constructor ?  
+Q32 : Why interface does not have constructor ?
+Q33 : why we use abstract class / interface in java ?  
+Q34 : Difference between abstract class and interface ? 
+Q35 : can constructor initialize final static variable in interface/abstract class/ class ?
+Q36 : can constructor initialize final non static variable in interface/abstract-class/class ? 
+Q37 : suppose in an abstarct class there are 3 incomplete methods and u want to implement only 2  method in a class and 
+      that one method u dont want to implement in a class is this possible to implement in a class?
+Q38 : why we use static complete method in interface ?
+Q39 : after java8 versions can we use private access specifiers in interface in java9 versions? 
+Q40 : if we create the static method in the interface which is a complete method and as we know that this static method in 
+      interface it cant be used by other classes than what is the use we know that we dont want to share the logic of this 
+      static method to other classes then who will use this method this interface will use ?
+Q41 : when to use abstrct class and interface ? 
+Q42 : in real world project which is recommended abstract class or interface ?
+Q43 : Similarities between Abstract class & Interfaces ? 
+Q44 : Where u have used these 4 pillars of oops concept in your project(Hotel Management System) ? 
+Q45 : what is constructor?
+Q46 : what is constructor chaining?
+Q47 : this() vs super() ?
+Q48 : super vs this keyword?
+Q49 : can we use super keyword or this keyword in static method ?
+Q50 : is inheritance is must between the classes for using super and this keyword?
+Q51 : types of constructor?
+Q52 : what is default constructor?
+Q53 : Can we use any access specifiers with constructor?
+Q54 : what is IIB and SIB?
+Q55 : Difference between java util package vs java lang package?
+Q56 : What are access specifiers/modifiers.
+Q57 : What are sub-class and non subclass?
+Q58 : can we inherit constructor ?
+Q59 : Which method is used to convert string into integer and integer into string ?
+Q60 : What is Wrapper class ?
+Q61 : is wrapper class is non-primitive datatype ? 
+Q62 : is wrapper class immutable in nature ? 
+Q63 : why we use wrapper class ?
+Q64 : How to convert primitive to non-primitive -->(this is also called boxing)  ?
+Q65 : How to convert non-primitive/wrapper  to primitive -->(this is also called unboxing) ?
+Q66 : What is marker interface ? 
+Q67 : final vs finally vs finalize ? 
+Q68 : What is Object class ? and what are there methods of object class? 
+Q69 : difference between map vs flatmap ?
+Q70 : What is class up casting ?
+Q71 : What is method chaining?
+Q72 : is java Fully object-oriented programming language? 
+Q73 : deep copy vs shallow copy ? and when to use deep copy and when to use shallow copy?  
+
+======================================================================================================================================
+
+EXCEPTION HANDLING
+Q1 : what is exception in java  ?
+Q2 : what is exception handling ? Ways to handel the exception ? 
+Q3 : Hierarchy of Java Exception classes ?
+Q4 : what is error ? and explain types of error (StackOverflowError & OutOfMemoryError) ? 
+Q5 : Compile time error vs Runtime error?  
+Q6 :  Checked exception / compile time excetion vs Unchecked exception / run time excetion ? 
+Q7 : Common scenario of java where exceptions occurs ? 
+Q8 :  how to handel the exception ? 
+Q9 : what is try block ?
+Q10 : what is catch block ?
+Q11 : Can we use multiple catch block? 
+Q12 : why we need the child exception like arithmetic and null pointer exception when we have parent exception?	
+Q13 : What is finally block ?
+Q14 : What is throws keyword?
+Q15 : what is throw keyword?
+Q16 : what is java exception propagation?
+Q17 : can we use try and finally block together there is no catch block in between  ?
+Q18 : can we use multiple finally block?
+Q19 : can we use multiple try block?
+Q20 : can we use multiple catch block  ? 
+Q21 : can finally block handel the exception ?
+Q22 : can a single catch block can handel multiple exceptions ? 
+Q23 : what will be the output? 
+ 
+try {
+   return 10;
+} catch (Exception e) {
+   return 20;
+} finally {
+   return 30;
+}
+
+
+-------------------------------------handling exception in spring boot project -------------------------------------------------------
+
+Q24 : difference between @RestControllerAdvice vs @ControllerAdvice vs @ExceptionHandler ?
+Q25 : how to handel exception in spring boot project? 
+
+
+======================================================================================================================================
+
+STRING
+
+Q1 : What is String? 
+Q2 : how many ways to create string?
+Q3 : How many classes are there to create string object?
+Q4 : What is SCP(Stirng constant pool)?
+Q5 : what is the benefit of creating object using string literals ?
+Q6 : how many string objects are created ?  
+
+     String s = "saurav";
+     String s1 = new String("saurav");
+     String s2 = new String("chawla");
+
+Q7 : output ? 
+     String s = "saurav";
+     s = s.concat("chawla");
+     System.out.println(s);
+
+Q8 : output ? 
+     String s = "saurav";
+     s.concat("chawla");
+     System.out.println(s);
+
+Q9 : Q: What is intern()method string? 
+Q10 : why string object are immutable in java ?
+Q11 : difference between string builder vs string buffer ? 
+Q12 : difference between string vs string builder & string buffer ? 
+Q13 : what is immutable class ? and How to create immutable class? 
+Q14 : can we inherit immutable class ?  
+Q15 : why string class is immutable ? 
+
+======================================================================================================================================
+
+JAVA 8 FEATURES
+
+Q1 : what is the main aim of java 8?
+Q2 : what are java 8 features? Explain each features ? 
+Q3 : Why do we need functional interface?
+Q4 : types of functional interface ?
+Q5 : What are the Methods present in Optional class ?
+Q6 : Difference between .of() vs .ofNullable() method ? 
+Q7 : Diference between intermmediate operation vs Terminal operation ? 
+Q8 : Collection vs Stream ? 
+Q9 : difference between map vs flatmap ?
+Q10 : what is boxed() method in stream api ?
+
+
+======================================================================================================================================
+
+COLLECTION
+Q1 : what is collection(Collection Framework) ? 
+Q2 : Difference between Collection and Collections ?
+Q3 : why do we need Collection ? 
+Q4 : Limitations of array ? 
+Q5 : difference between array vs Collection/ArrayList ?
+Q6 : Differnce between Array vs Arrays? 
+Q7 : Collection frame work hierarchy ? 
+Q8 : What is List Interface ?
+Q9 : Difference between ArrayList and linked list  ?
+Q10 : What are generics ?
+Q11 : How many ways are there to Iterate ArrayList? 
+Q12 : Diference between Iterator vs ListIterator? 
+Q13 : What is Arrays.asList() is used for ? 
+Q14 : Internal working of ArrayList?
+Q15 : Internal working of LinkedList?
+Q16 : What is vector ? 
+Q17 : What is Stack ? 
+Q18 : What is Queue ?
+Q19 : What is Set? 
+Q20 : what is hashset? 
+Q21 : internal working of hashset?
+Q22 : What is LinkedHashSet?
+Q23 : What is TreeSet? Does Treeset contains null value ?
+Q24 : What is Map hierarchy and what is map? 
+Q25 : What is HashMap? 
+Q26 : What is Map.Entry and map.entrySet()?
+Q27 : what is LinkedHashMap? 
+Q28 : what is TreeMap? Does treen map allow null key ?
+Q29 : Internal working of HashMap ? what is Hashing ? what is equals ? what is collison ? and There are two Scenerios of equals 
+      methods what are they ? 
+Q30 : what is Concurrent Hashmap ? Does Concurrect Hashmap allow null key or null value ?	
+Q31 : Differecne between HahsMap vs Concurrent hashmap?
+Q32 : what is CopyOnWriteArrayList?
+Q33 : fail-fast vs fail-safe ? 
+Q34 : Difference between Comparable vs Comparator?
+Q35 : Why do we need comparator and comaparable interface even if we have Arrays.sort() method?
+Q36 : hashtable vs HashMap ?
+
+===================================================================================================
+
+
+MULTI-THREADING
+
+Q1 : What is single tasking ?
+Q2 : What is Multi tasking ? 
+Q3 : thread vs Process ? 
+Q4 : What is Concurrency?
+Q5 : what is concurrency and multithreading? 
+Q6 :  parallelism vs concurrency ? 
+Q7 : how internally multithreading works?
+Q8 : in how many ways multitasking can be achieved?
+Q9 : What is Thread ?
+Q10 : Which is default thread in java? 
+Q11 : What is multithreading?
+Q12 : What is user defined thread?
+Q13 : in java how many ways are there to create a user defined thread/create a thread ?
+Q14 : What is difference between extending thread class and implementing runnable interface? Which one is recommended ?
+Q15 : What is thread schedular ? 
+Q16 :  start() vs run() ? 
+Q17 : Can we call run() method directly without calling start() method ?
+Q18 : How start() method and run() method related internally ?
+Q19 : what is thread life cycle ?
+Q20 : Suppose in a thread pool there are 10 threads Suppose one of the thread done its task so it again goes to thread pool ?
+Q21 : What if u want to make thread dead during the work and after the work is done completely ?
+Q22 : thread priority and set thread name? 
+Q23 : What is calleble interface ? 
+Q24 : callable interface vs runnable interface ?
+Q25 : which approach is best to create a thread amoung?
+Q26 : In callable interface we use start method or executors(Executor service) ? 
+Q27 : What is executors? 
+Q28 : what is ExecutorService ? 
+Q29 : How to submit the task to the thread in the thread pool?
+Q30 : what is future ? 
+Q31 : difference between future vs completable future? 
+Q32 : important points on ExecutorsService?
+Q33 : Advantage of using ExecutorService ? 
+Q34 : How to create thread in callable interface ? Difference between newFixedThreadPool vs 
+      newCachedThreadPool?                                 
+Q35 : What is Deamon Thread? and how many types of threads are there?  
+Q36 : Benefit of using deamon thread ? 
+Q37 : If interviewr ask have you used deamon thread in your project ?
+Q38 : do we have deamon thread in java ?
+Q39 : What is Synchronization ?
+Q40 : what is synchronized(this){} what is this here for and also explain the locking concept                                                                                                                             according to the object? or explaining the locking concept how through object , a thread can be lock be? or how a locking concept work in real life project ?
+Q41 : which one is recommended thread safe or not thread safe ? 
+Q42 : how to achieve synchronization ? how many ways are there in to achieve synchronization? 
+Q43 : when to go for method level synchronization and when to go for block level synchronization ?
+Q44 : Create a thread with anonymous implementation or working with threads using anonymous implemention? benefits of using anonymous implementation ? 
+Q45 : What is deadlock ? and how can we prevent dead lock condition ? 
+Q46 : why we put in circular order ? to prevent deadlock? 
+Q47 : what is join() and yeild() method ?
+Q48 : What is Inter Thread Communication? 
+Q49 : Why these 3 methods of inter thread communiction are avaibale in object class not in thread class ? 
+Q50 : what is thread pool ? 
+Q51 : What is wait() ,notify() and notifyAll() method ? 
+Q52 : sleep() vs wait() ? 
+
+===================================================================================================
+
+SERVER 
+
+Q1 : What is Server ?
+Q2 : Advantages of Server ?
+Q3 : Types of Server?
+Q4 : Disadvantage of server ?
+Q5 : What is protocol ? 
+Q6 : types of protocol ? 
+Q7 : What is Domain name system ? 
+Q8 : What is cookies?
+Q9 : What is apache tomcat server ?
+
+==================================================================================================
+
+Design Pattern 
+Q1 : What is design pattern and why do we need design patterns ?
+Q2 : explain types of design pattern and also there types as well ? 
+Q3 : What is Factory pattern/Factory method pattern?
+Q4 : Where you have used Factory pattern/Factory method pattern in your project?
+Q5 : What is Singleton pattern?
+Q6 : Ways to create Singleton class ? 
+Q7 : why to make constructor private in singleton class ?
+Q8 : Why getInstance() is static method in singleton design pattern?
+Q9 : Where you have used singleton design pattern in your project?
+Q10 : What is Eager initialization and Lazy initialization ? 
+Q11 : What is Double Check Locking in singleton design pattern or Synchronized singleton design 
+     pattern? why we use double check locking ? and what is single check locking?
+Q12 : What is Volatile keyword?
+Q13 : How to break singleton design pattern?	
+Q14 : what is prototype design pattern ?
+Q15 : Benefit of using prototype design pattern ? 
+Q16 : Where u have used prototype design pattern in your project?
+Q17 : Builder design pattern  ? 
+Q18 : and now can u tell me if i want to set only two values id and name not department can i do that or is it compulsory to add department as well  ? 
+Q19 : What is Behavioral desing pattern ?
+Q20 : Where u have used Behavioral desing pattern in your project?
+
+===================================================================================================
+
+SPRINGBOOT & HIBERNATE & JUNIT-TESTING
+
+Q1 : What is embedded server ? what is the built in server spring boot application has?  
+Q2 : What is difference between spring and springboot  ? 
+Q3 : What is Rest Api?  
+Q4 : What are annotaions in java ?
+Q5 : what are bean/obejct creation annotations ?
+Q6 : What is ResponseEntity class? 
+Q7 : What is spring IOC ? 
+Q8 : What is Dependency Injection ? 
+Q9 : Main features of Spring IOC ? 
+Q10 : how many ways are there to configure the bean? 
+Q11 : @Autowired can be used in several ways to inject dependencies what are the several ways? 
+Q12 :Advantages of @Bean ? 
+Q13 : what is @Scope annotation and there types ? 
+Q14 : What is difference between put and patch ? 
+Q15 : Difference between XML vs YML/YAML ?
+Q16: Difference between Soap api vs Rest api ? 
+Q17:  What is maven  ? 
+Q18 : what are idompotent methods in spring boot ?
+Q19 : what is objectmapper and modelmapper ?
+Q20 : What is spring profile? 
+Q21 : What is spring profile?
+Q22 : What is DAO layer ? 
+Q23 : why do we create DTO class ?
+Q24 : What is spring aop  ?
+Q25 : What is auto configuration ?
+Q25 : What is hibernate ? 
+Q26 : how mapping is done between java object and database table ? what are the annotaion used to connect to DB explain that as well 
+Q27 : What is JPA(Java Persistence API) ? 
+Q28 : How you use JPA annotation in hibernate ?
+Q29 : How do you add hibernate dependencies in your project?
+Q30 : What is Spring data jpa ? 
+Q31 : difference between Crud Repository vs JPA repository?
+Q32 : why to use hibernate over jdbc(difference between hibernate and jdbc)? 
+Q33 : Important interfaces used in hibernate ? or how to maintain transaction in hibernate? 
+Q34 : difference between  EntityManagerFactory, EntityManager and Transaction v/s SessionFactory ,Session and Transaction? 
+Q35 : **Hibernate API** (`Session`, `SessionFactory`) vs **JPA API** (`EntityManager`, `EntityManagerFactory`) vs **Spring Data JPA**                (`JpaRepository`) ?  which one is better ?
+Q36 : What is mapping in hibernate ? types of mappings in hibernate? 
+Q37 : What are hibernate Configuration file ? 
+Q38 : What are hibernate mapping files?
+Q39 : difference between is hibernate caching vs cache ? types of hibernate cache ? 
+Q40: How to integrate hibernate and spring boot?
+Q41 : How can we see hibernate generated sql queries on console ? 
+Q42 : what is n+1 problem in hibernate ? 
+Q43 : how to fix n+1 problem in hibernate  ? and where to use join fetch ?
+Q44 :  What is the difference between HQL and SQL?
+Q45 : What is cascading in Hibernate?
+Q46 : we put project in a jar ? benefits of using this ? 
+Q47 : life cycle of hibernate ?
+Q49 : What is  JUnit testing and why do we need it? 
+Q50 : Difference between junit and mockito ? 
+Q51 : Annoatations used in junit with mockito testing ? 
+Q52 : difference between @Mock vs @InjectMock ? 
+Q53 : What are the important dependecies u add in your spring boot project? 
+
+
+
+
+==========================================================================================================================================
+
+SOME IMP QUESTIONS 
+Q1 : Future vs completable future ? 
+Q2 :  application.yml file and application.properties file if we run both which value it will take
+suppose in application.properties i have value = "saurav" and in application.yml i have value : "saurav" 
+and if i run the spring boot project which file it will be run application.yml or application.properties ?
+Q3 : how we can make win of application.yml file over application.properties?
+Q4 : try with resource ? 
+Q5 : where u have used functional interface in your project ? 
+Q6 : git fetch vs git pull ? 
+Q7 : implement redis cache in spring boot application? tell the steps ? and what are the annotations used in integrating redis cache in spring boot project 
+Q8 : java 17 features? 
+Q9 : JAR vs WAR ? 
+Q10 : Synchronization Internal Working (Monitor & Lock) ?
+Q11 : explain me Advanced Concurrency (Synchronization) there are total 3 types of Advanced Concurrency (Synchronization)?
+Q12 : synchronized vs volatile vs atomic in java ?
+Q13 : Application Context vs bean Factory ?
+Q14 : What is JMM(Java Memory Model) ? 
+Q15 : How to change the API Versioning ? And what is the benefit if using Api versioning , why do               
+      we change the version? 
+Q16 : What is Auto-Configuration ?
+Q17 : What is transaction in spring boot ?
+Q18 : What is 2 phase commit ? 
+Q19 : So Transaction and 2 phase commit both are kind of same then what is the difference between them ?
+Q20 : What is saga design pattern and it saga design pattern types ?
+Q21 : So What is the difference between transaction vs 2 phase commit vs saga design pattern ?
+Q22 : Can we use multiple databases with a single monolithic application ? 
+Q23  Suppose if multiple database is connectoed to single monolithic architecture and u wan to use only one database then how we will use ? 
+Q24 : what is decomposition design pattern ? 
+Q25 : what is CQRS design pattern  ? 
+Q26 : RestTemplate vs WebClient vs Feign Client vs Kafka ? and whatb are the methods u used while using these interservice communication ? 
+Q27 : What is Hikari CP(Connection Pool)  ?
+Q28 : Young generation vs Old Generation ?  
+Q29 : SQL V/S NoSQL ? 
+Q30 : jdbc vs jpa vs hibernte vs spring data jpa ? 
+Q31 : difference between JPQL Query vs Native Sql Query? 
+Q32 : What is virtual thread vs platform thread? 
+Q33 : What is circular dependency ? 
+Q34 : what is @Transient ? 
+Q35 : Integrate email service in a Spring Boot project? 
+Q36 : What is spring cloud ?
+Q37 : what steps to follow for development of microservices?
+Q38 : Main Components of microservice and steps to build microservices ? 
+Q39 : How to change the API Versioning ?

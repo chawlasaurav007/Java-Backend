@@ -1,0 +1,36 @@
+Kafka Producer
+|
+|
+|
+KAFKA CLUSTER
+─────────────────────────────────────────
+   │
+   ├── Broker 1
+   │       ├── Topic: orders
+   │       │        ├── Partition-0  ← contains offsets
+   │       │        │       [Offset 0] Message1
+   │       │        │       [Offset 1] Message2
+   │       │        │       [Offset 2] Message3
+   │       │        │
+   │       │        └── Partition-1  ← contains offsets
+   │       │                [Offset 0] MessageA
+   │       │                [Offset 1] MessageB
+   │       │
+   │
+   ├── Broker 2
+   │       ├── Topic: orders
+   │       │        ├── Partition-2  ← contains offsets
+   │       │        │       [Offset 0] X1
+   │       │        │       [Offset 1] X2
+   │       │        │
+   │       │        └── Partition-0 (Replica)
+   │
+   └── Broker 3
+           ├── Topic: orders
+           │        ├── Partition-1 (Replica)
+           │        └── Partition-2 (Replica)
+_______________________________________________________
+|
+|
+|
+kafka consumer 

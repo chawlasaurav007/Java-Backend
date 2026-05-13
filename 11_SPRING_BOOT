@@ -1,0 +1,2482 @@
+Q1 : What is difference between spring and springboot  ? 
+embedded server - embedded server is a server which is part of the application(ex spring based application).
+Like a car with a built-in engine — you just turn the key and drive.
+Same way, in Spring Boot, the app has a built-in server (like Tomcat). Just run it, and your app is live.
+
+or 
+
+Embedded server = server comes inside your application.
+Spring Boot uses embedded Tomcat by default.
+So when you run Spring Boot, Tomcat starts automatically.
+
+Ans :
+                 Spring                            |                  SpringBoot
+___________________________________________________|______________________________________________________________
+1.  spring is  a framework used to develop java    |1. spring boot is one of the module of spring framework  
+    based application with a lot of manual         |   it also develop the web application(it is widely used to  
+	configuration(xml based configuration).        |   develop rest apis).it provides embedded server such as 
+	the main feature of spring is dependency       |   tomcat,jetty.The important featur of spring boot is auto 
+	injection in case of spring we need to add     |   configuration.springboot reduces the boiler plate code.
+	server explicitly.	                           |
+2 : Requires external server setup (e.g., Tomcat,  |2. Comes with an embedded server (e.g., Tomcat, Jetty) for  
+    Jetty).                                        |   running applications out of the box.
+                                                   |
+												   
+  Q : what is jar files?
+   ans-In Spring Boot, a JAR (Java ARchive) is a packaged file that contains your entire application
+       suppose i add one dependecy mysql connector jar so it adds the jar files required for mysql connector jar
+       in maven dependecies.	   
+        
+		or
+		
+       When you add a dependency, such as MySQL Connector, Maven downloads the JAR file for MySQL Connector 
+	   along with any additional required JARs (transitive dependencies) and adds them to the Maven Dependencies 
+	   section in your project.		
+
+
+Q1 : What is Rest Api? 
+ 
+Ans - A REST API lets apps talk to each other over the internet. It uses simple HTTP methods (like GET to fetch 
+      data, POST to send data) to request or update information, usually in a format like JSON.
+				 
+Q1 : What are annotaions in java ?
+Ans : Annotations are nothing but set of instructions given to perform a specefic task. 
+
+Q2 : what are bean/obejct creation annotations ?
+ANs : these annotaions are used to create a bean where ever we use these annotaions on class or methods(@Bean) 
+      it tells spring ioc to create a bean of this class. 
+      1 - @Component
+      2 - @Service
+      3 - @Repository
+      4 - @Controller
+      5 - @Configuration -The @Configuration annotation is used on a class, which tells Spring IoC that the beans 
+                          created through the methods in this class should be managed by Spring IoC.
+						  
+      6 - @Bean	- Used within a @Configuration class to define individual bean methods. These methods are 
+	              responsible for creating and configuring beans.
+				  
+Q : What is ResponseEntity class? 
+ResponseEntity is a class in Spring that represents the entire HTTP response, including the status code, headers, and body.			 
+or 
+ResponseEntity is a class in Spring that helps you build HTTP responses. It allows you to set the status code, headers,
+and body of the response.
+
+  @GetMapping("/hello")
+    public ResponseEntity<String> sayHello() {//ResponseEntity<String> here it is used 
+        String body = "Hello World!";
+        return new ResponseEntity<>(body, HttpStatus.OK); // 200 OK
+    }
+				  
+				  
+Q3 : Explain some types of annotaions ? 
+Ans : 
+1 - @Component : @Component annotaion is used to create Bean for the class,the class which is annotated by
+                 @Component.  	 
+				 
+	Q : What is spring IOC ? 
+   ans :  Spring IoC is a container. It holds and manages the beans(Objects).It manages the life Cycle of the 
+	       bean from creating a bean to dependency injection and configuring(manages the bean behaviour) that 
+		   bean.
+		   
+		   configuration meaning - manages the bean behaviour means to provide defination to a bean(giving 
+		   identification to a bean).
+		   
+		  IoC uses DI (Dependency Injection) to manage components like classes, services, controllers, and 
+		  repositories that are annotated with @Component. Instead of using @Component, you can also use 
+		  @Service, @Controller, or @Repository, which are specialized forms of @Component.
+		  
+		  ex : Without IoC: You go to the kitchen, cook your own meal, and serve it yourself.
+               With IoC (Spring): You just tell the waiter what you want, and the kitchen (Spring) prepares and gives it
+			   to you.
+			   so spring io is like that it manages the bean for u. u not need to worry how it is created and all 
+               
+			So, Spring IoC manages the beans for you. You don’t need to worry about how they are created or managed. You
+			just define what you need, and Spring takes care of creating the objects, injecting dependencies, and managing
+			their lifecycle.
+            
+			It’s basically Spring taking control so your code is cleaner, loosely coupled, and easier to maintain.
+			
+           
+		  Q : What is Dependency Injection ? 
+		  Ans- Dependency Injection: When one bean (e.g., a @Controller class) relies on another bean 
+		       (e.g., a @Service class), Spring injects the @Service bean into the @Controller bean. 
+			   This allows the @Controller to use the @Service without creating it directly, making the 
+			   code more flexible and easier to manage.
+		      
+	Q : Types of IOC container ? 
+	Ans :1 -  Bean factory (old version,lazy loading)---------------|----------> these are the ioc container which manages our
+	     2 -  Application context(new version,(Eager loading))------|            beans. 
+		 
+		 now a days we are using Application context.
+		 
+	Q:	Main features of Spring IOC ? 
+	Ans: 1 : creating object for us . 
+		 2 : managing our object.
+		 3 : managing dependencies
+         4 : helping our application to be configurable.
+    
+    Q: how many ways are there to configure the bean? 
+    Ans : XML Configuration: Define beans and their dependencies in an XML file. This was the traditional way 
+	                         before annotations became popular.
+
+          Annotation-Based Configuration: Use annotations like @Component, @Service, @Controller, @Repository, 
+		             and @Autowired to define beans and manage their dependencies. This is more modern and 
+					 concise.
+					 
+					 // MyClass.java
+						@Component
+						public class MyClass {
+							@Autowired
+							private SomeDependency dependency;
+						}
+
+
+          Java-Based Configuration: Use Java classes annotated with @Configuration and @Bean methods to define 
+		                            beans. This approach provides type safety and is more flexible.	
+					   @Configuration
+						public class AppConfig {
+							@Bean
+							public MyClass myClass() {
+								MyClass myClass = new MyClass();
+								myClass.setProperty("value");
+								return myClass;
+							}
+						}
+
+    @Component annotation is main Stereotype annotion.
+	
+	there are other 3 type of stereo annotation.These stereo annotaion define the layer and creates bean of that 
+    class where stereo annotaion is used . 
+   
+                                       @Component
+                 ___________________________|__________________________                          
+				 |                          |                         | 
+			@Controller	                @Service                   @Repository
+		controller class in  	service classes in service     repository classes in DAO layer  
+		controller layer                layer                  DAO : it has method to interact with database
+                                                               DAO means where objects are used to access and 
+                                                               manipulate the data in database.
+															   DAO(Data access object).
+															   
+	Note : Instead of using @Controller, @Service ,@Repository on classes we can use @Component annotaion on 
+	       these classes Controller class ,Repository class and Service class. 
+
+2 - @Autowired :this annotaion says to spring ioc that provide me the bean of this class which is annotated with
+                @Autowired.  
+                
+				@Autowired can be used in several ways to inject dependencies :
+				dependencies(Dependencies are things a class needs to do its job).For example, if a class needs
+				a tool to work, that tool is its dependency.
+                In this context, dependencies are the objects or services that a class needs to function 
+				correctly. For example, if a class needs to use a database or another service, that database 
+				or service is its dependency.				
+				1 : Field Injection - 
+				    @Autowired
+                    private MyService myService;//here in controller layer we are using MyService so here 
+					MyService is a dependency(correct way to define dependency).
+                    
+					MyService is a dependency of the class (e.g., a controller). The @Autowired annotation tells 
+					Spring to provide the MyService instance to this class, so it can use it to perform its tasks.
+					
+                2 : Setter Injection - 
+				    
+					private MyService myService;
+					
+					@Autowired
+					public void setMyService(MyService myService) {
+						this.myService = myService;
+					}
+                3 : Constructor Injection : 
+				    private final MyService myService;
+
+					@Autowired
+					public MyClass(MyService myService) {
+						this.myService = myService;
+					}
+
+        Note : Bean injection insert bean of one class into another class with the intention of accessing the
+        	   methods of injected bean class.
+			   
+			   suppose in controller layer we create bean of service layer/service class and this bean is 
+			   annotated with @Autowired which allows this variable to use the service class methods.
+			   
+			   @Autowired is compulsory to perform dependency injection of another class.
+			   
+3 - @Qualifier - The @Qualifier annotation is used to specify which bean to inject when there are multiple beans
+                 of the same type.
+				 
+				 ex :                    Pizza(interface)---- String getPizza();
+				                           /\
+										  /  \
+										 /    \
+                                        /	   \									 
+         						VegPizza       NonVegPizza(class)Syso("NonVegPizza is here");
+  								(class)
+								Syso("VegPizza is here");
+								these both classes implements Pizza interface method which is getPizza(). 
+								
+								now suppose iam using Pizza interface bean in controller class so it will get 
+                                confused whose bean to be implemented VegPizza or NonVegPizza.
+                                so to avoid confusion we use @Qualifier.
+
+                                PizzaController.java
+                                
+                                private Pizza pizza ;// here we can use field injection also  
+                                
+                                // constructor based injection
+                                
+                                @Autowired 
+                                public PizzaController(@Qualifier("vegPizza")Pizza pizza){//here vegPizza will be 
+								 this.pizza = pizza ;                 ↓         // qualified for getting the bean
+								}    							first letter of class 
+								                                  will be small	
+								
+								public String getPizza(){
+								  return pizza.getPizza();//VegPizza is here
+								}
+								
+								or another code  
+								
+								@Component
+								public class MyService1 implements ServiceInterface { }
+
+								@Component
+								public class MyService2 implements ServiceInterface { }
+
+								@Autowired
+								@Qualifier("myService2")
+								private ServiceInterface service;
+								
+
+4 - @Primary -  This annotation gives higher preferences to a bean of a class where we use @Primary annotation
+                on the top of the class.@Primary annotaion we use on the top of the class.
+
+                  				Pizza(interface)---- String getPizza();
+				                           /\
+										  /  \
+										 /    \
+                                @Primary/	   \									 
+         						VegPizza       NonVegPizza(class)Syso("NonVegPizza is here");
+  					        	(class)
+								Syso("VegPizza is here");
+								
+								i use @Primary annotaion on VegPizza class so that i can get the bean of that 
+								class
+								
+								PizzaController.java
+								@Autowired
+								private Pizza pizza ;// here it will create bean of VegPizza class because we
+								                     // used @Primary annotaion on that VegPizza class.
+								
+								public String getPizza(){
+								  return pizza.getPizza();//VegPizza is here
+								}
+								
+			Note : Interface refrence can be used to hold the bean of class but cant create a bean of interface .
+			
+			here private Pizza pizza ; Pizza is interface will hold the bean of the class. Interface will not 
+			                           create the bean here.
+									   
+									   or another code  
+									   
+			@Component
+			@Primary
+			public class MyService1 implements ServiceInterface { }
+
+			@Component
+			public class MyService2 implements ServiceInterface { }
+
+			@Autowired
+			private ServiceInterface service; // Spring injects MyService1 automatically
+
+5 - @Bean - @Bean is a method level annotation you can annotate the method with the @Bean. Which declares the 
+            bean of a class . 
+            @Bean will only work if the class is annoated with @Configuration annotation.
+            
+		@Configuration
+		public class AppConfig {
+
+			@Bean
+			public VegPizza m() {// here this method will give bean of VegPizza class , Yes VegPizza class has 
+			                     // been made thats why we are getting its bean.   
+				return new VegPizza();  // Creating and returning the bean, here we are getting the bean of 
+				                        // VegPizza class through @Bean.
+			}
+		}
+		
+		VegPizza Class: 
+		public class VegPizza {
+
+		public void prepare() {
+			System.out.println("Preparing Veg Pizza...");
+		}
+
+		// You can have more properties and methods here
+     	}
+		
+		PizzaService class
+		import org.springframework.beans.factory.annotation.Autowired;
+		import org.springframework.stereotype.Component;
+
+		@Component
+		public class PizzaService {
+
+			@Autowired
+			private VegPizza vegPizza; // Spring injects the VegPizza bean from AppConfig
+
+			public void makePizza() {
+				vegPizza.prepare();// so here we are using vegpizza class methods 
+				System.out.println("Veg Pizza is ready!");
+			}
+		}
+
+       @Configuration - @Configuration annotation tells the Spring IoC container that the methods in the 
+						annotated class are responsible for creating beans that Spring IoC will manage.
+						
+						here through methods we create bean. ( It means that in a class annotated with 
+						@Configuration, the methods annotated with @Bean are responsible for creating and 
+						returning bean instances that the Spring IoC container will manage.)
+
+        Advantages of @Bean ? 
+        1 - giving you the full control of creating bean of whatever class is present.
+        2 -	code reusability  : through the method you can create multiple beans.
+        3 - on the Configuration class you can see which class beans have been created.
+		
+6 - @Lazy annotation - 
+    When we bootstrap(means start the application) by default spring creates all singleton beans eagerly for the 
+	classes where we use stereo type annotations.
+
+    You can create the spring bean lazily(on demand) by using @lazy annotation.
+    the class in which we use @Lazy annotation creates the bean of that class on demand(means). @Lazy can be used 
+	with @Configuration, @Component and @Bean.
+	
+	Note : Eager initialization is recommended at the time we start the application.@Lazy is not recommended.
+	
+7 - @Scope - @Scope annotation specify the scope of a bean(life cycle or visibility of bean).
+        
+        There are 6 types of scope of bean: 
+        1 - singleton
+        2 - prototype
+        3 - session
+        4 - web socket
+        5 - application
+		6 - request
+		
+		for general web application we will use singleton and prototype scope.
+		for web aware application will use last 4 scope.
+		
+		@Scope("singleton") : This is a default scope if you dont write singleton then also by default it will
+                              create one single bean. Only one single bean is created for a particular class and 
+							  bean/object is shared accross all application. We can use this with the method where 
+                              @Bean is used and also with the class we can use the @scope where bean annotations
+							  (@Component,@Service,@Repository,@Controller)are used. 							  
+
+        @Scope("prototype") : when ever we request for a new bean everytime a new bean is created.
+		                      We can use this with the method where @Bean is used and also with the class we can 
+							  use the @scope where bean annotations(@Component,@Service,@Repository,@Controller)
+							  are used. and yes it is different from prototype design pattern.  
+        
+
+        import org.springframework.context.annotation.Bean;
+		import org.springframework.context.annotation.Configuration;
+		import org.springframework.context.annotation.Scope;
+
+		@Configuration
+		public class AppConfig {
+
+			@Bean
+			@Scope("singleton")//@Scope also we can write //Creates a same instance each time when the bean is 
+			                                              // requested
+			public MyBean myBean() {
+				return new MyBean();
+			}
+		}
+		__________________________________________________________________
+		
+		public class MyBean {
+			public MyBean() {
+				System.out.println("MyBean instance created!");
+			}
+		}
+	    __________________________________________________________________	
+		
+		import org.springframework.beans.factory.annotation.Autowired;
+		import org.springframework.stereotype.Controller;
+		import org.springframework.web.bind.annotation.GetMapping;
+		import org.springframework.web.bind.annotation.RestController;
+
+		@RestController
+		public class MyController {
+
+			@Autowired
+			private MyBean myBean1;
+
+			@Autowired
+			private MyBean myBean2;
+
+			@GetMapping("/test")
+			public String test() {
+				System.out.println(myBean1);
+				System.out.println(myBean2);
+				return "Check the console for bean instances!";
+			}
+		}
+
+output - 
+        MyBean instance created!
+		MyBean@1a2b3c4d
+		MyBean@1a2b3c4d 	
+		
+		
+		if the scope of bean is prototype than output will be like this :  
+		MyBean instance created!
+		MyBean instance created!
+		MyBean@1a2b3c4d
+		MyBean@5e6f7g8h
+		
+8 - @Value  - it is used to assign default value to a variable, it can also be used to get the value from 
+              property key(which is application.properties file). 
+              ex - application.properties
+                   app.name = MySpringApp
+                
+                   class A{
+				      @Value("${app.name}")
+					  private String app_name;
+				   }  				
+                   			  
+
+9 - @SpringBootApplication - it is used on the top of the main class . it is the main annotation which contains
+                             @Configuration, @ComponentScan, @EnableAutoConfiguration. 
+
+10 - @Configuration - The @Configuration annotation is used on a class, which tells Spring IoC that the beans 
+                     created through the methods in this class should be managed by Spring IoC.  					
+                   
+11 - @ComponentScan - Whatever classes are there in the package which are annotated with @Component,@Repository,
+                      @Service,@Controller are scanned(auto-detected) by @ComponentScan.This allows Spring to 
+					  register and manage these classes as beans in the application context. 					  
+					  
+12 - @EnableAutoConfiguration - it automatically configure your spring boot application based on the jar 
+                                dependencies that you have added on pom.xml file.
+                                lets Spring Boot automatically set up your application based on what it finds in
+								your project. It saves you from having to manually configure common settings that 
+                                we do in spring through xml.
+								
+								  or 
+								  
+								@EnableAutoConfiguration tells Spring Boot to automatically configure your 
+								application based on the dependencies you’ve included in your pom.xml or 
+								build.gradle file. It simplifies the setup by automatically applying default 
+								configurations based on these dependencies, so you don’t have to manually 
+								configure common settings as you would in traditional Spring applications 
+								using XML or Java configuration.  
+								
+								or
+								
+								It tells Spring Boot to automatically configure your application based on the dependencies 
+								(libraries) present in your project.
+                             
+							    Imagine you add pizza ingredients (like cheese and dough) — and the chef (Spring Boot) 
+								automatically prepares a pizza for you.
+                                Similarly, if you add Spring Web dependency, Spring Boot sees it and automatically 
+								configures Tomcat, DispatcherServlet, etc. for you.
+								
+13 - @PathVariable - @PathVariable is used to extract the data from url path and pass that data to the method in
+                     controller layer. @PathVariable is used inside the method of controller layer.
+
+        ways to write @PathVariable
+		
+    1 - writing the name in @PathVariable
+	        //http://localhost:8080/api/employee/1            
+		    @GetMapping("/{id}")
+			public String getUserById(@PathVariable("id") Long userId) {//@PathVariable will extract 1 id from
+                return "User ID: " + userId;                             //the url
+				
+			}
+			
+	2 - dont write the name in @PathVariable 
+	        //http://localhost:8080/api/employee/1	
+	     	@GetMapping("/{id}")
+			public String getUserById(@PathVariable Long id) {
+				return "User ID: " + id;
+			}
+         
+	another example : 
+	        //http://localhost:8080/api/employee/1/john
+			@GetMapping("/{id}/{name}")
+			public String getUserById(@PathVariable Long id,@PathVariable String name) {
+				return new Employee();
+			}
+
+14 - @RequestParam - @RequestParam is used to get query parameter from the url and pass them to your method in
+                     controller layer.@RequestParam is used inside the method of controller layer.
+                     Variable inside path url and variable along with @RequestParam or inside the @RequestParam 
+					 should be same.
+                     
+        2 ways are there to write this  : 
+    1 : writing the name in @RequestParam - 
+	    http://localhost:8080/employee?name=John
+		@GetMapping("/employee")
+		public String greetUser(@RequestParam("name") String userName) {
+			return "Hello, " + userName + "!";
+		}
+	
+    2 : dont write the name inside @RequestParam -	
+	    http://localhost:8080/employee?name=John
+		@GetMapping("/employee")
+		public String greetUser(@RequestParam String name) {
+			return "Hello, " + name + "!";
+		}
+		
+	another example : 
+        http://localhost:8080/employee?id=1&name=John
+		@GetMapping("/employee")
+		public String greetUser(@RequestParam Long id,@RequestParam String name) {
+			return "Hello, " +id+" " +name + "!";
+		}
+		
+		
+Q : Differnce between pathparameter(@PathVariable) amd queryparameter(@RequestParam)?
+    Ans : Written in microservices lectures in note book 	
+	
+	     Query Parameter : 
+		 1 - Query Parameter will represent data in key-value format.
+		 2 - Query parameter will start with '?' symbol.
+         3 - Query parameter will be seperated bys using '&' symbol when we send multiple 
+             parameters then we use '&' symbol.
+             ex - /api/watch?id=1
+              	  /api/watch?id=1&name=saurav
+         4 - Query parameter should present only at the end of the url. 				  
+	     5 - to read Query parameter values from the URL we will use @RequestParam annoatation.
+             ex -  http://localhost:8080/employee?id=1&name=John
+					@GetMapping("/employee")
+					public String greetUser(@RequestParam Long id,@RequestParam String name) {
+						return "Hello, " +id+" " +name + "!";
+					}
+		Path Parameter - 
+        1 - To send data to server in the URL.
+        2 - Path Parameter will present data directly.
+        3 - Path Parameter can present anywhere in the url.
+        4 - path parameter will start with '/' and will be seperated bu '/' (if many data are there)
+        5 - we need to represent Path parameter position in the URL.
+        6 - To read Path Parameter we will use @PathVariable annoatation
+        7 - If you see any {}(curly braces) in the URL than that is called path parameter.    		
+			ex - 
+            //http://localhost:8080/api/employee/1/john // but here in the postman 
+			@GetMapping("/{id}/{name}")//using curly braces here 
+			public String getUserById(@PathVariable Long id,@PathVariable String name) {
+				return new Employee();
+			} 	
+	
+		
+15 - @Test : The @Test annotation is used in JUnit testing. applied on  the method wheather every code in that
+             method is running properly or not will result pass or fail
+
+16 - @Query : @query annotation is used in spring data jpa .it allows you to write JPQL or native SQL Queries in 
+              your repository layer.
+			  
+			  Q : what is Spring Data JPA ? 
+			  Spring Data JPA is a framework that helps us interact with databases in Spring applications using JPA (Java
+			  Persistence API), without writing boilerplate code like SQL or JDBC.
+              
+			  UserRepository → Spring Data JPA automatically provides CRUD methods like save(), findAll(), findById().
+			  
+			  
+			  
+            @Query("_______________________________")			  
+                              ↓
+						here we write jpql or native sql query 
+        JPQL query operates on entity layer.
+		
+		ex : 
+		@Query("SELECT u FROM User u WHERE u.username = ?1")
+        User findByUsername(String username);
+		
+		Q : what is JPA and hibernate?  
+		Ans : JPA is like the rulebook for how Java objects and database tables should talk to each other. Hibernate or 
+		EclipseLink is like the engine that follows the rules and actually does the work. 
+		
+        
+		"JPA defines what should be done (the rules), and Hibernate actually does it (the implementation)."
+		
+		
+		in code jpa and hibernate is used like this  
+		JPA is used here
+        JPA API standards are applied via annotations and interfaces, and Hibernate is used as the implementation behind
+		the scenes (configured through properties and auto-wiring in Spring Boot).		
+		// JPA Entity Annotation
+		import javax.persistence.Entity;
+		import javax.persistence.Id;
+
+		@Entity         // JPA annotation: defines the class as an entity (table)
+		public class Student {
+			@Id            // JPA annotation: marks the field as primary key
+			private int id;
+			private String name;
+			private String email;
+		}
+		
+		JPA is used here as well  
+		import org.springframework.data.jpa.repository.JpaRepository;
+
+		public interface StudentRepository extends JpaRepository<Student, Integer> {
+			// JpaRepository is part of Spring Data JPA. It uses JPA under the hood.
+		}
+
+        and Hibenate is used here  
+        Hibernate acts as the “engine” that runs all JPA commands under the hood. You don’t use Hibernate-specific code directly, but you configure it in your Spring Boot app:
+
+		Hibernate Configuration via application.properties
+		This is where Hibernate is declared as the JPA implementation:         
+        
+		spring.jpa.hibernate.ddl-auto=update              // Hibernate-specific property
+		spring.jpa.show-sql=true                          // Hibernate shows SQL on console
+		spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+		
+17 - @RequestMapping :@Requestmapping is a annotation is used on the controller layer.@Requestmapping defines 
+                      the path of the url where all your http requests are handled.
+		
+18 - @NoArgsConstructor: Generates a no-argument constructor. If you write this annotation above an entity class, 
+                         it will automatically create a no-argument constructor internally, which you don't see 
+						 in the code.
+						 
+19 - @AllArgsConstructor:Generates a constructor with parameters for all fields in the class. If you write this 
+                         annotation above an entity class, it will automatically create such a constructor 
+						 internally, which you don't see in the code.
+
+20 - @Data - Combines @Getter, @Setter, @ToString, @EqualsAndHashCode, and @RequiredArgsConstructor.
+
+21 - @Column - @Column links a field in your class to a column in the database. It helps you set things like the 
+               column name, whether it can be empty(nullable or not), or if the values must be unique.
+               You can use it to customize the column name, make it required (nullable = false), or set it as 
+			   unique (unique = true). 	
+22 - @ResponseStatus - @ResponseStatus is used to set the HTTP status code for a response from a Spring 
+                       controller method. we can use this annotation on abive the class and use this annotion
+                       on above controller method.
+             ex : using this annoatation on the method of controller class 
+			        @ResponseStatus(HttpStatus.OK)
+					public String success() {
+						return "Operation successful!";
+					}
+			ex :  using this annoatation on the class 
+			       @ResponseStatus(value = HttpStatus.NOT_FOUND)
+				   public class ResourceNotFoundException extends RuntimeException{
+				 
+				   }
+
+23 - @RestController - @RestController is a Spring annotation that combines @Controller and @ResponseBody. 
+                       It’s used to define a controller that handles web requests and automatically converts the 
+					   return values into JSON or XML, which is sent directly to the client.
+
+24 - @RequestBody - 
+            Used on method parameters
+			It tells Spring:
+			"Take the JSON data from the HTTP request body and convert it into a Java object."
+			
+			@PostMapping("/user")
+			public void createUser(@RequestBody User user) {
+				// JSON → User object
+			}
+			
+25 - @ResponseBody -
+            Used on methods
+            It tells Spring:
+            "Take the Java object returned by this method and convert it into JSON for the HTTP response." 
+            
+			@GetMapping("/user")
+			@ResponseBody
+			public User getUser() {
+				return new User("Saurav", "email@example.com");
+				// Java object → JSON
+			}
+			
+			 Note: If you use @RestController, you don’t need @ResponseBody — it’s already included. so usally we dont use
+                   @ResponseBody
+                   So, when you annotate your class with @RestController, all methods automatically return the response 
+				   body.				   
+				   					   
+
+24 - @Controller  -  @Controller is a Spring annotation used to define a class as a web controller.
+                     It handles HTTP requests and returns a View (e.g., HTML page).
+                     Typically used with MVC (Model-View-Controller) design in Spring applications.
+
+25 - @RequestBody - convert json data to java object of a particular class
+
+28 - @Preauthorize - Before running this method, make sure the user has this specific role or permission.
+                     
+					    @PreAuthorize("hasRole('ADMIN')")
+						public void deleteUser(Long id) {
+							System.out.println("User deleted!");
+						}
+						
+						How to enable it:
+
+						Add this annotation in your security configuration class:
+
+						@EnableGlobalMethodSecurity(prePostEnabled = true)
+ 
+
+29 @Profile - It helps you tell Spring, “Use this bean only in a specific environment (like dev, test, or prod).”
+              it will work only with the class which is annotated with @Configuration.
+			💡 Example:
+			@Configuration
+			@Profile("dev")
+			public class DevDatabaseConfig {
+				// This bean will load only when 'dev' profile is active
+				@Bean
+				public DataSource dataSource() {
+					System.out.println("Dev database connected");
+					return new DataSource();
+				}
+			}
+
+			🧠 How it works:
+
+			You can activate a profile in:
+
+			application.properties → spring.profiles.active=dev (will use in application.properties file)
+			but for that using in application.properties file For the dev profile, the file must be:
+            application-dev.properties 
+
+			Or as a command-line argument → --spring.profiles.active=prod 
+
+
+Q : @Requestmapping vs @Postmapping ? 
+Ans : 
+            @Requestmapping                         |                  @postmapping
+1 : can be applied to class and method level in a   |1 : can be applied to  method level in a controller.
+    controller.                                     |
+2 : @requestmapping it is used to make mapping more |2 : it is used to handel http post request.
+    spcefic to handler methods.
+     
+    @RequestMapping(value = "/greet", method = RequestMethod.GET)
+    public String greet() {
+        return "Hello, World!";
+    }
+			   
+Q 5: What is difference between put and patch ? 
+Ans : Patch is to update partial data 
+      See when you update the data in put mapping so you have to give full records .
+      suppose you have 3 objects id ,name and age and now in putmapping you have to update the 
+      age so in postman for testing your api you have to put all the three thing id ,name and age 
+      
+      like this : so in putmapping you have to give all the 3 things like this   
+      {
+		  "id": 1,
+		  "name": "saurav",
+		  "age": 25,
+   	  }
+	  
+	  now suppose you give only one thing in put mapping and you want to update the age  
+      so name and id will become null. so that why we use patch mapping for parial update
+	  
+	  {
+		  "age": 26,
+   	  }
+	  
+	  in patch mapping if you give only one thing in postman to update so it will update that only it will 
+      not make id and name as null: 
+	  {
+		  "age": 26,
+   	  }
+
+Q6 : Difference between XML vs YML/YAML
+Ans : 
+        XML                                    |                        YML/YAML or application.properties
+_______________________________________________|_________________________________________________________________		
+1: structure is defined with the tags.  	   |1: structure is created using identation making it more consise
+                                               |   and easier to read.  
+2: not sensite to white space                  |2: sensite to white space and identation
+3: extension .xml                              |3: extension .yml,.yaml, .properties for application.properties
+4: represent data in a tree structure          |4: represents data in key-value pairs; YAML supports 
+   with nested tags                            |   hierarchical data through indentation.      	  
+
+Q7 : What is an api ? 
+Ans : An API (Application Programming Interface) is like a messenger that allows two software applications to 
+      talk to each other. It defines a set of rules for how one application can request services or data from 
+	  another.
+
+      For example, when you use an app to check the weather, the app uses an API to get the weather information 
+	  from a remote server and displays it to you.
+      
+	  or 
+	  
+	  My defination  : 
+	  
+	  An  api is like set of rules that lets different software programs talk to each other. It allows on 
+	  programs to request informations service from another, even if they are made by different developers, 
+	  different tech stack or companies. Think of it as a menu in restaurent it tells you what you can order 
+	  and how to order it ,but you dont need to know how kitchen prepares the food . 
+
+      another example  : 
+      To show the location of hotel on map , you might use a service like google maps api. your website sends 
+      the location details to maps api(created by google) . which returns a map that you can display to the
+      user. By using other company api we are making it loosely coupled.
+
+      Types of API : 
+      
+      1 : Web api(web services) : Web api is used for communication over the web application .  
+	        types of web api  :   a - rest api // here we will study only web api and only rest api 
+                                  b - soap api
+								  
+		 rest api/rest/restful web services/rest ful api/web services->all these terms are related to rest api
+		                                                                      
+      
+      2 : library api 
+      3 : operating system api 
+      4 : database api  	  
+
+
+Q8: Difference between Soap api vs Rest api ? 
+Ans : 
+           Soap                                    |                                Rest
+___________________________________________________|_________________________________________________________________
+1 :it is a protocol                                |1 :it is a architectural design
+2 :soap is independent it can work with any        |2 :It only work with HTTP protocol 
+   protocols like HTTP,SMTP,TCP/IP,ICMP            | 
+3 :for data exchange we use XML                    |3 :for data exhange we use JSON and XML both.    
+4 :Built-in error handling (via SOAP faults)       |4 :Relies on HTTP status codes for error handling  
+                                                   |
+
+Q9:  What is maven  ? 
+Ans : Maven is a tool that helps you build and manage java projects. It handels task like downloading libraries 
+      ,compiling code , you declare the dependecies in pom.xml file and maven automatically downloads and 
+	  includes them in your project.Maven Run tests automatically. Maven Build and packages the java applications into JAR/WAR files. Maven Download required plugins automatically
+	   
+	  or
+	  
+	  Maven is a build automation and dependency management tool for Java-based projects. When you write code, 
+	  you can package it into a JAR (Java ARchive) file. If you make this JAR available in a Maven repository, 
+	  other developers can use your code by adding its dependency coordinates to their pom.xml file.
+      
+	  or
+	  my defination  : 
+	  
+	  Maven is a build automation and dependency management tool that helps compile code, manage libraries using pom.xml, and package the application into JAR/WAR files.
+	  
+   	    Full Form:
+		POM: Project Object Model
+		XML: Extensible Markup Language
+		
+		Maven = Tool that builds your project and manages external libraries
+        Q : what is maven dependencies? 
+		Maven Dependencies = The libraries your project needs (added in pom.xml)
+		
+		Maven is a tool that helps you build Java projects and manage libraries automatically.
+        Maven dependencies are the external libraries (like Spring, MySQL) your project needs — you just list them in the
+		pom.xml file, and Maven downloads them for you.
+   
+     Q : what are idompotent methods in spring boot ? 
+
+       In simple terms, idempotent methods in Spring Boot (and HTTP in general) are methods that, when called 
+	   multiple times with the same input, will always produce the same result and not have any additional side 
+	   effects after the first call.
+
+       Idempotent Methods in HTTP
+       HTTP GET, PUT, and DELETE methods are usually considered idempotent.
+       GET: Fetches data without changing anything, so calling it multiple times doesn't change the result.
+       PUT: Updates or replaces a resource. Calling it multiple times with the same data will result in the same
+	   state(i.e., no change after the first update).
+       DELETE: Removes a resource. Calling it multiple times doesn't change the fact that the resource is deleted.
+
+        | Method   | Idempotent?  | Meaning                                                      |
+        | -------- | -----------  | ------------------------------------------------------------ |
+        | `GET`    | ✅ Yes       | Read data — calling it 1 time or 100 times is same           |
+        | `PUT`    | ✅ Yes       | Update data — setting the same value repeatedly              |
+        | `DELETE` | ✅ Yes       | Deleting the same item again does nothing (after first time) |
+
+
+        Non-Idempotent Methods
+        HTTP POST is typically not idempotent because it usually creates a new resource. If you call it multiple 
+		times, you may create multiple resources, changing the system's state.
+		
+		| Method  | Non-Idempotent?  | Meaning                                                        |
+        | ------  | ---------------  | -------------------------------------------------------------- |
+        | `POST`  | ✅ Yes           | Used to **create** new data — multiple calls create duplicates |
+		| `PATCH` |  Usually Yes     | Used to partially update data — repeated calls may change data again and again |
+		
+		⚠️ PATCH is usually non-idempotent, but not always:
+
+		-> If your patch adds 10 points, it changes each time → ✅ non-idempotent.
+
+		-> But if the patch says set score to 50, calling it again does nothing → ❌ idempotent.
+				
+        PATCH is typically non-idempotent, because it may apply incremental changes. But it can be idempotent depending 
+		on how the patch is designed. 
+
+        Why is it Important?
+        Idempotency ensures reliability and predictability in your API, especially for scenarios like retries 
+		(e.g., if the request fails but the operation should still be safe to repeat).
+        In summary, idempotent methods always produce the same result if invoked multiple times with the same 
+		input, and they don’t cause unintended changes after the first call.
+		
+Q10 : what is objectmapper and modelmapper ?
+Ans - objectmapper - It is used to convert JSON to Java object and Java object to JSON.
+      
+      User obj = objectMapper.readValue(jsonString, User.class);  // JSON → Java
+      String json = objectMapper.writeValueAsString(obj);         // Java → JSON
+
+      modelmapper - ModelMapper is used for converting one Java object → another Java object.
+                    Helpful when converting between Entity ↔ DTO.
+                    UserDTO dto = modelMapper.map(userEntity, UserDTO.class);
+                    Think of it as copying data from one class to another.
+                    Used for DTO ↔ Entity mapping
+                    Automatically copies fields with same names
+ 
+
+Q11 : What is spring profile? 
+Imagine you have one app, but you want it to behave differently in different environments like:
+
+Development (dev) – for testing by developers
+
+Testing (test) – for QA team
+
+Production (prod) – for real users
+
+👉 Spring Profile helps you separate and control settings for each environment.	
+ 
+ In different environments, you usually have different databases	
+And Spring Profiles help you switch between them easily. 👍 
+
+Spring Profile allows you to switch behavior or settings of your app based on the environment. No need to change code 
+each time!
+You don’t need to change the code — you only change the environment (profile).
+
+Then just change this in application.properties:
+
+spring.profiles.active=dev    // for development
+or
+spring.profiles.active=prod   // for production
+		
+Same code, different behavior. Just switch the profile — that's it!
+
+Q : What is DAO layer(Data Access Object layer) ? 
+->DAO layer is a repository layer(JPA repository layer)
+  Repository layer in Spring can be considered as a specialized form of the DAO layer.
+  DAO layer contains classes/methods that talk directly to the database (insert, update, delete, fetch).
+
+Q :  What is Spring Data JPA?
+Spring Data JPA helps you connect your Java app to a database easily and saves you from writing boring SQL queries.  
+
+
+Q : What is acid properties? 
+Ans : 
+ACID = Set of rules to make sure database transactions are reliable.
+A – Atomicity
+➤ All or nothing.
+→ A transaction either completes fully or doesn't happen at all.
+
+C – Consistency
+➤ Valid state.
+→ Data must be correct before and after the transaction.
+
+I – Isolation
+➤ No mixing.
+→ Transactions don’t affect each other, even when run at the same time.
+
+D – Durability
+➤ Permanent.
+→ Once a transaction is done, the changes stay even if system crashes.
+
+🧠 Example: Sending money from one bank account to another:
+
+Amount is deducted from one → Atomic
+
+Total balance stays correct → Consistent
+
+No clash if two users send at same time → Isolated
+
+If server crashes after transfer → Still saved → Durable
+
+
+Q27 : why do we create DTO class ?
+ans : 
+DTO stands for Data Transfer Object.
+We create DTO classes to transfer only the required data between layers (like Controller → Service → DB) or between 
+applications (like backend → frontend).
+
+"We use DTOs to avoid sending or exposing the full object.
+Instead, we send only the needed fields — it keeps things safe, clean, and efficient."
+
+Let’s say you have a User entity with 10 fields:
+
+public class User {
+    private String username;
+    private String password;
+    private String email;
+    private String address;
+    // ... 6 more fields
+}
+
+but for login we only need  username and password
+public class LoginDTO {
+    private String username;
+    private String password;
+}
+
+
+You don’t expose sensitive or unnecessary fields like address, email.
+
+It makes your code cleaner and safer.
+
+Q : What is spring aop  ? 
+Ans : Instead of writing logging code in every method, I can write it once using AOP, and it runs automatically before or
+      after those methods.
+      In Spring AOP, you write the extra logic (like logging) in a separate class, not in your main business logic class.
+	  Do we need to call the AOP method (like logBefore())?
+      👉 No, you don't need to call it manually.
+	  Spring-managed beans automatically handle AOP method calls —
+      No need to call the AOP method separately.	
+
+Q : What is auto-configurtion ? 
+Spring Boot automatically handles configuration based on the dependencies added in the pom.xml. Whatever starters or libraries you include, Spring Boot detects them and sets up the required beans and configurations by itself.      	
+		
+================================================Hibernate======================================================== 
+
+Q10 : What is hibernate ? 
+Ans : hibernate is an object realtional mapping(orm) tool used to map java objects and database table. 
+      
+	                     orm(this is hibernate) 
+	  java objects  <---------------------------------> database
+	                              ↓
+                    through orm we connect java object to databse
+
+Q11 : how mapping is done between java object and database table ?
+Ans : Through JPA annoations we can connect java object to database(will study this only).
+      and through XML configuration we connect java object to database in spring.
+      So these are some jpa annoations  : 
+      1 : @Entity : This class is mapped to database table. 
+      2 : @Table  : specifies the table name in database
+      3 : @Id     : mark the field as primary key of table 
+      4 : @Column : maps a field (java object to specefic column)
+      5 : @GeneratedValue : auto increment on primary key
+      6 : @OnetoOne ,@OnetoMany ,@ManytoOne : defines relationship between entities.
+      7 : @JoinColumn : @JoinColumn(name = "column_name") - specefies the foreign key column in a relationship 
+                                                            between entities.
+
+       ex : 
+       Here are the **clean and perfect** entity classes for
+		**Department (One side)** and **Employee (Many side)**:
+
+		---
+
+		# ✅ **Department Entity (ONE side)**
+
+		```java
+		import jakarta.persistence.*;
+		import java.util.List;
+
+		@Entity
+		@Table(name = "department")
+		public class Department {
+
+		    @Id
+		    @GeneratedValue(strategy = GenerationType.IDENTITY)
+		    private Long id;
+
+		    private String name;
+
+		    @OneToMany(mappedBy = "department")   // refers to Employee.department(one department many employees)
+		    private List<Employee> employees;
+
+		    // getters and setters
+		}
+		```
+
+		### ✔ Key Points:
+
+		* `@OneToMany(mappedBy = "department")` → means the foreign key is in **Employee table**.
+		* No `@JoinColumn` here.
+		* Department table only contains: `id`, `name`.
+
+		---
+
+		# ✅ **Employee Entity (MANY side)**
+
+		```java
+		import jakarta.persistence.*;
+
+		@Entity
+		@Table(name = "employee")
+		public class Employee {
+
+		    @Id
+		    @GeneratedValue(strategy = GenerationType.IDENTITY)
+		    private Long id;
+
+		    private String name;
+
+		    private Double salary;
+
+		    @ManyToOne//many employee belongs to one department 
+		    @JoinColumn(name = "department_id")   // foreign key column in employee table (foreign key of dept table)
+		    private Department department;
+
+		    // getters and setters
+		}
+		```
+
+		### ✔ Key Points:
+
+		* Employee table gets a `department_id` foreign key.
+		* This column stores `Department.id`.
+		* This is the owning side of the relationship.
+
+		---
+
+		# 📌 **Database Tables Generated**
+
+		### **department**
+
+		| id | name |
+		| -- | ---- |
+		| 1  | HR   |
+		| 2  | IT   |
+
+		### **employee**
+
+		| id | name   | salary | department_id |
+		| -- | ------ | ------ | ------------- |
+		| 1  | Ram    | 50000  | 1             |
+		| 2  | Saurav | 60000  | 2             |
+
+		---
+
+		If you want, I can also show you:
+		✅ How the relationship inserts work
+		✅ Service/Repository code
+		✅ How to fetch department with employees using JPA queries
+
+                                                  
+      8 : @Transient : mark a field in java class that you dont want to save in database. 															
+
+Note  - All the apis are interfaces. 
+
+
+Q12 : What is JPA(Java Persistence API) ? 
+Ans : JPA describes what an orm framework should do. with jpa you can perform crud opearion. 
+      JPA provide a way to map java objects to database table , making it easier to work with with database 
+	  in java application.
+      
+      through structure will understand jpa and hibernate. 
+      
+                      implementation
+      JPA(Interface)------------------->Hibernate ORM(Class)-----------> JPA annoations------->Database 	  
+
+      hibernate class implements jpa interface and now in hibernate class we have JPA annoations and through 
+      this JPA annoations we map java objects to database.	  
+	  
+	  So with JPA you can perform CRUD operation without writing any complex sql Queries. 
+      
+	  ->DAO layer is a repository layer(JPA repository layer)
+        Repository layer in Spring can be considered as a specialized form of the DAO layer.	  
+	  
+	  Q : How you use JPA annotation in hibernate ? 
+      Ans : Hibernate is a class and is implementation of jpa interface.
+	  
+	  Q : How do you add hibernate dependencies in your project? 
+	  Ans : Through spring data jpa dependency which gives you hibernate dependencies
+      
+	  Q : What is Spring data jpa ? 
+	  Ans : Spring data jpa is a dependency by adding this dependency you can interact with database through jpa
+	        annoations(provided by spring data jpa annotation ).
+            
+			you can use JPA annotations to map Java objects to database tables and perform CRUD operations with 
+			minimal boilerplate code
+      
+	  Q : difference between Crud Repository vs JPA repository?  
+      Ans : Both come from spring data jpa dependency.
+            Crud Repository - it only provide crud operation .
+            JPA repository - it extends crud repository and adds JPA specefic features like pagination and 
+			                 sorting. 			
+
+Q 13 : why to use hibernate over jdbc(difference between hibernate and jdbc)? 
+Ans : 
+
+                 hibernate                          |                   JDBC
+____________________________________________________|____________________________________________________________				 
+1: Hibernate framework is independent of database   |1: Our query is database software dependent suppose if we  
+   because it supports HQL which is not specify to  |   are using MySql database in our JDBC code so if we change 
+   any database. HQL work for all databases.        |   our databse this sql query will not work 
+   HQL write the query through JPA annoations and   |   (Query is not applicable for different database software
+   through JPA repsository methods.                 |   in JDBC)
+                                                    |
+2: Hibernate uses java object to be mapped with DB	|2: JDBC uses primitive datatype											
+                                                    |													
+3: In hibernate only you have to write connection   |3: In JDBC you have to write much code like creating the DB  
+   with DB in application.properties you dont have  |   writing the Queries(operations you want to perform like
+   to write queries and closing connection with DB  |   CRUD and closing the DB)
+                                                    |
+4: Exception Handling is not mandatory              |4: Exception handling is necessary in JDBC so that why we 
+                                                    |   write JDBC code in try catch block.  
+													|
+
+
+Q14 : Important interfaces used in hibernate ? or how to maintain transaction in hibernate? 
+Ans : Important interfaces used in hibernate are  : this is how we maintain transaction in hibernate
+      if interviewer ask how to maintain transaction in hibernate so we do like this              
+      1 : SessionFactory -  Creates Session instances. It's a heavyweight object typically created once and 
+	                        shared across your application.
+	  2 : Session - Manages the interaction with the database. You use it to perform CRUD operations and queries.
+      3 : Transaction - Manages database transactions. You start and commit transactions to ensure data 
+	                    consistency. Ensures atomicity (all-or-nothing).Used to begin, commit, or rollback
+      
+	  In short: Session for CRUD operations, SessionFactory to get Session, and Transaction for handling 
+	  transactions.
+	  
+      through this interfaces we interact with database using hibernate which is older way.
+       ________________________________
+       |     SessionFactory           |       
+       |  _________________________   |    
+       |  |  Session               |  |     
+       |  | _________________      |  |     
+       |  | |                |     |  |     
+       |  | |                |     |  |     
+ 	   |  | |                |     |  |     
+       |  | | Transaction    |     |  |   
+       |__|_|________________|_____|__|             
+       
+       SessionFactory is the parent of all. With the session factory you can always get the  Session Object and 
+	   through session Object  you can get the transaction object. This is the logical implementation
+						   
+       or  
+	   
+	   chat gpt answer : 
+	   The SessionFactory creates Session objects. From a Session object, you can obtain a Transaction object 
+	   to manage transactions.
+
+       Here is the logical implementation : 
+	   code  - 
+	    Chat gpt code  : 
+		
+	    SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		// Perform database operations
+		transaction.commit();
+		session.close();
+
+
+        my version  : 
+		
+		SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build;
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		// Perform database operations
+		transaction.commit();
+		session.close();
+		
+		1 : SessionFactory - This interface is used to create session object.so that session object can do crud
+                             operation. One Session factory for one database.
+        2 : Session - This interface does all the crud opeartions. In a session factory there can be multiple 
+                      session.
+        3 :Transaction - we need to commit our transaction when you did crud opeartion and each session has a 
+                         transaction.		
+        
+		another example we do like this in our code :
+        we combine this in same file  : 
+		
+		// Create an entity class
+		@Entity
+		public class Hotel {
+		@Id
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
+		private Long id;
+
+		private String name;
+		private String location;
+
+		// Constructors, getters, and setters
+		public Hotel() {}
+		
+		public Hotel(String name, String location) {
+			this.name = name;
+			this.location = location;
+		}
+
+		// Getters and Setters of name and location
+		}
+
+		// Hibernate CRUD operation (POST - Create)
+		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+
+		Hotel hotel = new Hotel("Grand Palace", "New York");
+		session.save(hotel); // POST operation - Save entity to the database
+
+		transaction.commit();
+		session.close();
+        
+	    another example we do like this in our code :
+        we seperate this files  : 
+		
+		Hotel.java : 
+
+		@Entity
+		public class Hotel {
+			@Id
+			@GeneratedValue(strategy = GenerationType.IDENTITY)
+			private Long id;
+
+			private String name;
+			private String location;
+
+			// Constructors
+			public Hotel() {}
+
+			public Hotel(String name, String location) {
+				this.name = name;
+				this.location = location;
+			}
+
+			// Getters and Setters of id, name and location
+
+		}
+
+         HotelRepository.java
+		 
+			public class HotelRepository {
+
+				private SessionFactory sessionFactory;
+
+				public HotelRepository() {
+					sessionFactory = new Configuration().configure().buildSessionFactory();
+				}
+
+				public void saveHotel(Hotel hotel) {
+					Session session = sessionFactory.openSession();
+					Transaction transaction = session.beginTransaction();
+					session.save(hotel); // Save entity to the database
+					transaction.commit();
+					session.close();
+				}
+				// Optionally, add methods for other CRUD operations (e.g., find, update, delete)
+			}
+
+        How to use : 
+		public class Main {
+		public static void main(String[] args) {
+			HotelRepository hotelRepository = new HotelRepository();
+
+			Hotel hotel = new Hotel("Grand Palace", "New York");
+			hotelRepository.saveHotel(hotel);
+		}
+	}
+
+    Note : Same we have EntityManagerFactory, EntityManager and Transaction these 3 algorithm are same like    
+           SessionFactory ,Session and Transaction. but the thing is SessionFactory, Session and transaction
+		   are specefic to hibernate and  EntityManagerFactory, EntityManager and Transaction are specefic to JPA.
+           Hibernate is an implementation of JPA, so while they fulfill similar functions, they belong to 
+		   different frameworks.
+		   
+    Q : Why we need these 3 interfaces implementation ? 
+	Ans : You need these interfaces to interact with the database efficiently.
+	
+| Approach                                          | Used Directly Today?   | Comments                                                                     |
+| ----------------------------------------------------- | --------------------   |----------------------------------------------------------------------------  |
+| **Hibernate API** (`Session`, `SessionFactory`)       | ❌ Rarely              | Spring Boot apps mostly avoid it. Used only in advanced or legacy cases.     |
+| **JPA API** (`EntityManager`, `EntityManagerFactory`) | ✅ Sometimes           | Still used, especially for custom queries or fine-grained control.           |
+| **Spring Data JPA** (`JpaRepository`)                 | ✅ Very Common         | Most modern apps use this for database access — simple, clean, and powerful. |
+
+Important :  
+You no longer need to manually use Session, SessionFactory, or Transaction.
+
+Spring Boot + Spring Data JPA does everything for you behind the scenes using Hibernate.
+
+You just work with Java objects and repositories — less boilerplate, faster development.
+
+one example of Spring Data JPA** (`JpaRepository`)  in coding terms 
+
+Here's a simple Spring Data JPA example using JpaRepository — the modern and preferred way in Spring Boot.
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
+public class Book {
+
+    @Id
+    private Long id;
+    private String title;
+
+    // getters and setters
+}
+------------------------------------
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BookRepository extends JpaRepository<Book, Long> {
+}
+-------------------------------------
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/books")
+public class BookController {
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    @PostMapping
+    public Book saveBook(@RequestBody Book book) {
+        return bookRepository.save(book);
+    }
+
+    @GetMapping
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
+    }
+}
+---------------
+ Note  - 
+ Hibernate API, JPA API, and Spring Data JPA all help in performing CRUD operations, but the most modern and 
+ preferred way in Spring Boot applications is using Spring Data JPA because it's simple, less code-heavy, and
+ handles most tasks automatically
+
+Q15 : What is mapping in hibernate ? 
+Ans : Mapping in Hibernate connects Java classes to database tables. It tells Hibernate which class fields match 
+      which table columns, so it knows how to save and retrieve data.
+      
+      or
+
+        Mapping in Hibernate means connecting Java classes to database tables.
+		It defines how class fields (attributes) map to table columns, and how relationships between classes map to foreign keys in the database.
+		This allows Hibernate to automatically save, update, and fetch objects.
+
+		or
+
+        Mapping means connecting Java objects to database tables.
+	  
+      Types of mapping in hibernate : 
+	  1 : @OneToOne - one person can have one aadhar card 
+      2 : @ManyToOne - many employees can stay at one address.	  
+	  3 : @OneToMany - one address where many employee stays.  
+      4 : @ManyToMany - one person can write two books and a book can be written by two person.
+      
+      class Student { 
+	     @ManyToOne
+		 private Address address;
+	  }   	  
+	  
+	  here,
+	  many -> students 
+	  one -> address  
+	  
+	Note  - If you don’t use @Column, JPA will automatically use the field name in your entity class as the column name 
+	in the database table.
+
+    @JoinColumn - @JoinColumn is used to specify the foreign key column name in the database table for relationships.
+                  If not specified, JPA automatically names it as <fieldName>_id.
+                  It’s most commonly used with @ManyToOne or @OneToOne to control how tables are joined. 	
+	              if we use @JoinColumn will it automaticaly create the column in that table 
+				  If you use @JoinColumn, JPA will automatically create that foreign key column in the table for you
+				  
+     				Company Entity class
+					import jakarta.persistence.*;
+
+					@Entity
+					public class Company {
+
+						@Id
+						@GeneratedValue(strategy = GenerationType.IDENTITY)
+						private Long id;
+
+						private String name;
+
+						// getters and setters
+						public Long getId() {
+							return id;
+						}
+						public void setId(Long id) {
+							this.id = id;
+						}
+						public String getName() {
+							return name;
+						}
+						public void setName(String name) {
+							this.name = name;
+						}
+					}
+
+                    Employee Entity class :  
+                    import jakarta.persistence.*;
+
+					@Entity
+					public class Employee {
+
+						@Id
+						@GeneratedValue(strategy = GenerationType.IDENTITY)
+						private Long id;
+
+						private String name;
+						private String role;
+
+						@ManyToOne
+						@JoinColumn(name = "company_id") // Foreign key column
+						private Company company;
+
+						// getters and setters
+						public Long getId() {
+							return id;
+						}
+						public void setId(Long id) {
+							this.id = id;
+						}
+						public String getName() {
+							return name;
+						}
+						public void setName(String name) {
+							this.name = name;
+						}
+						public String getRole() {
+							return role;
+						}
+						public void setRole(String role) {
+							this.role = role;
+						}
+						public Company getCompany() {
+							return company;
+						}
+						public void setCompany(Company company) {
+							this.company = company;
+						}
+					}	
+	  
+Q16 : What are hibernate Configuration file ? 
+Ans : 1 - using xml based configuration.
+      2 - using application.properties file(hibernate.properties) (at present we use this)
+	      In application.properties we do Database connection settings like url, username and password of 
+		  Database along with we do ddl-auto = update , show-sql . all this is done in key-value pair. 		  
+
+Q17 : What are hibernate mapping files? 
+Ans : Hibernate mapping files are xml files used in hibernate to define how java objects are mapped to database 
+      tables.
+      
+      But currently we dont map java objects through hibernate mapping 
+      
+      Currently we use Annotations to map java objects to database table with the help of these JPA annoations
+      @Column , @Entity, @Table ,@Id  	  
+
+Q18 : What is hibernate caching? 
+Ans :  
+      Q : What is cache ? 
+	  Ans: My defination  : 
+	       A cache is like a storage layer that holds the copy of data you use often. It helps you get that data
+           faster when you need it next time. Rather than fetching it from a database.
+           
+		   or 
+		   Chat gpt : 
+		   Cache stores data in memory to make things faster. In Hibernate, it helps by keeping commonly used 
+		   data so that it doesn't have to go to the database every time, speeding up the application.
+     
+      Q : What is hibernate cache ? 
+      Ans : it stores data from the the database in memory to speed up the access. The idea behind cache is to 
+            reduce the number of database queries. 	
+
+            or  
+
+            Hibernate cache is a mechanism that stores frequently accessed data from the database in memory. 
+			It helps improve performance by minimizing database hits, allowing data to be quickly retrieved from 
+			memory instead of querying the database every time.		\
+
+
+			diference between cache vs hibernate cache ? 
+			Here is the **shortest and simplest** explanation:
+
+---
+
+# ✅ **Cache (General Meaning)**
+
+**A cache is a temporary storage that stores frequently used data so you can access it faster.**
+
+Example:
+Your browser caches images so websites load faster.
+
+---
+
+# ✅ **Hibernate Cache**
+
+**Hibernate cache is a special cache used by Hibernate to store database query results so it doesn’t hit the database again for the same data.**
+
+It makes your app faster by avoiding repeated DB calls.
+
+---
+
+# ⭐ **Super Simple Difference**
+
+| Cache (General)                                         | Hibernate Cache                                                    |
+| ------------------------------------------------------- | ------------------------------------------------------------------ |
+| A general concept used everywhere (browser, CPU, apps). | A cache used specifically by Hibernate to reduce database queries. |
+| Speeds up any type of system.                           | Speeds up Hibernate ORM operations.                                |
+
+---
+
+If you want, I can also explain **first-level cache vs second-level cache** in one line.
+	
+
+       Types of hibernate cache/cache/caching : 
+	   1 - First level cache 
+	   2 - Second level cache
+       3 - Query level cache
+
+    1 : First Level Cache : Built-in, stores data per session, valid only within the same session.
+                            First-level cache in Hibernate stores data for just one session. If you ask for the 
+							same data again during that session, Hibernate gives it from the cache, not the 
+							database. Once the session ends, the cache is cleared.
+                            
+                            here session is like In Hibernate, a session is like a connection between your 
+							application and the database.
+							
+	2 : Second Level Cache : Optional, stores data across sessions, useful for shared, long-term data storage. 
+                             Second-level cache in Hibernate saves data that can be used by different sessions. 
+							 This means data stays in memory even after a session ends, so if another session 
+							 needs the same data, it can be retrieved from the cache instead of the database. 
+							 This helps make the application faster.
+							 
+	3 : Query Level Cache : Stores the result of database queries. If the same query is run again Hibernate 
+                            can return the cached result quickly instead of re-running the query agian the 
+							database.
+
+	or 
+	
+	
+     Hibernate Cache = "Memory Shortcut"
+Hibernate uses cache to remember data, so it doesn’t need to ask the database again and again.
+
+Imagine: You asked your mom, “What’s for dinner?”
+She says, “Paneer.”
+
+Next time, instead of asking again, you remember it — that’s cache!
+
+🔹 Types of Hibernate Cache (with real-life examples):
+1. First Level Cache (automatic)
+🧠 It remembers data only for you (your session).
+✅ You don’t need to set it up — it works automatically.
+
+📦 Example:
+You open an app and ask for employee info — Hibernate goes to the database.
+You ask again in the same session — Hibernate remembers and doesn’t ask again.
+
+🎒 Like your school bag — only you use it.
+
+2. Second Level Cache (you must enable it)
+🧠 It remembers data for everyone in the app.
+🚀 You need to turn it on and choose a helper (like EhCache).
+
+📦 Example:
+If you or your friend opens the app later and asks for same employee — Hibernate gives the answer from memory, no need to 
+ask the database again.
+
+🏫 Like a school library — everyone can use it.
+
+3. Query Cache (you must enable it)
+🧠 It remembers the search result, not the actual data.
+
+📦 Example:
+You searched “All employees in IT department”.
+Hibernate stores this result.
+Next time, it gives the same result quickly, without repeating the search.
+
+🔍 Like writing a search answer in your notebook — next time, just read it.
+
+🧾 Simple Summary:
+Type	             Who uses it?	Works by default?	Real-life example
+First Level	Only         you	       Yes	             Your school bag
+Second Level	       Everyone	        No	            Shared school library
+Query Cache	         Search results	    No	         Saved answer in your notebook	
+							
+							
+							or
+							
+							
+	1. First Level Cache (Built-in)
+	🔹 Enabled by default
+
+	🔹 Works per session (inside one Session object)
+
+	🔹 If you fetch the same object again in the same session, Hibernate won’t hit the DB — it fetches from memory.
+
+	🧠 Like: Asking the same question twice in one meeting — you remember it without rechecking.						
+
+    2. Second Level Cache (Optional)
+	🔹 Works across sessions
+
+	🔹 You must enable it manually
+
+	🔹 Stores data in memory (like EhCache, Redis, etc.)
+
+	🔹 Reduces DB calls even if sessions are closed and reopened
+
+	🧠 Like: Company knowledge base — even if new employees come (new sessions), info is still available.
+
+    3. Query Cache (Not "Third Level")
+	🔹 No official "Third Level Cache" — people confuse Query Cache as the third.
+
+	🔹 Stores the result of queries, not just entities
+
+	🔹 Also optional — must be enabled manually
+
+	🧠 Like: Saving results of a Google search so next time it's faster.
+							
+| Cache Type         | Scope           | Default  | Purpose                                |
+| ------------------ | --------------- | -------  | -------------------------------------- |
+| First Level Cache  | Per Session     | ✅ Yes   | Avoid duplicate DB hits in one session |
+| Second Level Cache | Across Sessions | ❌ No    | Reuse data across sessions             |
+| Query Cache        | Query results   | ❌ No    | Cache query result sets                |	
+
+
+or 
+
+this is the clean and clear version of first level cache  vs second level cache vs query level cache 
+
+Sure! Here is the **easiest and simplest version** — like you would explain to a 10-year-old:
+
+“Session = a temporary workspace where Hibernate talks to the database.”
+A Session is like a connection between your Java program and the database.
+---
+
+# ✅ **First-Level Cache**
+
+**Hibernate remembers data inside the same session.
+If you ask for the same data again → it does NOT go to the database.**
+
+👉 *Works only for one session.*
+
+---
+
+# ✅ **Second-Level Cache**
+
+**Hibernate remembers data even after the session is closed.
+Other sessions can also use this saved data.**
+
+👉 *Shared by the whole application.*
+
+---
+
+# ✅ **Query Cache**
+
+**Hibernate remembers the results of a query (like a list of IDs).
+So running the same query again is faster.**
+
+👉 *Caches the query result, not the actual objects.*
+
+---
+
+# ⭐ **Super Simple Summary**
+
+* **First-Level Cache → memory inside ONE session**
+* **Second-Level Cache → memory shared by ALL sessions**
+* **Query Cache → memory for query results**
+
+This is the simplest explanation possible.
+
+
+Q19: How to integrate hibernate and spring boot? 
+Ans : To integrate Hibernate with Spring Boot, follow these steps:
+
+1 - Add Dependencies: Include spring-boot-starter-data-jpa and your database driver (e.g., MySQL) in pom.xml.
+2 - Configure application.properties: Set your database connection details (e.g., URL, username, password) and 
+    Hibernate settings.
+3 - Create Entity Classes: Annotate your model classes with @Entity and map them to your database tables.
+4 - Repository Layer(DAO Layer): Use JpaRepository or CrudRepository interfaces for database operations.
+
+Spring Boot will automatically configure Hibernate as your JPA provider.
+
+Q20 : How can we see hibernate generated sql queries on console ?
+Ans : spring.jpa.show-sql=true --> write this in application.properties
+
+
+
+Q21 : what is n+1 problem in hibernate ? 
+Ans : 
+The N+1 problem happens when Hibernate first runs 1 query to get the main data (like a list of hotels), and 
+then runs N more queries to get related data (like rooms for each hotel).
+
+So if you have 10 hotels, it runs 1 + 10 = 11 queries instead of just 1 or 2.
+This makes your app slow and inefficient.
+
+You can fix it using JOIN FETCH to fetch everything in one go.
+
+Q22 : what is JOIN FETCH  ?
+Ans : 
+
+how n+1 problems looks like :  
+Repository Method that causes N+1 Problem:
+// HotelRepository.java
+@Query("SELECT h FROM Hotel h")
+List<Hotel> findAllHotels();
+
+Service Layer (causes N+1)
+List<Hotel> hotels = hotelRepository.findAllHotels();
+
+for (Hotel hotel : hotels) {
+    System.out.println(hotel.getName());
+
+    //This line triggers a separate SQL query for each hotel's rooms
+    System.out.println("Rooms: " + hotel.getRooms().size());
+}
+
+Use JOIN FETCH to solve it 
+@Query("SELECT h FROM Hotel h JOIN FETCH h.rooms")
+List<Hotel> findAllHotelsWithRooms();
+
+
+List<Hotel> hotels = hotelRepository.findAllHotelsWithRooms();
+
+for (Hotel hotel : hotels) {
+    System.out.println(hotel.getName());
+    System.out.println("Rooms: " + hotel.getRooms().size()); // ✅ No extra queries now
+}
+
+| Without `JOIN FETCH` | Causes N+1 problem (many DB hits)               |
+| -------------------- | ----------------------------------------------- |
+| With `JOIN FETCH`    | Solves it by fetching everything in one query ✅|
+
+
+Q23 :  What is the difference between HQL and SQL?
+Answer:
+
+HQL: Hibernate Query Language, works on objects, not tables.
+
+SQL: Structured Query Language, works on tables and columns directly.
+
+Q24 : What is cascading in Hibernate?
+Answer:
+Cascading tells Hibernate what to do with related entities. For example, if you delete a hotel, you may also 
+want to delete all its rooms.
+Use @OneToMany(cascade = CascadeType.ALL) for that.
+
+or 
+
+“Cascading in Hibernate means when you perform an action on a parent entity, the same action automatically happens on its child entities. For example, if I save a parent, its children are also saved; if I delete the parent, its children are also deleted. It helps avoid writing multiple save or delete statements manually.”
+
+
+Commonly used JPA annotations (used in Hibernate):
+
+| Annotation        | Description                      |
+| ----------------- | -------------------------------- |
+| `@Entity`         | Marks class as a table (entity)  |
+| `@Table`          | Specifies table name             |
+| `@Id`             | Marks primary key                |
+| `@GeneratedValue` | Auto-generates primary key       |
+| `@Column`         | Customizes column settings       |
+| `@OneToOne`       | One-to-one relationship          |
+| `@OneToMany`      | One-to-many relationship         |
+| `@ManyToOne`      | Many-to-one relationship         |
+| `@ManyToMany`     | Many-to-many relationship        |
+| `@JoinColumn`     | Specifies the foreign key column |
+| `@JoinTable`      | For Many-to-Many relationships   |
+| `@Transient`      | Field not to be stored in DB     |
+| `@Embedded`       | For embedding a value object     |
+| `@Embeddable`     | Mark class to be embedded        |
+
+
+Other annotations that are not JPA, but used in Hibernate or Spring:
+| Annotation           | From                          | Purpose                             |
+| -------------------- | ----------------------------- | ----------------------------------- |
+| `@Transactional`     | Spring Framework              | Transaction management              |
+| `@NotNull`, `@Email` | Hibernate Validator (JSR 380) | Data validation before saving       |
+| `@Fetch`             | Hibernate-specific            | Controls fetching strategy manually |
+| `@Cascade`           | Hibernate-specific            | More control than JPA cascade       |
+
+Q : we put project in a jar ? benefits of using this ?  
+Ans :  JAR = Java ARchive
+       It is like a zip file that bundles your Java classes + libraries together.
+	    Benefits (in simple terms):
+		✅ Easy to share – One file contains everything your app needs.
+
+		✅ Easy to run – You can run it using java -jar myapp.jar.
+
+		✅ Portable – Run on any machine with Java installed.
+
+		✅ Reduces clutter – Combines many files into one.
+
+		✅ Used for deployment – Send it to server or cloud easily.
+
+
+Q21 : life cycle of hibernate ? 
+Ans : 
+| Stage | Name         | Meaning                                                                                                                        |
+| ----- | -------------| ------------------------------------------------------------------------------------------------------------------------------ |
+| 1️⃣   | **Transient**  | Object is just created using `new`, **not saved** in DB, **not tracked** by Hibernate.                                         |
+| 2️⃣   | **Persistent** | Object is saved using `session.save()` or `session.persist()` — now **Hibernate tracks it** and manages updates automatically. |
+| 3️⃣   | **Detached**   | Session is closed → object is **no longer tracked** by Hibernate, but still exists in memory.                                  |
+| 4️⃣   | **Removed**    | Object is **deleted** from DB using `session.delete()` — no longer in DB or tracked.                                           |
+
+
+// 1️⃣ Transient — Just created, not in DB
+User user = new User();
+user.setName("Saurav");
+
+// 2️⃣ Persistent — Saved and tracked by Hibernate
+Session session = factory.openSession();
+session.beginTransaction();
+
+session.save(user);  // Hibernate now manages this object
+
+session.getTransaction().commit();
+
+// 3️⃣ Detached — Session closed, Hibernate stops tracking it
+session.close();
+
+// 4️⃣ Removed — Deleted from DB using a new session
+Session newSession = factory.openSession();
+newSession.beginTransaction();
+
+newSession.delete(user); // Object is now removed from DB
+
+newSession.getTransaction().commit();
+newSession.close();
+
+
+how it works internally it is like this  
+
+### 💡 What really happens:
+
+When you do:
+
+```java
+User user = new User();  
+user.setName("Saurav");
+```
+
+👉 This object is **Transient** — it exists **only in Java memory**, not in the database.
+
+---
+
+### Then:
+
+```java
+session.save(user);
+session.getTransaction().commit();
+```
+
+👉 Now Hibernate **inserts** this record into the **database**.
+So after the commit — ✅ **the user is saved in DB** and becomes **Persistent**.
+
+---
+
+### Next:
+
+```java
+session.close();
+```
+
+👉 The Hibernate session is closed — now Hibernate **stops tracking** this object.
+So it becomes **Detached**, but the **record is still present in the database**.
+
+---
+
+### Finally:
+
+```java
+newSession.delete(user);
+newSession.getTransaction().commit();
+```
+
+👉 Hibernate deletes that **existing DB record** (because it uses the object’s ID).
+After commit, the record is **removed from the database** — so now it’s in the **Removed** state.
+
+---
+
+### 🧠 In short:
+
+| **State**      | **Meaning (Very Simple Words)**                                                         |
+| -------------- | --------------------------------------------------------------------------------------- |
+| **Transient**  | Object is created **in Java only**, **not in DB**, and **Hibernate does not track it**. |
+| **Persistent** | Object is **saved in DB** and **Hibernate is tracking it** inside an open session.      |
+| **Detached**   | Session is **closed**, object still exists in DB, but **Hibernate stops tracking it**.  |
+| **Removed**    | Hibernate is instructed to **delete the object from DB**.                               |
+
+
+---
+
+So the key idea 🔑:
+
+> The object **is deleted from the database only if it was previously saved (persistent)**.
+> If you try to `delete()` a **transient** object (not saved), Hibernate will throw an error — because it doesn’t exist
+  in DB yet.
+
+
+
+=============================================== J Unit Testing ===================================================
+
+JUnit(Java Unit) = Java code  +  Unit testing
+
+Q21 : What is  JUnit testing and why do we need it? 
+Ans : JUnit testing is a framework used in Java to write and run tests for your code.JUnit tests are used to 
+      verify that individual parts of your code, like methods or classes, function correctly and produce the 
+	  expected results.
+	  
+	  Why we need JUnit database : 
+	  JUnit testing for database code can be set up to avoid hitting the real database by using in-memory 
+	  databases, mocking, or test containers. This allows you to test your code without affecting actual data.
+      
+	   Q : Difference between junit and mockito ? 
+	  Ans : 
+	  JUnit alone
+
+		JUnit itself is just a testing framework — it doesn’t decide whether to hit the database or not.
+
+		If your code (the method you’re testing) calls the real database, then yes — JUnit will also hit the real database
+		when running that test.
+
+		✅ Example (JUnit hitting real DB):
+
+		@Test
+		public void testFindUser() {
+			User user = userRepository.findById(1); // 👈 This will hit the real database
+			assertEquals("Saurav", user.getName());
+		}
+
+     Mockito with JUnit : Mockito is almost always used along with a testing framework like JUnit.
+	 so mockito does not work alone like junit so mockito needs junit.
+
+		Mockito is used along with JUnit to create fake (mock) objects so your test does not hit the real database or API.
+
+		Instead, Mockito pretends to return some data — so you only test your business logic, not the database connection.
+
+		✅ Example (Mockito avoiding real DB):
+
+		@Mock
+		UserRepository userRepository;
+
+		@Test
+		public void testFindUserWithoutDB() {
+			when(userRepository.findById(1)).thenReturn(new User("Saurav")); // 👈 Fake data
+
+			User user = userService.getUser(1); // This does NOT hit the database
+			assertEquals("Saurav", user.getName());
+		}
+
+        JUnit: Just runs your test. If your method goes to the database, it will hit the real database.
+               If your code calls the real database, JUnit will hit the real database unless you mock it.
+
+		Mockito: Lets you mock (fake) that database call so that no real database interaction happens.
+		         It prevents real database/API calls by faking the behavior of dependencies.
+
+		Note(just for understanding) - so if we dont use mockito framework than simply using junit test cases so it will hit the real data base so thats why we use mockito so that it does not hit the real database           
+	  
+     Q : What is Mockito? 
+	  Ans: it is a tool that create fake version of object for testing. this allows you to test your code with 
+           fake objects.so you don’t need the real objects during testing.
+		   
+| Tool        | Use Case                            | In Simple Terms                               |
+| ----------- | ----------------------------------- | --------------------------------------------- |
+| **JUnit**   | Write tests for your code logic     | “Is my code working?” ✅❌                    |
+| **Mockito** | Fake dependencies for clean testing | “Ignore the real stuff, test my part only” 🎯 |
+		   
+      Annoatations used in junit with mockito testing ? 
+	  1 : @Test
+	  2 : @SpringBootTest
+	  3 : @InjectMock
+	  4 : @Mock
+	  
+	  1 - @Test : using this annotation over the method you want to test.
+	              Suppose in service layer you have file EmployeeServiceImpl.java in this you have method 
+				  getEmpById. so in src/test/java create a package of service layer and create a class to test
+				  your method like this. 
+                    //in testing class name as EmployeeServiceImplTest.java
+					// this code is junit testing without mockito 
+					import org.junit.jupiter.api.Test;
+					import static org.junit.jupiter.api.Assertions.assertEquals;
+
+					public class EmployeeServiceImplTest {
+
+						@Test
+						public void testGetEmpById() {
+							// Create an instance of EmployeeServiceImpl
+							EmployeeServiceImpl service = new EmployeeServiceImpl();
+							
+							// Call the method to test
+							Employee employee = service.getEmpById(1);
+							
+							// Verify the result
+							assertEquals(expectedEmployee, employee);
+						}
+					}
+
+     
+      2 - @SpringBootTest : used for testing whole application written over the class can use all the bean of 
+                            other class here by writing @SpringBootTest	  
+	  
+      3 - @InjectMock : Inject the bean of the class where method is present which you want to test.
+                        Suppose i have a method getEmpById present in EmployeeServiceImpl so i will inject 
+                        the bean of EmployeeServiceImpl by using @InjectMock. because i want to test the
+                        getEmpById method and this method is present in EmployeeServiceImpl.
+
+                        @InjectMock
+                        private EmployeeServiceImpl employeeServiceImpl; //now IOC will provide bean of this 
+						                                                 //class inside test class
+ 						
+						or 
+						
+						For example, if you have a method getEmpById in EmployeeServiceImpl that you want to test,
+						you would use @InjectMocks to create an instance of EmployeeServiceImpl and inject any 
+						mocked dependencies (like EmployeeRepository) into it by using @Mock.
+      
+	  4 - @Mock : @Mock is an annotation used in Mockito to create a fake version of a class or interface. This 
+	              fake object can simulate the behavior of real objects in your tests, allowing you to control 
+				  and verify interactions with it without using the actual implementation.
+				  
+				  or
+				  
+				  My defination  : 
+				  
+				  @Mock is used in testing to create fake version of a class this helps you test your code 
+				  without needing the real class suppose for example you have a layer called EmployeeRepository 
+                  layer which is extended by JpaRepository class. this class(EmployeeRepository) has all the 
+				  methods to perform crud operations on db. but in test class we are creating a mock of 
+                  EmployeeRepository so that it does not hit to the actual Database. 				  
+				  
+				  
+      example :  normal junit testing  
+	  code : // Calculator.java
+			public class Calculator {
+				public int add(int a, int b) {
+					return a + b;
+				}
+			}
+
+
+        // CalculatorTest.java
+		import static org.junit.jupiter.api.Assertions.*;
+
+		import org.junit.jupiter.api.Test;
+
+		public class CalculatorTest {
+
+			@Test
+			public void testAdd() {
+				Calculator calculator = new Calculator();
+				int result = calculator.add(3, 5);
+				assertEquals(8, result, "The add method should correctly add two numbers.");
+			}
+		}
+
+     
+       	example : junit with mockito 
+        User.java
+        public class User {
+			private Long id;
+			private String name;
+
+			// Constructors, getters, and setters
+		}
+		
+		UserRepository.java
+		import java.util.Optional;
+
+		public interface UserRepository {
+			Optional<User> findById(Long id);
+		}
+
+        UserService.java
+		public class UserService {
+			private final UserRepository userRepository;
+
+			public UserService(UserRepository userRepository) {
+				this.userRepository = userRepository;
+			}
+
+			public User getUserById(Long id) {
+				return userRepository.findById(id).orElse(null);
+			}
+		}
+
+        UserServiceTest.java
+		import org.junit.jupiter.api.Test;
+		import org.mockito.InjectMocks;
+		import org.mockito.Mock;
+		import org.mockito.MockitoAnnotations;
+		import static org.junit.jupiter.api.Assertions.assertEquals;
+		import static org.mockito.Mockito.when;
+
+		public class UserServiceTest {
+
+			@Mock
+			private UserRepository userRepository;
+
+			@InjectMocks
+			private UserService userService;
+
+			public UserServiceTest() {
+				MockitoAnnotations.openMocks(this);
+			}
+
+			@Test
+			public void testGetUserById() {
+				User mockUser = new User();
+				mockUser.setId(1L);
+				mockUser.setName("John Doe");
+
+				when(userRepository.findById(1L)).thenReturn(Optional.of(mockUser));
+
+				User user = userService.getUserById(1L);
+				assertEquals("John Doe", user.getName());
+			}
+		}
+
+
+		Explanation
+		1 - @Mock: Creates a mock instance of UserRepository.(so that dont hit the actual database)
+		2 - @InjectMocks: Injects the mock UserRepository into the UserService instance.
+		3 - MockitoAnnotations.openMocks(this): Initializes the mocks and injects them.
+		4 - when(...).thenReturn(...): Defines the behavior of the mock.
+		5 - assertEquals(...): Verifies the result of the service method.
+       
+
+
+or 
+
+simple explanation of @Mock and @InjectMock
+this is junit with mockito (means we are using @Mock and @injectMock in junit)
+
+When you use @InjectMocks on a controller class, you're saying:
+👉 “I want to test this class (the controller)”
+
+When you use @Mock on the service class, you're saying:
+👉 “Don’t use the real service — use a fake/mock one because the controller depends on it.”
+
+
+The controller class is dependent on the service layer, so we use @Mock for the service and @InjectMocks for the 
+controller — and that allows us to test the controller in isolation.
+
+@Mock
+private UserService userService;  // Fake service
+
+@InjectMocks
+private UserController userController;  // Real controller with fake service injected
+
+@Test
+public void testGetUser() {
+    when(userService.getUser(1)).thenReturn(new User(1, "John"));
+
+    String result = userController.showUser(1);
+
+    assertEquals("User: John", result); // Testing only controller logic
+}
+
+
+You're not testing the service here — you're only testing the controller, and mocking the service so the test stays 
+focused.
+
+or 
+ 
+You're not testing the service here — you're only testing the controller, and mocking the service, so that you can test
+the controller methods independently, without depending on actual service logic. 
+
+or 
+
+In unit testing, we mock the service to test only the controller layer.
+We're checking if the controller behaves correctly when the service gives certain responses — without running real 
+service logic.
+
+
+Q : What are the important dependecies u add in your spring boot project? 
+Ans : In a typical Spring Boot project, we add important dependencies like spring-boot-starter-web for building REST APIs,
+spring-boot-starter-data-jpa for database operations, the database driver like mysql-connector-java, 
+spring-boot-starter-test for JUnit and Mockito testing, and lombok to reduce boilerplate code.
+
+1. Spring Boot Starter Web – for REST APIs / web apps
+   This gives you support for building REST APIs, controllers, and handling HTTP requests.
+
+2. Spring Boot Starter Data JPA – for database communication
+   Helps you work with databases easily using JPA/Hibernate.
+
+3. Database Driver (like MySQL) – to connect to DB
+   Without this, your application can’t connect to MySQL (or whichever DB you’re using).
+
+4. Spring Boot Starter Test – for JUnit & Mockito
+   Includes JUnit, Mockito, and other testing tools.
+
+5. Lombok – to reduce boilerplate code (getters/setters)
+   Auto-generates getters, setters, constructors, etc., and makes your entity classes cleaner.
+
+6. Validation – if you’re doing request validation
+   Needed if you use @Valid, @NotNull, @Email, etc.
+   
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+kal samj ne ke liye	
+
+The @ResponseBody annotation in Spring tells the framework to directly send the return value of a method as the 
+HTTP response body. It means that instead of rendering a view (like a webpage), the method's return value 
+(e.g., JSON or plain text) is sent directly to the client.	
+
+ResponseEntity is a class in Spring that represents the entire HTTP response, including the status code, headers, and body.			 
+
+ResponseEntity is a class in Spring that helps you build HTTP responses. It allows you to set the status code, headers, and body of the response.
+
+In your example:
+
+java
+Copy code
+@GetMapping
+public ResponseEntity<List<Registration>> getAllReg() {
+    List<Registration> registrations = registrationRepository.findAll();
+    return new ResponseEntity<List<Registration>>(registrations, HttpStatus.OK);
+}
+ResponseEntity<List<Registration>>: Represents the entire HTTP response, including the list of Registration objects and the HTTP status code.
+new ResponseEntity<>(registrations, HttpStatus.OK): Constructs the response with the body (registrations) and status code (HttpStatus.OK), which means the request was successful.
+So, ResponseEntity lets you customize the HTTP response sent to the client.								
+
+Here’s a simple explanation of the difference between @RequestBody and @ResponseBody in Spring:
+
+1. @RequestBody:
+Purpose: Binds the HTTP request body to a method parameter in a controller.
+Use Case: When a client sends data (e.g., JSON) to your server, @RequestBody converts that data into a Java object.
+Example:
+
+java
+Copy code
+@PostMapping("/addUser")
+public String addUser(@RequestBody User user) {
+    // The HTTP request body is converted to a User object
+    return "User added!";
+}
+2. @ResponseBody:
+Purpose: Converts the Java method return value into the HTTP response body.
+Use Case: When you want to send data (e.g., JSON or text) directly as a response to the client, without rendering a view.
+Example:
+
+java
+Copy code
+@GetMapping("/getUser")
+@ResponseBody
+public User getUser() {
+    // The returned User object will be converted to JSON (or XML) and sent as the response body
+    return new User("John", "Doe");
+}
+Key Difference:
+@RequestBody: Takes data from the client (request body) and converts it to a Java object.
+@ResponseBody: Sends data from the server (method return value) as the HTTP response body.
+
+Q: what is objectmapper and modelmapper ? 
+Q spring profile  ? 
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+kal samj ne ke liye	
+
+The @ResponseBody annotation in Spring tells the framework to directly send the return value of a method as the 
+HTTP response body. It means that instead of rendering a view (like a webpage), the method's return value 
+(e.g., JSON or plain text) is sent directly to the client.	
+
+ResponseEntity is a class in Spring that represents the entire HTTP response, including the status code, headers, and body.			 
+
+ResponseEntity is a class in Spring that helps you build HTTP responses. It allows you to set the status code, headers, and body of the response.
+
+In your example:
+
+java
+Copy code
+@GetMapping
+public ResponseEntity<List<Registration>> getAllReg() {
+    List<Registration> registrations = registrationRepository.findAll();
+    return new ResponseEntity<List<Registration>>(registrations, HttpStatus.OK);
+}
+ResponseEntity<List<Registration>>: Represents the entire HTTP response, including the list of Registration objects and the HTTP status code.
+new ResponseEntity<>(registrations, HttpStatus.OK): Constructs the response with the body (registrations) and status code (HttpStatus.OK), which means the request was successful.
+So, ResponseEntity lets you customize the HTTP response sent to the client.								
+
+Here’s a simple explanation of the difference between @RequestBody and @ResponseBody in Spring:
+
+1. @RequestBody:
+Purpose: Binds the HTTP request body to a method parameter in a controller.
+Use Case: When a client sends data (e.g., JSON) to your server, @RequestBody converts that data into a Java object.
+Example:
+
+java
+Copy code
+@PostMapping("/addUser")
+public String addUser(@RequestBody User user) {
+    // The HTTP request body is converted to a User object
+    return "User added!";
+}
+2. @ResponseBody:
+Purpose: Converts the Java method return value into the HTTP response body.
+Use Case: When you want to send data (e.g., JSON or text) directly as a response to the client, without rendering a view.
+Example:
+
+java
+Copy code
+@GetMapping("/getUser")
+@ResponseBody
+public User getUser() {
+    // The returned User object will be converted to JSON (or XML) and sent as the response body
+    return new User("John", "Doe");
+}
+Key Difference:
+@RequestBody: Takes data from the client (request body) and converts it to a Java object.
+@ResponseBody: Sends data from the server (method return value) as the HTTP response body.
+
+Q: what is objectmapper and modelmapper ? 
+Q spring profile  ? 
+

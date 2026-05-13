@@ -1,0 +1,1121 @@
+Q1 : What is design pattern and why do we need design patterns ?
+Ans : Design pattern is a well known proved solution for specefic problem.
+      
+	  We need design patterns because they help solve common problems with creating and managing objects. 
+	  They give us easy ways to handle how objects are created, organized, and interact with each other.
+	  
+      There are 3 design pattern and these are sub divide into sub parts. 
+       
+                              Design pattern 
+							        |
+        ____________________________|___________________________
+ 		|							|                          |
+		|							|                          |
+	1.Creational               2.Structural design         3.Behavioral 
+   Design pattern	              pattern                 Design Pattern
+        ↓                           ↓                          ↓
+   a.Factory Pattern(used)     a.Adapter Pattern         a.Iterator Pattern
+   b.Abstract Factory          b.Bridge Pattern          b.Observer Pattern
+     Pattern                                             c.Staretegy design pattern(used)
+   c.Singleton Pattern(used)
+   d.Prototype Pattern(used)
+   e.Builder Pattern.(used)
+   
+   only we are using 2 design pattern 
+   1 . Factory pattern/Factory method pattern 
+   2 . Singleton Pattern
+   
+Q2:What is Factory pattern/Factory method pattern?
+Ans : Factory method pattern talks about the creation of object.
+      In the factory pattern we hide the logic for creating object from client(user) through a 
+	  method we get Object of particular class. The factory class returns required class instance.
+      ex : Suppose i write String of teacher(i want object of teacher) so i pass this string in 
+      the method. So it will give the teacher object/instance.
+      So factory method dont want to show how iam creating object i will not show to you i will
+      just give to you for use.
+
+    code : 
+	Profession.java
+	public interface Profession { 
+	    void print();
+	}
+	
+	Doctor.java
+	public class Doctor implements Profession { 
+	   public void print(){
+	      Syso("Doctor");
+	   }
+	}
+	
+	Engineer.java
+	public class Engineer implements Profession { 
+	   public void print(){
+	      Syso("Engineer");
+	   }
+	}
+    
+    Teacher.java	
+	public class Teacher implements Profession { 
+	   public void print(){
+	      Syso("Teacher");
+	   }
+	}
+	
+	ProfessionFactory.java // FactoryClass in this class we create object it returns object
+	
+	public class ProfessionFactory{
+	 
+	  public Profession getProfession(String typesOfProfession){
+	     if(typesOfProfession == null){
+		    return null;
+		 }
+		 if(typesOfProfession.equalsIgnoreCase("Doctor")){
+		   return new Doctor();
+		 }
+		 else if(typesOfProfession.equalsIgnoreCase("Engineer")){
+		   return new Engineer();
+		 }else if(typesOfProfession.equalsIgnoreCase("Teacher")){
+		   return new Teacher(); 
+		 }
+		 return  null;
+	  }
+	}
+	
+	FactoryPatternMainClass.java // here we will ask for object 
+	
+	public class FactoryPatternMainClass{
+	    psvm(){
+		 ProfessionFactory p = new ProfessionFactory();
+		 Profession pr = p.getProfession("Doctor");// just like - List<Integer> l = new ArrayList<>();
+		 pr.print();         |                     // class implements interface 
+		                     |
+		}                    ↓
+                      so here in this code factory method design pattern dont show that how this
+                      pattern creating object. we call the method and methods return the object.					  
+	}
+
+	
+Q3 : Where you have used Factory pattern/Factory method pattern in your project?
+Ans : I have used factory design pattern in my project like this suppose how the user wants the otp
+      through email or through message.if he clicks on email the otp will get generated and comes 
+	  to email and vice versa for message.
+	  
+Q4: What is Singleton pattern?
+Ans : For any java class if we are allowed to create only one instance/object such type of class 
+      is called as Singleton class.
+	  
+	  Two ways to create Singleton class : 
+	  1 : Lazy initialization
+	  2 : Eager initialization
+	  
+	1 : Lazy initialization : we are creating our own singleton class using Lazy initialization
+	    
+        package p7;
+
+		public class Test {
+			private static Test t = null ;
+			private Test() {
+				
+			}
+			
+			//using factory method to get object through the method 
+			public static Test getTest() {
+				if(t==null) {
+					t = new Test();
+				}
+				return t ; 
+				
+			}
+
+		}
+		
+		package p7;
+
+		public class Client {
+
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				 System.out.println(Test.getTest());//p7.Test@5b480cf9
+				 System.out.println(Test.getTest());//p7.Test@5b480cf9
+			}
+
+		}
+		
+		Q : why to make constructor private in singleton class ? 
+		Ans : Making the constructor private in a Singleton class stops other classes from creating new objects 
+		      of it. This way, only one instance is allowed, and it’s controlled by a single method like 
+			  getInstance().
+			  
+			  or  
+			  
+			  we made Object and Constructor private so that no other class cant initialize/use the object
+              and cant modify it.
+			  
+			  or
+			  
+			 in a sinleton class we make constructor private because so that no other class can create an object using new.
+			 
+
+more explanation why we make both variable and cosntructor private with coding : 
+
+If in a singleton class, the variable and constructor are public, how can we initialize values from another class?
+
+If both variable and constructor are public, then:
+
+-> Any class can call new Singleton(), which breaks the Singleton pattern.
+
+-> So, you’re no longer following Singleton rules.
+	
+
+Why Singleton Fails in This Case?
+
+❌ Example (Incorrect Singleton):
+public class Singleton {
+    public static Singleton instance = null;  // public variable
+    public Singleton() {                      // public constructor
+        System.out.println("Constructor called");
+    }
+}
+	
+Now from another class:
+public class Test {
+    public static void main(String[] args) {
+        Singleton s1 = new Singleton(); // ❌ creates a new object
+        Singleton s2 = new Singleton(); // ❌ creates another object
+    }
+}
+
+👉 So here, multiple objects are created — Singleton is broken.
+
+
+Correct Singleton Pattern:
+
+To properly follow Singleton, do this:
+	public class Singleton {
+    private static Singleton instance = null;   // ✅ static variable
+    private Singleton() {                       // ✅ private constructor
+        System.out.println("Constructor called");
+    }
+
+    public static Singleton getInstance() {     // ✅ global access method
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+
+Now from another class:
+
+public class Test {
+    public static void main(String[] args) {
+        Singleton s1 = Singleton.getInstance();  // ✅ Only one object
+        Singleton s2 = Singleton.getInstance();  // ✅ Same object
+    }
+}
+
+
+| Scenario                                 | Result                                |
+| ---------------------------------------- | ------------------------------------- |
+| Constructor is public                    | ❌ Anyone can create new object        |
+| Variable is public                       | ❌ Anyone can reassign or modify       |
+| Constructor **and** variable are private | ✅ Singleton is protected and enforced |
+| Access object through `getInstance()`    | ✅ Only one object allowed             |
+
+
+	2 : Eager initialization : we are creating our own singleton class using Eager initialization
+    
+        package p7;
+
+		public class Test {
+			private static Test t = new Test();
+			private Test() {
+				
+			}
+			
+			//using factory method to get object through the method 
+			public static Test getTest() {
+				return t ; 
+			}
+		}
+		
+		package p7;
+
+		public class Client {
+
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				 System.out.println(Test.getTest().hashCode());//1531448569
+				 System.out.println(Test.getTest().hashCode());//1531448569
+			}
+
+		}
+
+    we made Object and Constructor private so that no other class cant initialize/use the object
+	and cant modify it.
+    
+Q : Why getInstance() is static?
+
+Because the constructor is private, we cannot create an object using new A() from outside.
+
+If getInstance() was not static, we’d need an object to call it like:
+
+A obj = new A(); // ❌ Not allowed (constructor is private)// here A is a singleton class whose object we are creating here
+                 // so if we create so it break the singleton rule so thats why we make the method static and call 
+                 // directly by class name. 
+obj.getInstance(); // ❌ Can't reach here because of the static method(getInstance) it cant call means object cant call the 
+                   // static method 
+
+
+But if it’s static, we can call it without an object:
+
+A obj = A.getInstance(); ✅
+
+
+This way, we directly get the single instance of the class without ever creating one manually.
+
+	
+or 
+
+Q : Why is getInstance() method static in Singleton Design Pattern?
+
+Ans :
+In Singleton class, constructor is private, so we cannot create object from outside using new keyword.
+
+That’s why getInstance() method is made static so we can call it directly using class name without creating object.
+
+Example:
+A obj = A.getInstance();
+
+This helps us get the single object of the class.	
+ 	
+Q5: Where you have used singleton design pattern in your project?
+Ans : Used for database connection through project(we use Database connection that driver manager
+      connection con is is the example of singleton design pattern).
+	  This is useful in database connections to avoid creating multiple connections unnecessarily
+	  
+         	  
+Q6: What is Eager initialization and Lazy initialization ? 
+Ans : Eager initialization : 
+      in this method , class is initialized wheather it is to be used or not. you initiate the 
+      object at the time of class loading.
+	  means when the class loads it will create the object.
+	  Lazy initialization : 
+	  in this method, class is initialized only when it is required required you initiate the 
+	  object when it is required.
+	  means when the method is called then only object is created. 
+
+Q7 : What is Double Check Locking in singleton design pattern or Synchronized singleton design 
+     pattern? why we use double check locking ?  
+Ans : we use double check locking in sigleton class makes object access faster after the first time.
+
+      most efficient way to implement singleton design pattern through double check locking,
+      it is also called as synchronized design pattern.
+	  
+	  but first we will do single check locking in singleton design pattern : 
+	  code : 
+	  package p8;
+
+		public class A {
+			
+			private static A a = null ; 
+			
+			private A() {
+				
+			}
+			
+			public static synchronized A getInstance() {
+				if(a==null) {
+					a = new A();
+				}
+				return a;	
+			}	
+		}
+      
+	  package p8;
+
+		public class Test {
+
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				System.out.println(A.getInstance());//p8.A@5b480cf9
+				System.out.println(A.getInstance());//p8.A@5b480cf9
+			}
+
+		}
+		
+		
+       
+	    here in the above code thread will come one by one. and will check the condition if object
+		is null or not so it will check this condition everytime, so thats why we use double 
+		check locking so that condition should not be checked everytime.	
+
+
+		
+	   
+	    Double check Locking : in this we use synchronize keyword on block(which is inside method). 
+        
+        code:  	
+        package p8;
+
+		public class B {
+			 private static volatile B b ;// if we want we can remove volatile keyword also 
+			 private B() {
+				 
+			 }
+			 public static B getInstance() {
+				 if(b==null) {
+					 //using synchronised keyword on block level
+					 synchronized (B.class) {// it will decide it is lock of this class(B.class) 
+						 if(b==null) {
+							 b = new B();
+						 }
+						
+					}
+				 }
+				 return b;
+			 }
+			
+
+		}
+		
+		package p8;
+
+		public class Test {
+
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				System.out.println(B.getInstance());//p8.B@5b480cf9
+				System.out.println(B.getInstance());//p8.B@5b480cf9
+				System.out.println(B.getInstance());//p8.B@5b480cf9
+			}
+
+		}
+		
+Q8 : What is Volatile keyword?
+ans : The volatile keyword makes sure that when one thread changes a variable, other threads see 
+      the changes right away and use that variable.
+      suppose i have used volatile keyowrd with an object, which is now not initialzed 
+      suppose now 1st thread enters and make some changes in object and now other threads 
+      will enter but will use that object only whose changes are made by 1st thread.
+	  means other thread will look into  the main memory and uses the object that changes
+      has been made by 1st thread.(jo first thread ne jo change kiya baaki sab thread vhi use 
+	  kr lenge it is kind of caching  
+	  or 
+	  Jo pehle thread ne change kiya, volatile ki wajah se baaki threads usi updated value ko main memory se
+	  padhenge, apne local cache se nahi.).	  
+	  
+  	  
+Q9 : How to break singleton design pattern?	
+Ans : singleton design pattern  breaks which means we have to create new object. 
+      there are three ways to break singleton design pattern
+     
+      1 - Reflection api
+      2 - Desirialization
+      3 - cloning
+
+      	  
+1 : reflection api  - 
+	  code : 
+	  package p9;
+
+import java.lang.reflect.InvocationTargetException;
+
+public class A {
+    static A a = new A();
+    private A() {}
+    public static A getInstance() {
+    	return a;
+    }
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		  A a = A.getInstance();
+		  A  a1= A.getInstance();
+		  
+		  System.out.println(a);
+		  System.out.println(a1);
+		  
+		  try {
+		   
+			A a2 = A.class.getDeclaredConstructor().newInstance();//this is reflection api 
+			System.out.println(a2);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | 
+		          InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			
+			e.printStackTrace();
+		}
+	}
+
+}
+
+output - p9.A@3feba861
+         p9.A@3feba861
+		 p9.A@5b480cf9// here it breaks giving new object address
+
+		                       
+       	explanation : A.class.getDeclaredConstructor().newInstance();
+		                ↓                 ↓                     ↓
+					class on which     through this method    it is the method of constructor
+                    you want to       we can create private   class which creates new object. 
+                    break singleton   constructor 
+                    pattern 					
+					
+					getDeclaredConstructor() // both are method of constructor class
+					newInstance()
+					
+	Q : Write a code which prevents you to break sinlgeton class through Reflection api?
+	Ans : so we use if condition in constuctor and throws IllegalStateException 
+
+		package p12;
+
+
+		import java.lang.reflect.InvocationTargetException;
+
+		public class A {
+			static A a = new A();
+			private A() {
+			    //Prevent breaking the Singleton through reflection
+				if (a != null) {
+					throw new IllegalStateException("Singleton instance already created!");
+				}
+			}
+			public static A getInstance() {
+				return a;
+			}
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+				  A a = A.getInstance();
+				  A  a1= A.getInstance();
+				  
+				  System.out.println(a);
+				  System.out.println(a1);
+				  
+				  try {
+				   
+					A a2 = A.class.getDeclaredConstructor().newInstance();//this is reflection api 
+					System.out.println(a2);
+				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | 
+						  InvocationTargetException | NoSuchMethodException | SecurityException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		output -p12.A@3feba861
+				p12.A@3feba861
+				java.lang.reflect.InvocationTargetException
+					at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+					at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+					at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+					at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+					at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+					at Java/p12.A.main(A.java:26)
+				Caused by: java.lang.IllegalStateException: Singleton instance already created!
+					at Java/p12.A.<init>(A.java:10)
+					... 6 more	
+	     
+		
+   	
+					
+2 : Cloning  - by implementing clonable interface we get the clone method through which we can 
+               create new instance by this our singleton design pattern breaks.
+            
+            package p14;
+
+			public class A implements Cloneable {
+				private static A b = new A();
+				
+				private A() {
+					
+				}
+				
+				public static A getInstance() {
+					return b ; 
+				}
+				
+				// this is clone method of object class
+				//@Override
+				protected Object clone() throws CloneNotSupportedException {
+					// TODO Auto-generated method stub
+					return super.clone();
+				}
+				public static void main(String[] args)  {
+					// TODO Auto-generated method stub
+					A b1 = A.getInstance();
+					A b2 = A.getInstance();
+					
+					System.out.println(b1);
+					System.out.println(b2);
+					
+					try {
+						A b3 = (A) b1.clone();// calling clone method of Object class
+						System.out.println(b3);
+					} catch (CloneNotSupportedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+			}
+
+			
+			output -p9.B@3feba861
+					p9.B@3feba861
+					p9.B@5b480cf9
+			
+	Q : Write a code which prevents you to break sinlgeton class through cloning method?
+    Ans :	
+	    code - 
+		package p12;
+
+		public class B implements Cloneable {
+			private static B b = new B();
+
+		   
+
+			public static B getInstance() {
+				return b;
+			}
+			
+			private B() {}
+			
+			protected Object clone() throws CloneNotSupportedException {
+				throw new CloneNotSupportedException("Singleton instance cannot be cloned!");
+			}
+
+			public static void main(String[] args) {
+				B b1 = B.getInstance();
+				B b2 = B.getInstance();
+
+				System.out.println(b1);
+				System.out.println(b2);
+
+				try {
+					// Attempting to clone the singleton instance will throw an exception
+					B b3 = (B) b1.clone();
+					System.out.println(b3);
+				} catch (CloneNotSupportedException e) {
+					e.printStackTrace(); // Print the exception message
+				}
+			}
+		}
+
+		output -p12.B@3feba861
+				p12.B@3feba861
+				java.lang.CloneNotSupportedException: Singleton instance cannot be cloned!
+					at Java/p12.B.clone(B.java:17)
+					at Java/p12.B.main(B.java:29)
+
+3 : Deserialization - first we will convert singleton instance into byte stream(byte code) using
+                      serialization process then we will convert it into new instance if both 
+                      instance refrence are different then singleton design pattern is broken.
+
+					  Serialization can break the Singleton design pattern.
+					  When you serialize an instance of a singleton class and then deserialize it, 
+					  the deserialized object is a new instance, which can break the singleton
+					  guarantee (having only one instance). 
+code : Singleton.java
+		package p15;
+
+		import java.io.*;  
+		public class Singleton implements Serializable {  
+			private static Singleton instance;  
+			private Singleton() {  
+				// Private constructor  
+			}  
+			public static Singleton getInstance() {  
+				if (instance == null) {  
+					instance = new Singleton();  
+				}  
+				return instance;  
+			}  
+
+		}  
+		
+		SingletonBreaker.java
+		package p15;
+
+		import java.io.FileInputStream;
+		import java.io.FileOutputStream;
+		import java.io.IOException;
+		import java.io.ObjectInputStream;
+		import java.io.ObjectOutputStream;
+
+		public class SingletonBreaker {  
+			public static void main(String[] args) throws IOException, ClassNotFoundException {  
+				Singleton singleton = Singleton.getInstance();
+				Singleton singleton1 = Singleton.getInstance();
+				// Serialization  
+				ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("singleton.ser"));  
+				out.writeObject(singleton);  
+				//out.close();  
+				// Deserialization  
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream("singleton.ser"));  
+				Singleton singleton2 = (Singleton) in.readObject();  
+				//in.close();  
+				System.out.println(singleton);
+				System.out.println(singleton1);
+				System.out.println(singleton2);  
+			}  
+		}  
+
+
+
+output -p9.B@3feba861
+		p9.B@3feba861
+		p9.B@5b480cf9
+
+
+ Q :  Write a code which prevents you to break sinlgeton class through Deserization?
+ Ans : 
+ code : package p16;
+
+		import java.io.*;
+
+		public class Singleton implements Serializable {
+			private static Singleton instance;
+
+			private Singleton() throws Deserialized {
+
+			}
+
+			public static Singleton getInstance() throws IOException ,Deserialized  {
+				if (instance == null) {
+					instance = new Singleton();
+				}
+				return instance;
+			}
+
+			protected Object readResolve() throws Deserialized {
+				throw new Deserialized("Singleton instance already created!");
+			}
+		}
+		
+		package p16;
+
+		import java.io.FileInputStream;
+		import java.io.FileOutputStream;
+		import java.io.IOException;
+		import java.io.ObjectInputStream;
+		import java.io.ObjectOutputStream;
+
+		import javax.security.auth.DestroyFailedException;
+
+		public class SingletonBreaker {
+			
+
+			public static void main(String[] args) throws IOException, ClassNotFoundException, Deserialized {
+				Singleton singleton = Singleton.getInstance();
+				Singleton singleton1 = Singleton.getInstance();
+
+				System.out.println(singleton);
+				System.out.println(singleton1);
+				// Serialization
+				ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("singleton.ser"));
+				out.writeObject(singleton);
+				// out.close();
+				// Deserialization
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream("singleton.ser"));
+				Singleton singleton2 = (Singleton) in.readObject();
+				// in.close();
+
+				System.out.println(singleton2);
+			}
+
+		}
+
+    output - p16.Singleton@5b480cf9
+			p16.Singleton@5b480cf9
+			Singleton instance already created!
+			Exception in thread "main" java.io.IOException: unexpected exception type
+				at java.base/java.io.ObjectStreamClass.throwMiscException(ObjectStreamClass.java:1588)
+				at java.base/java.io.ObjectStreamClass.invokeReadResolve(ObjectStreamClass.java:1200)
+				at java.base/java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2277)
+				at java.base/java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1744)
+				at java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:514)
+				at java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:472)
+				at Java/p16.SingletonBreaker.main(SingletonBreaker.java:26)
+			Caused by: p16.Deserialized
+				at Java/p16.Singleton.readResolve(Singleton.java:20)
+				at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+				at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+				at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+				at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+				at java.base/java.io.ObjectStreamClass.invokeReadResolve(ObjectStreamClass.java:1194)
+				... 5 more
+
+
+
+Q10 : what is prototype design pattern ? 
+Ans : used to create new object by copying an existing object.  	
+      It will give you a new object(different), but with the same data.
+
+      Student s1 = new Student();  
+      Student s2 = s1.clone();
+     
+      output - 
+      s1  → @A9214   (example memory address)
+	  s2  → @B5521   (different address)
+
+
+ steps : 1 - first we have to write prototype interface which has clone abstract/incomplete method.
+         2 - we have to implement this clone method in a class. which returns the existing object 
+		     by using private variable.
+			 
+		 3 - Client(class in which we create object) - 
+             the class that request the new object from the prototype by calling the clone method.
+            			 
+      
+
+code : // Step 1: Create a Prototype interface
+interface Prototype extends Cloneable {
+    Prototype clone();
+}
+
+// Step 2: Implement the Prototype interface in a concrete class
+class ConcretePrototype implements Prototype {
+    private String name;
+
+    public ConcretePrototype(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Prototype clone() {
+        try {
+            return (Prototype) super.clone(); // Shallow copy
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+// Step 3: Use the Prototype pattern
+public class PrototypePatternDemo {
+    public static void main(String[] args) {
+        // Create a prototype instance
+        ConcretePrototype original = new ConcretePrototype("Original");
+
+        // Clone the prototype
+        ConcretePrototype cloned = (ConcretePrototype) original.clone();
+
+        System.out.println("Original Name: " + original.getName());
+        System.out.println("Cloned Name: " + cloned.getName());
+    }
+}
+	
+	
+	output :Original Name: Original
+            Cloned Name: Original
+			
+			
+			or  
+			we have another code 
+			
+			
+			
+			class Book implements Cloneable {
+				private String title;
+				private String author;
+				
+				public Book(String title, String author) {
+					this.title = title;
+					this.author = author;
+				}
+				
+				@Override
+				public Book clone() throws CloneNotSupportedException {
+					return (Book) super.clone();  // Clone the current object
+				}
+				
+				@Override
+				public String toString() {
+					return "Book[Title=" + title + ", Author=" + author + "]";
+				}
+			}
+
+			public class PrototypeExample {
+				public static void main(String[] args) {
+					try {
+						// Creating the prototype object
+						Book originalBook = new Book("Java Basics", "John Doe");
+
+						// Cloning the prototype to create a new object
+						Book clonedBook = originalBook.clone();
+
+						// Displaying the objects
+						System.out.println(originalBook);
+						System.out.println(clonedBook);
+					} catch (CloneNotSupportedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+output : Book[Title=Java Basics, Author=John Doe]
+         Book[Title=Java Basics, Author=John Doe]
+
+		 
+or another code of prototype design pattern
+
+// Step 1: Create a Prototype interface
+interface Prototype {
+    Prototype clone();
+}
+
+// Step 2: Create a concrete class that implements Prototype
+class Car implements Prototype {
+    private String model;
+    private String color;
+
+    public Car(String model, String color) {
+        this.model = model;
+        this.color = color;
+    }
+
+    // Copy constructor for cloning
+    private Car(Car car) {
+        this.model = car.model;
+        this.color = car.color;
+    }
+
+    @Override
+    public Prototype clone() {
+        return new Car(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Car(model=" + model + ", color=" + color + ")";
+    }
+
+    // Setter for testing clone modification
+    public void setColor(String color) {
+        this.color = color;
+    }
+}
+
+// Step 3: Test the Prototype pattern
+public class Main {
+    public static void main(String[] args) {
+        Car car1 = new Car("Tesla Model S", "Red");
+        System.out.println("Original: " + car1);
+
+        // Clone the existing car
+        Car car2 = (Car) car1.clone();
+        car2.setColor("Blue");
+
+        System.out.println("Cloned: " + car2);
+    }
+}
+			
+			
+
+Q11 : Benefit of using prototype design pattern ? 
+Ans: 1 - cost of creating new object is more expensive then copying an existing one.(cost in terms 
+         of space wise).
+     2 - hide the complexity of creating object 
+
+Q12 :Where u have used prototype design pattern in your project?	 
+Ans: I used the Prototype Design Pattern to handle different room types. Instead of creating new 
+     room objects every time, I made a copy (clone) of an existing room type and changed only 
+	 what was needed. This made the process faster and simpler. 
+	 
+Q13 : Builder design pattern  ? 
+Ans : Builder Design Pattern is used to create complex objects step by step.
+      Instead of using a big constructor with many parameters, we use a Builder class to set values.
+      At the end, we call .build() to get the final object.
+      It makes code clean, readable, and easy to maintain.
+
+public class Employee {
+    private int id;
+    private String name;
+    private String department;
+
+    // Private constructor
+    private Employee(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.department = builder.department;
+    }
+
+    // Static inner Builder class
+    public static class Builder {
+        private int id;
+        private String name;
+        private String department;
+
+        public Builder setId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder setDepartment(String department) {
+            this.department = department;
+            return this;
+        }
+
+        public Employee build() {
+            return new Employee(this);
+        }
+    }
+
+    // toString() for display
+    @Override
+    public String toString() {
+        return "Employee [id=" + id + ", name=" + name + ", department=" + department + "]";
+    }
+
+    // Main method to test
+    public static void main(String[] args) {
+        Employee emp = new Employee.Builder()
+                            .setId(101)
+                            .setName("Saurav")
+                            .setDepartment("IT")
+                            .build();
+
+        System.out.println(emp);
+    }
+}
+
+
+o/p - Employee [id=101, name=Saurav, department=IT]
+
+Q : and now can u tell me if i want to set only two values id and name not department can i do that or is it compulsory to
+    add department as well  ? 
+ans - No, it's not compulsory to set all values (like department) when using the Builder pattern — unless you force it.
+Employee emp = new Employee.Builder()
+                    .setId(101)
+                    .setName("Saurav")
+                    // .setDepartment("IT") // ← This is optional
+                    .build();
+
+This will work just fine. The department will be null by default because:
+
+ - > You never set it.
+
+ - > String fields default to null in Java.	 
+ 
+ output will be Employee [id=101, name=Saurav, department=null]
+  
+ if u dont want null set default vaule -  private String department = "General"; // default department
+
+
+
+Q : What is Behavioral desing pattern ?
+Ans  : 
+Behavioral Design Patterns (Simple Explanation)
+
+Behavioral Design Patterns are about
+👉 how objects talk to each other
+👉 how they share work or responsibilities
+
+In short:
+
+They define how things happen in a program — who does what and how they work together.
+
+Strategy Design Pattern – Simple Explanation:
+The Strategy Design Pattern selects (or switches) the algorithm or behavior (object) at runtime — not at compile time.
+
+The Strategy Design Pattern lets you choose different algorithms or behaviors at runtime, without changing the code that
+uses them.
+
+👉 In simple words:
+
+It’s like having multiple ways to do something, and you can pick which way to use while the program is running.
+
+💡 Real-life Example:
+
+Imagine you’re using Google Maps — you can choose:
+
+Driving route 🚗
+
+Walking route 🚶
+
+Cycling route 🚴
+
+All are different strategies for finding a path.
+The app just switches the strategy without changing the main code.	
+
+Code  : 
+// Step 1: Strategy Interface
+interface RouteStrategy {
+    void buildRoute(String start, String end);
+}
+
+// Step 2: Concrete Strategies
+class DrivingRoute implements RouteStrategy {
+    public void buildRoute(String start, String end) {
+        System.out.println("Building driving route from " + start + " to " + end);
+    }
+}
+
+class WalkingRoute implements RouteStrategy {
+    public void buildRoute(String start, String end) {
+        System.out.println("Building walking route from " + start + " to " + end);
+    }
+}
+
+class CyclingRoute implements RouteStrategy {
+    public void buildRoute(String start, String end) {
+        System.out.println("Building cycling route from " + start + " to " + end);
+    }
+}
+
+// Step 3: Context Class
+class Navigation {
+    private RouteStrategy routeStrategy;
+
+    // Change route strategy at runtime
+    public void setRouteStrategy(RouteStrategy routeStrategy) {
+        this.routeStrategy = routeStrategy;
+    }
+
+    public void buildRoute(String start, String end) {
+        if (routeStrategy == null) {
+            System.out.println("Please select a route type first!");
+        } else {
+            routeStrategy.buildRoute(start, end);
+        }
+    }
+}
+
+// Step 4: Test the Strategy Pattern
+public class Main {
+    public static void main(String[] args) {
+        Navigation navigation = new Navigation();
+
+        // Choose Driving Strategy
+        navigation.setRouteStrategy(new DrivingRoute());
+        navigation.buildRoute("Home", "Office");
+
+        // Switch to Walking Strategy
+        navigation.setRouteStrategy(new WalkingRoute());
+        navigation.buildRoute("Home", "Park");
+
+        // Switch to Cycling Strategy
+        navigation.setRouteStrategy(new CyclingRoute());
+        navigation.buildRoute("Home", "Gym");
+    }
+}
+
+
+output  : 
+Building driving route from Home to Office
+Building walking route from Home to Park
+Building cycling route from Home to Gym
+
+Strategy pattern means selecting one algorithm from multiple algorithms at runtime.
+Just like Google Maps gives you options (walk, bike, car), and you choose one at runtime.
+The code does not change — only the strategy changes.

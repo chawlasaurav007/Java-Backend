@@ -1,0 +1,35 @@
+producer ----->  we need to create the job 
+                 
+
+central broker 
+
+subscriber 
+
+class Message {
+   String Topic ;
+   String subscriber; 
+  
+
+}
+
+machine  - serves different types of coffee 
+selecting interface types of coffe 
+
+non functional 
+less than 60 sec to prepare coffee 
+
+
+public interface BeverageSelector{
+   Bevrage select(String typeCoffee,String size);
+}
+
+
+
+
+
+
+
+
+
+
+

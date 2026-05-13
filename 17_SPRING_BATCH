@@ -1,0 +1,261 @@
+Spring batch 
+Steps to integrate spring batch in our spring boot application first we will 
+Step 1 : add some dependencies in pom.xml file 
+    1 : spring web 
+	2 : h2 database 
+    3 : spring data jpa 
+    4 : spring batch  
+
+Step 2 : so now we need to copy the .csv file and paste it in spring boot application resource folder 
+
+Step 3 : create the same entity class(Person.class) having the data same as the present in .csv file 
+ex : name, age , account_num
+
+Step 4 : here we will  the job (or create the job by using rest api) so for this we will create a controller 
+         classs and make one rest end points . So we are launching the job using rest apis 
+
+
+JobController.class		 
+package com.codesnippet.SpringBatchDemo.controller;
+
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/jobs")
+public class JobController {
+    
+	//here we have job launcher class iam autowiring it so that i can use run method of this class
+	@Autowired
+	private JobLauncher jobLauncher;
+    
+	
+	@Autowired
+	private Job job;
+    
+    // by triggering this rest api we will launch a job - this is the starting point 	
+	@PostMapping("/importData")
+	public String jobLauncher() {
+
+		final JobParameters jobParameters = new JobParametersBuilder()
+				.addLong("startAt", System.currentTimeMillis()).toJobParameters();
+
+			try {
+				// Launch the job - using the run method and it calls SpringBatchConfig class 
+				final JobExecution jobExecution = jobLauncher.run(job, jobParameters);// we pass the job here to launch the job
+
+				// Return job status
+				return jobExecution.getStatus().toString();
+			} catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException
+					| JobParametersInvalidException e) {
+				e.printStackTrace();
+				return "Job failed with exception: " + e.getMessage();
+			}
+		}
+	}
+
+
+Step 5 : application.properties
+
+spring.application.name=SpringBatchDemo
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=root
+spring.datasource.password=root
+
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.show-sql=true
+
+#disabled job run at startup - while starting the spring boot project it runs spring batch process automatically so 
+# we want to make it false because we want to triggger the job manually using rest api
+spring.batch.job.enabled=false
+
+
+Step 6 : PersonProcessor.class we need to create which will do the data process which is the second step after reader 
+PersonProcessor.class
+package com.codesnippet.SpringBatchDemo.config;
+
+import com.codesnippet.SpringBatchDemo.entity.Person;
+import org.springframework.batch.item.ItemProcessor;
+
+public class PersonProcessor implements ItemProcessor<Person, Person> {
+
+    // how we want to process the data we write here. So here we write the logic 
+    // Defines how we want to process the data between reading and writing	
+	@Override
+	public Person process(Person person) throws Exception {
+
+		 person.setFirstName(person.getFirstName().toUpperCase());
+		 person.setLastName(person.getLastName().toUpperCase());
+
+		return person;
+	}
+}
+
+Step 6 : here we will configure our spring batch code here in this class 
+
+SpringBatchConfig.class
+
+package com.codesnippet.SpringBatchDemo.config;
+
+import com.codesnippet.SpringBatchDemo.entity.Person;
+import com.codesnippet.SpringBatchDemo.repository.PersonRepository;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
+
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
+import org.springframework.batch.item.data.RepositoryItemWriter;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.LineMapper;
+import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
+import org.springframework.batch.item.file.mapping.DefaultLineMapper;
+import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+
+import org.springframework.transaction.PlatformTransactionManager;
+
+@EnableBatchProcessing // dont need to use this annotation because in new verson of spring batch its not needed because 
+                       // spring boot auto configuaration handel this automatically 
+@Configuration
+public class SpringBatchConfig {
+
+	@Autowired
+	private PersonRepository personRepository;
+
+
+    // Step 3: Reads data from the CSV file (people-1000.csv) and maps each line to a Person object
+	@Bean
+	public FlatFileItemReader<Person> reader() {
+		return new FlatFileItemReaderBuilder<Person>()
+				.name("personItemReader")
+				.resource(new ClassPathResource("people-1000.csv"))
+				.linesToSkip(1)// We write this because the first line of the CSV file contains column names (header)
+				               //ex : name ,age, account_num etc
+				.lineMapper(lineMapper())
+				.targetType(Person.class)
+				.build();
+	}
+	
+	//Step 4: This code defines how each line in your CSV file is converted into a Person object — splitting the line by
+	//commas and mapping the values to the matching fields in the Person class.
+	private LineMapper<Person> lineMapper() {
+		DefaultLineMapper<Person> lineMapper = new DefaultLineMapper<>();
+
+		DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
+		lineTokenizer.setDelimiter(",");
+		lineTokenizer.setStrict(false);
+		lineTokenizer.setNames("id", "userId", "firstName", "lastName", "gender", "email", "phone", "dateOfBirth", "jobTitle");
+
+		BeanWrapperFieldSetMapper<Person> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
+		fieldSetMapper.setTargetType(Person.class);
+
+		lineMapper.setLineTokenizer(lineTokenizer);
+		lineMapper.setFieldSetMapper(fieldSetMapper);
+
+		return lineMapper;
+	}
+    
+	// Step 5: This method returns a new instance of PersonProcessor, which processes each Person item before writing
+	// so here it calls the PersonProcessor class
+	@Bean
+	PersonProcessor processor() {
+		return new PersonProcessor();
+	}
+
+    //Step 6 : This method defines a writer that saves each processed Person record into the database using the save()
+	//method of PersonRepository. 
+	@Bean
+	RepositoryItemWriter<Person> writer() {
+		RepositoryItemWriter<Person> writer = new RepositoryItemWriter<>();
+		writer.setRepository(personRepository);// use the PersonRepository to save data
+		writer.setMethodName("save");// call the save() method of the repository
+		return writer;
+	}
+
+
+
+    //step 1 : we are creating a job from here. We call this from the controller class where we autowired this job in 
+    //controller class. 	
+	@Bean
+	public Job job(JobRepository jobRepository, Step step) {
+		return new JobBuilder("importPersons", jobRepository)
+				.start(step)
+				.build();
+	}
+
+
+    //Step 2 : here is the secong step in which we will create step in whci we have reader , process , writer   
+	@Bean
+	public Step step(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+		return new StepBuilder("csv-import-step", jobRepository)
+				.<Person, Person>chunk(10, transactionManager)//Processes data in chunks of 10 items at a time
+                                                               //For example, if there are 1000 records, they will be
+															   //processed in batches of 10.				
+				.reader(reader())
+				.processor(processor())
+				.writer(writer())
+				.build();
+	}
+
+}
+
+
+By Running this it will add the 1000 records in the DB with Upper names (first name and last names)
+
+✅ Exactly right!
+
+When you **run this Spring Batch job**, here’s what happens step by step 👇
+
+1. **Your REST API endpoint** `/jobs/importData` is called.
+   → This triggers the Spring Batch **job** defined in your configuration.
+
+2. **Reader** (`FlatFileItemReader`)
+   → Reads data line by line from the file **`people-1000.csv`** (skipping the header).
+   → Each line is mapped into a `Person` object.
+
+3. **Processor** (`PersonProcessor`)
+   → Takes each `Person` object and converts the
+   `firstName` and `lastName` fields to **UPPERCASE**.
+
+4. **Writer** (`RepositoryItemWriter`)
+   → Saves each processed `Person` record into the **database** using `personRepository.save(person)`.
+
+5. **Chunking (10)**
+   → Records are processed in batches of 10 at a time until all 1000 are done.
+
+---
+
+✅ **So yes — after running the job:**
+
+* All **1000 records** from the CSV file are inserted into your DB.
+* Each record will have the **first name and last name stored in uppercase**.
+
+💬 Example:
+
+| Before (CSV) | After (DB) |
+| ------------ | ---------- |
+| John         | **JOHN**   |
+| Doe          | **DOE**    |
+
+Perfect understanding! 

@@ -1,0 +1,117 @@
+Note  : As a developer we provide services means business logic to the server ,so that the client(user) can get
+        the request to the server.
+        or 
+        As developers, we implement business logic on the server to process requests sent by the client (user).		
+
+Q1 :What is Server ?
+Ans : Server is a main computer which fulfills the request of user/client or other computer.
+
+Q2 : Advantages of Server ? 
+Ans : 1 - Provide backup :- if data is deleted from local computer so it can ask to main server and can call his
+                            deleted files. 
+      2 - Security :- Server provide security. Which ever local computer are connected to the main Server it 
+                       provides security in local computer. 
+      3 - Storage : Server has more memory capacity than local computer. Server opens for 24 hours.
+	  
+Q3 : Types of Server?
+Ans : 1 - File Server : it uses ftp protocol to bring file from server.
+          protocol - A protocol is like a set of rules that helps two devices to communicate to each other 
+		             means how local computer is communicating to server/main computer.
+	  2 - Application Server: it uses HTTP/HTTPS protocol	 			 
+		  Application Server is a program that provides the environment where your applications(websites ) run.
+          It handles things like business logic, manages data, and processes requests from users.
+      
+	  3 - Mail Server : it uses smpt to send and receive mail.
+	  
+      4 - Web server : it also uses HTTP/HTTPS protocol 
+          Suppose we request something from the server it uses http or https protocol.
+          
+		  HTTP (Hypertext Transfer Protocol):  is used for sending and receiving web content. It’s unencrypted.
+          
+		  HTTPS (HTTP Secure) : is the secure version of HTTP. It encrypts the data to protect it during 
+		  transmission.
+		  
+		  How It Works:
+
+		When you enter a URL like youtube.com in your browser, the request typically starts with HTTP or HTTPS, 
+		depending on whether the site supports encryption.
+
+		If the site supports HTTPS, your browser will initiate a secure connection. The request to the server
+		and the response from the server are both encrypted using HTTPS.
+
+		If the site only supports HTTP, the request and response are not encrypted.
+		
+		When you type youtube.com in your browser, the browser checks if the website supports HTTPS. If it does,
+		it will use HTTPS to securely request and receive the website content. If not, it will use HTTP.
+		
+		Apache tomcat is a type of web server whic we will use.It is a dynamic web server.
+		
+		Q : What is apache tomcat server ?
+        Ans : Apache tomcat is a web server that allows java application to run on the web. If user request a 
+              website so tomcat recieves the request runs the java code and sends back the web page for you 
+              that you were requesting. so tomcat is just like a middleman. Apache tomcat host the website
+              (because it runs java based web application).			  
+		
+	  5 - Database server : When an application(web page) or user needs information, the database server 
+	                         retrieves it quickly.
+          Database server uses JDBC protocol 
+          JDBC (Java Database Connectivity): A protocol for Java applications to interact with databases.
+
+Q4 : Disadvantage of server ?
+Ans : 1 : if server fails(main computer fails) all other local computer will not connect to that website.
+      2 : Server is more expensive(more ram , more storage)
+
+
+Q5 : What is protocol ? 
+Ans : Protocol is a set of rules which are used in digital communication to connect network devices and exchange 
+      information between them. 	  
+	  
+	  
+	  System 1 <----------------------------> System 2
+	                       ↓
+					Protocol(set of rules)	   
+			Through protocol we can achieve connection
+
+    Q : types of protocol ? 
+    Ans : 1 - TCP/IP
+          2 - HTTP(will use this more)
+          3 - SMTP
+
+        HTTP protocol - so http protocol takes user details what they type suppose he is searching for a page 
+		                gfg.com so that page is given back to user with the help of http protocol.
+                        		
+         		        or 
+						
+						The HTTP protocol works when a user types a URL, like 'gfg.com,' and presses Enter. 
+						The browser sends an HTTP request to the server hosting the page (e.g., Apache Tomcat). 
+						The server processes the request and sends back the webpage to the user's browser using 
+						HTTP.
+
+Q6 : What is Domain name system ? 
+Ans : A domain name is a user-friendly address for websites, like www.example.com, that replaces 
+	  hard-to-remember IP addresses (e.g., 192.168.1.1). The Domain Name System (DNS) converts these domain names
+	  into IP addresses so that users can easily access websites by typing the name instead of the numbers.
+	  
+	  If domain name does not work than write the ip address and you can get your website, but remembering domain
+      is more easy than remebering IP address.	  
+	  
+      	             
+Q7 : What is cookies?
+Ans : If a website is a cookie enabled by the user then that website drop one cookie on your computer. and 
+      whatever we search on that website now it will go to that website with the help of cookie and then again
+      you visit that website so it will recommend your earlier search result or some better search result with 
+	  the help of the cookie which is enabled in your computer when you gave permission. 
+
+      So cookies are like little notes that website put on your computer. they help the website remember  whom
+      you are what you like so it give you better experience the next time you visit.
+	  
+	  for ex : they might keep you logged in or remember items in your shopping cart.
+	  
+	  or 
+	  
+	  chat gpt explanation  : 
+	  
+	  Cookies are small files that websites store on your computer if you give permission. They help websites 
+	  remember information about you, such as your preferences or previous searches. When you revisit the site, 
+	  cookies allow the website to offer a more personalized experience, like recommending similar content, 
+	  keeping you logged in, or remembering items in your shopping cart.
