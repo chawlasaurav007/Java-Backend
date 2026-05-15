@@ -1,0 +1,274 @@
+```text
+                    JAVA STREAM PIPELINE
+══════════════════════════════════════════════════════════════
+
+ ┌──────────────────┐
+ │ Input Source     │
+ │------------------│
+ │ Arrays           │
+ │ Collections      │
+ │ List / Set       │
+ └────────┬─────────┘
+          │
+          ▼
+ ┌──────────────────┐
+ │ Stream           │
+ └────────┬─────────┘
+          │
+          ▼
+
+ ┌──────────────────────────────────────────────────────────┐
+ │              Intermediate Operations (Lazy)             │
+ │                                                          │
+ │   ┌──────────┐   ┌──────────┐   ┌──────────┐            │
+ │   │ filter() │ → │  map()   │ → │ sorted() │            │
+ │   └──────────┘   └──────────┘   └──────────┘            │
+ │                                                          │
+ │        Other Operations: distinct(), limit()            │
+ └───────────────────────┬──────────────────────────────────┘
+                         │
+                         ▼
+
+ ┌──────────────────────────────────────────────────────────┐
+ │                 Terminal Operation                      │
+ │----------------------------------------------------------│
+ │ collect() | forEach() | count() | reduce()             │
+ └───────────────────────┬──────────────────────────────────┘
+                         │
+                         ▼
+
+                 ┌────────────────┐
+                 │ Output Result  │
+                 └────────────────┘
+```
+
+Example Flow:
+
+```text
+List<Integer>
+       │
+       ▼
+stream()
+       │
+       ▼
+filter(x -> x % 2 == 0)
+       │
+       ▼
+map(x -> x * 2)
+       │
+       ▼
+collect(Collectors.toList())
+       │
+       ▼
+[4, 8, 12]
+```
+
+
+Q : Convert it into Stream ?
+
+package Stream_API_Guide;
+
+import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class ConvertToStream_1 {
+    public static void main(String[] args) {
+        //primitive array
+        int primitiveArray[] = {1,2,3,4};
+        //converting primitive array to stream we use Arrays.stream() method
+        IntStream stream = Arrays.stream(primitiveArray);
+        stream.forEach(System.out::println);
+
+        //Object array
+        Integer objectArray[] = {5,6,7,8};
+        //converting object array to stream we use Stream.of() method
+        Stream<Integer> stream2 = Stream.of(objectArray);
+        stream2.forEach(System.out::println);
+
+        // When we have a List or any Collection, we can directly convert it into a Stream by using .stream() method
+        List<Integer> list = Arrays.asList(9, 10, 11, 12);
+        list.stream().forEach(System.out::println);
+
+        // When we have a Set or any Collection, we can directly convert it into a Stream by using .stream() method
+        Set<Integer> set = new HashSet<>();
+        set.add(13);
+        set.add(14);
+        set.add(15);
+        set.stream().forEach(System.out::println);
+
+        // When we have a Map like HashMap, we can convert it into Stream using entrySet().stream() method
+        //her why we use .entrySet() method ?
+        //* `HashMap` does not support direct `stream()`.
+        // so we cant do this map.stream()
+        //* So first we convert map into a `Set` using `entrySet()`.
+        // map.entrySet()->so by this map gets convert into set and set supports stream
+        // so we write like this map.entrySet().stream()
+        // Simple flow:
+        //HashMap
+        //   ↓
+        //entrySet()
+        //   ↓
+        //  Set
+        //   ↓
+        // stream()
+        Map<Integer, String> map = new HashMap<>();
+
+        map.put(1, "Java");
+        map.put(2, "Spring");
+        map.put(3, "Microservices");
+
+        map.entrySet().stream().forEach(System.out::println);
+    }
+}
+
+Q : Difference between intermediate opertion vs Terminal operation ?
+Ans : 
+
+| **Intermediate Operation**         | **Terminal Operation**           |
+| ---------------------------------- | -------------------------------- |
+| Used to **process/transform** data | Used to **produce final result** |
+| Returns a **Stream**               | Returns **result/value**         |
+| Can be chained                     | Ends the stream                  |
+| Lazy execution                     | Executes the stream              |
+
+
+
+Q : Filter example : filter is an intermediate operation because it process the data
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class FilterExample_2 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6);
+        list.stream()
+        .filter(n->n%2==0)//filter is a intermediate operation 
+        .forEach(System.out::println);//forEach() is a terminal operation because it produces the final output by printing
+                                      //as u can see here
+    }
+}
+
+
+Q : Map Example : Map is an intermediate operation because it process the data
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class MapExample {
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("saurav", "manish", "manisha");
+        list.stream()
+        .map(names->names.toUpperCase())//map is a intermediate operation 
+        .forEach(System.out::println);//forEach() is a terminal operation because it produces the final output by printing
+                                      //as u can see here 
+    }
+}
+
+Q : Reduce Example : it will reduce your collection to one element so Reduce is an terminal operation because it gives up the final ouptut/result
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class ReduceExample {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        Integer reduce = list.stream()
+                .reduce(0, (a, b) -> a + b);
+        System.out.println(reduce);
+    }
+}
+
+Q : FlatMap Example : it is a intermediate operation it works only when there is a list of list so the below code as u can see that in the list there are 3 more list so first we convert outer list into stream by using .stream() then there are three more list so here we use flat map what it does is it convert list into single elelments (flatMap() converts multiple collections/lists into single stream of elements.).
+
+Note : so here flatmap also uses .stream() to convert inner list elements to stream.
+Then flatMap() combines all those streams into one single stream.
+[a,b] → stream
+[c,d] → stream
+[e,f] → stream
+
+flatMap()
+     ↓
+
+a,b,c,d,e,f
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class FlatMapExample {
+
+    public static void main(String[] args) {
+
+               // List containing multiple inner lists
+               List<List<String>> list = Arrays.asList(
+                       Arrays.asList("a", "b"),
+                       Arrays.asList("c", "d"),
+                       Arrays.asList("e", "f"));
+
+                list.stream()// converts outer list into stream
+
+                // flatMap() takes elements from all inner lists
+                // and makes them into one single stream
+                // [a,b] [c,d] [e,f]  →  a,b,c,d,e,f
+                .flatMap(lists -> lists.stream())//so here flatmap also uses .stream() to convert inner list elements to 
+                                                 // stream  
+
+                // Converts every element into uppercase
+                .map(n -> n.toUpperCase())
+
+                // Prints final output
+                .forEach(System.out::println);
+    }
+}
+
+
+ 
+Q : So flatMap will only works when there is something inside something ?
+Yes ✅ Exactly
+
+flatMap() is used when something is inside something
+
+Example:
+
+List inside List
+Stream inside Stream
+Array inside Array
+
+`flatMap()` takes inner things out and makes them into one single stream.
+
+
+Q : Peek Example : peek is a intermediate operation
+peek() is used to see/check data while the stream is processing.
+
+It does not modify the data.
+It is mostly used for:
+- debugging
+- checking intermediate values
+- understanding what is happening inside stream flow
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class PeekExample_6 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> collect = list.stream()
+                .map(n -> n * n)
+                .peek(System.out::println)
+                .collect(Collectors.toList());
+        System.out.println(collect);
+    }
+}
+
+
