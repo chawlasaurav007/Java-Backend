@@ -343,6 +343,38 @@ lock is released.
 code. 
 
 Q6 : explain me Advanced Concurrency (Synchronization)
+    
+    so first what is Advanced Concurrency (Synchronization) is  
+
+    ## Advanced Concurrency (Synchronization)
+
+* It is used to manage and control multiple threads safely in Java.
+
+* It helps avoid:
+
+  * **Race condition**
+  * **Data inconsistency**
+  * **Thread conflict**
+
+* It provides advanced features compared to normal `synchronized` keyword like:
+
+  * Better performance
+  * Manual locking
+  * Read/Write locking
+  * Limited thread access
+
+  or 
+
+  Advanced Concurrency (Synchronization) in Java is used to safely handle multiple threads working at the same time on shared data or resources. It helps prevent problems like incorrect data updates and thread conflicts. It is an improved and more flexible version of the normal `synchronized` keyword and provides features like better control over locking, allowing multiple readers, and limiting how many threads can access a resource simultaneously.
+
+
+* Main types:
+
+  1. **ReentrantLock**
+  2. **ReadWriteLock**
+  3. **Semaphore**
+
+
      there are total 3 types of Advanced Concurrency (Synchronization)
 	 1 : ReentrantLock
      2 : ReentrantReadWriteLock / ReadWriteLock
@@ -909,6 +941,16 @@ Ans :
 Note - 2-Phase Commit (2PC) is mainly used in a monolithic system that has multiple databases.
 
 saga design pattern > 2 phase commit > transacation - this will be the order 
+
+Q : why do we use saga design pattern when we have transaction and 2 phase commit ? 
+ans: 
+Yes 👍 you can explain like this in simple interview terms:
+
+* **Saga Design Pattern** works between **multiple microservices**.
+* It manages service-to-service transactions.
+* Normal **Transaction** and **2-Phase Commit (2PC)** mainly work at **database level**.
+* 2PC tries to lock and coordinate all databases together.
+* Saga is better for microservices because each service works independently and can undo its own work if failure happens.
 
 Q : Can we use multiple databases with a single monolithic application ? 
 Ans - yes 
