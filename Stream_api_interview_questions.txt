@@ -808,3 +808,246 @@ Parallel stream is mainly used for computationally heavy operations and large da
 
 For simple or small operations, sequential stream is better because parallel stream may add thread overhead and can sometimes take more time than sequential stream.
 
+-----------------------------------------------------------------------------------------------
+
+Some Coding interview questions we will see of stream api :
+
+----------------------------------------Level 1 - Super Easy -----------------------------------
+
+Q1 : How do u create streams in java ? 
+
+package Level_1;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+public class Create_Streams_in_Java_1 {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("alice", "bob");
+        //1 : List -> Stream
+        Stream<String> stream = names.stream();
+        System.out.println(stream);
+
+        String arr[] = {"java","cpp","python"};
+        //2 : Array to Stream
+        Stream<String> stream1 = Arrays.stream(arr);
+
+        //3 : by using Stream.of() method
+        Stream<Integer> integerStream = Stream.of(1, 2, 3);//In Stream.of(1,2,3), these values are primitive
+                                                                  // int values and are automatically converted into
+                                                                  //Integer objects using autoboxing because Stream
+                                                                  // works on objects, not on primitive data types.
+                                                                  // so stream.of()method does automatically conversion
+                                                                  // primitive to object
+
+        //Stream.generate() is not used much. It is mainly used when we want to create a stream of random or repeated
+        // values.
+        Stream<Double> limit = Stream.generate(Math::random).limit(5);
+        System.out.println("limit "+ limit);
+    }
+}
+
+
+Q2: Filter out even numbers from the list ? 
+
+package Level_1;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+public class FIlterEven_2 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Stream<Integer> stream = list.stream();
+        stream.filter(n->n%2==0)
+                .forEach(System.out::println);
+    }
+}
+
+output : 2,4,6,8,10
+
+Q3: Square each numner which are in list : 
+
+package Level_1;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class SquareOfEachNum_3 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> collect = list.stream()
+                .map(n -> n * n)
+                .collect(Collectors.toList());
+        System.out.println(collect);
+    }
+}
+
+output : 1,4,9,16,25
+
+
+Q4 : Square even number from the list : 
+
+package Level_1;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class SquareEvenNum_4 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> collect = list.stream()
+                .filter(n -> n % 2 == 0)
+                .map(n -> n * n)
+                .toList();//in recent version of java we can use toList() as well
+        System.out.println(collect);
+    }
+}
+
+output : 4,16
+
+Q5 :  find the first number greater than n(suppose n is 10) : 
+
+package Level_1;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+public class FindFirstNumGreaterThanTen_5 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 12, 7,11, 24);
+        Integer i = list.stream()
+                .filter(n -> n > 10)
+                .findFirst()
+                .get();
+        System.out.println(i);//12
+
+        System.out.println("suppose u need according to the smaller number so output should be 11");
+
+        Optional<Integer> first = list.stream()
+                .filter(n -> n > 10)
+                .sorted()
+                .findFirst();
+        System.out.println(first.get());//11
+
+    }
+}
+
+
+Q6 : Count numbers which are greater than n(suppose n is 5): 
+
+package Level_1;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class NumbersGreaterThanFive_6 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 6, 8, 3, 4, 8);
+        long count = list.stream()
+                .filter(n -> n > 5)
+                .count();
+        System.out.println(count);//3
+    }
+}
+
+Q7 : find sum and product of all the numbers present in the list : 
+
+package Level_1;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class SumAllNum_7 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+
+        int sum = list.stream()
+                .mapToInt(i -> i.intValue())
+                .sum();
+        System.out.println("1st way by using sum() so Sum  is " + sum);//15
+
+        Integer reduce = list.stream()
+                .reduce(0, (a, b) -> a + b);
+        System.out.println("2nd way by using reduce() so Sum  is " + reduce);//15
+
+
+        Integer reduce1 = list.stream()
+                .reduce(1, (a, b) -> a * b);
+        System.out.println("Product is " + reduce1);//120
+
+    }
+}
+
+Q8 : Sum of even number from the list : 
+
+package Level_1;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class SumOfEvenNum_8 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6);
+        int sum = list.stream()
+                .filter(n -> n % 2 == 0)
+                .mapToInt(i -> i.intValue())
+                .sum();
+        System.out.println("by using .sum() method so sum is " + sum); //12
+
+        Integer reduce = list.stream()
+                .filter(n -> n % 2 == 0)
+                .reduce(0, (a, b) -> a + b);
+        System.out.println("by using .reduce() method so sum is " + reduce); //12
+    }
+}
+
+Q9 : Find Max number in the list : 
+
+package Level_1;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+
+public class FindMax_9 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(4, 12, 5, 22, 45,32);
+        Optional<Integer> first = list.stream()
+                .sorted(Comparator.reverseOrder())
+                .findFirst();
+        System.out.println("by using sorted way we get max " +first.get());//45
+
+        Integer reduce = list.stream()
+                .reduce(0, (a, b) -> Integer.max(a, b));
+        System.out.println("by using reduce we get max " + reduce);//45
+
+        Integer i = list.stream()
+                .max(Comparator.naturalOrder()).get();
+        System.out.println("by using max() method so max is " + i);//45
+    }
+}
+
+Q10 : Sum of squares of even numbers in the list : 
+
+package Level_1;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class SumOfSquaresOfEvenNum_10 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Integer reduce = list.stream()
+                .filter(n -> n % 2 == 0)
+                .map(n -> n * n)
+                .reduce(0, (a, b) -> a + b);
+        System.out.println(reduce);//220
+    }
+}
