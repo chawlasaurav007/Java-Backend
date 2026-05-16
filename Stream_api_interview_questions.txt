@@ -133,6 +133,7 @@ Ans :
 | Lazy execution                     | Executes the stream              |
 
 
+So first we will se intermediate operations 
 
 Q : Filter example : filter is an intermediate operation because it process the data
 
@@ -169,21 +170,6 @@ public class MapExample {
     }
 }
 
-Q : Reduce Example : it will reduce your collection to one element so Reduce is an terminal operation because it gives up the final ouptut/result
-
-package Stream_API_Guide;
-
-import java.util.Arrays;
-import java.util.List;
-
-public class ReduceExample {
-    public static void main(String[] args) {
-        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
-        Integer reduce = list.stream()
-                .reduce(0, (a, b) -> a + b);
-        System.out.println(reduce);
-    }
-}
 
 Q : FlatMap Example : it is a intermediate operation it works only when there is a list of list so the below code as u can see that in the list there are 3 more list so first we convert outer list into stream by using .stream() then there are three more list so here we use flat map what it does is it convert list into single elelments (flatMap() converts multiple collections/lists into single stream of elements.).
 
@@ -271,4 +257,554 @@ public class PeekExample_6 {
     }
 }
 
+Q : Distinct Example : it is intermediate operation
+
+distinct() is used to remove duplicate elements from a stream.
+It returns only unique elements.
+The final list/stream will contain no duplicates.
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class DistinctExample {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 3, 4, 3, 4, 5);
+        list.stream()
+                .distinct()
+                .forEach(System.out::println);
+        List<Integer> collect = list.stream()
+                .distinct()
+                .collect(Collectors.toList());
+
+        System.out.println(collect);
+
+    }
+}
+
+
+Q : Sorted Example : it is intermediate operation. used to sort the elements how ever u want aesc or desc or based on the length of the word u can sort 
+
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+
+public class SortedExample {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(4, 3, 5, 2, 1);
+        System.out.println("sort in ascending order");
+        list.stream()
+                .sorted()
+                .forEach(System.out::println);
+
+        System.out.println("sort in descending order");
+        list.stream()
+                .sorted(Comparator.reverseOrder())
+                .forEach(System.out::println);
+
+
+        List<String> list1 = Arrays.asList("cherry", "apple", "kiwi", "banana");
+
+        System.out.println("Ascending sort on based of the size or length of the word");
+
+        list1.stream()
+                .sorted(Comparator.comparingInt(s->s.length()))
+                .forEach(System.out::println);
+
+        System.out.println("Descending sort on based of the size or length of the word");
+
+        list1.stream()
+                .sorted(Comparator.comparingInt(String::length).reversed())
+                .forEach(System.out::println);
+    }
+}
+
+
+Q : Skip Example : it is intermediate operation it is used to skip n numbers of elements 
+
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class SkipExample {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> listAfterSkip = list.stream()
+                .skip(2)//so here first two elements will be skipped which is 1,2
+                .collect(Collectors.toList());
+        System.out.println(listAfterSkip);
+    }
+}
+
+
+Q : Limit : it is intermediate operation limit is opposite of skip which says it will allow n number of elements rest it will block 
+in the below example limit(3) it says that first r elemets are allowed rest are blocked.
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class LimitExample {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        list.stream()
+                .limit(3)//so here max size is limited upto 3 so limit is 3
+                .forEach(System.out::println);
+    }
+}
+
+
+Now we will se Terminal Operations 
+
+Q : Reduce Example : it will reduce your collection to one element so Reduce is an terminal operation because it gives up the final ouptut/result
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class ReduceExample {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        Integer reduce = list.stream()
+                .reduce(0, (a, b) -> a + b);
+        System.out.println(reduce);
+    }
+}
+
+Q : Collect Example : suppose a list is given u dooperation and u want to create another list out of it so here we use .collect() method 
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class CollectExample {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
+        List<Integer> EvenSquareList = list.stream()
+                .filter(x -> x % 2 == 0)
+                .map(x -> x * x)
+                .collect(Collectors.toList());
+        System.out.println(EvenSquareList);
+    }
+}
+
+Q : in side .collect method we have two more methods partitioningBy() vs groupingBy()
+we have already seen Collectors.toList() method inside .colect method so we have two more methods  partitioningBy() and groupingBy() lets see that
+
+
+| **partitioningBy()**                            | **groupingBy()**                             |
+| ----------------------------------------------- | -------------------------------------------- |
+| Used to divide data into **2 groups only**      | Used to divide data into **multiple groups** |
+| Works with **boolean condition** (`true/false`) | Works with any key/value                     |
+| Return type is usually `Map<Boolean, List<T>>`  | Return type is usually `Map<Key, List<T>>`   |
+
+Example:
+
+### partitioningBy()
+
+employees.stream()
+         .collect(Collectors.partitioningBy(emp -> emp.getSalary() > 50000));
+
+Output:
+
+* true → employees with salary > 50000
+* false → remaining employees
+-------------
+
+### groupingBy()
+
+employees.stream()
+         .collect(Collectors.groupingBy(Employee::getDepartment));
+
+Output:
+
+* IT → employees list
+* HR → employees list
+* Sales → employees list
+
+Simple understanding:
+
+* **partitioningBy() → only 2 groups**
+* **groupingBy() → many groups**
+
+Note : Both partitioningBy() and groupingBy() are present inside Collectors class and are used inside collect() method.
+
+stream.collect(Collectors.groupingBy(...));
+
+stream.collect(Collectors.partitioningBy(...));
+
+--------------------------
+
+package Stream_API_Guide;
+
+public class Employee {
+    String name;
+    String department;
+    Integer salary;
+
+    public Employee(String name, String department, Integer salary) {
+        this.name = name;
+        this.department = department;
+        this.salary = salary;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public Integer getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Integer salary) {
+        this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "name='" + name + '\'' +
+                ", department='" + department + '\'' +
+                ", salary=" + salary +
+                '}';
+    }
+}
+
+
+----------------------GroupingBy----------------------------
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class GroupingBy_11 {
+    public static void main(String[] args) {
+        List<Employee> employees = Arrays.asList(
+                new Employee("Alice", "HR", 3000),
+                new Employee("Bob", "IT", 4000),
+                new Employee("Charlie", "HR", 3500),
+                new Employee("Dave", "IT", 4500),
+                new Employee("Eve", "Finance", 5000)
+        );
+
+        Map<String, List<Employee>> collect = employees.stream()
+                .collect(Collectors.groupingBy(e -> e.getDepartment()));
+        System.out.println("First way of printing this it is very simple");
+        System.out.println(collect);//one way to print he output like this
+
+        //another way to print the output like this
+        System.out.println("Second way of printing this it is very tricky but it shows clear ");
+        collect.forEach((department,empoyeeList)->{
+            System.out.println("Department " + department );
+            empoyeeList.forEach(System.out::println);
+        });
+    }
+}
+
+
+
+----------------------PartitionBy----------------------------
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import java.util.stream.Collectors;
+
+public class PartitionBy_12 {
+    public static void main(String[] args) {
+        List<Employee> employees = Arrays.asList(
+                new Employee("Alice", "HR", 3000),
+                new Employee("Bob", "IT", 4000),
+                new Employee("Charlie", "HR", 3500),
+                new Employee("Dave", "IT", 4500),
+                new Employee("Eve", "Finance", 5000)
+        );
+
+        Map<Boolean, List<Employee>> collect = employees.stream()
+                .collect(Collectors.partitioningBy(e -> e.getSalary() > 3700));
+        System.out.println("Simply printing data having salary more than 3700 and less that 3700 but it give two separated thing true or false in one answer");
+        System.out.println(collect);
+
+        System.out.println("Now we will print only that data having salary more than 3700");
+        collect.get(true).forEach(System.out::println);
+
+        System.out.println("Now we will print only that data having salary less than 3700");
+        collect.get(false).forEach(System.out::println);
+    }
+}
+
+Q : Min And Max Terminal operation : finding minimum and maxinum from the list 
+
+min() and max() need a Comparator to decide:
+
+which element is smaller
+which element is bigger
+
+Comparator.naturalOrder() means:
+so natural order means ascending order
+compare elements in their default ascending order
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+
+public class MinMaxExample {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        System.out.println("Minimum number from the list ");
+        Optional<Integer> min = list.stream().min(Comparator.naturalOrder());
+        System.out.println(min.get());
+
+        System.out.println("Maximum number from the list ");
+        Integer i = list.stream().max(Comparator.naturalOrder()).get();
+        System.out.println(i);
+    }
+}
+
+
+Q: FindFirst Example : it is a terminal operation after any operation what ever is the first element give me that 
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+public class FindFirstExample_14 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6);
+        Optional<Integer> first = list.stream()
+                .filter(n -> n % 2 == 0) //so it will filter out 2,4,6
+                .findFirst();//2 comes first than 2
+        System.out.println(first.get());
+    }
+}
+
+
+Q : AnyMatch Example: What AnyMatch says
+anyMatch() checks whether at least one element matches the condition.
+
+If any one element satisfies the condition, it returns true.
+Otherwise, it returns false.
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class AnyMatchExample_15 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        boolean b = list.stream()
+                .anyMatch(n -> n % 2 == 0);// so from the list if any one condition gets true than it will print true
+                                                 // and if it does not find any condition as true that than print false
+                                                 //so here as u can see 2,4,6 are 3 even but we want any one number to
+                                                 //satisfy the condition to print true so anymatch() works like that
+        System.out.println(b);
+
+        System.out.println("Ok suppose it does not satisfy the condition so it will give false");
+        List<Integer> list1 = Arrays.asList(1, 3, 5);
+        System.out.println(list1.stream()
+                .anyMatch(n -> n % 2 == 0));//so here u can see that in anymatch does not satisfy the condition
+                                                   //here in the list there is no single element in the list so
+                                                   // it gives false
+        
+    }
+}
+
+
+Q : Count Example : it will count the number of elements inside your stream or  list(samj ne ke liye vaise .stream use krne ke baad sab stream hi ho jata hai so stream bhi bol sakte ho )
+so it is also a terminal operation which give the result at the end 
+
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class CountExample_16 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6);
+        long count = list.stream()
+                         .count();
+        System.out.println(count);
+    }
+}
+
+
+Q : Sum Example : it is a terminal operation just sum /add the values in side your list 
+                  we can use sum() on int stream
+
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class SumExample_17 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        int sum = list.stream()
+                .mapToInt(i -> i.intValue())
+                .sum();
+        System.out.println(sum);//output : 15
+    }
+}
+
+
+Q : What is parellel Stream ?
+Ans : 
+Parallel Stream is used to process multiple elements at the same time using multiple threads.
+It helps to improve performance for large data processing.
+
+Example:
+list.parallelStream()
+    .forEach(System.out::println);
+
+Simple understanding:
+
+* `stream()` → one thread
+* `parallelStream()` → multiple threads working together
+
+
+
+here we will see the difference through code of parallel stream vs sequential stream(till now we are using this)
+package Stream_API_Guide;
+
+import java.util.Arrays;
+import java.util.stream.LongStream;
+
+public class FactorialParallelAndSequentialStreams {
+    public static void main(String[] args) {
+        long[] longArray = new long[20000];
+        for (int i = 0; i < longArray.length; i++) {
+            longArray[i] = i + 1;
+        }
+
+        // Calculate sum of factorials using sequential stream
+        long startTime = System.currentTimeMillis();
+        long sequentialSum = Arrays.stream(longArray)
+                .map(FactorialParallelAndSequentialStreams::factorial)
+                .sum();
+        long endTime = System.currentTimeMillis();
+        System.out.println("Sequential sum of factorials: " +
+                "" + sequentialSum);
+        System.out.println("Time Taken by Sequential Stream: "
+                + (endTime - startTime) + " ms");
+
+
+        // Calculate sum of factorials using parallel stream
+        startTime = System.currentTimeMillis();
+        long parallelSum = Arrays.stream(longArray)
+                .parallel()
+                .map(FactorialParallelAndSequentialStreams::factorial)
+                .sum();
+        endTime = System.currentTimeMillis();
+        System.out.println("Parallel sum of factorials: "
+                + parallelSum);
+        System.out.println("Time Taken by Parallel Stream: "
+                + (endTime - startTime) + " ms");
+    }
+
+    // Method to calculate factorial of a number
+    public static long factorial(long number) {
+        return LongStream.rangeClosed(1, number)
+                .reduce(1, (long a, long b) -> a * b);
+    }
+}
+
+output : 
+Sequential sum of factorials: 1005876315485501977
+Time Taken by Sequential Stream: 278 ms
+Parallel sum of factorials: 1005876315485501977
+Time Taken by Parallel Stream: 124 ms
+
+so here in the above example u see here that parallel stream works faster than sequential stream 
+
+but in the below example u see that sometimes sequential stream are faster that parallel stream 
+
+package Stream_API_Guide;
+
+import java.util.Arrays;
+
+public class Parallel_vs_Sequential_Stream {
+    public static void main(String[] args) {
+        int[] intArray = new int[1000000];
+        Arrays.fill(intArray, 2);
+
+        // Calculate sum of squares using sequential stream
+        long startTime = System.currentTimeMillis();
+        final int sequentialSum = Arrays.stream(intArray)
+                .map(n -> n * n)
+                .sum();
+        long endTime = System.currentTimeMillis();
+        System.out.println("Sequential sum: "
+                + sequentialSum);
+        System.out.println("Time Taken by Sequential Stream: "
+                + (endTime - startTime) + " ms");
+
+        // Calculate sum of squares using parallel stream
+        startTime = System.currentTimeMillis();
+        final int parallelSum = Arrays.stream(intArray)
+                .parallel()
+                .map(n -> n * n)
+                .sum();
+        endTime = System.currentTimeMillis();
+        System.out.println("Parallel sum: " + parallelSum);
+        System.out.println("Time Taken by Parallel Stream: "
+                + (endTime - startTime) + " ms");
+    }
+}
+
+
+output : 
+Sequential sum: 4000000
+Time Taken by Sequential Stream: 20 ms
+Parallel sum: 4000000
+Time Taken by Parallel Stream: 37 ms
+
+Q : So when to use parallel stream and sequential stream ? 
+Ans : 
+when u need to perform heavy operations than u use parallel stream 
+and if u may use parallel stream for simple operation so u may end up with more time execution than sequential streams
+so if u have computational heavy opeartion use parallel stream otherwise go with sequential streams
+
+or 
+
+Parallel stream is mainly used for computationally heavy operations and large data processing to improve performance using multiple threads.
+
+For simple or small operations, sequential stream is better because parallel stream may add thread overhead and can sometimes take more time than sequential stream.
 
