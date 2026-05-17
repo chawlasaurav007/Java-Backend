@@ -1026,13 +1026,19 @@ public class FindMax_9 {
 
         Integer reduce = list.stream()
                 .reduce(0, (a, b) -> Integer.max(a, b));
-        System.out.println("by using reduce we get max " + reduce);//45
+        System.out.println("by using reduce we get max " + reduce);
 
         Integer i = list.stream()
                 .max(Comparator.naturalOrder()).get();
-        System.out.println("by using max() method so max is " + i);//45
+        System.out.println("by using max() method so max is " + i);
+
+        int maxNum = list.stream()
+                .mapToInt(j -> j.intValue())
+                .max().getAsInt();
+        System.out.println("by using max() method but convert it into primitive first " + maxNum);
     }
 }
+
 
 Q10 : Sum of squares of even numbers in the list : 
 
@@ -1051,3 +1057,239 @@ public class SumOfSquaresOfEvenNum_10 {
         System.out.println(reduce);//220
     }
 }
+
+
+
+----------------------------------------Level 2 - Easy -----------------------------------
+
+Q1 : Remove dulicates from the list (find all distinct elements from the list): 
+
+package Level_2;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public class RemoveDuplicates_1 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 3, 4, 3, 2, 1, 5);
+        System.out.println("removing duplicates by using distinct() " );
+        list.stream()
+                .distinct()
+                .toList()
+                .forEach(System.out::println);//1,2,3,4,5
+
+        System.out.println("we can use set, and set keeps unique value");
+        Set<Integer> collect = list.stream()
+                .collect(Collectors.toSet());
+        System.out.println(collect);//[1, 2, 3, 4, 5]
+    }
+
+}
+
+
+Q2 : find the avg of all the numbers in the list :
+
+package Level_2;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.OptionalDouble;
+
+public class FindAverage_2 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        System.out.println("So when ever it comes to mathematical operations sum, min, max, avg so these will work on primitive Objects so convert it into primitive object");
+        System.out.println("so it will not work on Integer object it will work on int object");
+        OptionalDouble average = list.stream()
+                .mapToInt(n -> n.intValue())
+                .average();
+        System.out.println(average.getAsDouble());//3.0
+
+        System.out.println("Another way" );
+        double average1 = list.stream()
+                .mapToInt(n -> n.intValue())
+                .average()
+                .orElse(0.0);
+        System.out.println(average1);//3.0
+    }
+}
+
+
+Q3 : Sort the list of integer in ascending and descending order : 
+
+package Level_2;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class SortListInAscDesc_3 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(4, 2, 4, 5, 1, 2, 5, 6);
+        List<Integer> list1 = list.stream()
+                .sorted()
+                .toList();
+        System.out.println("Sort in ascending order "+list1);
+
+        List<Integer> collect = list.stream()
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+        System.out.println("Sort in descending order " + collect);
+
+        System.out.print("And if u want suppose ascending sort and remove duplicates then use distinct ");
+
+        List<Integer> collect1 = list.stream()
+                .distinct()
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+        System.out.println(collect1);
+    }
+}
+
+
+Q4 : Count num of Strings starts with "A" : 
+
+package Level_2;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class CountStringStarstsWithA_4 {
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("Aman", "Saurav", "Ashish", "Lakshay", "Ayush");
+        long a = list.stream()
+                .filter(n -> n.startsWith("A"))
+                .count();
+        System.out.println(a);//3
+    }
+}
+
+Q5 : Join all strings in a list into a single comma-seperated string. 
+
+package Level_2;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class JoinAllStringsSeperateByComma_5 {
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("Apple", "Banana", "Mango", "Orange");
+        System.out.println("for joining the strings we will use joining method which is present in Collectors method and inside that we will set the delimiter");
+        String collect = list.stream()
+                .collect(Collectors.joining(","));
+        System.out.println(collect);
+
+    }
+}
+
+
+Q6 : Check if all elements are positive : 
+
+package Level_2;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class CheckAllElementsArePositive_6 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(4, 23, 2, 4, 56);
+        System.out.println("So here we will use .allMatch() method which says all the condition should be satisfied so it will give true or else false ");
+        boolean b = list.stream()
+                .allMatch(n -> n > 0);
+        System.out.println("Are all numbers are positive = " + b);//true
+    }
+}
+
+
+
+Q7 : Check if any number is divisible by 3 : 
+
+package Level_2;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class CheckAnyNumDivByThree_7 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 2, 7, 8, 14);
+        System.out.println("here we will use anyMatch() method which says if any one condition satisfy it will give true or else false");
+        boolean b = list.stream()
+                .anyMatch(n -> n % 3 == 0);//false
+        System.out.println(b);
+    }
+}
+
+
+Q8 : Flatten the list of list :  
+
+package Level_2;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class FlattenListOfList_8 {
+    public static void main(String[] args) {
+        List<List<Integer>> list = Arrays.asList(
+                Arrays.asList(1, 2, 3),
+                Arrays.asList(4, 5),
+                Arrays.asList(6, 7, 8)
+        );
+
+        List<Integer> list1 = list.stream()
+                .flatMap(i -> i.stream())
+                .toList();
+        System.out.println(list1);//[1, 2, 3, 4, 5, 6, 7, 8]
+    }
+}
+
+Q9 : Find First Non-Empty String from the given list :
+
+package Level_2;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+public class FindFIrstNonEmptyStringInList_9 {
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("", "", "", "Hello", "", "Saurav","");
+        System.out.println("by using .length() method");
+        Optional<String> first = list.stream()
+                .filter(n -> n.length() != 0)
+                .findFirst();
+        System.out.println(first.get());
+
+        System.out.println("this is another way by using .isEmpty() method");
+        String s = list.stream()
+                .filter(n -> !n.isEmpty())
+                .findFirst().get();
+        System.out.println(s);
+
+    }
+}
+
+Q10 : Find Second Highest number in the list using streams : 
+
+package Level_2;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+
+public class FindSecondHighestNum_10 {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 3, 5, 2, 6, 8,8, 6, 1);
+        Integer i = list.stream()
+                .sorted(Comparator.reverseOrder())
+                .distinct()
+                .skip(1)
+                .findFirst().get();
+        System.out.println(i);//6
+    }
+}
+
