@@ -1588,3 +1588,141 @@ public class GroupEmployeeByDeptAndCalculateAvgSalary_6 {
 }
 
 output : {Finance=60000.0, HR=52500.0, IT=75000.0}
+
+Q7 : Find the Highest paid employee in each department : 
+
+package Level_3;
+
+import Level_3.dto.Employee;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class HighestPaidEmployeeInEachDept_7 {
+    public static void main(String[] args) {
+        List<Employee> employees = Arrays.asList(
+                new Employee(1,"John", "HR", 50000),
+                new Employee(2,"Jane", "IT", 70000),
+                new Employee(3,"Mike", "IT", 80000),
+                new Employee(4,"Sara", "Finance", 60000),
+                new Employee(5,"Paul", "HR", 55000)
+        );
+
+        System.out.println("Highest Salary of each department  : ");
+        System.out.println("the way i know ");
+        Map<String, List<Employee>> collect = employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment));
+
+        collect.forEach((department,highestPaid)->{
+            System.out.println(department);
+            System.out.println(highestPaid.stream().mapToDouble(Employee::getSalary).max().getAsDouble());
+        });
+
+        System.out.println("Highest Salary of each department  : ");
+        System.out.println("If u want u can club both the streams : " );
+        employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment))
+                .forEach((dept,highestPaid)->{
+                System.out.println(dept);
+                System.out.println(highestPaid.stream().mapToDouble(Employee::getSalary).max().getAsDouble());
+        });
+
+        System.out.println("Employee Name having Highest Salary of each department  : ");
+
+        Map<String, Optional<Employee>> collect1 = employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.maxBy(Comparator.comparing(Employee::getSalary))));
+        System.out.println(collect1);
+
+    }
+}
+
+
+Q8 : Find all department with more than 2 Employees : 
+
+package Level_3;
+
+import Level_3.dto.Employee;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class FindDeptHavingMoreThanTwoEmp_8 {
+    public static void main(String[] args) {
+        List<Employee> employees = List.of(
+                new Employee(1,"John", "IT", 60000),
+                new Employee(2,"Alice", "HR", 55000),
+                new Employee(3,"Bob", "IT", 75000),
+                new Employee(4,"Carol", "HR", 70000),
+                new Employee(5,"David", "Finance", 65000),
+                new Employee(6,"Eve", "IT", 80000),
+                new Employee(7,"Frank", "Finance", 64000),
+                new Employee(8,"Prank", "Finance", 67000),
+                new Employee(9,"Ala", "Operations", 44000)
+        );
+
+        System.out.println("this is my way of doing the solution : ");
+        Map<String, Long> collect = employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting()));
+        System.out.println(collect);//{Finance=2, HR=2, IT=3, Operations=1}
+        collect.forEach((department,counting)->{
+            if(counting>2){
+                System.out.println(department);
+            }
+        });
+
+        System.out.println("Another way of solving this is ");
+        Map<String, Long> collect1 = employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting()));
+
+        List<Map.Entry<String, Long>> list = collect1.entrySet()// converts map into Set of key-value pairs key = department & value = employee count in that department(.entrySet() will converts map into key-value pairs)
+                .stream()//we use again stream because further operation(ex like filter) will be used on streams not on map so thats why we convert map again to stream
+                .filter(e -> e.getValue() > 2)
+                .toList();
+        System.out.println(list);//[Finance=3, IT=3]
+    }
+}
+
+Q9 : Find the Department with highest average salary : 
+
+package Level_3;
+
+import Level_3.dto.Employee;
+
+import java.util.List;
+import java.util.Map;
+import java.util.OptionalDouble;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+public class FindDeptByHighestAvgSalary_9 {
+    public static void main(String[] args) {
+        List<Employee> employees = List.of(
+                new Employee(1,"John", "IT", 60000),
+                new Employee(2,"Alice", "HR", 55000),
+                new Employee(3,"Bob", "IT", 75000),
+                new Employee(4,"Carol", "HR", 70000),
+                new Employee(5,"David", "Finance", 65000),
+                new Employee(6,"Eve", "IT", 80000),
+                new Employee(7,"Frank", "Finance", 64000),
+                new Employee(8,"Prank", "Finance", 67000),
+                new Employee(9,"Ala", "Operations", 44000)
+        );
+        Map<String, Double> collect1 = employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.averagingDouble(Employee::getSalary)));
+        System.out.println(collect1);
+        Map.Entry<String, Double> stringDoubleEntry = collect1.entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue())
+                .orElseThrow();
+        System.out.println(stringDoubleEntry);
+
+
+    }
+}
+
+
+---two questions are left of intermediate level will do after reaching blr ---
+
+Q10 : Find most frequent character in string : 
+Q11 : Find first non repeating character in string : 
