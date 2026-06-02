@@ -29,11 +29,13 @@ Q24 : if two interfaces with the same method having the same method signature an
 Q25 : why method overloading also called as compile time polymorphism and what is method overriding ?
 Q26 : if parent class method is default and child class method is public? will it work ? 
 Q27 : if parent class method is public and child class method is default ? will it work ?
+Q28 : What must be the order of visibility ? 
 Q28 : Can we create an object of an abstract class?
 Q29 : Why use a constructor in an abstract class?
 Q30 : if we can create constructor in abstract class than why we cant create object in abstract                     
       class?
-Q31 : how child class can reuse abstract class constructor ?  
+Q31 : how child class can reuse abstract class constructor ? 
+Q32 : What is the main purpose of using abstract class ? if possible give one example also ?
 Q32 : Why interface does not have constructor ?
 Q33 : why we use abstract class / interface in java ?  
 Q34 : Difference between abstract class and interface ? 
@@ -42,6 +44,14 @@ Q36 : can constructor initialize final non static variable in interface/abstract
 Q37 : suppose in an abstarct class there are 3 incomplete methods and u want to implement only 2  method in a class and 
       that one method u dont want to implement in a class is this possible to implement in a class?
 Q38 : why we use static complete method in interface ?
+
+Q : What is the main purpose of using interface?
+ Q : Can we create object in abstrct class? 
+ Q : why java 8 gives default and static in interface what was the main purpose of giving  ? 
+ Q : Why are interface methods public by default and why are private methods introduced in Java 9? Why can’t we use protected or default access modifiers in interfaces?
+ Q : after java 9 still default and protected access spoecifiesr still not used in interface why ? 
+Q : difference between static method vs private method in interface ? 
+Q : > **Which access modifiers can we use in abstract classes and why?
 Q39 : after java8 versions can we use private access specifiers in interface in java9 versions? 
 Q40 : if we create the static method in the interface which is a complete method and as we know that this static method in 
       interface it cant be used by other classes than what is the use we know that we dont want to share the logic of this 
@@ -49,6 +59,7 @@ Q40 : if we create the static method in the interface which is a complete method
 Q41 : when to use abstrct class and interface ? 
 Q42 : in real world project which is recommended abstract class or interface ?
 Q43 : Similarities between Abstract class & Interfaces ? 
+Q : abstract class sometimes looks like  runtime polymorphism (override) ?
 Q44 : Where u have used these 4 pillars of oops concept in your project(Hotel Management System) ? 
 Q45 : what is constructor?
 Q46 : what is constructor chaining?

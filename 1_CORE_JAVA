@@ -1105,7 +1105,7 @@ public class Main {
  Q : Can we create an object of an abstract class?
      No, abstract classes are incomplete and meant to be extended.
  Q : Why use a constructor in an abstract class?
-    To initialize common fields(like variables) or setup logic that child classes can reuse using super().4
+    To initialize common fields(like variables) or setup logic that child classes can reuse using super().
 	
 	abstract class Vehicle {
     String brand;
