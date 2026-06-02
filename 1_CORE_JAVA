@@ -2774,6 +2774,10 @@ Ans : In method chaining through only one object we can call more than one metho
 				}
   	  
 	  output - saurav
+	  In this order it will run
+	    1. m()
+		2. n()
+		3. test()
 
 Q28 : is java Fully object-oriented programming language?
 Ans : Java is not fully object-oriented because it uses primitive types (like int, char, etc.) which are not       

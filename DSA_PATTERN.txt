@@ -1,0 +1,291 @@
+## **1. Arrays (8–10 Patterns)**
+
+1. Traversal
+2. Prefix Sum
+3. Kadane's Algorithm
+4. Two Pointers
+5. Sliding Window
+6. Sorting-based Problems
+7. Matrix Traversal
+8. Merge Intervals
+9. Cyclic Sort
+10. Dutch National Flag
+
+---
+
+## **2. Strings (7–8 Patterns)**
+
+1. Frequency Counting
+2. Two Pointers
+3. Sliding Window
+4. Hashing
+5. Palindrome
+6. Anagram
+7. KMP Pattern Matching
+8. Rabin-Karp
+
+---
+
+## **3. Recursion & Backtracking (6 Patterns)**
+
+1. Pick / Not Pick
+2. Subsequences
+3. Permutations
+4. Combinations
+5. N-Queens
+6. Maze / Grid Backtracking
+
+---
+
+## **4. Linked List (8 Patterns)**
+
+1. Fast & Slow Pointer
+2. Reverse Linked List
+3. Merge Lists
+4. Cycle Detection
+5. Dummy Node
+6. Kth Node
+7. In-place Manipulation
+8. Multi-pointer
+
+---
+
+## **5. Stack & Queue (8 Patterns)**
+
+1. Monotonic Stack
+2. Next Greater Element
+3. Previous Smaller Element
+4. Balanced Parentheses
+5. Stack using Queue
+6. Queue using Stack
+7. Sliding Window Maximum
+8. Expression Evaluation
+
+---
+
+## **6. Binary Search (7 Patterns)**
+
+1. Classic Binary Search
+2. Lower Bound
+3. Upper Bound
+4. Search on Answer
+5. Rotated Array
+6. Peak Element
+7. Binary Search on Matrix
+
+---
+
+## **7. Trees (10+ Patterns)**
+
+1. DFS Traversal
+2. BFS Traversal
+3. Diameter
+4. Height / Depth
+5. Path Sum
+6. Lowest Common Ancestor
+7. Boundary Traversal
+8. Vertical Traversal
+9. Zigzag Traversal
+10. Tree DP
+
+---
+
+## **8. BST (6 Patterns)**
+
+1. Search
+2. Insert
+3. Delete
+4. Inorder Property
+5. Kth Smallest/Largest
+6. Validate BST
+
+---
+
+## **9. Heap / Priority Queue (6 Patterns)**
+
+1. Top K Elements
+2. Kth Largest/Smallest
+3. Merge K Sorted Lists
+4. Median in Stream
+5. Heap Sort
+6. Scheduling Problems
+
+---
+
+## **10. Hashing (5 Patterns)**
+
+1. Frequency Map
+2. Lookup Optimization
+3. Prefix Sum + HashMap
+4. HashSet Lookup
+5. Counting Problems
+
+---
+
+## **11. Greedy (7 Patterns)**
+
+1. Interval Scheduling
+2. Activity Selection
+3. Fractional Knapsack
+4. Huffman Coding
+5. Gas Station
+6. Jump Game
+7. Minimum Platforms
+
+---
+
+## **12. Graphs (12+ Patterns)**
+
+1. BFS
+2. DFS
+3. Topological Sort
+4. Cycle Detection
+5. Shortest Path
+6. Dijkstra
+7. Bellman-Ford
+8. Floyd-Warshall
+9. Minimum Spanning Tree
+10. Disjoint Set (Union Find)
+11. Bridges
+12. Articulation Points
+13. Bipartite Graph
+
+---
+
+## **13. Dynamic Programming (10 Major Patterns)**
+
+1. Fibonacci Pattern
+2. 0/1 Knapsack
+3. Unbounded Knapsack
+4. LCS Pattern
+5. LIS Pattern
+6. Grid DP
+7. DP on Strings
+8. Interval DP
+9. Tree DP
+10. State Machine DP (Stocks)
+
+---
+
+## **14. Tries (4 Patterns)**
+
+1. Insert/Search/Delete
+2. Prefix Matching
+3. Word Search
+4. XOR Problems
+
+---
+
+## **15. Sliding Window (5 Patterns)**
+
+1. Fixed Size Window
+2. Variable Size Window
+3. Longest Substring
+4. Minimum Window
+5. Frequency-based Window
+
+---
+
+## **16. Two Pointers (6 Patterns)**
+
+1. Opposite Direction
+2. Same Direction
+3. Fast & Slow Pointer
+4. Partitioning
+5. Three Sum
+6. Container Problems
+
+---
+
+### **Most Important Topics for Interviews**
+
+| Topic               | Patterns |
+| ------------------- | -------- |
+| Arrays              | 10       |
+| Strings             | 8        |
+| Linked List         | 8        |
+| Binary Search       | 7        |
+| Trees + BST         | 16       |
+| Graphs              | 13       |
+| Dynamic Programming | 10       |
+| Sliding Window      | 5        |
+| Two Pointers        | 6        |
+
+### **Total**
+
+You can think of DSA interviews as roughly **100–120 core patterns**. Once you learn these patterns, most interview questions become variations of them rather than completely new problems.
+
+
+Striver A to Z DSA Sheet coveres : 
+### Short Answer
+
+**Yes, Striver A2Z covers almost all of these important patterns either directly or through problems based on those patterns.**
+
+### Coverage Estimate
+
+| Topic                    | Coverage in Striver A2Z |
+| ------------------------ | ----------------------- |
+| Arrays                   | ✅ 90-95%                |
+| Strings                  | ✅ 90%                   |
+| Recursion & Backtracking | ✅ 95%                   |
+| Linked List              | ✅ 95%                   |
+| Stack & Queue            | ✅ 95%                   |
+| Binary Search            | ✅ 95%                   |
+| Trees                    | ✅ 95%                   |
+| BST                      | ✅ 95%                   |
+| Heap                     | ✅ 90%                   |
+| Hashing                  | ✅ 90%                   |
+| Greedy                   | ✅ 85-90%                |
+| Graphs                   | ✅ 95%                   |
+| Dynamic Programming      | ✅ 95%                   |
+| Tries                    | ✅ 90%                   |
+| Sliding Window           | ✅ 85-90%                |
+| Two Pointers             | ✅ 90%                   |
+
+### Topics Where Striver is Especially Strong
+
+✅ Trees
+✅ Graphs
+✅ Dynamic Programming
+✅ Binary Search
+✅ Linked List
+✅ Recursion & Backtracking
+
+These are covered very systematically from beginner to advanced.
+
+### What Is Not Fully Covered?
+
+A few advanced or niche patterns may need extra practice:
+
+* Advanced Greedy
+* Advanced Trie Problems
+* Advanced String Algorithms (KMP, Rabin-Karp, Z-Algorithm)
+* Some hard Graph problems
+* Some hard DP variations
+
+### For Your Goal (Java Developer, 4 YOE)
+
+If you complete:
+
+1. **Striver A2Z DSA Sheet**
+2. **Striver DP Series**
+3. **Striver Graph Series**
+
+then you will have covered **around 90-95% of the DSA patterns commonly asked in interviews**.
+
+### Recommended Order
+
+1. Arrays
+2. Strings
+3. Linked List
+4. Stack & Queue
+5. Binary Search
+6. Recursion & Backtracking
+7. Trees + BST
+8. Heap
+9. Greedy
+10. Graphs
+11. Dynamic Programming
+12. Tries
+
+For a **4-year Java developer**, Graphs + DP + Trees are usually the most important topics after the basics.
