@@ -26,7 +26,7 @@ Q23 : if two interfaces with the same method having the same method signature bu
       types can a java class implement?
 Q24 : if two interfaces with the same method having the same method signature and having same
       return type can a java class implement ?
-Q25 : why method overloading also called as compile time polymorphism?
+Q25 : why method overloading also called as compile time polymorphism and what is method overriding ?
 Q26 : if parent class method is default and child class method is public? will it work ? 
 Q27 : if parent class method is public and child class method is default ? will it work ?
 Q28 : Can we create an object of an abstract class?
