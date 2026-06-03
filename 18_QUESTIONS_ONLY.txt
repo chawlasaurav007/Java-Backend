@@ -128,11 +128,15 @@ try {
    return 30;
 }
 
+output - 30  because it overrides 10 
+          finally block always executes (except in a few special cases like System.exit())
+          If a finally block contains a return statement, it overrides any return statement present in the try or catch block. Therefore, the output will be 30.
+
 
 -------------------------------------handling exception in spring boot project -------------------------------------------------------
 
 Q24 : difference between @RestControllerAdvice vs @ControllerAdvice vs @ExceptionHandler ?
-Q25 : how to handel exception in spring boot project? 
+Q25 : how to handel exception in spring boot project? and tell the flow of this as well . 
 
 
 ======================================================================================================================================
