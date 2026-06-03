@@ -283,6 +283,7 @@ Ans : We can't inherit an immutable class because it could allow changes to some
       should never change.  Making the class final stops this from happening.
 	  
  
+ Q : Why string is immutable in java ? 
 Ans : 
 String is immutable → once created, its value cannot be changed.
 
@@ -293,3 +294,34 @@ Security → used in passwords, network connections, etc., safe from modificatio
 String Pool optimization → immutable strings can be shared in SCP safely.
 
 Thread-safe → no need for synchronization when multiple threads use the same string.	  
+
+
+or
+ 
+
+Imagine you have a **name sticker** on your school bag.
+
+Once the sticker says **"SAURAV"**, nobody can erase or change the letters on that same sticker.
+
+If you want **"SAURAV CHAWLA"**, you get a **new sticker** and keep the old one unchanged.
+
+Java **String** works the same way.
+
+```java
+String name = "SAURAV";
+name = name + " CHAWLA";
+```
+
+Java does not change the original `"SAURAV"` string. It creates a **new String** `"SAURAV CHAWLA"` and makes `name` point to it.
+
+### Why Java made String immutable?
+
+1. **Security** – Important values like passwords and URLs cannot be changed accidentally.
+2. **Thread Safety** – Many threads can use the same String without problems.
+3. **Performance** – Java can reuse the same String object from the String Pool and save memory.
+4. **Reliability** – Once created, the value stays the same, so bugs are reduced.
+
+### One-line interview answer
+
+**String is immutable in Java because once a String object is created, its value cannot be changed. Any modification creates a new String object, which improves security, thread safety, memory optimization, and reliability.**
+ 
