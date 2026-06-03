@@ -259,7 +259,7 @@ Ans - throw keyword is used to throw the exception explicitly by the developer.i
       better version of the answer : 
       throw keyword is used to throw an exception explicitly by the developer. 
 	We can throw predefined exceptions or customized exceptions. 
-	To create a customized exception, the class should extend Exception, RuntimeException, or Throwable class(in these three what ever u want to use u can use because throwable is parent exception is a child of throwable and and runtime exception is a child of exception). 
+	To create a customized exception, the class should extend Exception, RuntimeException, or Throwable class(in these three what ever u want to use u can use because throwable is parent of exception class and exception class is a child of throwable and runtime exception is a child of exception class). 
 	Using throw keyword, we can throw only one exception at a time. 
 	throw keyword is used inside a method or block. 	  
       
@@ -519,3 +519,192 @@ Annotation           |What It Does                                              
 @ControllerAdvice  (for global exception handling)
 
 @ResponseBody (to return data in response body, like JSON or plain text)
+
+
+
+how to handel springboot exception : 
+
+## **1. Create Custom Exception**
+
+```java
+public class ProductNotFoundException extends RuntimeException {
+
+    public ProductNotFoundException(String message) {
+        super(message);
+    }
+}
+```
+
+---
+
+## **2. Throw Exception from Service Layer**
+
+```java
+@Service
+public class ProductService {
+
+    public Product getProductById(Long id) {
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(() ->
+                        new ProductNotFoundException(
+                                "Product not found with id : " + id));
+
+        return product;
+    }
+}
+```
+
+---
+
+## **3. Global Exception Handler**
+
+```java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<String> handleProductNotFoundException(
+            ProductNotFoundException ex) {
+
+        return new ResponseEntity<>(
+                ex.getMessage(),
+                HttpStatus.NOT_FOUND);
+    }
+}
+```
+
+---
+
+## **4. Controller**
+
+```java
+@RestController
+@RequestMapping("/products")
+public class ProductController {
+
+    @Autowired
+    private ProductService productService;
+
+    @GetMapping("/{id}")
+    public Product getProduct(@PathVariable Long id) {
+
+        return productService.getProductById(id);
+    }
+}
+```
+
+---
+
+## **Flow**
+
+```text
+Client Request(postman)
+      ↓
+Controller
+      ↓
+Service
+      ↓
+Repository
+      ↓
+Product Not Found(so here in service class it will throw product not found exception)
+      ↓
+throw new ProductNotFoundException()-> (then it goes to ProductNotFoundException class )
+      ↓
+GlobalExceptionHandler (@RestControllerAdvice)
+      ↓
+404 NOT FOUND Response
+      ↓
+Client
+```
+
+---
+
+## **Response**
+
+Request:
+
+```text
+GET /products/101
+```
+
+Response:
+
+```json
+{
+   "message":"Product not found with id : 101"
+}
+```
+
+Status:
+
+```text
+404 NOT FOUND
+```
+
+---
+
+## **Interview Answer (Philips Online Store Project)**
+
+**In my Spring Boot project, I handle exceptions using a custom exception class and a global exception handler (`@RestControllerAdvice`). For example, if a product is not found, the service layer throws `ProductNotFoundException`. The global exception handler catches it and returns a proper HTTP status code like `404 NOT FOUND` along with an error message. This keeps the controller clean and provides consistent error responses across the application.**
+
+or 
+
+✅ **Yes, this is correct.** Just make one small correction:
+
+```text
+Client Request (Postman)
+      ↓
+Controller
+      ↓
+Service
+      ↓
+Repository
+      ↓
+Product Not Found
+      ↓
+throw new ProductNotFoundException()
+      ↓
+ProductNotFoundException Constructor Executes
+      ↓
+Exception Object Created
+      ↓
+Spring finds matching @ExceptionHandler
+      ↓
+GlobalExceptionHandler (@RestControllerAdvice)
+      ↓
+404 NOT FOUND Response
+      ↓
+Client
+```
+
+### What actually happens?
+
+When this line executes:
+
+```java
+throw new ProductNotFoundException("Product not found");
+```
+
+1. Java first calls the constructor of `ProductNotFoundException`.
+2. Exception object is created.
+3. Exception is thrown.
+4. Spring catches it.
+5. Spring sends it to:
+
+```java
+@ExceptionHandler(ProductNotFoundException.class)
+```
+
+inside:
+
+```java
+@RestControllerAdvice
+public class GlobalExceptionHandler
+```
+
+6. `404 NOT FOUND` is returned.
+
+### Interview Answer
+
+**If the product is not found, the service layer throws `ProductNotFoundException`. Java first creates the exception object by calling its constructor, then throws it. Spring catches the exception and routes it to the `GlobalExceptionHandler` class annotated with `@RestControllerAdvice`, which returns a `404 NOT FOUND` response to the client.**
