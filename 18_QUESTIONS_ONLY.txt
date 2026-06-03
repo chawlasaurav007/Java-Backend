@@ -90,6 +90,8 @@ Q70 : What is class up casting ?
 Q71 : What is method chaining?
 Q72 : is java Fully object-oriented programming language? 
 Q73 : deep copy vs shallow copy ? and when to use deep copy and when to use shallow copy?  
+Q : why we need to  create static and default method in interface? 
+
 
 ======================================================================================================================================
 
