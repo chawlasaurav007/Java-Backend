@@ -74,6 +74,80 @@ Ans: 1. Lambda Expressions: Shorter syntax for writing anonymous functions.
                                          |	 }                                  ↓
                                          |   }                     which implements the 					
          			                                                   functional interface method 
+
+
+    or 
+    
+    why we use functional interaface ? 
+    ans : 
+
+    Yes, your understanding is mostly correct.
+
+A **Functional Interface** is like a **contract** that says:
+
+> "Whoever uses me must provide the implementation for this one method."
+
+Example:
+
+```java
+@FunctionalInterface
+interface Calculator {
+    int add(int a, int b);
+}
+```
+
+Now Class A can provide its own logic:
+
+```java
+class A {
+    public static void main(String[] args) {
+        Calculator c = (a, b) -> a + b;
+
+        System.out.println(c.add(10, 20)); // 30
+    }
+}
+```
+
+Class B can provide different logic:
+
+```java
+class B {
+    public static void main(String[] args) {
+        Calculator c = (a, b) -> a * b;
+
+        System.out.println(c.add(10, 20)); // 200
+    }
+}
+```
+
+### Layman Explanation
+
+Think of `Calculator` as an **empty box with one slot**.
+
+The interface only says:
+
+> "Give me two numbers and return one number."
+
+It does **not** say how.
+
+Now:
+
+* Class A says: "I will do **addition**."
+* Class B says: "I will do **multiplication**."
+* Class C can say: "I will do **subtraction**."
+
+The **functional interface defines WHAT needs to be done**, and the **lambda expression defines HOW it should be done**.
+
+### Interview Answer
+
+**A Functional Interface provides a single abstract method contract. Different classes or objects can provide their own implementation using lambda expressions, allowing behavior to be passed dynamically without creating separate implementation classes.**
+
+or 
+
+my words : 
+so what does this means is why do we need to use functional interface because as u know the interface which is annotated with functional interface here we can create only one abstract or incomplete method and which ever class suppose there are three classes they can take this incomplete abstarct method from interface and they can implement there own logic via a lambadas expression.
+
+     			                                                   
        
 	   Q: types of functional interface ?
 	   Ans :   1 . predicate--------|
