@@ -166,7 +166,7 @@ So:
 Note(its important) : 
 how internally multithreading works?
 1 thread will do one task , Suppose in a thread pool(Executors) there are 10 thread and the task is given only one
-so 1 thread will do that task rest 9 thread will be in rest condition. if the task come than  out of 9 thread we can
+so 1 thread will do that task rest 9 thread will be in rest condition. if the task come than  out of 9 thread we can use
 it for another task if task is provided 
 if the task is completed by that thread it than it again goes back to the thread pool and tell that u can again reuse me 
 for the task 
@@ -354,9 +354,9 @@ Ans - If we extend properties from thread class then we cant extend properties f
 		}
 	  
 
-      class A extends B implements Runnable,C{}// we can write like 
+      class A extends B implements Runnable,C{}// we can write like this
 
-      public class B extends Thread implements A,B{}//// we cant write like 	  
+      public class B extends Thread implements A,B{}//// we cant write like this	  
 
 Q6 : What is thread schedular ? 
 Ans - The thread scheduler in Java is part of the JVM (Java Virtual Machine) that decides which thread should run
@@ -376,7 +376,7 @@ Q7 :  start() vs run() ?
 Ans - to start thread execution we will call start() method (like this t.start()) start method will call run 
       method internally and inside run method we will write our logic which should be executed by thread.
       once the start method is called then Thread Schedular will come into picture to execute our thread. 
-	  If you call run method directly it will like this(t.run()) then it will execute as a normal method it is 
+	  If you call run method directly  like this(t.run()) then it will execute as a normal method it is 
 	  not like thread method so for thread method write t.start() method to call run method.
 
 Q8 : Can we call run() method directly without calling start() method ? 
@@ -527,11 +527,11 @@ Ans - callable interface is also a way to create thread(user defined thread). so
 Q13 : callable interface vs runnable interface ? 
 Ans - Runnable interface                          |         callable Interface 
 1 - runnable is a functional interface which has  |1 - callable is a functional interface which has call() method. 
-    run() method.  	                          |
+    run() method.  	                              |
 2 - Runnable run() method has void no return type |2 - callable call() method returns object.
 3 - runnable interface present in                 |3 - callable interface present in java.util.concurrent package 
     java.lang.package                             |
-	                                            |
+	                                              |
 
 Q14 : which approach is best to create a thread amoung? 
 Asn - callable interface is best and preffered way to create a thread because callable interface has call method
