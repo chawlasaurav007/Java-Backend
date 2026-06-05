@@ -668,7 +668,7 @@ public class Main {
 
         ExecutorService service = Executors.newFixedThreadPool(2);
 
-        Future<String> result = service.submit(new MyTask());
+        Future<String> result = service.submit(new MyTask());//it calls call method
 
         System.out.println(result.get());
 
@@ -753,6 +753,38 @@ success
 Note -  		  
 here in the above program we have created 10 threads in thread pool these 10 threads are doing 100 tasks in round
 robin fashion.
+
+ Q : Why we cant use ExecutorsService with thread class ? Why we can only use ExecutorService with callable and runnable interface ?  
+### Answer (Short & Simple)
+
+**ExecutorService works with `Runnable` and `Callable` because they represent a task (work to do).**
+
+A **Thread** is not a task, it is an actual thread that executes tasks.
+
+Think of it like this:
+
+* **Runnable / Callable = Job**
+* **Thread = Worker**
+* **ExecutorService = Manager**
+
+The manager (**ExecutorService**) manages workers (threads) internally. It only needs the **job (Runnable/Callable)** to assign to a worker.
+
+That's why we do:
+
+```java
+executor.submit(new MyTask()); // Runnable or Callable
+```
+
+and not:
+
+```java
+executor.submit(new Thread()); // Not recommended
+```
+
+### Interview Answer
+
+**ExecutorService is designed to manage and reuse threads internally. Therefore, we submit tasks using Runnable or Callable. A Thread is already an execution unit, not a task, so ExecutorService does not need us to create and manage Thread objects manually.**
+
 
 Q:what is future ? 
 future is an interface in java that represents the result in asynchronous format. when u submit a task by using 
@@ -1597,9 +1629,9 @@ so here i tell my friend to complete your task first so i write join method with
       Now a days we dont use these methods in our project
 
 or 
-join() : suppose there are two thread t1 and t2 suppose abhi currect thread is t1 so suppose kro maine abhi t2 pe join method lagaya so pehle t2 thread finish hoga then currect thread jo ki t1 hai fir vo complete hoga 
+join() : suppose there are two thread t1 and t2 suppose abhi currect thread is t1 so suppose kro maine abhi t2 pe join method lagaya so pehle t2 thread finish hoga then current thread jo ki t1 hai fir vo complete hoga 
 
-yeild() : suppose there are two thread t1 and t2 suppose abhi currect thread is t1 so suppose kro maine abhi t1 thread pe yeild() method lagaya so t1 thread yeh keh rha hai baaki threads ko mai thodi der ke liye pause ho rha hu baaki threads tumahre pass chance hai apna kaam finish krne ke liye . agar tumhe apna kaam kiya toh thik nhi kiya toh mai to chalu ho rha hu vapas  
+yeild() : suppose there are two thread t1 and t2 suppose abhi current thread is t1 so suppose kro maine abhi t1 thread pe yeild() method lagaya so t1 thread yeh keh rha hai baaki threads ko mai thodi der ke liye pause ho rha hu baaki threads tumahre pass chance hai apna kaam finish krne ke liye . agar tumhe apna kaam kiya toh thik nhi kiya toh mai to chalu ho rha hu vapas  
 	  
 Q29 : What is Inter Thread Communication? 
 Ans - one thread communicating with another thread is called inter thread communication. We do interthread 
@@ -1818,6 +1850,148 @@ sleep(): does NOT release lock → blocks other threads from entering synchroniz
 
 If you want, I can also explain with a real-life example.
 
+
+Q : What is Producer-Consumer Problem in multithreading in java ? 
+Ans : 
+### Producer Consumer Problem (Simple Terms)
+
+Imagine:
+
+* **Producer** = A chef making food 🍔
+* **Consumer** = A customer eating food 🍔
+
+The chef keeps placing burgers on a table, and the customer keeps taking them.
+
+Problems:
+
+1. If the table is **full**, the chef must **wait**.
+2. If the table is **empty**, the customer must **wait**.
+
+This coordination between producer and consumer is called the **Producer-Consumer Problem**.
+
+### In Java
+
+* One thread produces data (**Producer Thread**).
+* Another thread consumes data (**Consumer Thread**).
+* They share a common resource like a **Queue**.
+
+### Example
+
+```text
+Producer -> Adds items to Queue
+Consumer -> Removes items from Queue
+```
+
+### Interview Answer
+
+**Producer-Consumer Problem is a multithreading scenario where one thread produces data and another thread consumes it. If the shared resource is full, the producer waits; if it is empty, the consumer waits. Java uses synchronization, wait(), and notify() (or BlockingQueue) to coordinate between them.**
+
+
+and the code for understanding producer and consumer problem is : 
+
+### Simplest Producer-Consumer Example
+
+```java
+public class Main {
+
+    static int item = 0;
+
+    public static void main(String[] args) {
+
+        Thread producer = new Thread(() -> {
+            item++;
+            System.out.println("Produced: " + item);
+        });
+
+        Thread consumer = new Thread(() -> {
+            System.out.println("Consumed: " + item);
+        });
+
+        producer.start();
+        consumer.start();
+    }
+}
+```
+
+### Output
+
+```text
+Produced: 1
+Consumed: 1
+```
+
+### Real Producer-Consumer (using wait() and notify())
+
+```java
+class Shared {
+
+    int item;
+    boolean available = false;
+
+    synchronized void produce(int value) throws Exception {
+
+        while (available) {
+            wait();
+        }
+
+        item = value;
+        available = true;
+
+        System.out.println("Produced: " + item);
+
+        notify();
+    }
+
+    synchronized void consume() throws Exception {
+
+        while (!available) {
+            wait();
+        }
+
+        System.out.println("Consumed: " + item);
+
+        available = false;
+
+        notify();
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Shared shared = new Shared();
+
+        new Thread(() -> {
+            try {
+                shared.produce(10);
+            } catch (Exception e) {
+            }
+        }).start();
+
+        new Thread(() -> {
+            try {
+                shared.consume();
+            } catch (Exception e) {
+            }
+        }).start();
+    }
+}
+```
+
+### Easy Understanding
+
+* **Producer Thread** → puts data (`produce()`).
+* **Consumer Thread** → takes data (`consume()`).
+* If data is not available, consumer does **wait()**.
+* After producing data, producer does **notify()** to wake up consumer.
+
+This is the classic **Producer-Consumer Problem** in Java.
+
+So Simple thing is Producer cant add data into buffer/queue/matlb vo khane wali table if its full.
+and Consumer Wont consume data if its(buffer//queue/matlb vo khane wali table) empty.
+
+
 imp questions
 1) What is Multi - Threading?
 2) Why we need multi-Threading?
@@ -1837,3 +2011,5 @@ imp questions
 16) What is Executor Framework
 ans  - We use the Executor Framework to run tasks in a multithreaded way.
        It works with Runnable and Callable interfaces to run tasks using a thread pool.
+
+

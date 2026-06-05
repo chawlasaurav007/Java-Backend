@@ -260,10 +260,11 @@ Q22 : thread priority and set thread name?
 Q23 : What is calleble interface ? 
 Q24 : callable interface vs runnable interface ?
 Q25 : which approach is best to create a thread amoung?
-Q26 : In callable interface we use start method or executors(Executor service) ? 
+Q26 : In callable interface we use start method or executors(Executor service) ?
 Q27 : What is executors? 
 Q28 : what is ExecutorService ? 
 Q29 : How to submit the task to the thread in the thread pool?
+Q : Why we cant use ExecutorsService with thread class ? Why we can only use ExecutorService with callable and runnable interface ?  
 Q30 : what is future ? 
 Q31 : difference between future vs completable future? 
 Q32 : important points on ExecutorsService?
