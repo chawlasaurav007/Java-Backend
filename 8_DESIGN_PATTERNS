@@ -21,6 +21,85 @@ Ans : Design pattern is a well known proved solution for specefic problem.
    d.Prototype Pattern(used)
    e.Builder Pattern.(used)
    
+### 1. Creational Design Patterns 🏗️
+
+**Purpose:** How to create objects.
+
+**Layman Example:**
+Suppose you want a car.
+
+Instead of creating a car manually every time, you go to a **car factory** and ask for one.
+
+➡️ Creational patterns focus on **object creation**.
+
+**Examples:**
+
+* Singleton
+* Factory
+* Builder
+
+**Interview One-Liner:**
+**Creational design patterns deal with object creation and hide the object creation logic from the client.**
+
+---
+
+### 2. Structural Design Patterns 🧩
+
+**Purpose:** How to connect classes and objects together.
+
+**Layman Example:**
+You have a **mobile charger** and a **different socket type**.
+
+You use an **adapter** to connect them.
+
+➡️ Structural patterns focus on **how objects/classes are organized and connected**.
+
+**Examples:**
+
+* Adapter
+* Decorator
+* Facade
+
+**Interview One-Liner:**
+**Structural design patterns deal with how classes and objects are combined to form larger structures.**
+
+---
+
+### 3. Behavioral Design Patterns 🤝
+
+**Purpose:** How objects communicate with each other.
+
+**Layman Example:**
+In WhatsApp, when someone sends a message, all group members receive a notification.
+
+➡️ Behavioral patterns focus on **communication and interaction between objects**.
+
+**Examples:**
+
+* Observer
+* Strategy
+* Command
+
+**Interview One-Liner:**
+**Behavioral design patterns define how objects interact and communicate with each other.**
+
+---
+
+### Easiest Way to Remember
+
+| Pattern Type   | Meaning                     |
+| -------------- | --------------------------- |
+| **Creational** | How to **create** objects   |
+| **Structural** | How to **connect** objects  |
+| **Behavioral** | How objects **communicate** |
+
+### 5-Second Interview Answer
+
+**Creational = Create Objects**
+**Structural = Connect Objects**
+**Behavioral = Communicate Objects** 🚀
+
+
    only we are using 2 design pattern 
    1 . Factory pattern/Factory method pattern 
    2 . Singleton Pattern
@@ -283,6 +362,9 @@ Ans :
 In Singleton class, constructor is private, so we cannot create object from outside using new keyword.
 
 That’s why getInstance() method is made static so we can call it directly using class name without creating object.
+
+suppose if the getInstace() method is non static method and if u want to call this method than u need to create the object and then call 
+but if u are creating object to call then it breaks the singeton design pattern.
 
 Example:
 A obj = A.getInstance();
