@@ -116,6 +116,8 @@ Ans :
          4 : helping our application to be configurable.
     
     Q: how many ways are there to configure the bean? 
+    or we can repharase this question like this 
+    In how many ways can we tell Spring to create and manage an object (bean)?
     Ans : XML Configuration: Define beans and their dependencies in an XML file. This was the traditional way 
 	                         before annotations became popular.
 
@@ -289,6 +291,260 @@ Ans :
 			@Autowired
 			private ServiceInterface service; // Spring injects MyService1 automatically
 
+
+here is the code of using @Qualifier and @Primary  : 
+
+Using @Qualifier :
+
+```java
+package com.example.demo;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+// Interface
+interface Payment {
+    void pay();
+}
+
+// Implementation 1
+@Component("debitCard")
+class DebitCard implements Payment {
+
+    @Override
+    public void pay() {
+        System.out.println("Paid using Debit Card");
+    }
+}
+
+// Implementation 2
+@Component("creditCard")
+class CreditCard implements Payment {
+
+    @Override
+    public void pay() {
+        System.out.println("Paid using Credit Card");
+    }
+}
+
+// Service Class
+@Service
+class PaymentService {
+
+    private final Payment payment;
+
+    public PaymentService(@Qualifier("creditCard") Payment payment) {
+        this.payment = payment;
+    }
+
+    public void makePayment() {
+        payment.pay();
+    }
+}
+
+// Controller Class
+@RestController
+class PaymentController {
+
+    private final PaymentService paymentService;
+
+    public PaymentController(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
+    @GetMapping("/pay")
+    public String pay() {
+        paymentService.makePayment();
+        return "Payment Successful";
+    }
+}
+```
+
+### Output
+
+When you hit:
+
+```text
+http://localhost:8080/pay
+```
+
+Console:
+
+```text
+Paid using Credit Card
+```
+
+Browser:
+
+```text
+Payment Successful
+```
+
+### Flow
+
+```text
+Payment (Interface)
+        ↑
+   ┌───────────┐
+   │           │
+DebitCard   CreditCard
+                ↑
+      @Qualifier("creditCard")
+                ↑
+         PaymentService
+                ↑
+        PaymentController
+                ↑
+           /pay API
+```
+
+**Interview Explanation:**
+There are **two implementations** of the `Payment` interface. Spring gets confused about which one to inject, so we use **@Qualifier("creditCard")** in the constructor of `PaymentService` to tell Spring to inject the `CreditCard` bean. ✅
+
+
+Using @Primary : 
+
+```java
+package com.example.demo;
+
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+// Interface
+interface Payment {
+    void pay();
+}
+
+// Implementation 1
+@Component
+@Primary
+class DebitCard implements Payment {
+
+    @Override
+    public void pay() {
+        System.out.println("Paid using Debit Card");
+    }
+}
+
+// Implementation 2
+@Component
+class CreditCard implements Payment {
+
+    @Override
+    public void pay() {
+        System.out.println("Paid using Credit Card");
+    }
+}
+
+// Service Class
+@Service
+class PaymentService {
+
+    private final Payment payment;
+
+    public PaymentService(Payment payment) {
+        this.payment = payment;
+    }
+
+    public void makePayment() {
+        payment.pay();
+    }
+}
+
+// Controller Class
+@RestController
+class PaymentController {
+
+    private final PaymentService paymentService;
+
+    public PaymentController(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
+    @GetMapping("/pay")
+    public String pay() {
+        paymentService.makePayment();
+        return "Payment Successful";
+    }
+}
+```
+
+### What is happening?
+
+```java
+@Primary
+class DebitCard implements Payment
+```
+
+* There are **2 beans** of type `Payment`:
+
+  * `DebitCard`
+  * `CreditCard`
+
+* Spring gets confused.
+
+* `@Primary` tells Spring:
+
+> "If no specific bean is mentioned, use this bean by default."
+
+So Spring injects:
+
+```java
+private final Payment payment;
+```
+
+as:
+
+```java
+Payment payment = new DebitCard();
+```
+
+### Output
+
+When calling:
+
+```text
+http://localhost:8080/pay
+```
+
+Console:
+
+```text
+Paid using Debit Card
+```
+
+Browser:
+
+```text
+Payment Successful
+```
+
+### Difference
+
+**@Qualifier**
+
+```java
+public PaymentService(@Qualifier("creditCard") Payment payment)
+```
+
+➡️ Explicitly selects **CreditCard**.
+
+**@Primary**
+
+```java
+@Primary
+class DebitCard implements Payment
+```
+
+➡️ Makes **DebitCard** the default choice. ✅
+
+
 5 - @Bean - @Bean is a method level annotation you can annotate the method with the @Bean. Which declares the 
             bean of a class . 
             @Bean will only work if the class is annoated with @Configuration annotation.
@@ -385,8 +641,7 @@ Ans :
 		public class AppConfig {
 
 			@Bean
-			@Scope("singleton")//@Scope also we can write //Creates a same instance each time when the bean is 
-			                                              // requested
+			@Scope("singleton")//@Scope also we can write //Creates a same instance each time when the bean is requested
 			public MyBean myBean() {
 				return new MyBean();
 			}
@@ -547,7 +802,7 @@ Q : Differnce between pathparameter(@PathVariable) amd queryparameter(@RequestPa
               	  /api/watch?id=1&name=saurav
          4 - Query parameter should present only at the end of the url. 				  
 	     5 - to read Query parameter values from the URL we will use @RequestParam annoatation.
-             ex -  http://localhost:8080/employee?id=1&name=John
+             ex -  http://localhost:8080/employee?id=1&name=John(in postman)
 					@GetMapping("/employee")
 					public String greetUser(@RequestParam Long id,@RequestParam String name) {
 						return "Hello, " +id+" " +name + "!";
@@ -564,7 +819,7 @@ Q : Differnce between pathparameter(@PathVariable) amd queryparameter(@RequestPa
             //http://localhost:8080/api/employee/1/john // but here in the postman 
 			@GetMapping("/{id}/{name}")//using curly braces here 
 			public String getUserById(@PathVariable Long id,@PathVariable String name) {
-				return new Employee();
+				 return "Id: " + id + ", Name: " + name;
 			} 	
 	
 		
@@ -1109,6 +1364,7 @@ Ans : Through JPA annoations we can connect java object to database(will study t
 
 		    @ManyToOne//many employee belongs to one department 
 		    @JoinColumn(name = "department_id")   // foreign key column in employee table (foreign key of dept table)
+		                                       //means department_id this column will be present in employee table as foreign key
 		    private Department department;
 
 		    // getters and setters

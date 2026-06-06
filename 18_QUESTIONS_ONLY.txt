@@ -341,11 +341,14 @@ Q5 : what are bean/obejct creation annotations ?
 Q6 : What is ResponseEntity class? 
 Q7 : What is spring IOC ? 
 Q8 : What is Dependency Injection ? 
+Q : Types of IOC container ?
 Q9 : Main features of Spring IOC ? 
 Q10 : how many ways are there to configure the bean? 
 Q11 : @Autowired can be used in several ways to inject dependencies what are the several ways? 
 Q12 :Advantages of @Bean ? 
 Q13 : what is @Scope annotation and there types ? 
+Q : Differnce between pathparameter(@PathVariable) amd queryparameter(@RequestParam)?
+Q : what is spring data jpa ? 
 Q14 : What is difference between put and patch ? 
 Q15 : Difference between XML vs YML/YAML ?
 Q16: Difference between Soap api vs Rest api ? 
@@ -355,6 +358,7 @@ Q19 : what is objectmapper and modelmapper ?
 Q20 : What is spring profile? 
 Q21 : What is spring profile?
 Q22 : What is DAO layer ? 
+Q : What is acid properties? 
 Q23 : why do we create DTO class ?
 Q24 : What is spring aop  ?
 Q25 : What is auto configuration ?
