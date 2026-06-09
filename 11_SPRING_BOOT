@@ -73,7 +73,7 @@ Ans :
 1 - @Component : @Component annotaion is used to create Bean for the class,the class which is annotated by
                  @Component.  	 
 				 
-	Q : What is spring IOC ? 
+	Q : What is spring IOC or spring container? 
    ans :  Spring IoC is a container. It holds and manages the beans(Objects).It manages the life Cycle of the 
 	       bean from creating a bean to dependency injection and configuring(manages the bean behaviour) that 
 		   bean.
@@ -95,7 +95,9 @@ Ans :
 			their lifecycle.
             
 			It’s basically Spring taking control so your code is cleaner, loosely coupled, and easier to maintain.
-			
+
+Q : What is @ComponentScan ?	
+@ComponentScan tells the Spring IoC Container where to look for classes annotated with @Component, @Service, @Repository, and @Controller. After finding them, the IoC Container creates their objects (beans) and manages them.			
            
 		  Q : What is Dependency Injection ? 
 		  Ans- Dependency Injection: When one bean (e.g., a @Controller class) relies on another bean 

@@ -162,6 +162,18 @@ class B extends A{
 }
 A) Yes
 Q) I want B class should avoid serialized?
+A )
+class A implements Serializable {
+}
+
+class B extends A {
+    private void writeObject(java.io.ObjectOutputStream out)
+            throws java.io.NotSerializableException {
+        throw new java.io.NotSerializableException("B is not serializable");
+    }
+}
+This will throw NotSerializableException when someone tries to serialize B.
+
   [ javabyraghu@gmail.com ]
 =============XML Configurtation=======================================
 <bean> --- creating object
@@ -550,17 +562,104 @@ Note:-
    for a class. Ex: Database connection, ViewResolver..etc
 
 ----------------------------------------------------------
-Q) What is var-args and how it is different from array?
-   provide all rules to work with var-args.
-A)
+### Q) What is Var-args and how is it different from Array?
 
-Q) What is casting (up and down) ? 
+**Ans:** Var-args (`...`) allows a method to accept **any number of arguments**.
 
-Q) What is overloading ? what are all rules we need to follow?
+```java
+void display(int... nums) { }
+```
 
-Q) What is dynamic polimorphisum? 
+**Difference:**
 
-Q) What is method overriding?
+* **Array:** You create and pass an array.
+* **Var-args:** You can pass multiple values directly.
+
+**Rules:**
+
+* Only **one var-args** parameter per method.
+* It must be the **last parameter**.
+* Internally, var-args is treated as an **array**.
+
+---
+
+### Q) What is Casting (Upcasting and Downcasting)?
+
+**Ans:** Casting means converting one object reference type to another.
+
+**Upcasting:**
+
+```java
+Animal a = new Dog();
+```
+
+* Child object → Parent reference.
+* Implicit and safe.
+
+**Downcasting:**
+
+```java
+Dog d = (Dog) a;
+```
+
+* Parent reference → Child reference.
+* Explicit casting required.
+
+---
+
+### Q) What is Method Overloading? What are the rules?
+
+**Ans:** Having **multiple methods with the same name** but **different parameters** in the same class.
+
+```java
+add(int a, int b)
+add(int a, int b, int c)
+```
+
+**Rules:**
+
+* Method name must be the same.
+* Parameters must be different (number/type/order).
+* Return type alone cannot differentiate overloaded methods.
+
+---
+
+### Q) What is Dynamic Polymorphism?
+
+**Ans:** Dynamic Polymorphism means the **overridden method is decided at runtime** based on the actual object.
+
+```java
+Animal a = new Dog();
+a.sound();
+```
+
+If `Dog` overrides `sound()`, Dog's method is called.
+
+---
+
+### Q) What is Method Overriding?
+
+**Ans:** When a child class provides its own implementation of a method already present in the parent class.
+
+```java
+class Animal {
+    void sound() {}
+}
+
+class Dog extends Animal {
+    @Override
+    void sound() {}
+}
+```
+
+**Rules:**
+
+* Same method name.
+* Same parameters.
+* Must have inheritance.
+* Return type should be same or covariant.
+* Cannot reduce access level.
+
 =========================================================
 Example code:#1
 1. Spring Bean + annotation config
@@ -618,6 +717,9 @@ basePackage :- This is the input must be given incase of
 => @ComponentScan is used to provide basePackages to scan
    our classes 
 
+   Q : What is @ComponentScan?
+    @ComponentScan tells the Spring IoC Container where to look for classes annotated with @Component, @Service, @Repository, and @Controller. After finding them, the IoC Container creates their objects (beans) and manages them.
+
 @ComponentScan(basePackages = "com.app") means
    find classes from app package and app all subpackage classes
 
@@ -634,7 +736,7 @@ Possible examples:
 @ComponentScan(basePackages = "com.app")
 
 *) if your class is having @Component but not under basePackage
-  then it has no meaning. ie container is unable to finsd your class.
+  then it has no meaning. ie container is unable to find your class.
 
 ========Example#2==================================
 1. Spring bean
@@ -778,6 +880,9 @@ Notes:
   ex: myapp.properties   then add some key=val pairs
 2. @PropertySource is used to load our properties file into
    Spring container.
+   @PropertySource is still used, but in Spring Boot it is rarely needed because Spring Boot automatically loads application.properties and application.yml. It is mainly used when we want to load a custom properties file.
+   A custom properties file is any .properties file other than the default application.properties or application.yml. We use @PropertySource to load such files into the Spring application. 
+
 3. Spring container creates Environment(I) [org.springframework.core.env]
    memory (Object).
    Environment environment = new StandardEnvironment();
@@ -1607,6 +1712,7 @@ class B{
     sysout(oa); // not accessable
   }
 }
+Ans : yes  oa is a local variable
 
 3. Can we create a re-usable object using below format?
 class A{}
@@ -2496,10 +2602,59 @@ Ex:
 
 ------------------Lecture-14-----------------------
 
-Q) What is coupling? How many types are there?
-Q) Why Coupling?
-Q) What is tight coupling?
-Q) What is loose coupling?
+### Q) What is Coupling?
+
+**Ans:** Coupling means the **degree of dependency between two classes**. It tells us how much one class depends on another class.
+
+---
+
+### Q) How many types of Coupling are there?
+
+**Ans:** There are **2 types**:
+
+1. **Tight Coupling**
+2. **Loose Coupling**
+
+---
+
+### Q) Why Coupling?
+
+**Ans:** Classes need to work together to perform a task. Coupling shows **how strongly or loosely classes are connected**.
+
+---
+
+### Q) What is Tight Coupling?
+
+**Ans:** A class directly creates and depends on another class.
+
+```java
+class Service {
+    Repository repo = new Repository();
+}
+```
+
+**Disadvantage:** Changes in one class may affect the other class.
+
+---
+
+### Q) What is Loose Coupling?
+
+**Ans:** A class depends on an **interface or dependency injection**, not on a specific class.
+
+```java
+class Service {
+    @Autowired
+    private Repository repo;
+}
+```
+
+**Advantage:** Easy to maintain, test, and change implementations.
+
+---
+
+### Interview Answer
+
+**Coupling means the dependency between classes. There are two types: Tight Coupling and Loose Coupling. Spring promotes Loose Coupling using Dependency Injection (`@Autowired`).** ✅
 ------------------------------------------------------------
 @Autowired : Link Objects (Read object from container and
    link with current class )
@@ -3402,10 +3557,6 @@ or
 @Autowired  @Scope
 @Configuration @Bean @PropertySource
 
-AshokIT Admin : +91 630 192 1083
-              9985 29 6677
-        9986 39 6677
-Email: javabyraghu@gmail.com
 
 
 Spring Boot:-
