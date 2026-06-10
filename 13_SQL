@@ -435,6 +435,19 @@ SQL Interview Questions
 
 2. What is the difference between WHERE and HAVING clause?
 
+SQL:
+Find Avg Salary of each department and display in desc order
+Fetch only Avg salary more then 300.
+
+Note:- So whenever u are using group by and order by there we should not use where keyword we should use having keyword
+
+---
+select dept, avg(esal)
+from employee
+group by dept
+having avg(esal)>300
+order by avg(esal) desc;
+
 3. Explain the difference between DELETE, TRUNCATE, and DROP.
 
 4. What is a Primary Key? Can a table have more than one primary key?

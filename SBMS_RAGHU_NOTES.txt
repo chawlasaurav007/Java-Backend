@@ -3666,6 +3666,39 @@ name=firstapp
 http://localhost:9696/
 
 
+Q : which is mostly used jar or war nowdays? 
+Ans : 
+### Q) Which is mostly used: JAR or WAR?
+
+✅ **Nowadays, JAR is mostly used.**
+
+### JAR (Java ARchive)
+
+* Used in **Spring Boot Microservices**.
+* Has an **embedded server** (Tomcat).
+* Run directly:
+
+```bash
+java -jar app.jar
+```
+
+* Easy deployment.
+* Most companies use this today.
+
+---
+
+### WAR (Web ARchive)
+
+* Used in traditional Spring MVC applications.
+* Needs an external server like **Tomcat**, **WebLogic**, or **JBoss**.
+* Less common in modern microservices.
+
+---
+
+### Interview Answer
+
+**JAR is mostly used nowadays because Spring Boot applications come with an embedded Tomcat server, making deployment easier. WAR is mainly used in traditional applications that require an external application server.** ✅
+
 --------------------Lecture-19--------------------
 
 
@@ -7790,6 +7823,39 @@ Entity field mapping
   //valid : findBybookType, findByBookType
   List<Book> findByBookType(String bookType);
   
+  or
+
+  Yes, concept-wise your explanation is correct. ✅
+
+For interviews, you can say:
+
+> **In Spring Data JPA, we create a Repository interface by extending `JpaRepository`. It provides many built-in methods like `save()`, `findById()`, `findAll()`, and `deleteById()` to perform database operations. If the built-in methods are not enough, we can use `@Query` to write custom JPQL or SQL queries. If we don't want to write queries manually, Spring Data JPA can generate queries automatically from method names such as `findByName()` or `findByEmail()`.**
+
+### Examples
+
+**Built-in Method**
+
+```java
+employeeRepository.findAll();
+```
+
+**Custom Query**
+
+```java
+@Query("select e from Employee e where e.salary > :salary")
+List<Employee> getEmployees(double salary);
+```
+
+**Method Name Query**
+
+```java
+List<Employee> findByName(String name);
+
+List<Employee> findByEmail(String email);
+```
+
+This is a good interview answer for a Java developer. ✅
+
   
   
   
