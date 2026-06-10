@@ -1455,3 +1455,140 @@ Hashtable always uses LinkedList and does not support tree structure.”
 
 Internal working of hashtable  : it is same like hashmap  
 
+
+Q : what is the contract between equals and hascodemethod in hashmap  ? 
+Ans : 
+Simple Contract between hashCode() and equals()
+
+Think of it like this:
+
+hashCode() = tells HashMap which bucket/index to go to.
+equals() = tells HashMap which object inside that bucket is the correct one.
+Contract Rule
+
+✅ If two objects are equal according to equals(), then their hashCode() must be the same.
+
+A.equals(B) == true
+
+Then:
+
+A.hashCode() == B.hashCode()
+Your Example
+
+Suppose:
+
+A -> hashCode = 4
+B -> hashCode = 4
+
+Both go to bucket 4.
+
+Now HashMap checks:
+
+A.equals(B)
+If true → update existing value.
+If false → store both objects in the linked list/tree at bucket 4.
+Why do we need both?
+hashCode() → fast bucket lookup.
+equals() → exact key matching inside that bucket.
+Interview Answer (1 line)
+
+hashCode() is used to find the bucket, and equals() is used to identify the exact object within that bucket. If two objects are equal, they must return the same hashCode.
+
+How the order will be fist tell me about a then b order wise kaise hai iskie internal working 
+
+Suppose:
+
+map.put(A, 10);
+map.put(B, 20);
+
+And both A and B have the same hashCode = 4.
+
+Step 1: Put A
+map.put(A, 10);
+HashMap calls A.hashCode()
+Gets bucket index 4
+Bucket 4 is empty
+Stores A there
+Bucket 4:
+[A,10]
+Step 2: Put B
+map.put(B, 20);
+HashMap calls B.hashCode()
+Gets bucket index 4
+Goes to bucket 4
+Finds A already present
+
+Now it checks:
+
+A.equals(B)
+Case 1: equals() returns false
+A.equals(B) = false
+
+Then B is added after A.
+
+Bucket 4:
+[A,10] -> [B,20]
+
+Both keys are stored.
+
+Case 2: equals() returns true
+A.equals(B) = true
+
+HashMap says:
+"Same key already exists."
+
+So it updates the value.
+
+Bucket 4:
+[A,20]
+
+B is not added separately.
+
+While Getting
+map.get(B);
+Calls B.hashCode()
+Goes to bucket 4
+Compares with A using equals()
+If equal → returns value
+Otherwise checks next node in the linked list
+One-line Interview Answer
+
+First HashMap uses hashCode() to find the bucket. If multiple keys are in the same bucket, it uses equals() to find the exact key.
+
+Suppose a,10 then i add a,20 
+So equals method it will return true so it it will overrride and suppose if second value is b,20 so itwill go to equlas method and check it will return false so it will add to next node 
+
+Yes ✅, exactly.
+
+Case 1: Same Key
+map.put(A, 10);
+map.put(A, 20);
+A.hashCode() → same bucket
+HashMap finds A already present
+A.equals(A) → true
+Value is updated
+
+Result:
+
+A -> 20
+Case 2: Different Key but Same Bucket
+map.put(A, 10);
+map.put(B, 20);
+
+Assume:
+
+A.hashCode() = 4
+B.hashCode() = 4
+B goes to bucket 4
+HashMap compares:
+A.equals(B)
+Returns false
+So B is added as the next node
+
+Result:
+
+Bucket 4:
+[A,10] -> [B,20]
+Interview Answer
+
+If equals() returns true, HashMap treats it as the same key and updates the value. If equals() returns false, HashMap treats it as a different key and stores it as a new node in the same bucket.
