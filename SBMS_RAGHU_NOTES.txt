@@ -9406,9 +9406,61 @@ spring:
 ----------------Lecture-39--------------------
 
   ------------------------------------------------------------
-Q) What is Cascading in JPA/Hibernate?
-Q) What is FetchType in JPA/Hibernate?
-Q) What is the use of SQL Joins?
+### Q1) What is Cascading in JPA/Hibernate?
+
+**Answer:**
+
+Cascading means when you perform an operation on a parent object, the same operation is automatically performed on its child objects.
+
+**Example:**
+If you save a **Department**, all its **Employees** can also be saved automatically.
+
+**In one line:**
+👉 **Cascade saves you from performing the same operation manually on related objects.**
+
+---
+
+### Q2) What is FetchType in JPA/Hibernate?
+
+**Answer:**
+
+FetchType decides **when related data should be loaded from the database**.
+
+* **EAGER** → Load related data immediately.
+* **LAZY** → Load related data only when needed.
+
+**Example:**
+When fetching an Employee:
+
+* EAGER → Employee + Department loaded together.
+* LAZY → Only Employee loaded first; Department loaded when accessed.
+
+**In one line:**
+👉 **FetchType controls when related data is fetched from the database.**
+
+---
+
+### Q3) What is the use of SQL Joins?
+
+**Answer:**
+
+SQL Joins are used to **combine data from multiple tables** based on a common column.
+
+**Example:**
+
+* Employee table
+* Department table
+
+Using a JOIN, you can get:
+
+```text
+Employee Name | Department Name
+```
+
+in a single query.
+
+**In one line:**
+👉 **Joins help retrieve related data from multiple tables in one query.**
 ---------------------------------------------------------------------
 Many-To-Many:
  If both sides 1...* is implemented/exist then use many-to-many.
