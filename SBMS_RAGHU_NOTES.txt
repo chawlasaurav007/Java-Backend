@@ -16805,7 +16805,7 @@ So yes — for your product-not-found use case, this is the preferred approach.
 
 ==================================================================
 Q) How do you handle exceptions in your RestApplications?
-A) Here Service Layer thro exception based on some conditions.
+A) Here Service Layer throw exception based on some conditions.
   Catched by RestController and re-thrown to GlobalHandler.
   Global Exception Handler compares exception type and returns
   Custome Error Message with status code.
