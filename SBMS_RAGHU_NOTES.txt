@@ -11568,7 +11568,7 @@ At a time two different services can not use same port number.
 => Http - 80, https-443.
 
 *) Default port number for Spring Boot app is : 8080
-  We can modify using key : server.port=9090(in application.tml file )
+  We can modify using key : server.port=9090(in application.yml file )
 
 
 
@@ -15099,6 +15099,34 @@ Note:
 
 =======================================================================
 Q) Write one Example using Maven for JSON/JACKSON?
+A)
+### Q) Write one Example using Maven for JSON/Jackson?
+
+**Answer:**
+
+Jackson is a Java library used to **convert Java objects to JSON and JSON to Java objects**.
+
+**Maven Dependency:**
+
+```xml
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+</dependency>
+```
+
+**Example:**
+
+```java
+ObjectMapper mapper = new ObjectMapper();
+String json = mapper.writeValueAsString(employee);
+```
+
+This converts an `Employee` object into JSON.
+
+### Interview Answer
+
+**Jackson is used for converting Java objects to JSON and JSON to Java objects. In Maven, we add the `jackson-databind` dependency to use it.**
 
 Q) Do we need to apply @ResponseBody in Spring boot rest ?
 A) Not required. By default @RestController gives it.
@@ -15963,7 +15991,7 @@ public class BookRestController {
  BasicErrorController(C) and method error().
 
 => This error() method returns some pre-defined response format.
-Ex: So if u are handling the exception by this way then ot will throw the message like this which client will never accept so thats why we use custome exception which will give valueable message.
+Ex: So if u are handling the exception by this way then it will throw the message like this which client will never accept so thats why we use custome exception which will give valueable message.
 
 or
 
