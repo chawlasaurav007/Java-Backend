@@ -20317,6 +20317,13 @@ Spring knows:
 
 > **Key = Unique identifier used to store/find data in cache.**
 
+Q : Why we use @CachePut and @CacheEvict ? 
+Ans : 
+**Corrected version in your style:**
+
+**"We use `@CachePut` and `@CacheEvict` because when we update the data, `@CachePut` updates it in both the database and the cache. If a user wants the latest data, then by using `@Cacheable`, he can get the updated data from the cache. If the data is deleted, then `@CacheEvict` removes it from both the database and the cache. So if the user tries to read that data again, he cannot get it from the cache because it has already been deleted. Basically, `@CachePut` and `@CacheEvict` help keep the database and cache in sync."** ✅
+
+
   @Cacheable(value = "users", key = "#userId")
   public User getOneUser(Integer userId) {
     return repo.findById(userId).get();
@@ -20488,6 +20495,65 @@ Note :
 ex: 
   spring.cache.redis.time-to-live=60000
 
+Q : For one user there will be one redis cache for each user or for 1000 user there will be 1 redis cache in industry how it works ? 
+Ans : 
+No ❌.
+
+Usually there is **one Redis cache server for all users**, not one Redis cache per user.
+
+### Example
+
+Suppose 1000 users are using your website.
+
+```text
+1000 Users
+    |
+Spring Boot App
+    |
+One Redis Cache
+    |
+Database
+```
+
+When User A requests:
+
+```text
+getProduct(101)
+```
+
+Data is stored in Redis:
+
+```text
+product:101 -> Product Data
+```
+
+Now User B requests the same product:
+
+```text
+getProduct(101)
+```
+
+Redis returns it directly.
+
+No need to create a separate cache for User B.
+
+### When do we have user-specific cache?
+
+Sometimes we store data like:
+
+```text
+user:101:profile
+user:102:profile
+user:103:profile
+```
+
+Still, all of these are stored in the **same Redis server**, just with different keys.
+
+### Interview Answer
+
+**In real projects, we usually have one Redis cache shared by all users. We don't create a separate Redis cache for every user. User-specific data is stored using different cache keys inside the same Redis cache.** ✅
+
+
 
 Q) Can we apply these Redis cache annotation on rest controller layer? 
 Ans : Yes but the better practice is to apply these cache annotation on service layer.
@@ -20636,7 +20702,7 @@ https://www.atlassian.com/microservices/microservices-architecture/microservices
 ===========================================================
 Compile : .java --> .class
 Build   : .class --> .jar/.war
-Deploy  : Place WAR under server and starter server
+Deploy  : Place WAR under server and start server
 Instance : A Running server with project (successfully)
 Load     : No.of Request (Incoming Request ) to server
 Load Factor : No.of Request / Total Capacity
@@ -20709,7 +20775,7 @@ Scalability : Done for Increasing performance of app.
       ex : in amazon website search module is mostly used so so one server cant so many requests at a time 
       so for that we create multiple instances of the search so that it can handel the request easily.
       
-      supoose we have one instance / one server for one module and per day 200 request comes and that server can handel that 200 requests but suddenly 600 requests came per day than it will be difficult for one serverto handel so many request so we have created two more instaces/ server so that it can handel those 600 requests
+      supoose we have one instance / one server for one module and per day 200 request comes and that server can handel that 200 requests but suddenly 600 requests came per day than it will be difficult for one server to handel so many request so we have created two more instaces/ server so that it can handel those 600 requests
 
 2. Vertical Scaling  : Increasing the configuration of System
   N/w , Storage, Processor, RAM...etc
@@ -21473,7 +21539,7 @@ This is the real production-style way.
 *) MS# Communication: If one MS# wants to send request and get response
 from another MS# then it is called as MS# communication.
 
-*) All MS# are internall Spring Boot REST apps. So, we can use RestTemplate.
+*) All MS# are internally Spring Boot REST apps. So, we can use RestTemplate.
   But hardcoding URL of MS# is not a good approch. Because in rest template we use hard coding approach means that we write the ip address as hard coded
   But in RestTemplate hardcoding URLs (IP/port) is not a good approach because service instances can change (due to scaling or deployment), making hardcoded values unreliable.
   “Hardcoding URLs in RestTemplate is not recommended because microservice instances are dynamic;
