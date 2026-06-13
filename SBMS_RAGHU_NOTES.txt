@@ -28568,7 +28568,7 @@ suppose A extends B
 so dont modify B , whatever u want to change change in A  
 
 
-LSP: "Derived classes must be substitutable for their base classes."
+LSP: "Derived classes(child class) must be substitutable for their base classes(parent class)."
 (Supported by Java)  Upcasting
 
 
@@ -28582,6 +28582,96 @@ void display(Employee e){
 }
 
 ob.display(new ContractEmployee()); // so in liskov substitution principle iam able to pass employee class object and as well as we can pass employee sub type object which is ContractEmployee like how we have passed here 
+
+here is the full code for this  : 
+
+Yes. Your example is a good demonstration of the **Liskov Substitution Principle (LSP)**.
+
+### Simple Definition
+
+**If a method expects a parent class object, we should be able to pass any child class object without breaking the program.**
+
+### Example
+
+```java
+class Employee {
+
+    void work() {
+        System.out.println("Employee is working");
+    }
+}
+
+class ContractEmployee extends Employee {
+
+    @Override
+    void work() {
+        System.out.println("Contract Employee is working");
+    }
+}
+
+class PermanentEmployee extends Employee {
+
+    @Override
+    void work() {
+        System.out.println("Permanent Employee is working");
+    }
+}
+
+public class Main {
+
+    static void display(Employee e) {
+        e.work();
+    }
+
+    public static void main(String[] args) {
+
+        Employee emp = new Employee();
+        ContractEmployee ce = new ContractEmployee();
+        PermanentEmployee pe = new PermanentEmployee();
+
+        display(emp);
+        display(ce);
+        display(pe);
+    }
+}
+```
+
+### Output
+
+```text
+Employee is working
+Contract Employee is working
+Permanent Employee is working
+```
+
+### How LSP works here
+
+```java
+display(emp); // Parent object
+display(ce);  // Child object
+display(pe);  // Child object
+```
+
+The method:
+
+```java
+display(Employee e)
+```
+
+expects an **Employee**, but it also works perfectly with:
+
+* **Employee**
+* **ContractEmployee**
+* **PermanentEmployee**
+
+because both child classes are valid substitutes for Employee.
+
+### Interview Answer
+
+* **LSP states that objects of a superclass should be replaceable with objects of its subclasses without affecting the correctness of the program.**
+* In the example, `display(Employee e)` accepts an `Employee`, but we can also pass `ContractEmployee` and `PermanentEmployee`.
+* Since the program behaves correctly for all subclasses, it follows the **Liskov Substitution Principle**.
+
 
 
 ISP: "Make fine grained interfaces that are client specific."
@@ -28604,7 +28694,7 @@ not between two classes.
 *) For one request, there can be multiple MS# executed in a order.
 *) This is called as Chain of MS# also called as Circut.
 *) If one of these MS# is not responding properly for request processing
-   Exception internall, Service Down, Resource issues, timeout issues..etc
+   Exception internally, Service Down, Resource issues, timeout issues..etc
   Then Cascade Exception/failure may occur, which leads to invalid 
   response/bad client response..etc
 
@@ -28797,6 +28887,35 @@ steps how it goes :
 *) Dependency Chain : one JAR can be internally using other JAR classes
   then those JARs are called as Dependency Chain.
  
+Q : why do we need jar file i mean why do we need to build explian ?
+Ans : 
+### Why do we need a JAR file?
+
+* During development, your project contains many files:
+
+  * Java source files (`.java`)
+  * Compiled class files (`.class`)
+  * Libraries/dependencies
+  * Configuration files
+
+* When we **build** the project, all the required files are packaged into a single **JAR (Java Archive)** file.
+
+### Benefits of JAR
+
+1. **Easy deployment** – One file instead of many files.
+2. **Easy sharing** – Send a single JAR file to another machine.
+3. **Easy execution** – Run using:
+
+```bash
+java -jar app.jar
+```
+
+4. **Contains everything needed** (especially in Spring Boot fat JARs).
+
+### Interview Answer
+
+**We build a project to convert the source code into executable code and package it into a JAR file. A JAR file makes deployment, sharing, and execution easier because all required classes and resources are bundled into a single file.**
+
 ===============================================================
 Project Management Tool : Maven
 
@@ -30471,7 +30590,7 @@ so read this file
 
 -------------------------------------Lectire-135------------------------------------
 
-one word file os there of github
+one word file is there of github
 
  -------------------        -------------------        -------------------------     -----------------------------
 |     Workspace     |      |       Stage       |      |   .git (local repo)   | 3    | GitHub Repository (Remote) |
