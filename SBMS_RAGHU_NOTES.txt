@@ -22145,6 +22145,25 @@ import com.app.raghu.entity.Cart;
 Step-2
 // then it goes to the interface in order microservice which is annotated with @FeignClient("aother microservcie name") and we call through this and that service example cart serviec sends the response back to order service 
 
+Q : Why do we need to create interfcae in consumer service(while using feign client) ? 
+Ans : We create an interface in Feign Client because we only need to define the API methods of the other service. Spring automatically creates the implementation at runtime. This reduces boilerplate code and makes service-to-service communication easier. We can directly call methods instead of writing HTTP client code manually.
+
+**Correct statement:**
+
+**"If the producer service controller has 3 APIs and the consumer service needs all 3 APIs, then we should create corresponding methods for all 3 APIs in the Feign Client interface."** ✅
+
+Or even simpler:
+
+**"We create methods in the Feign Client interface only for the APIs that the consumer service needs to call. If it needs all 3 APIs, then we create all 3 methods."** ✅
+
+or 
+
+**"If the consumer service needs to use only 2 APIs from the producer service, then we create only 2 abstract methods in the Feign Client interface. We create methods only for the APIs that we need to call, not for all the APIs present in the producer service."** ✅
+
+**Short version:**
+
+**"We create only those methods in the Feign Client interface that the consumer service needs. If it needs 2 APIs, we create 2 methods; if it needs 3 APIs, we create 3 methods."** ✅
+
 
 @FeignClient("CART-SERVICE")
 public interface CatConsumerFeign {
@@ -22338,6 +22357,185 @@ or
 ## ✅ Verdict
 
 ✔ Your understanding → **Correct (now fully polished 💯)**
+
+
+in the above code we have not use service layer so here we will use that servcei layer in order service(consumer service) which will give us the complete idea 
+
+
+3. OrderService
+Name : SpringCloudOrderService
+Dep : Spring web, Eureka Discovery Client, Open Feign, Lombok
+
+Main: @EnableEurekaClient, @EnableFeignClients
+
+--application.properties--
+#PORT
+server.port=9091
+
+# ServiceId (app Name)
+spring.application.name=ORDER-SERVICE
+
+#Provide eureka location
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+
+--Spring Bean--------
+package com.app.raghu.entity;
+
+import lombok.Data;
+
+@Data
+public class Cart {
+
+  private Integer cartId;
+  private String cartCode;
+  private Double cartCost;
+}
+
+
+
+### Feign Client (Consumer)
+
+```java
+package com.app.raghu.consumer;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.app.raghu.entity.Cart;
+
+@FeignClient("CART-SERVICE")
+public interface CatConsumerFeign {
+
+    @GetMapping("/cart/info")
+    public ResponseEntity<String> showMessage();
+
+    @GetMapping("/cart/find/{id}")
+    public ResponseEntity<Cart> getCartById(
+            @PathVariable("id") Integer id);
+
+    @PostMapping("/cart/create")
+    public ResponseEntity<String> addToCart(
+            @RequestBody Cart cart);
+}
+```
+
+---
+
+### Service Layer
+
+```java
+package com.app.raghu.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.raghu.consumer.CatConsumerFeign;
+import com.app.raghu.entity.Cart;
+
+@Service
+public class OrderService {
+
+    @Autowired
+    private CatConsumerFeign consumer;
+
+    public String placeOrder() {
+        return consumer.showMessage().getBody();
+    }
+
+    public Cart fetchOrderWithCart(Integer id) {
+        return consumer.getCartById(id).getBody();
+    }
+
+    public String addToCart(Cart cart) {
+        return consumer.addToCart(cart).getBody();
+    }
+}
+```
+
+---
+
+### Rest Controller
+
+```java
+package com.app.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.raghu.entity.Cart;
+import com.app.raghu.service.OrderService;
+
+@RestController
+@RequestMapping("/order")
+public class OrderRestController {
+
+    @Autowired
+    private OrderService service;
+
+    @GetMapping("/place")
+    public ResponseEntity<String> placeOrder() {
+
+        String cartResp = service.placeOrder();
+
+        return ResponseEntity.ok(
+                "ORDER PLACED WITH => " + cartResp);
+    }
+
+    @GetMapping("/fetch/{id}")
+    public ResponseEntity<String> fetchOrderWithCart(
+            @PathVariable("id") Integer id) {
+
+        Cart cob = service.fetchOrderWithCart(id);
+
+        return ResponseEntity.ok(
+                "ORDER WITH CART DATA => " + cob);
+    }
+
+    @PostMapping("/addToCart")
+    public ResponseEntity<String> addToCart(
+            @RequestBody Cart cart) {
+
+        String cartResp = service.addToCart(cart);
+
+        return ResponseEntity.ok(
+                "ORDER WITH => " + cartResp);
+    }
+}
+```
+
+### Flow
+
+```text
+Client
+  ↓
+OrderRestController
+  ↓
+OrderService
+  ↓
+CatConsumerFeign
+  ↓
+Eureka Server
+  ↓
+Cart Service
+  ↓
+Response Back
+```
+
+### Interview Answer
+
+**In real projects, the Controller should not directly call the Feign Client. The Controller calls the Service Layer, and the Service Layer calls the Feign Client. This follows layered architecture and keeps the code clean and maintainable.** ✅
+
 
 
 
@@ -22713,9 +22911,41 @@ New Relic
 
 These are tools used to know the current status of applications/MS# running 
 
+or 
+
+✅ **Mostly correct**, but one small correction:
+
+### Development Monitoring / Tracing Tools
+
+1. **Spring Boot Admin + Actuator**
+
+   * Monitor application health
+   * Memory, CPU, endpoints, beans, etc.
+
+2. **Zipkin + Sleuth** *(older approach)*
+
+   * Used for distributed tracing between microservices.
+   * Nowadays **Micrometer Tracing** is replacing Sleuth in Spring Boot 3.
+
+---
+
+### DevOps Monitoring Tools
+
+* **Prometheus** → Collects metrics
+* **Grafana** → Dashboards and visualization
+* **ELK Stack** → Log monitoring (Elasticsearch, Logstash, Kibana)
+* **Nagios** → Infrastructure monitoring
+* **Datadog** → Cloud monitoring platform
+* **New Relic** → Application performance monitoring
+
+### Interview Answer
+
+**Spring Boot Admin + Actuator and Zipkin/Sleuth are mainly used by developers to monitor and trace microservices during development. Tools like Prometheus, Grafana, ELK Stack, Datadog, and New Relic are commonly used by DevOps teams for application, infrastructure, and log monitoring in production environments.** ✅
+
+
 *) Actuator : Set of Production Ready Endpoints.
 It gives some pre-defined services which are commonly used in Production
-Environment for every MS# apps. Like:  Health Checking, Beans detaiks, 
+Environment for every MS# apps. Like:  Health Checking, Beans details, 
  mapping inforation(URL,HttpMethods), cache, heap, thread dumps..etc
 
 => If we use only 'Actuator' that is manual process of using/checking
@@ -23199,7 +23429,7 @@ Destination type is : Queue.
 Publish-Subscribe [Pub/Sub] Communication:
   if one Message is sent to multiple consumers. Destination type : Topic.
 
-So in Pub/Sub communication cade will remain same what we saw in P2P commnication just one thing we need to change which is in properties file make as spring.jms.pub-sub-domain as true ,if ir is false then it is P2P communcaition rest the code remains same almost
+So in Pub/Sub communication case will remain same what we saw in P2P commnication just one thing we need to change which is in properties file make as spring.jms.pub-sub-domain as true ,if ir is false then it is P2P communcaition rest the code remains same almost
 
 or 
 
@@ -25013,7 +25243,7 @@ eureka.client.service-url.defaultZone=http://localhost:8761/eureka
      ID           PATH                     URI
   ---------------------------------------------------------
      CID        /cart/**              lb://CART-SERVICE
-     OID  /order/**             lb://ORDER-SERVICE
+     OID        /order/**             lb://ORDER-SERVICE
   ---------------------------------------------------------
 
 => Every Routing table contains List<Route>
@@ -25732,6 +25962,10 @@ You’re thinking in the right direction 👍 but the conclusion needs a small c
 👉 **Although Spring MVC follows a one-thread-per-request model, it performs efficiently with thread pools and scaling; WebFlux is used when we need better resource utilization under high concurrency.**
 
 
+Spring MVC / Spring Boot REST → Mostly RestTemplate (legacy) and Feign Client.
+Spring WebFlux → WebClient.
+In modern microservices, Feign Client is generally preferred over RestTemplate because it is cleaner and easier to maintain.
+
 -----------------------------------------Lecture-109----------------------------------
 
 
@@ -26139,6 +26373,48 @@ public class Student {
   private Double fee;
 }
 ====================================================================
+
+Q : Spring MVC / Spring Boot REST - in this can we use Webclient and in spring web flux can we use restemplate and feign client?
+Ans : 
+Yes, but there are some considerations.
+
+### Spring MVC / Spring Boot REST
+
+✅ You can use **WebClient**.
+
+* WebClient is not limited to WebFlux.
+* Many Spring MVC applications use WebClient instead of RestTemplate because RestTemplate is in maintenance mode.
+* If you call `.block()`, it behaves synchronously.
+
+```java
+String response = webClient.get()
+        .uri("http://user-service/users/1")
+        .retrieve()
+        .bodyToMono(String.class)
+        .block();
+```
+
+### Spring WebFlux
+
+✅ You can technically use **RestTemplate** and **Feign Client**, but it is not recommended.
+
+Why?
+
+* RestTemplate and traditional Feign are **blocking**.
+* WebFlux is designed for **non-blocking reactive programming**.
+* Using blocking calls inside a reactive application reduces the benefits of WebFlux and can hurt scalability.
+
+### Interview Answer
+
+| Application Type | Recommended Client                    |
+| ---------------- | ------------------------------------- |
+| Spring MVC       | RestTemplate, Feign Client, WebClient |
+| Spring WebFlux   | WebClient                             |
+
+### One-liner Interview Answer
+
+**WebClient can be used in both Spring MVC and Spring WebFlux. RestTemplate and traditional Feign Client can also be used in WebFlux applications, but since they are blocking clients, WebClient is the preferred choice in reactive applications.**
+
 
 
 ------------------------------------Lecture-112------------------------------------
