@@ -30648,7 +30648,7 @@ BA : Business Analyst
 
 EPIC : Product / Project Document.
 
-Stroy : Work need to be done. (Module/ Part Module)
+Story : Work need to be done. (Module/ Part Module)
 
 --Example Story----------------
 Ticket: WH-3466  <UniqueId>
