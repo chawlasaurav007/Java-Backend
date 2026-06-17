@@ -26589,7 +26589,7 @@ Dont store plain text password in database
 
 ===coding================================================================
 1. We need to define only one class (additionally) for security.
-  ie SecurityConfig (any equal name her ename can be anything) called as One Configuration class.
+  ie SecurityConfig (any equal name here name can be anything) called as One Configuration class.
 
 2. This SecurityConfig class contains two methods mainly.
   a. Authentication : InMemory/JDBC/UserDetailsService
@@ -28051,6 +28051,83 @@ Your understanding of JWT structure is **mostly correct** but needs a few import
 3. **Complete token**: 3 parts separated by dots [devtools](https://devtools.at/cs/tools/jwt-decoder/jwt-structure)
 
 Your overall flow is perfect - you understand the core concept correctly! The signature ensures **tamper-proof integrity** since any change to header/payload breaks signature verification. [fusionauth](https://fusionauth.io/articles/tokens/jwt-components-explained)
+
+or 
+
+another explanation of jwt token : 
+
+
+Your understanding is **mostly correct**, but one important correction:
+
+❌ **Header and Payload are NOT encrypted.**
+✅ They are **Base64URL encoded** only.
+
+Interview-friendly explanation:
+
+```text
+JWT consists of 3 parts:
+
+1. Header
+   - Contains token type (JWT)
+   - Contains signing algorithm (HS256, RS256, etc.)
+
+2. Payload
+   - Contains user information (claims)
+   - Contains userId, username, roles
+   - Contains expiration time (exp)
+
+3. Signature
+   - First, Header and Payload are Base64URL encoded.
+   - Then encodedHeader + "." + encodedPayload are combined.
+   - This combined value is signed using a secret key (HS256) or private key (RS256).
+   - The generated hash/signature becomes the third part of the JWT.
+
+Note : here HS256 = HMAC + SHA-256 or HS256 = HMAC-SHA256 both are same  
+and
+       RS256 = RSA + SHA-256 or RS256 = RSA-SHA256 both are same 
+
+
+Formula:
+
+JWT =
+Base64Url(Header)
++
+"."
++
+Base64Url(Payload)
++
+"."
++
+HMACSHA256(//her u can write like this as well HS256 
+    Base64Url(Header) + "." + Base64Url(Payload),
+    SecretKey
+)
+```
+
+### Simple flow
+
+```text
+Header --> Base64 Encode
+Payload --> Base64 Encode
+
+Encoded Header + "." + Encoded Payload
+                     |
+                     V
+            Sign using Secret Key
+                     |
+                     V
+                Signature
+
+Final JWT:
+Header.Payload.Signature
+```
+
+**Important Interview Point:**
+
+* Header and Payload can be decoded by anyone.
+* Signature cannot be recreated without the secret key.
+* Signature is used to verify that the token was not modified.
+
 
 =====================================================================
 
