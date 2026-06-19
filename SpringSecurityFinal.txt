@@ -1,0 +1,196 @@
+Perfect. Is format mein yaad karo.
+
+# REGISTRATION FLOW
+
+```text
+AuthController
+↓
+Kaam:
+- /register request receive karta hai.
+- AuthService ko call karta hai.
+
+AuthService
+↓
+Kaam:
+- User validation karta hai.
+- Username pehle se exist hai ya nahi check karta hai.
+- PasswordEncoder ko call karta hai.
+
+PasswordEncoder
+↓
+Kaam:
+- Plain password ko BCrypt hash mein convert karta hai.
+
+UserRepository
+↓
+Kaam:
+- User object ko database mein save karta hai.
+
+Database
+↓
+Kaam:
+- Username, Email, Hashed Password store karta hai.
+```
+
+---
+
+# LOGIN FLOW
+
+```text
+AuthController
+↓
+Kaam:
+- /login request receive karta hai.
+- AuthService ko call karta hai.
+
+AuthService
+↓
+Kaam:
+- AuthenticationManager ko call karta hai.
+
+AuthenticationManager
+↓
+Kaam:
+- Authentication process start karta hai.
+- UserDetailsService ko call karta hai.
+
+CustomUserDetailsService
+↓
+Kaam:
+- Username ke basis par user load karta hai.
+
+UserRepository
+↓
+Kaam:
+- User ko database se fetch karta hai.
+
+Database
+↓
+Kaam:
+- User details return karta hai.
+
+PasswordEncoder
+↓
+Kaam:
+- Entered password aur DB password compare karta hai.
+
+JwtService
+↓
+Kaam:
+- JWT Token generate karta hai.
+- Username, Role aur Expiry token mein add karta hai.
+
+Client
+↓
+Kaam:
+- JWT Token receive karta hai.
+- Browser/Frontend mein store karta hai.
+```
+
+---
+
+# ORDER API FLOW
+
+User Request:
+
+```text
+GET /orders
+
+Authorization:
+Bearer JWT_TOKEN
+```
+
+---
+
+```text
+SecurityConfig
+↓
+Kaam:
+- Check karta hai API secure hai ya public.
+- JwtAuthenticationFilter register karta hai.
+
+JwtAuthenticationFilter
+↓
+Kaam:
+- Authorization header read karta hai.
+- Bearer token extract karta hai.
+- JwtService ko call karta hai.
+
+JwtService
+↓
+Kaam:
+- Token validate karta hai.
+- Expiry check karta hai.
+- Signature verify karta hai.
+- Username extract karta hai.
+
+CustomUserDetailsService
+↓
+Kaam:
+- Username se user details load karta hai.
+
+UserRepository
+↓
+Kaam:
+- Database se user fetch karta hai.
+
+Database
+↓
+Kaam:
+- User details return karta hai.
+
+JwtAuthenticationFilter
+↓
+Kaam:
+- Authentication Object create karta hai.
+- SecurityContextHolder mein set karta hai.
+
+SecurityContextHolder
+↓
+Kaam:
+- Current logged-in user ki information store karta hai.
+
+OrderController
+↓
+Kaam:
+- /orders request receive karta hai.
+
+OrderService
+↓
+Kaam:
+- Business logic execute karta hai.
+- Orders fetch karta hai.
+
+OrderRepository
+↓
+Kaam:
+- Database query execute karta hai.
+
+Database
+↓
+Kaam:
+- Orders data return karta hai.
+
+Response
+↓
+Kaam:
+- Final response client ko bhejta hai.
+```
+
+### Sabse Short Revision
+
+```text
+Registration
+
+Controller → Service → PasswordEncoder → Repository → DB
+
+Login
+
+Controller → Service → AuthenticationManager → UserDetailsService → Repository → DB → PasswordEncoder → JwtService
+
+Order API
+
+SecurityConfig → JwtFilter → JwtService → UserDetailsService → Repository → DB → SecurityContextHolder → Controller → Service → Repository → DB
+```
+
+Ye flow 2+ years Spring Security JWT interview ke liye enough hai. ✅
