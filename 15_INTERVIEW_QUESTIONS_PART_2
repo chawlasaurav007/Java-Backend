@@ -194,6 +194,8 @@ Spring Boot already provides a **default `RedisTemplate`** and **default seriali
 It will still work, but adding this class makes Redis data **clearer, more readable, and more reliable** — especially when caching custom objects.
 
 
+In my project, I used Spring Cache with @Cacheable, so I did not need RedisTemplate. Spring Boot handled storing and retrieving data from Redis automatically. RedisTemplate is used when we need more control over Redis operations.
+
 🚀 5. Use Caching in Your Service Layer
 
 You can now use caching annotations:
@@ -275,6 +277,93 @@ Step	Description
 4	Optionally configure RedisTemplate
 5	Use @Cacheable, @CachePut, @CacheEvict
 6	Test and verify keys in Redis 
+
+Q : Where u have used redis cache in your card vault project ? 
+Ans : 
+Chalo Card Vault ke context mein samajhte hain.
+
+### Without Redis
+
+Maan lo ek card se 100 transactions aa rahi hain.
+
+Har baar flow:
+
+```text
+POS
+↓
+Card Authentication Service
+↓
+Database
+↓
+Card Details Fetch
+```
+
+Matlab har transaction pe DB hit lag rahi hai.
+
+---
+
+### With Redis
+
+Pehli baar:
+
+```text
+POS
+↓
+Card Authentication Service
+↓
+Database
+↓
+Redis Mein Store Kar Diya
+```
+
+Ab agli baar same card aaya:
+
+```text
+POS
+↓
+Card Authentication Service
+↓
+Redis
+↓
+Data Mil Gaya
+```
+
+Database tak jana hi nahi pada.
+
+---
+
+### Interview Answer
+
+```text
+Card Vault project mein humne Redis Cache use kiya tha frequently accessed card information ko temporarily store karne ke liye. Isse har transaction ke liye database call nahi karni padti thi, response time fast ho gaya aur database load bhi kam ho gaya.
+```
+
+### Real Example
+
+```text
+Card Number = 1234XXXX
+
+Pehli Transaction
+↓
+DB se data aaya
+↓
+Redis mein store
+
+Dusri Transaction
+↓
+Seedha Redis se data aaya
+↓
+DB hit bach gayi
+```
+
+Bas Redis ko aise samjho:
+
+```text
+Redis = Super Fast Temporary Memory
+Database = Permanent Storage
+```
+
+Frequently use hone wala data Redis mein rakhte hain taaki application fast chale. ✅
 
 
 Q3 : features of java 17 ? 
