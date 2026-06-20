@@ -2519,6 +2519,46 @@ id and name → saved in the database ✅
 
 ageInYears → only in Java memory, not stored in the DB ❌
 
+Q : What is the main purpose of using @Transient annotation  ? 
+Ans : 
+Think of it like this:
+
+Suppose you have an Employee table:
+
+| id | name   |
+| -- | ------ |
+| 1  | Saurav |
+
+Now in Java:
+
+```java
+Employee emp = new Employee();
+emp.setName("Saurav");
+emp.setWelcomeMessage("Welcome Saurav");
+```
+
+You want to use **welcomeMessage** only in your code or API response.
+
+You **don't want a database column called `welcome_message`**.
+
+So:
+
+```java
+@Transient
+private String welcomeMessage;
+```
+
+means:
+
+> "Keep this field in Java, but don't save it in the database."
+
+That's the whole purpose of `@Transient`. ✅
+
+**Interview one-liner:**
+
+> `@Transient` is used when a field is needed in the application but should not be stored in the database. ✅
+
+
 Q : Integrate email service in a Spring Boot project? 
 Ans : 
 Here is the **short + simple** explanation to integrate **email service** in a Spring Boot project 👇
@@ -2783,9 +2823,125 @@ So nobody breaks. Everything works smoothly. ✔️
 
 If you want, I can explain with a real API JSON example also.
 
+Q : what is the main purpose of using api versioning ? 
+Ans : 
+Think of it like a mobile app.
+
+### Without API Versioning
+
+Today your API returns:
+
+```json
+{
+  "name": "Saurav"
+}
+```
+
+The mobile app is built expecting **name**.
+
+Tomorrow you change it to:
+
+```json
+{
+  "fullName": "Saurav Chawla"
+}
+```
+
+Now the old mobile app is looking for **name** but receives **fullName**.
+
+💥 The app may stop working.
+
+---
+
+### With API Versioning
+
+Keep the old API:
+
+```text
+/api/v1/user
+```
+
+Return:
+
+```json
+{
+  "name": "Saurav"
+}
+```
+
+Create a new API:
+
+```text
+/api/v2/user
+```
+
+Return:
+
+```json
+{
+  "fullName": "Saurav Chawla"
+}
+```
+
+Now:
+
+* Old app uses **v1** ✅
+* New app uses **v2** ✅
+* Nothing breaks ✅
+
+### Interview Answer (Simple)
+
+> **API versioning is used so that when we make changes to an API, old applications can continue working without breaking.** ✅
+
 
 Q : What is the life cycle of the bean  ? 
 Q : in code where is ioc container present ? 
 Q : where u have used @bean in project  - in model mapper (i used model mapper) nd create a seperate bean for it in config class annotated by 
                                            @Configuration class inside we write the method to create a bean for model mapper and 
                                            which is anntoated by @bean 
+
+### Q1: What is the Bean Lifecycle?
+
+> **Bean Lifecycle:** Spring creates the bean → injects dependencies → initializes the bean → bean is used in the application → Spring destroys the bean when the application shuts down.
+
+**Short Flow:**
+Create → Inject Dependencies → Initialize → Use → Destroy ✅
+
+---
+
+### Q2: In code, where is the IoC Container present?
+
+> The **IoC Container** is managed by Spring and is represented by the **ApplicationContext**. It is created automatically when the Spring Boot application starts.
+
+```java
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+```
+
+`SpringApplication.run()` starts the IoC Container. ✅
+
+---
+
+### Q3: Where have you used `@Bean` in your project?
+
+> I used `@Bean` for **ModelMapper**. I created a separate configuration class annotated with `@Configuration` and defined a method annotated with `@Bean` to create and manage the ModelMapper object as a Spring bean.
+
+Example:
+
+```java
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+}
+```
+
+Then I inject it using `@Autowired` wherever required. ✅
+                                           
