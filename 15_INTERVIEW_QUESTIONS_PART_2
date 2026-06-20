@@ -915,7 +915,7 @@ Ans : this is my  explaination :
 saga design pattern means iam telling one example tell me if iam correct or not suppose i want to go for a picnic to goa
 from delhi for that i visited a website mmt.com and now this website has all the bookings like flight booking , hotel 
 booking , taxi booking suppose i booked all three and they are all synced with each other now suppose the taxi booking
-get fail means he would not be there with me in entire goa journey so for that my trip is wasted so what is the use to
+get fail means he(taxi driver) would not be there with me in entire goa journey so for that my trip is wasted so what is the use to
 go goa for picnic so automatically flight and hotel booking also gets cancelled. 
 
 chat gpt explaination : 
@@ -1389,7 +1389,7 @@ Think of a restaurant 🍽️
  systems**.
 
 
-Create, Update, Delete Has its own write DB - menas these 3 things will have only one DB 
+Create, Update, Delete Has its own write DB - means these 3 things will have only one DB 
 and for read the data we have a seperate db
 
 Q: Why we use CQRS Design Pattern?
