@@ -494,6 +494,7 @@ Q : Find the employee name(s) having the second highest salary.
 
 20. Find all departments and show the number of employees in each department, including departments with zero employees?
 
+Q : sql vs nosql ? 
 
 ====================================SBMS-BY-RAGHU====================================
 
