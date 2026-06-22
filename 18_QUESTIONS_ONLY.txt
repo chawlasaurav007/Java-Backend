@@ -439,3 +439,9 @@ Q36 : What is spring cloud ?
 Q37 : what steps to follow for development of microservices?
 Q38 : Main Components of microservice and steps to build microservices ? 
 Q39 : How to change the API Versioning ?
+Q : What is the life cycle of the bean  ? 
+Q : in code where is ioc container present ? 
+Q : where u have used @bean in project?
+
+
+====================================SBMS-BY-RAGHU====================================
