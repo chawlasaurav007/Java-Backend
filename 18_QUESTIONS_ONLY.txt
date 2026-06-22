@@ -444,4 +444,56 @@ Q : in code where is ioc container present ?
 Q : where u have used @bean in project?
 
 
+====================================SQL====================================
+
+Q : GROUP BY vs HAVING
+Q : Joins (Inner, Left, Right, Full)
+Q : Indexing
+Q : Clustered vs Non-Clustered Index
+Q : Normalization (1NF, 2NF, 3NF)
+Q : ACID Properties
+Q : Find the second highest salary. If rank 1 has duplicate salaries, what will you do?
+Q : Duplicate Records Queries
+Q : delete vs drop vs truncate ?
+Q : Find the employee name(s) having the second highest salary.
+2. What is the difference between WHERE and HAVING clause?
+
+3. Explain the difference between DELETE, TRUNCATE, and DROP.
+
+4. What is a Primary Key? Can a table have more than one primary key?
+
+5. What are the different types of JOINs in SQL? Explain with examples.
+
+6. What is the use of the GROUP BY clause in SQL?
+
+7. What is the difference between NULL and O in SQL?
+
+8. How do you find duplicate records in a table?
+
+9. What is the difference between UNION and UNION ALL?
+
+10. How would you get the second highest salary from an Employee table?
+
+11. What is a foreign key?
+
+12. What is the difference between INNER JOIN and LEFT JOIN?
+
+13. How do you write a query to count the number of employees in each department?
+
+14. How can you fetch only odd or even rows?
+
+15. How do you find the maximum salary for each department?
+
+16. How do you find employees who do not belong to any department?
+
+17. How to retrieve records between two dates?
+
+18. How do you update multiple records in one query?
+
+19. Retrieve all employees along with their department names, even if they don't belong to any department?
+
+20. Find all departments and show the number of employees in each department, including departments with zero employees?
+
+
 ====================================SBMS-BY-RAGHU====================================
+
