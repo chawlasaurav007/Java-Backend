@@ -497,4 +497,152 @@ Q : Find the employee name(s) having the second highest salary.
 Q : sql vs nosql ? 
 
 ====================================SBMS-BY-RAGHU====================================
+Q : DI v/s IoC
+Q : what is native method ? 
+Q) Is class B serialized? 
+class A implements Serializable {
+}
+class B extends A{
+}
+Q : is group id and package name is same ? 
+Q : what is artifact id  ? 
+Q : what is needed while creating spring boot project ? 
+Q : StereoType Annotations and there types and tell what is the meaning of each annotation ? 
+Q : @Value
+Q) What is Var-args and how is it different from Array?
+Q) What is Casting (Upcasting and Downcasting)?
+Q) What is Method Overloading? What are the rules?
+Q) What is Dynamic Polymorphism?
+Q) What is Method Overriding?
+ Q : What is @ComponentScan?
+ Q : difference between @Component vs @ComponentScan? 
+ Q) Why are we using .properties / .xml / .yml files here?
+Q: difference between is-a vs has-a relationship ?
+Q :@Autowired
+Q : @Configuration and @bean? 
+Q. What is local variable?
 
+Q. Is oa local variable?
+class A{}
+class B{
+  void m1() {
+    A oa = new A();
+  }
+  void m2(){
+    sysout(oa); // not accessable
+  }
+}
+
+10. What is Repeatable annotation (JDK 1.8)?
+Q : what is Spring Bean Scope ? and what are the types of spring bean scope?
+Q) Are singleton scope and singleton class same?
+Q) Which one is the default scope in Spring f/w?
+
+2. Is Spring container EAGER/LAZY by default in Bean Creation?
+
+3. How can we force container to behave Lazy for singleton beans?
+
+4. When should we go for singleton / prototype?
+
+5. When should we go for Lazy?
+
+6. How can we convert prototype Loading to EAGER?
+
+7.*** What is load-on-startup in Servlets?
+   (or) Explain Eager and Lazy Loading in Servlets?
+
+8. How can we provide two scopes for a same bean?
+
+9. Is Below code valid? how many objects created?
+ (Using Both Java and Annotation Config at a time)
+
+10 : diff setter injection vs constructor injection ? 
+Q) What is Reflection API?
+
+Q) What is Annotation and how it works (Annotation Processor class).
+Q) What is Coupling?
+Q) How many types of Coupling are there? and explain these 2 types of coupling as well? 
+Q : @Qualifier vs @Primary ?
+Q:@EnableScheduling and @Scheduled
+Q : difference between scehduling vs spring batch? 
+Q : spring vs spring boot ? 
+Q) .yml or .yaml ?? which one is valid?
+Q : jar vs war ?
+Q : which is mostly used jar or war nowdays? 
+ Q : what is Embedded Deployment vs external server?
+ Q :what is @Order?
+ Q : what is lombok? 
+ Q) What is the contract between equals() and hashCode()?
+ Q) Who will generate default constrcutor in java?
+ Q : Spring Boot Profiles ?
+
+ Q) Which profile is loaded if we did not specify any while running app?
+
+ Q) Can we define multiple profiles data in single properties file
+  like YAML file?
+ Q : @Profile?
+ Q) How can we inform container to create selected classes
+   objects only in Prod Environment?
+
+ Q : what is Database?
+  Q : ORM vs JPA vs  Hibernate ?
+Q) What is the main diff b/w JDBC and JPA?
+Q) What is the diff b/w ORM, JPA and Hibernate?
+Q) Can we write application using hibernate without JPA?
+Q) What is the advantage of JPA over JDBC? 
+Q : spring data jpa , jpa , hibernate, jdbc  which generate sql quesries for us ? and what is the flow of this  ?
+Q: JPA vs spring data jpa ? 
+Q) Entity v/s DTO ?
+Q) What is DAO and DTO ?
+Q) What is Repository?
+Q) What is Dynamic Proxy ?
+Q : what are the inbuilt methods in jpa repo that we use mostly ? 
+Q :@GeneratedValue?
+Q :Custom Query in Spring Boot Data JPA how we write? and what are sping data jpa naming method ?
+Q : @Modifying?
+Q : @Query ?
+Q) Why cant we apply @Component or equal stereotype for Entity class?
+Q) What are possible returnTypes in JPQL/HQL Custom queries?
+Q) Do we need to provide @Repository on Data JPA Repository interface?
+Q : 
+ @ManyToOne (@OneToOne)(this is the latest version)
+ @OneToMany            
+ @ManyToOne            
+ @ManyToMany           
+ @JoinColumn 
+  @JoinTable 
+
+  if possiblw write code how will u write code between employee and department 
+
+  agar suppose kro employee mai likho ge toh employee many hai yaa one 
+  so aacordingly in employee class u need to write @manytoone
+
+  suppose one product can has many models 
+  so in product class u will write @onetomany product is one so pehle usse specify krenge fir then dusre class ko specify kroge matlab map matlab models class 
+Q : What is Cascading in JPA/Hibernate? 
+Q2) What is FetchType in JPA/Hibernate? na d what are eager fetch type and lazy fetch type ? 
+
+Q3) What is the use of SQL Joins?
+
+Q : how will u use @manytomany ? explain. 
+Q) What is Unique Condition in Database?
+Q : Why FULL JOIN not supported everywhere?
+Q) Which one is better to use?
+@Query("SELECT e FROM Employee e)  [or] repo.findAll()
+Q : how to use fetch type write  sample code  ? 
+@OneToMany(fetch = FetchType.EAGER)
+
+Q : @Transactional
+Q) What annotations are required for custom NON-SELECT 
+   operations using Data JPA? and Why?
+Q : how can we genrate our own custome generator ? 
+Q : what is mvc ?
+Q : Port Number? 
+Q) Why we need to add @Controller over class insted of @Component?
+Q) How can we map/link one java method with Request Details(PATH/HttpMethod)?
+Q) Can't we use only POST for all Types of Operations?
+Q) How can we read Form object in controller?
+Q) *** Can we define one Controller#method without any Path and HttpMethod?
+Q) What is DevTools dependencies why it is used ?
+Q) How many layers required to develop one simple web application
+  using spring boot?   

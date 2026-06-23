@@ -149,6 +149,13 @@ ctrl+O    : members
 
 *) native : A method which has its impl code at another language
      (C-language)
+    
+     A native method is a method whose implementation is written in another language (usually C or C++) and not in Java. It is declared using the native keyword.
+
+    Example:
+    public native void display();
+
+
 *) When ever we override equals() method we should even override
    hashCode() method also (Contract b/w equals and hashCode)
 
@@ -1774,6 +1781,26 @@ A.
    and use getProperty("key") method to read one key value,
    which return in String format.
 
+   or 
+
+   ### Repeatable Annotation (Java 8)
+
+> **Repeatable Annotation** allows the same annotation to be applied multiple times on the same class, method, or field.
+
+Example:
+
+```java id="yjlwm0"
+@Role("Admin")
+@Role("Manager")
+public class Employee {
+}
+```
+
+### Interview Answer (2–3 lines)
+
+> **Repeatable Annotation was introduced in Java 8. It allows us to use the same annotation multiple times on a single class, method, or field instead of creating separate annotations.** ✅
+
+
 ==========Example Java Config + Properties file ===========
 1. Spring Bean
 package com.app;
@@ -2535,6 +2562,16 @@ public class TokenService {
 }
 =============================================================
 Q) What is Reflection API?
+### Reflection API
+
+> **Reflection API allows a Java program to inspect and manipulate classes, methods, fields, and constructors at runtime.**
+
+### Interview Answer (2–3 lines)
+
+> **Reflection API is used to get information about a class and access its methods, fields, and constructors at runtime, even if we don't know them at compile time.** ✅
+
+**Simple example:** Spring uses Reflection to create objects and perform Dependency Injection automatically. ✅
+
 
 Q) Write a Java code that takes one class name as input
    and output is
@@ -2544,6 +2581,37 @@ Q) Write a Java code that takes one class name as input
    No of Inners in class
 
 Q) What is Annotation and how it works (Annotation Processor class).
+### What is Annotation?
+
+> **Annotation is a special marker in Java that provides metadata (information) about a class, method, or variable.**
+
+Examples:
+
+```java
+@Override
+@SpringBootApplication
+@Autowired
+```
+
+---
+
+### How does it work?
+
+> **An Annotation Processor reads the annotation and performs some action based on it.**
+
+Example:
+
+```java
+@Autowired
+private EmployeeService service;
+```
+
+Spring's annotation processor sees `@Autowired` and automatically injects the object.
+
+### Interview Answer (Short)
+
+> **Annotation is metadata added to Java code. An annotation processor reads the annotation and performs the required action automatically at compile time or runtime.** ✅
+
 =====================================================================
 Q) What is LMI and When to use?
 A. Lookup Method Injection.
