@@ -645,4 +645,67 @@ Q) How can we read Form object in controller?
 Q) *** Can we define one Controller#method without any Path and HttpMethod?
 Q) What is DevTools dependencies why it is used ?
 Q) How many layers required to develop one simple web application
-  using spring boot?   
+  using spring boot?
+Q) What are Java relations used in Layers Conncetion?  
+Q) why service class is not detaching with controller class , why there is service interface between controller class and service class ? 
+Q) Why Strings are immutable ?
+Q : how u implemented pagination in your project  ? 
+Q : Is Web Service is NOT MVC ? 
+Q : Is webservices is rest architecture ?
+Q : explain Http Request Methods?
+Q) Can we use POST Method to Get Data from Server?
+Q) What is the difference between PUT and PATCH?
+Q :  explain status codes(1xx, 2xx, 3xx, 4xx, 5xx) ?
+Q) What is the difference between GET and HEAD?
+Q) What is the difference between GET and POST?
+Q) What is the difference between POST and PUT?
+Q) When should we use YAML and JSON?
+Q : Webservices are of 2 Types ? what are they ? 
+Q : Webservices vs Web application ? 
+Q : Controller vs RestController ?    
+Q) Explain these terms?
+ Compile
+ Build
+ Deploy
+ Instance
+ Scale(Horizontal/Vertical)
+ DownTime
+ Load balace
+ IP Address (private/public/elastic)
+ Network/firewall/routing.
+
+ Q) how can we switch to some other servers from tomcat?
+   How can we remove embeeded tomcat from Spring Boot application?
+ Q :   @JsonIgnore and @JsonProperty("user-first-name") ? explain
+Q) Do we need to apply @ResponseBody in Spring boot rest ?
+Q) How can we avoid one field/variable in JSON operations?
+Q) What will happen if variable holds null and in JSON Operations?
+Q) how can we provide alias names to variables in JSON?
+Q) PathVariable vs RequestParam? Which one is better to use PathVariable or RequestParam?
+Q : how will u send the Dynamic ReturnType Selection based on workflow ?
+Q) What is MultiValueMap and how it is different from Map?
+Q) When should we use ResponseEntity<> and Direct Return Type(ex: String, List)?
+Q) Can we create ResponseEntity object without HttpStatus?
+Q) Can we create ResponseEntity object without Body?
+Q) Can we create ResponseEntity object without Headers?
+Q : explain @ExceptionHandler and @RestControllerAdvice?
+Q) How do you handle exceptions in your RestApplications?
+Q) What is var-args and how they are different arrays?
+Q) What is mean by : java.net.ConnectException: Connection refused: connect?
+Q : explain rest template? 
+Q : explain some of the validation annotation ? 
+Q : How do you connect Angular frontend with Spring Boot backend?
+Q : What is CORS?
+Q : Why do we use @CrossOrigin in Spring Boot?
+Q : How do you handle CORS in Spring Boot?
+Q : POSTMAN ? and Swagger ? and Open Api ?
+Q : what is connection pooling (CP) ? and What Connection Pool do you use?
+Q : what is cache ?
+Q : connection pool vs scp ?
+Q : @Mock :
+   @InjectMocks:
+   what is junit ? 
+
+Q : what is MockMvc class ? What it does  ?
+Q : what is Spring Boot - Redis Cache explain and how u implement and what annotation u used  ? 
+Q : Why we use @CachePut and @CacheEvict ?  

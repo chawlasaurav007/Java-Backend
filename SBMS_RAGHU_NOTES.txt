@@ -14178,6 +14178,94 @@ public Page<Employee> getAllEmployees(Pageable pageable) {
   }
 
 
+Q : how u implemented pagination in your spring boot project?
+Ans : 
+ Yes ✅. This is how pagination is typically implemented in a Spring Boot project.
+
+### Repository Layer
+
+```java
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+}
+```
+
+No extra code needed because `JpaRepository` already provides pagination support.
+
+---
+
+### Service Layer
+
+```java
+@Service
+public class EmployeeService {
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    public Page<Employee> getEmployees(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        return employeeRepository.findAll(pageable);
+    }
+}
+```
+
+---
+
+### Controller Layer
+
+```java
+@RestController
+@RequestMapping("/employees")
+public class EmployeeController {
+
+    @Autowired
+    private EmployeeService employeeService;
+
+    @GetMapping
+    public Page<Employee> getEmployees(
+            @RequestParam int pageNo,
+            @RequestParam int pageSize) {
+
+        return employeeService.getEmployees(pageNo, pageSize);
+    }
+}
+```
+
+---
+
+### API Call
+
+```text
+GET /employees?pageNo=0&pageSize=5
+```
+
+Output:
+
+```json
+{
+  "content": [
+    {
+      "id": 1,
+      "name": "Saurav"
+    },
+    {
+      "id": 2,
+      "name": "Samay"
+    }
+  ],
+  "totalElements": 100,
+  "totalPages": 20
+}
+```
+
+### Interview Answer
+
+> **I implemented pagination using Spring Data JPA's `Pageable` and `PageRequest`. The controller receives page number and page size, the service creates a Pageable object, and the repository fetches records page by page using `findAll(pageable)`.** ✅
+
+
+
 ------------------------------Lecture-59--------------------------------
 
 ---------------------------------------------------------------------
