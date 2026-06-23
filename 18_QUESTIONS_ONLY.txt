@@ -709,3 +709,45 @@ Q : @Mock :
 Q : what is MockMvc class ? What it does  ?
 Q : what is Spring Boot - Redis Cache explain and how u implement and what annotation u used  ? 
 Q : Why we use @CachePut and @CacheEvict ?  
+Q) What is the use of Cache?
+Q) Can we implement cache for all operations/findAll ?
+Q : So How Data Gets Into Cache?
+Q) What are caching annotations given by Spring Boot ?
+Q) Which Cache vendor you implemented in Application?
+Q : For one user there will be one redis cache for each user or for 1000 user there will be 1 redis cache in industry how it works?
+Q) Can we apply these Redis cache annotation on rest controller layer?
+Q) if interviewr ask how its taking the data from redis can u show ?
+Q : monolithic vs microservices ? 
+Q) is JDK Software is platform dependent or independent?
+Q) What is down time of a Server/Project?
+Q) What is Blue Green deployment? k8s
+Q : 0 < LoadFactor < 1?
+Q : Meaning If Load Factor > 1 ? 
+Q : what is scaling and types of scaling ? 
+Q : Advantages of a monolithic architecture:
+Q : Disadvantages of a monolithic architecture:
+Q : advantage of microservices and disadvantages ? 
+Q : spring cloud ?
+
+1. Microservice : One Module/ One service in Project (Spring ReST is used)
+2. Register and Discovery : (Netflix Eureka Server)
+  
+3. Config Server 
+
+4. Communication Client : (RestTemplate)
+    
+5. Admin Dashboard : 
+
+6. ELK : Elasticsearch Logstash Kibana : 
+7. Distributed Tracking: (MS2-->MS4-->MS7-->MS4-->MS2)(how the request is travelling to each microservices)
+Tool: Zipkin Server, Sleuth
+
+8. Continioues Data Flow (Message Queue): [Apache Kafka]
+9. Circuite Breaker?
+10. API Gateway?
+
+
+
+
+
+

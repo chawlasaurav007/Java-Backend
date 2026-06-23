@@ -20651,7 +20651,7 @@ Note :
 ex: 
   spring.cache.redis.time-to-live=60000
 
-Q : For one user there will be one redis cache for each user or for 1000 user there will be 1 redis cache in industry how it works ? 
+Q : For one user there will be one redis cache for each user or for 1000 user there will be 1 redis cache in industry how it works? 
 Ans : 
 No ❌.
 
