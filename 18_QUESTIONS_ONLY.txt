@@ -746,6 +746,56 @@ Tool: Zipkin Server, Sleuth
 9. Circuite Breaker?
 10. API Gateway?
 
+Q : what is Registry and Discovery in eureka server ?  
+Q) Why Spring Cloud is used?
+Q) How Spring Cloud is different from Spring Boot?
+Q) How our app is connected with both Spring Cloud and Spring boot
+  (using Maven)?
+  Q) What is Instance ? and Why?
+  Q) What is a Register and Discovery Server? Give Example?
+   How it is different from webserver(tomcat)?
+Q) How can we expose our MS# or Register ? How can we enable to get
+  other MS# data from Register?
+Q)  In MS# apps, register-with-eureka=true key and fetch-registry=true
+    must be given?
+Q) Why do we need to provide 
+   register-with-eureka=false and fetch-registry=false 
+   at Eureka Server?
+
+
+Q) What is the defaultZone value if we did not provide in MS#?
+Q) K8s. What is Deployment and Replicasets?
+Q : In real time projects suppose we have  1 microservice which is search module and i need to create its 3 to 4 instance so how i will create ?
+Q) Why DiscoveryClient?
+Q) Can DiscoveryClient make request to MS# application?
+Q) Can Eureka Server makes HTTP request to MS# application?
+Q) What is ServiceInstance?
+Q) What is the Diff b/w URI, URL, Protocol, ResourcePath
+Q) Why LoadBalancerClient is used?
+Q) What it the old LoadBalancer Vendor name?
+Q) How many Instances does it return for a single request from eureka?
+Q) Do we need RestTemplate also if we use LoadBalancerClient?
+Q) what is Spring Cloud Config Server?
+Q : Spring Cloud Config Server : Refresh Scope
+Problem Statement:
+ Once we start MS# apps with Eureka and Config server, then we modify/
+ update any key=vals at Config Server (+Git properties File)
+ those will not get effected at MS# until we restart MS# apps.
+Q :We are having different monitering tools whta r they? means there are different monitoring tools 
+for development and deployment name that monitoring tool ?
+
+Q : What is the use of jackson api(ObjectMapper) ? 
+Q : what is model mapper and what is used for  ? 
+Q : Spring Cloud : API Gateway and Why Gateway?
+Q : Distributed Tracing [Sleuth and Zipkin] ? 
+Q : Can we use web client with spring boot rest(spring mvc) ? 
+Q : which is mostly used spring boot rest or spring web flux ? 
+Q) Does MongoDB Generates PK values?
+Q) Can we pass our own PK value to MongoDB?
+Q : Spring MVC / Spring Boot REST - in this can we use Webclient and in spring web flux can we use restemplate and feign client?
+
+
+         
 
 
 
