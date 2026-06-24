@@ -792,7 +792,42 @@ Q : Can we use web client with spring boot rest(spring mvc) ?
 Q : which is mostly used spring boot rest or spring web flux ? 
 Q) Does MongoDB Generates PK values?
 Q) Can we pass our own PK value to MongoDB?
-Q : Spring MVC / Spring Boot REST - in this can we use Webclient and in spring web flux can we use restemplate and feign client?
+Q : Spring MVC / Spring Boot REST - in this can we use Webclient and in spring web flux can we use restemplate and feign client? but i guess its not recommended and why its not recommeneded ? 
+
+Q : Authorization  vs authentication ? 
+Q : there are three types of authentication what are they  ? 
+Q : Dont store plain text password in database - so what we use ? 
+Q : in spring security what is the use of UserDetailsService(currently we use something name that as well) and SecurityFilterChain ? 
+Q : explain me spring security flow with jwt what classes is used to build a spring security 
+    what is jwt token and all explain me this as well ? 
+
+Q : Q : Spring Boot Security using ORM vs jwt which is mostly used ? 
+Q : what is OAuth 2.x?
+Q : explain solid principles? 
+Q : explain circuit breaker  ? 
+Q : and what are types of ciruit breaker  ? 
+Q : Which Circuit Breaker have you used?
+Q : what is apache maven  ?
+Q: jar vs war ? and what is the main benefit of using jar and war  ? 
+Q : what is target folder ? 
+Q : what commands have u used in maven  ? 
+Q : suppose u add spring cointext dependency this spring context dependency is dependent on like 3 to 4 dependency u can see in maven dependency jar in project 
+suppose u dont want aop dependency so like this u can exclude
+ Why exclusion?
+Q) How can we move from Tomcat Server to any other server in Spring boot?
+Q : what is logging and types of logging ? and what are the methods have u used in logging ?
+Q : what is aop and where have u used  ? 
+Q : in most of the companies which used mostly in cases(which cases is mostly used) slf4j vs log4j?
+Q : why we use @BeforeAll what is the need  ? 
+
+Q) How can we confirm that two references are pointed to same Object? which method we use in testing tell that method  ? 
+Q : what is docker and what are the commands that u use as a developer in docker  ? 
+Q : what is elk ? 
+
+need to prepare some questions on KAFKA and study kafka as well , need to study docker and need to study elk and grafana 
+
+
+
 
 
          
