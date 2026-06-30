@@ -657,6 +657,221 @@ there are two types of has a reationship
 
 	Car is responsible for creating and managing Engine.
 	
+
+if we have static method ad we override it 
+Here's a complete example that demonstrates **method hiding** (not overriding) with static methods.
+
+```java
+class A {
+    static void display() {
+        System.out.println("Static method of class A");
+    }
+}
+
+class B extends A {
+
+    // This is Method Hiding, NOT Overriding
+    static void display() {
+        System.out.println("Static method of class B");
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+
+        A obj1 = new A();
+        obj1.display();
+
+        B obj2 = new B();
+        obj2.display();
+
+        A obj3 = new B();
+        obj3.display();
+
+        A.display();
+        B.display();
+    }
+}
+```
+
+### Output
+
+```text
+Static method of class A
+Static method of class B
+Static method of class A
+Static method of class A
+Static method of class B
+```
+
+### Explanation
+
+* `obj1.display();` → Calls `A.display()`
+* `obj2.display();` → Calls `B.display()`
+* `A obj3 = new B(); obj3.display();` → Calls `A.display()` because **static methods are resolved using the reference type (`A`)**, not the object type (`B`).
+* `A.display();` → Calls `A.display()`
+* `B.display();` → Calls `B.display()`
+
+---
+
+### Using `@Override` (Compile-Time Error)
+
+```java
+class A {
+    static void display() {
+        System.out.println("A");
+    }
+}
+
+class B extends A {
+
+    @Override
+    static void display() {
+        System.out.println("B");
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        A obj = new B();
+        obj.display();
+    }
+}
+```
+
+**Compilation Error:**
+
+```text
+error: method does not override or implement a method from a supertype
+```
+
+**Interview one-liner:**
+**Static methods cannot be overridden; they can only be hidden because they belong to the class, not the object.**
+
+
+Q : 
+A obj3 = new B();
+        obj3.display();
+
+if it would be non static method than then answer will be of B class display method because whose object is created it will call that method  and if static methd is there where the parent class method will be called 
+
+Exactly. That's one of the fundamental differences between **overriding (instance methods)** and **method hiding (static methods)**.
+
+## Case 1: Non-static method (Overriding)
+
+```java
+class A {
+    void display() {
+        System.out.println("A");
+    }
+}
+
+class B extends A {
+    @Override
+    void display() {
+        System.out.println("B");
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        A obj = new B();
+        obj.display();
+    }
+}
+```
+
+### Output
+
+```text
+B
+```
+
+**Reason:**
+
+* `obj` is a reference of type `A`.
+* The actual object created is `new B()`.
+* **Instance methods use Runtime Polymorphism (Dynamic Method Dispatch).**
+* At runtime, Java checks the **actual object (`B`)**, so it calls `B.display()`.
+
+---
+
+## Case 2: Static method (Method Hiding)
+
+```java
+class A {
+    static void display() {
+        System.out.println("A");
+    }
+}
+
+class B extends A {
+    static void display() {
+        System.out.println("B");
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        A obj = new B();
+        obj.display();
+    }
+}
+```
+
+### Output
+
+```text
+A
+```
+
+**Reason:**
+
+* `obj` is a reference of type `A`.
+* Even though the object is `new B()`, **static methods belong to the class, not the object**.
+* The compiler sees the reference type `A` and converts:
+
+```java
+obj.display();
+```
+
+effectively into:
+
+```java
+A.display();
+```
+
+So `A.display()` is called.
+
+---
+
+## Easy way to remember
+
+| Feature                           | Non-static Method | Static Method |
+| --------------------------------- | ----------------- | ------------- |
+| Belongs to                        | Object            | Class         |
+| Supports Overriding?              | ✅ Yes             | ❌ No          |
+| Polymorphism                      | Runtime           | Compile Time  |
+| `A obj = new B(); obj.display();` | `B.display()`     | `A.display()` |
+
+### Interview Trick
+
+If the interviewer asks:
+
+```java
+A obj = new B();
+obj.display();
+```
+
+Ask yourself:
+
+* **Is `display()` static?**
+
+  * **Yes** → Output depends on the **reference type** (`A`).
+  * **No** → Output depends on the **actual object** (`B`).
+
+This single rule will help you answer almost every inheritance question involving method calls.
+
               
 Types of inheritance  : 
               A
@@ -1720,7 +1935,7 @@ Difference between Abstract class & Interfaces.
 
 Abstract Class                                     |    Interfaces
                                                    |
-1. Abstract class can have instance                |1. Methods of a Java interface are implicitly abstract and cannot       have    methods that implements a default behavior.        |   implementations.
+1. Abstract class can have instance                |1. Methods of a Java interface are implicitly abstract and cannot have methods that implements a default behavior.                                          |   implementations.
                                                    |
 2. An abstract class may contain non-final         |2. Interface contains public, static & final variables only.
    variables.                                      | 
