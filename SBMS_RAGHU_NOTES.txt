@@ -23536,6 +23536,79 @@ A oa = new B();
 ------------
 C oc = oa.m1("Our Message");
 
+Q : What is the difference between a single-broker message queue and a multi-broker message queue? Which technologies use each architecture?
+
+ Think of it like this.
+
+## 1. Single Broker (ActiveMQ / RabbitMQ)
+
+There is **only one message broker**.
+
+```text
+Producer
+    |
+    v
++----------------+
+|  One Broker    |
++----------------+
+    |
+    v
+Consumer
+```
+
+* All messages go to **one broker**.
+* If traffic increases, that one broker has to handle everything.
+* If that broker goes down (without clustering/HA), messaging can stop.
+
+**Layman example:** 🏢
+
+Imagine **one post office** in a city.
+
+* Everyone sends parcels to that one post office.
+* If too many people come, it becomes crowded.
+* If the post office closes, nobody can send parcels.
+
+---
+
+## 2. Multiple Brokers (Kafka)
+
+Kafka has **many brokers** working together as a **cluster**.
+
+```text
+                Kafka Cluster
+      +---------+---------+---------+
+      |Broker 1 |Broker 2 |Broker 3 |
+      +---------+---------+---------+
+            \       |       /
+             \      |      /
+             Producers
+                 |
+              Consumers
+```
+
+* Messages are distributed across multiple brokers.
+* Load is shared.
+* If one broker fails, other brokers continue working (because of replication).
+* Suitable for millions of messages.
+
+**Layman example:** 🏢🏢🏢
+
+Imagine **10 post offices** in a city.
+
+* People can send parcels to any of them.
+* Work is shared.
+* If one post office closes, the other nine continue working.
+
+---
+
+## Interview Answer (30 seconds)
+
+> **ActiveMQ and RabbitMQ generally use a single broker architecture, where one broker handles all messages. Kafka uses multiple brokers called a cluster. Messages are distributed across these brokers, which provides better scalability, load balancing, fault tolerance, and high availability.**
+
+### Easy Trick to Remember
+
+* **ActiveMQ / RabbitMQ** → 🏢 **One Broker** → Good for normal workloads.
+* **Kafka** → 🏢🏢🏢 **Multiple Brokers (Cluster)** → Best for very high traffic and real-time data.
 
 -------------------------------------------Lecture-97--------------------------------------------
 
@@ -23628,37 +23701,75 @@ Around **80–90% of the code remains same**, only **10–20% changes** when swi
 => Make Sure, all destination names (Producer and Consumer apps)
    must be matching.
 
-Q) What if we delete topic from MQ Broker?
-A) A new topic with same name is created. But old data will be removed.
-  It is not a recomanded approch.
+Q1) What happens if we delete a topic from the Message Broker?
+Correct Answer:
 
-Q) What if we stop one consumer and start from some time?
-  In case of P2P and Pub/Sub?
+If a topic is deleted, all the messages stored in that topic are also deleted. If we create a new topic with the same name, it is treated as a completely new topic and the old messages cannot be recovered. Therefore, deleting a topic is generally not recommended unless you intentionally want to remove all its data.
 
-A)
- P2P : There will be only one consumer. So , all Producer mesages single
-  copy is persisted at MOM Destination. Once consumer is up
-  then all Messages are delivered.
+Q2) What happens if we stop one consumer and start it later?
 
- Pub/Sub : Based on No.of Consumers, Cloned Copies are created and sent to
-  consumer applications. [not persisted]
-  Ex: 3 consumers are connected first.
-      1 Message in(Message enqued) = 3 Message out(Message dequed).
-      If One Consumer is stopped in middle
-      1 Message in = 2 Message out
+This depends on the messaging model.
 
-Input x Consumers = Output
- 5    x 0         = 0   (data lost)
- 2    x 2         = 4   (delivered)
+P2P (Queue)
 
+✅ Correct Answer:
 
-Q) Does ActiveMQ supports LoadBalancing?
-   What if MOM S/w ActiveMQ is down?
+Only one consumer processes each message.
+Messages remain in the queue until they are consumed (if persistence is enabled).
+If the consumer is stopped, messages wait in the queue.
+When the consumer starts again, it receives the pending messages.
 
-A) ActiveMQ comes with single instance (No LoadBalance)
-   if it is down data lose may occure.
+Example:
 
-   So to overcome this we use KAFKA.
+Producer ---> Queue ---> Consumer
+
+Consumer Down
+
+Producer sends 10 messages
+
+↓
+
+Queue stores all 10 messages
+
+↓
+
+Consumer starts again
+
+↓
+
+Receives all 10 messages
+
+Q3) Does ActiveMQ support Load Balancing?
+
+Your answer is incorrect.
+
+Correct Answer:
+
+ActiveMQ does support load balancing and high availability.
+
+It can be configured using:
+
+Network of Brokers
+Master-Slave (Classic)
+Shared Storage
+Failover Transport
+ActiveMQ Artemis Clustering
+
+So saying
+
+"ActiveMQ comes with single instance"
+
+so to overcome this problem we use kafka.
+
+Q4) What if ActiveMQ is down?
+Correct Answer:
+
+If there is only one ActiveMQ broker and it crashes:
+
+Producers cannot send new messages.
+Consumers cannot receive messages.
+If persistent messaging is enabled, previously stored messages are not lost and will be available after the broker restarts.
+If non-persistent messaging is used, messages in memory may be lost.
 
 =====Execution order===================
 1. Start ActiveMQ

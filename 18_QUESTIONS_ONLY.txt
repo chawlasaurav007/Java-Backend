@@ -826,6 +826,26 @@ Q : what is elk ?
 
 need to prepare some questions on KAFKA and study kafka as well , need to study docker and need to study elk and grafana 
 
+------------------------------Kafka-Interview Questions-----------------------
+
+1 : what is message broker ? 
+2 : What are the 2 types of Message Queue (MQ) technologies? name them
+3 : what is destination and where does destination is present inside what  ?
+4 : where does producer sends data and from where does consumer reads data ?  
+5 : what is another name of destination 
+    in kafka what is another name of destination 
+    and 
+    in active mq what is another name  destination ?  
+6 : What are the two types of messaging communication models, and in which messaging systems are they 
+    used ?
+7 : Is it compulsory for both the producer and the consumer to be connected to the same destination
+    (Queue/Topic)?  
+
+Q1) What happens if we delete a topic from the Message Broker?
+Q3) Does ActiveMQ support Load Balancing?
+
+
+
 
 
 
