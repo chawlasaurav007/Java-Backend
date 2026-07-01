@@ -843,7 +843,10 @@ need to prepare some questions on KAFKA and study kafka as well , need to study 
 
 Q1) What happens if we delete a topic from the Message Broker?
 Q3) Does ActiveMQ support Load Balancing?
-
+Q : active mq/ rabbit mq has how many broker and kafka has how many brokers ? 
+Q : what is kafka cluster ? 
+Q : Full Kafka S/w is called as EcoSystem. This EcoSystem contains mainly
+  3 parts. They are:
 
 
 
