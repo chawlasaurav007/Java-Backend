@@ -829,6 +829,20 @@ need to prepare some questions on KAFKA and study kafka as well , need to study 
 ------------------------------Kafka-Interview Questions-----------------------
 
 1 : what is message broker ? 
+ans : 
+
+A message broker is middleware that acts as a middleman between the producer and the consumer. It receives messages from the producer, stores them temporarily, and delivers them to the consumer. Kafka is one example of a message broker.
+
+Q: What is the purpose of Kafka? Why do we use Kafka? Where have you used it in your project?
+
+Answer:
+
+"The purpose of Kafka is to enable asynchronous communication between applications or microservices. Without Kafka, one service calls another service directly and waits for the response before continuing its work. With Kafka, the producer sends the message to Kafka and immediately continues its own work without waiting. The consumer reads and processes the message independently. This improves performance, scalability, reliability, and keeps the services loosely coupled."
+
+Where did you use Kafka in your Card Management project?
+
+"In my Card Management project, we used Kafka for communication between microservices. Whenever a card was created, activated, blocked, or updated, the Card Management Service published an event to Kafka. It did not wait for the Notification Service or Audit Service. These services consumed the event from Kafka and performed their work independently. This made the application faster, more reliable, and loosely coupled."
+
 2 : What are the 2 types of Message Queue (MQ) technologies? name them
 3 : what is destination and where does destination is present inside what  ?
 4 : where does producer sends data and from where does consumer reads data ?  
@@ -847,6 +861,23 @@ Q : active mq/ rabbit mq has how many broker and kafka has how many brokers ?
 Q : what is kafka cluster ? 
 Q : Full Kafka S/w is called as EcoSystem. This EcoSystem contains mainly
   3 parts. They are:
+Q : by using which kafka class producer is sending the data ?  and in consumer class how its is to be 
+    listen ?
+
+Q: What is an Offset?  Why do we need an Offset?
+
+Q : what is message broker and why do we need it  ? 
+Q : what is zookeeper and why do we need it  ? 
+
+Q: Both producer and consumer communicate through what?
+
+Q : how data is being stored in these partions? and if key is same does it goes to same partition or different partition and keys are different then how does data is being stored ?
+
+Q : how message replcation is been stored and draw a text diagram how data gets stored and how copies are made and tell me what is the purpose of using message replcaition and what is the meaning of replication factor = 2 ? 
+
+Q : which applicaion should we start first producers or consumer and tell me the reason why ? 
+
+
 
 
 

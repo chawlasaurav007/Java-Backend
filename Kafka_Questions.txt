@@ -1,0 +1,1353 @@
+Perfect! Here are **Kafka Interview Questions (1–10)** in **short, simple, interview-friendly English**.
+
+---
+
+# 1. What is a Message Broker?
+
+### Answer
+
+> **A message broker is middleware that acts as a middleman between the producer and the consumer. It receives messages from the producer, stores them temporarily, and delivers them to the consumer. Kafka is an example of a message broker.**
+
+### Architecture
+
+```text
+Producer
+    │
+    ▼
+Message Broker (Kafka)
+    │
+    ▼
+Consumer
+```
+
+---
+
+# 2. What is the purpose of Kafka? Why do we use Kafka?
+
+### Answer
+
+> **Kafka is used for fast, reliable, and asynchronous communication between applications or microservices. Instead of one service waiting for another service, it sends the message to Kafka and continues its work. The consumer reads the message independently. This improves performance, scalability, reliability, and keeps services loosely coupled.**
+
+---
+
+### Where did you use Kafka in your project?
+
+> **In my Card Management project, whenever a card was created, activated, blocked, or updated, the Card Management Service published an event to Kafka. It did not wait for the Notification or Audit Service. These services consumed the event and processed it independently. This made the application faster and loosely coupled.**
+
+---
+
+# 3. What are the two types of Message Queue (MQ) technologies?
+
+### Answer
+
+There are mainly **two types**:
+
+1. **Single Broker MQ**
+
+   * ActiveMQ
+   * RabbitMQ
+
+2. **Distributed MQ**
+
+   * Kafka
+
+---
+
+# 4. What is a Destination?
+
+### Answer
+
+> **A destination is the place where the producer sends messages and from where the consumer reads messages.**
+
+---
+
+### In Kafka
+
+Destination = **Topic**
+
+### In ActiveMQ
+
+Destination = **Queue** or **Topic**
+
+---
+
+# 5. Where does the Producer send data and from where does the Consumer read data?
+
+### Answer
+
+Producer sends data to a **Topic**.
+
+Consumer reads data from the **same Topic**.
+
+```text
+Producer
+    │
+    ▼
+Topic
+    │
+    ▼
+Consumer
+```
+
+---
+
+# 6. What are the two messaging communication models?
+
+### Answer
+
+### Point-to-Point (Queue)
+
+One producer
+
+↓
+
+One consumer receives the message.
+
+Used in:
+
+* ActiveMQ
+* RabbitMQ
+
+---
+
+### Publish-Subscribe (Topic)
+
+One producer
+
+↓
+
+Multiple consumers receive the same message.
+
+Used in:
+
+* Kafka
+* ActiveMQ
+
+---
+
+# 7. Is it compulsory for Producer and Consumer to use the same destination?
+
+### Answer
+
+> **Yes. Both the producer and the consumer must communicate through the same destination.**
+
+Example
+
+Producer
+
+↓
+
+Topic = Orders
+
+↓
+
+Consumer
+
+If Producer sends data to **Orders** and Consumer listens to **Payments**, the consumer will not receive the message.
+
+---
+
+# 8. What happens if we delete a Topic?
+
+### Answer
+
+> **If a topic is deleted, all its partitions, offsets, and messages are deleted. Consumers can no longer read messages from that topic, and producers cannot send messages to it.**
+
+---
+
+# 9. Does ActiveMQ support Load Balancing?
+
+### Answer
+
+> **Yes. ActiveMQ supports load balancing, but Kafka is better suited for handling very high throughput and large-scale distributed messaging.**
+
+---
+
+# 10. ActiveMQ/RabbitMQ has how many brokers? Kafka has how many brokers?
+
+### Answer
+
+### ActiveMQ
+
+Usually works with **one broker**.
+
+Although clustering is possible, a single broker setup is common.
+
+---
+
+### RabbitMQ
+
+Usually works with **one broker**.
+
+It also supports clustering.
+
+---
+
+### Kafka
+
+Kafka is a **distributed messaging system**.
+
+It usually consists of **multiple brokers**, which together form a **Kafka Cluster**.
+
+Example
+
+```text
+Kafka Cluster
+
+Broker 1
+
+Broker 2
+
+Broker 3
+
+Broker 4
+```
+
+---
+
+# ⭐ Interview Tips
+
+### Q1
+
+Message Broker = **Middleman**
+
+---
+
+### Q2
+
+Kafka = **Asynchronous Communication**
+
+---
+
+### Q3
+
+ActiveMQ & RabbitMQ = **Single Broker**
+
+Kafka = **Multiple Brokers**
+
+---
+
+### Q4
+
+Kafka Destination = **Topic**
+
+---
+
+### Q5
+
+Producer → **Topic**
+
+Consumer ← **Topic**
+
+---
+
+### Q6
+
+Queue → One Consumer
+
+Topic → Multiple Consumers
+
+---
+
+### Q7
+
+Producer and Consumer must use the **same Topic/Queue**.
+
+---
+
+### Q8
+
+Delete Topic = Delete Messages + Partitions + Offsets.
+
+---
+
+### Q9
+
+ActiveMQ supports load balancing, but Kafka is designed for much higher throughput.
+
+---
+
+### Q10
+
+Kafka = **Distributed (Multiple Brokers)**.
+
+---
+
+These 10 questions are among the most commonly asked Kafka interview questions for candidates with around **1 year of Kafka experience**.
+
+
+Great! Here are **Kafka Interview Questions (11–20)** with **short, simple, interview-ready answers**.
+
+---
+
+# 11. What is a Kafka Cluster?
+
+### Answer
+
+> **A Kafka Cluster is a group of multiple brokers working together to store and manage messages. It provides scalability, fault tolerance, and high availability.**
+
+### Architecture
+
+```text
+Kafka Cluster
+      │
+      ├── Broker 1
+      ├── Broker 2
+      └── Broker 3
+```
+
+---
+
+# 12. What is a Broker?
+
+### Answer
+
+> **A Broker is a Kafka server that stores topics, partitions, and messages. Producers send messages to brokers, and consumers read messages from brokers.**
+
+### Architecture
+
+```text
+Producer
+    │
+    ▼
+Broker
+    │
+    ▼
+Consumer
+```
+
+---
+
+# 13. What is a Topic?
+
+### Answer
+
+> **A Topic is a logical category or channel where messages are stored. Producers send messages to a topic, and consumers read messages from the same topic.**
+
+### Example
+
+```text
+Producer
+    │
+    ▼
+Topic : Orders
+    │
+    ▼
+Consumer
+```
+
+---
+
+# 14. What is a Partition?
+
+### Answer
+
+> **A Partition is a subdivision of a topic. It stores messages in order using offsets. Multiple partitions improve scalability and allow parallel processing.**
+
+### Architecture
+
+```text
+Topic : Orders
+    │
+    ├── Partition 0
+    ├── Partition 1
+    └── Partition 2
+```
+
+---
+
+# 15. Why do we create multiple Partitions?
+
+### Answer
+
+> **We create multiple partitions to increase throughput, improve scalability, distribute the load, and allow multiple consumers to process messages in parallel.**
+
+Example:
+
+Instead of **one partition handling 1 million messages**, Kafka can divide the load across multiple partitions.
+
+---
+
+# 16. What is an Offset? Why do we need it?
+
+### Answer
+
+> **An Offset is the unique sequence number of a message within a partition. It helps Kafka identify each message and allows consumers to know which messages have already been read.**
+
+### Architecture
+
+```text
+Partition 1
+
+Offset 0 → Order1
+Offset 1 → Order2
+Offset 2 → Order3
+Offset 3 → Order4
+```
+
+---
+
+# 17. Why does Kafka use Offsets instead of deleting messages?
+
+### Answer
+
+> **Kafka does not delete a message after a consumer reads it. Instead, it keeps the message for a configured retention period. Offsets help consumers track which messages they have already processed.**
+
+---
+
+# 18. Does Kafka delete messages after the Consumer reads them?
+
+### Answer
+
+> **No. Kafka does not delete messages after they are read. Messages remain in Kafka until the configured retention period expires or the topic is deleted.**
+
+---
+
+# 19. What is a Consumer Group?
+
+### Answer
+
+> **A Consumer Group is a group of consumers working together to read messages from a topic. Kafka distributes partitions among consumers in the same group, so each partition is processed by only one consumer in that group.**
+
+### Architecture
+
+```text
+Topic : Orders
+      │
+      ├── Partition 0 → Consumer 1
+      ├── Partition 1 → Consumer 2
+      └── Partition 2 → Consumer 3
+
+Consumer Group : Group A
+```
+
+---
+
+# 20. Why do we need Consumer Groups?
+
+### Answer
+
+> **Consumer Groups improve scalability and load balancing. They allow multiple consumers to process messages in parallel while ensuring that each message is processed only once within the same consumer group.**
+
+---
+
+# ⭐ Interview Tips
+
+### Q11
+
+**Cluster = Collection of Brokers**
+
+---
+
+### Q12
+
+**Broker = Kafka Server**
+
+---
+
+### Q13
+
+**Topic = Category/Channel where messages are stored**
+
+---
+
+### Q14
+
+**Partition = Subdivision of a Topic**
+
+---
+
+### Q15
+
+**Multiple Partitions = Better Performance + Parallel Processing**
+
+---
+
+### Q16
+
+**Offset = Unique Message Number inside a Partition**
+
+---
+
+### Q17
+
+**Offsets help consumers track progress; Kafka retains messages instead of deleting them immediately.**
+
+---
+
+### Q18
+
+**Consumer reading a message does not delete it.**
+
+---
+
+### Q19
+
+**Consumer Group = Multiple Consumers working together**
+
+---
+
+### Q20
+
+**Consumer Groups provide load balancing and parallel processing while preventing duplicate processing within the same group.**
+
+These questions are very commonly asked in Kafka interviews and are important for candidates with around **1 year of Kafka experience**.
+
+Perfect! Here are **Kafka Interview Questions (21–35)** with **short, simple, interview-ready answers**.
+
+---
+
+# 21. Can two consumers read the same message?
+
+### Answer
+
+**Yes, if they belong to different consumer groups.**
+
+**No, if they belong to the same consumer group.**
+
+### Example
+
+```text
+Topic : Orders
+
+Consumer Group A
+    ├── Consumer 1
+
+Consumer Group B
+    ├── Consumer 2
+
+Both Consumer 1 and Consumer 2 can read the same message.
+```
+
+---
+
+# 22. What happens if one Consumer crashes?
+
+### Answer
+
+> **Kafka automatically assigns that consumer's partitions to another consumer in the same consumer group. This process is called rebalancing.**
+
+---
+
+# 23. What happens if one Broker crashes?
+
+### Answer
+
+> **If the Leader Broker crashes, Kafka promotes one of its replicas to become the new Leader. This ensures high availability and prevents data loss.**
+
+---
+
+# 24. What is a Leader Partition?
+
+### Answer
+
+> **The Leader Partition is responsible for handling all read and write requests. Producers send messages to the Leader, and consumers read messages from the Leader.**
+
+---
+
+# 25. What is a Replica (Follower) Partition?
+
+### Answer
+
+> **A Replica (Follower) Partition is an exact copy of the Leader Partition. It continuously copies data from the Leader and acts as a backup.**
+
+---
+
+# 26. Why do we need Replication?
+
+### Answer
+
+> **Replication provides fault tolerance, high availability, and protects against data loss. If the Leader Broker fails, a Replica becomes the new Leader.**
+
+---
+
+# 27. What is Replication Factor?
+
+### Answer
+
+> **Replication Factor is the total number of copies of a partition.**
+
+Example:
+
+```text
+Replication Factor = 2
+
+Leader  → Broker 1
+Replica → Broker 2
+```
+
+Meaning:
+
+```text
+Total Copies = 2
+
+1 Leader
+1 Replica
+```
+
+Formula:
+
+```text
+Replicas = Replication Factor - 1
+```
+
+---
+
+# 28. Can the Producer write to a Replica?
+
+### Answer
+
+> **No. The Producer always writes to the Leader Partition. The Leader automatically copies the data to the Replica.**
+
+---
+
+# 29. Can the Consumer read from a Replica?
+
+### Answer
+
+> **Normally, no. Consumers read from the Leader Partition.**
+
+---
+
+# 30. What is ZooKeeper? Why do we need it?
+
+### Answer
+
+> **ZooKeeper is a coordination service used by older Kafka versions. It manages broker information, leader election, cluster metadata, and configuration.**
+
+**Note:** Newer Kafka versions can run without ZooKeeper using **KRaft mode**.
+
+---
+
+# 31. Both Producer and Consumer communicate through what?
+
+### Answer
+
+> **Both Producer and Consumer communicate through a Topic.**
+
+```text
+Producer
+    │
+    ▼
+Topic
+    │
+    ▼
+Consumer
+```
+
+---
+
+# 32. How is data stored in Partitions?
+
+### Answer
+
+> **Kafka stores messages inside partitions using offsets.**
+
+Example:
+
+```text
+Topic : Orders
+
+Partition 1
+
+Offset 0 → Order1
+Offset 1 → Order2
+Offset 2 → Order3
+Offset 3 → Order4
+```
+
+* Same key → Same partition.
+* Different keys → Partition selected using `hash(key) % number_of_partitions`.
+* No key → Default partitioner distributes messages across available partitions.
+
+---
+
+# 33. How does Kafka Replication work?
+
+### Answer
+
+```text
+Producer
+    │
+    ▼
+Leader Partition
+    │
+    ▼
+Replica Partition
+```
+
+The Producer writes only to the Leader.
+
+The Leader copies the same data to the Replica.
+
+If the Leader crashes, the Replica becomes the new Leader.
+
+---
+
+# 34. Which application should we start first: Producer or Consumer?
+
+### Answer
+
+> **Start the Consumer first, then the Producer.**
+
+Reason:
+
+> **The Consumer is ready to receive messages as soon as the Producer sends them.**
+
+---
+
+# 35. Draw the complete Kafka Architecture.
+
+### Answer
+
+```text
+Producer
+    │
+    ▼
+Kafka Cluster
+    │
+    ├── Broker 1
+    │      │
+    │      └── Topic : Orders
+    │              │
+    │              ├── Partition 0 (Leader)
+    │              │      ├── Offset 0 → Order1
+    │              │      └── Offset 1 → Order2
+    │              │
+    │              └── Partition 1 (Replica)
+    │
+    ├── Broker 2
+    │      │
+    │      └── Topic : Orders
+    │              │
+    │              ├── Partition 1 (Leader)
+    │              └── Partition 0 (Replica)
+    │
+    └── Broker 3
+           │
+           └── Topic : Orders
+                  │
+                  ├── Partition 2 (Leader)
+                  └── Partition 1 (Replica)
+    │
+    ▼
+Consumer
+```
+
+---
+
+# ⭐ Final Interview Revision (Remember These)
+
+* **Message Broker** = Middleman
+* **Kafka** = Asynchronous communication
+* **Broker** = Kafka Server
+* **Cluster** = Collection of Brokers
+* **Topic** = Category of messages
+* **Partition** = Division of a Topic
+* **Offset** = Unique sequence number within a partition
+* **Producer** = Sends messages
+* **Consumer** = Reads messages
+* **Leader** = Handles reads and writes
+* **Replica** = Backup copy of a partition
+* **Replication Factor** = Total number of copies (Leader + Replicas)
+* **Consumer Group** = Multiple consumers working together
+* **Same Key** → Same Partition
+* **Different Keys** → Partition selected by hashing
+* **No Key** → Default partitioner distributes messages
+* **Producer writes only to Leader**
+* **Consumer reads from Leader**
+* **Leader failure** → Replica is promoted to Leader
+* **ZooKeeper** = Coordination service for older Kafka versions; **KRaft** replaces it in newer versions.
+
+---
+
+## Overall
+
+If you can confidently answer these **35 questions**, you'll have a very solid foundation for Kafka interviews targeting **around 1 year of Kafka experience**, especially for Java backend roles.
+
+
+Yes. You have covered about **90–95%** of what is typically asked for **1 year of Kafka experience**.
+
+Here are the remaining important questions that interviewers sometimes ask.
+
+---
+
+# 36. Why is Kafka faster than ActiveMQ/RabbitMQ?
+
+### Answer
+
+> **Kafka is faster because it stores messages sequentially on disk, supports partitioning, batching, and distributed processing. This allows Kafka to handle millions of messages efficiently.**
+
+---
+
+# 37. What is Synchronous Communication?
+
+### Answer
+
+> **In synchronous communication, one service sends a request and waits for the response before continuing its work.**
+
+Example
+
+```text
+Service A
+    │
+    ▼
+Service B
+    │
+(wait)
+    ▼
+Response
+```
+
+---
+
+# 38. What is Asynchronous Communication?
+
+### Answer
+
+> **In asynchronous communication, the producer sends the message and continues its work without waiting for the consumer.**
+
+```text
+Producer
+    │
+    ▼
+Kafka
+    │
+Producer continues working
+    │
+    ▼
+Consumer reads later
+```
+
+---
+
+# 39. What is Loose Coupling?
+
+### Answer
+
+> **Loose coupling means services are independent. One service does not directly depend on another service to complete its work.**
+
+---
+
+# 40. What is Tight Coupling?
+
+### Answer
+
+> **Tight coupling means one service directly depends on another service and usually waits for its response.**
+
+---
+
+# 41. Why do we use Keys in Kafka?
+
+### Answer
+
+> **Keys ensure that all messages with the same key are stored in the same partition, preserving their order.**
+
+Example
+
+```text
+User101
+
+↓
+
+Partition 1
+
+↓
+
+Offset0
+Offset1
+Offset2
+```
+
+---
+
+# 42. Why do we create Topics?
+
+### Answer
+
+> **Topics help organize messages into different categories.**
+
+Example
+
+```text
+Orders Topic
+
+Payments Topic
+
+Notifications Topic
+```
+
+---
+
+# 43. Difference between Topic and Partition?
+
+### Answer
+
+| Topic               | Partition                       |
+| ------------------- | ------------------------------- |
+| Logical category    | Physical subdivision of a Topic |
+| Contains Partitions | Stores actual messages          |
+
+---
+
+# 44. Difference between Broker and Cluster?
+
+### Answer
+
+Broker
+
+> **A Kafka server.**
+
+Cluster
+
+> **A group of multiple brokers.**
+
+---
+
+# 45. Difference between Queue and Topic?
+
+### Answer
+
+Queue
+
+> **One producer → One consumer**
+
+Topic
+
+> **One producer → Multiple consumers**
+
+---
+
+# 46. Can multiple Producers write to the same Topic?
+
+### Answer
+
+> **Yes. Multiple producers can send messages to the same topic simultaneously.**
+
+---
+
+# 47. Can multiple Consumers read from the same Topic?
+
+### Answer
+
+> **Yes. Multiple consumers can read from the same topic. Their behavior depends on the consumer group they belong to.**
+
+---
+
+# 48. What is Retention Period?
+
+### Answer
+
+> **Retention Period is the duration for which Kafka stores messages before deleting them automatically.**
+
+---
+
+# 49. Does Kafka delete messages immediately after consumption?
+
+### Answer
+
+> **No. Kafka deletes messages only after the configured retention period expires or the topic is deleted.**
+
+---
+
+# 50. What is Throughput?
+
+### Answer
+
+> **Throughput is the number of messages Kafka can process in a given time. Kafka provides very high throughput.**
+
+---
+
+# 51. What is Fault Tolerance?
+
+### Answer
+
+> **Fault tolerance means Kafka continues working even if a broker fails because replicas take over as leaders.**
+
+---
+
+# 52. What is High Availability?
+
+### Answer
+
+> **High availability means Kafka remains available even if one or more brokers fail.**
+
+---
+
+# 53. Why do we use Multiple Brokers?
+
+### Answer
+
+> **To improve scalability, fault tolerance, load balancing, and high availability.**
+
+---
+
+# 54. What happens if the Consumer is slower than the Producer?
+
+### Answer
+
+> **Kafka stores the messages in the topic, and the consumer processes them later using offsets.**
+
+---
+
+# 55. What happens if the Producer sends messages faster than the Consumer can process them?
+
+### Answer
+
+> **Kafka stores the messages in partitions until the consumer reads them or the retention period expires.**
+
+---
+
+# 56. What API does the Producer use to send messages?
+
+### Answer
+
+> **The Producer uses the `KafkaProducer` class and the `send()` method.**
+
+Example
+
+```java
+KafkaProducer.send(record);
+```
+
+---
+
+# 57. How does the Consumer read messages?
+
+### Answer
+
+> **The Consumer uses the `KafkaConsumer` class and the `poll()` method to read messages.**
+
+Example
+
+```java
+consumer.poll(Duration.ofMillis(100));
+```
+
+---
+
+# 58. What happens if there are more Consumers than Partitions?
+
+### Answer
+
+Example
+
+```text
+3 Partitions
+
+5 Consumers
+```
+
+Result
+
+```text
+Consumer1 → Partition0
+
+Consumer2 → Partition1
+
+Consumer3 → Partition2
+
+Consumer4 → Idle
+
+Consumer5 → Idle
+```
+
+**Answer**
+
+> **Some consumers remain idle because one partition can be assigned to only one consumer within the same consumer group.**
+
+---
+
+# 59. What happens if there are more Partitions than Consumers?
+
+Example
+
+```text
+5 Partitions
+
+2 Consumers
+```
+
+Result
+
+```text
+Consumer1
+
+Partition0
+
+Partition1
+
+Partition2
+
+Consumer2
+
+Partition3
+
+Partition4
+```
+
+---
+
+# 60. Why is Kafka called a Distributed Messaging System?
+
+### Answer
+
+> **Kafka is called a distributed messaging system because it stores data across multiple brokers in a cluster, providing scalability, fault tolerance, and high availability.**
+
+---
+
+# ⭐ Final Tip
+
+If you prepare these **60 questions** well and can explain them in simple language with your **Card Management project** examples, you'll be very well prepared for Kafka interview questions expected from someone with around **1 year of Kafka experience**.
+
+
+Honestly, you've now covered **about 99%** of the Kafka questions asked for **0.5–2 years of experience**.
+
+There are only a few **bonus questions** that some interviewers may ask.
+
+---
+
+# 61. What is Apache Kafka?
+
+### Answer
+
+> **Apache Kafka is a distributed event streaming platform used for high-throughput, fault-tolerant, and asynchronous communication between applications.**
+
+---
+
+# 62. Why is Kafka called Distributed?
+
+### Answer
+
+> **Because Kafka stores data across multiple brokers instead of a single server.**
+
+---
+
+# 63. Is Kafka a Database?
+
+### Answer
+
+> **No. Kafka is not a database. It is a distributed event streaming platform and message broker.**
+
+---
+
+# 64. Is Kafka Persistent?
+
+### Answer
+
+> **Yes. Kafka stores messages on disk until the retention period expires.**
+
+---
+
+# 65. What is Event Streaming?
+
+### Answer
+
+> **Event streaming means continuously sending and processing events or messages in real time.**
+
+---
+
+# 66. What is an Event?
+
+### Answer
+
+> **An event is any action or activity that occurs in the system.**
+
+Examples:
+
+```text id="qtf3ia"
+Card Created
+
+Card Activated
+
+Card Blocked
+
+Payment Done
+
+Order Placed
+```
+
+---
+
+# 67. Difference between Message and Event?
+
+### Answer
+
+> **A message is the data being sent. An event represents something that has happened. In Kafka, events are sent as messages.**
+
+---
+
+# 68. What is High Throughput?
+
+### Answer
+
+> **High throughput means Kafka can process a very large number of messages in a short period of time.**
+
+---
+
+# 69. What is Scalability?
+
+### Answer
+
+> **Scalability means Kafka can handle more traffic by adding more brokers or partitions.**
+
+---
+
+# 70. What is Durability?
+
+### Answer
+
+> **Durability means Kafka stores data safely on disk so it is not lost even if the application stops.**
+
+---
+
+# 71. What is Load Balancing?
+
+### Answer
+
+> **Load balancing means distributing messages or work evenly across partitions and consumers.**
+
+---
+
+# 72. What happens if a Consumer is down for 2 hours?
+
+### Answer
+
+> **Kafka keeps the messages until the retention period expires. When the consumer starts again, it continues reading from its last committed offset.**
+
+---
+
+# 73. What happens if a Producer crashes?
+
+### Answer
+
+> **Messages that were already written to Kafka remain safe. Messages that were not sent before the crash may be lost unless the producer retries.**
+
+---
+
+# 74. Can Kafka guarantee message ordering?
+
+### Answer
+
+> **Yes, but only within a single partition. Kafka does not guarantee ordering across different partitions.**
+
+Example:
+
+```text id="b2mjlwm"
+Partition 1
+
+Offset0
+
+Offset1
+
+Offset2
+
+Order is maintained.
+```
+
+---
+
+# 75. Why do messages with the same key go to the same partition?
+
+### Answer
+
+> **To maintain the order of messages for that key.**
+
+Example:
+
+```text id="4wihqb"
+User101
+
+↓
+
+Partition1
+
+↓
+
+Order1
+
+Order2
+
+Order3
+
+Order remains the same.
+```
+
+---
+
+# 76. What happens if there is only one Partition?
+
+### Answer
+
+> **Ordering is maintained, but parallel processing is not possible because only one consumer can process that partition within a consumer group.**
+
+---
+
+# 77. What happens if there is only one Broker?
+
+### Answer
+
+> **Kafka works, but there is no fault tolerance because there is no other broker to hold replicas.**
+
+---
+
+# 78. Can the Replication Factor be greater than the number of Brokers?
+
+### Answer
+
+> **No. The replication factor cannot be greater than the number of brokers in the cluster.**
+
+Example:
+
+```text id="nzwbg4"
+3 Brokers
+
+Replication Factor = 4
+
+❌ Not Possible
+```
+
+---
+
+# 79. Why do we need Offsets?
+
+### Answer
+
+> **Offsets help consumers keep track of which messages have already been processed so they can resume from the correct position after a restart.**
+
+---
+
+# 80. Explain Kafka in one minute.
+
+### Answer
+
+> **Kafka is a distributed event streaming platform used for fast, reliable, and asynchronous communication between applications. Producers send messages to Kafka topics, which are divided into partitions. Messages are stored with unique offsets. Consumers read the messages independently. Kafka uses multiple brokers, replication, and leader-follower architecture to provide scalability, fault tolerance, and high availability. In my Card Management project, we used Kafka to publish card events such as card creation, activation, and blocking. Notification and Audit services consumed these events independently, making the application faster and loosely coupled.**
+
+---
+
+# ⭐ Two very important questions I noticed are missing
+
+## 81. What is the difference between Kafka and REST API?
+
+### Answer
+
+| REST API                  | Kafka                      |
+| ------------------------- | -------------------------- |
+| Synchronous communication | Asynchronous communication |
+| Client waits for response | Producer doesn't wait      |
+| Request-Response          | Event-driven               |
+| Tight coupling            | Loose coupling             |
+
+---
+
+## 82. When would you use REST API and when would you use Kafka?
+
+### Answer
+
+> **We use REST API when an immediate response is required, such as login, fetching user details, or checking account balance. We use Kafka when asynchronous processing is preferred, such as sending notifications, audit logging, payment events, inventory updates, or card activation events.**
+
+---
+
+# Final Assessment
+
+You now have around **82 Kafka interview questions**. For someone with **1 year of Kafka experience**, this is more than enough. It covers nearly all of the questions typically asked in Java backend interviews, from basic concepts to project-based discussions.
