@@ -1351,3 +1351,135 @@ Replication Factor = 4
 # Final Assessment
 
 You now have around **82 Kafka interview questions**. For someone with **1 year of Kafka experience**, this is more than enough. It covers nearly all of the questions typically asked in Java backend interviews, from basic concepts to project-based discussions.
+
+Q : what is p2p(Point-to-Point) and what is pubsub ? 
+ans : "Point-to-Point (P2P) uses a queue, where one producer sends a message and only one consumer receives it. It is commonly used in ActiveMQ and RabbitMQ. Publish-Subscribe (Pub/Sub) uses a topic, where one producer publishes a message and multiple consumers can receive it. Kafka mainly uses the Publish-Subscribe model."
+
+Q :  What is DLQ (Dead Letter Queue)?
+
+Yes. I think you're referring to **DLQ (Dead Letter Queue)**, which is a very common Kafka interview question.
+
+### Q: What is DLQ (Dead Letter Queue)?
+
+### Answer
+
+> **A Dead Letter Queue (DLQ) is a special topic where Kafka stores messages that cannot be processed successfully by the consumer.**
+
+### Simple Example
+
+Suppose the producer sends three messages:
+
+```text
+Order1
+Order2
+Order3
+```
+
+The consumer processes them:
+
+```text
+Order1 ✅ Success
+
+Order2 ❌ Failed (Invalid data)
+
+Order3 ✅ Success
+```
+
+Instead of losing **Order2**, it is sent to the **DLQ**.
+
+```text
+Producer
+    │
+    ▼
+Orders Topic
+    │
+    ▼
+Consumer
+    │
+    ├── Order1 ✅ Processed
+    ├── Order3 ✅ Processed
+    │
+    └── Order2 ❌
+             │
+             ▼
+      Dead Letter Queue (DLQ)
+```
+
+### Why do we use DLQ?
+
+* ✅ Prevent losing failed messages.
+* ✅ Analyze and fix failed messages later.
+* ✅ Retry processing after correcting the issue.
+
+### Interview Answer
+
+> **"A Dead Letter Queue (DLQ) is a special Kafka topic where messages that fail processing are stored. This prevents data loss and allows us to analyze or reprocess the failed messages later."**
+
+### Note
+
+Kafka **does not have a built-in DLQ feature**. In Kafka, a DLQ is **typically implemented as another Kafka topic** (for example, `orders-dlq`) where the application sends failed messages. Frameworks like **Spring Kafka** provide support for this pattern, making it easier to implement.
+
+
+Q : Is DLQ is kind of exception handling ? 
+Ans : 
+**Yes! Exactly.** ✅
+
+You can think of **DLQ as exception handling for messages.**
+
+When a consumer processes a message:
+
+* ✅ If processing succeeds → Message is processed normally.
+* ❌ If processing fails (exception occurs) → Instead of losing the message, it is sent to the **DLQ**.
+
+### Example
+
+Suppose the consumer receives:
+
+```text id="hsmf2d"
+Order1
+Order2
+Order3
+```
+
+Processing:
+
+```text id="s31hvi"
+Order1  → Success ✅
+
+Order2  → Exception ❌
+
+Order3  → Success ✅
+```
+
+Instead of discarding `Order2`:
+
+```text id="s5j04r"
+Order2
+   │
+   ▼
+Dead Letter Topic (DLQ)
+```
+
+---
+
+### Java analogy
+
+Think of it like this:
+
+```java
+try {
+    processMessage(message);
+} catch (Exception e) {
+    sendToDLQ(message);
+}
+```
+
+So yes, **DLQ is similar to exception handling**, but instead of just logging the exception, you also **save the failed message** so it can be investigated or retried later.
+
+---
+
+### Interview Answer
+
+> **"Yes, you can think of a DLQ as exception handling for messages. If the consumer cannot process a message because of an exception, instead of losing it, the application sends that message to a Dead Letter Queue (or Dead Letter Topic in Kafka) so it can be analyzed or reprocessed later."**
+
+This is a very good way to explain it in an interview because it's simple and technically correct.
