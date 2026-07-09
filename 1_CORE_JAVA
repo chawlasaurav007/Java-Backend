@@ -282,6 +282,26 @@ class C{
    B   ob; //HAS-A
 }
 
+or 
+
+interface A {
+
+}
+
+class B implements A {
+
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        A a1 = new B();
+
+        System.out.println(a1);
+    }
+}
+
 ------------------------------upto here-----------------------
 
 
@@ -3077,11 +3097,32 @@ Q30 : this is for this questions
 
 	public class main {
 		public static void main(String[] args) {
-			A a1 = new B();
-			a1.test();b
-			System.out.println(a1.x);10
-			System.out.println(A.y);30
-			A.test1();A
+			
+        A a1 = new B();
+
+        // ---------------- Instance Method (Overriding) ----------------
+        a1.test();                  // b
+
+        // ---------------- Instance Variable ----------------
+        System.out.println(a1.x);   // 10
+
+        // ---------------- Static Variable ----------------
+        System.out.println(a1.y);   // 30
+        System.out.println(A.y);    // 30
+        System.out.println(B.y);    // 40
+
+        // ---------------- Static Method (Method Hiding) ----------------
+        a1.test1();                 // A
+        A.test1();                  // A
+        B.test1();                  // B
+
+        // ---------------- Downcasting ----------------
+        B b1 = (B) a1;
+
+        b1.test();                  // b
+        System.out.println(b1.x);   // 20
+        System.out.println(b1.y);   // 40
+        b1.test1();                 // B
 		}
 	} 
 
