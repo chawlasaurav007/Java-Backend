@@ -229,7 +229,10 @@ variable gets serialized and we can get that password through deserialization.
 
 or 
 
-Suppose we have a password variable. If we declare it as transient, then while serializing the object, the password will not be saved inside the serialized file. So during deserialization, we cannot retrieve the original password value, which improves security.      
+Suppose we have a password variable. If we declare it as transient, then while serializing the object, the password will not be saved inside the serialized file. So during deserialization, we cannot retrieve the original password value, which improves security.   
+
+or another example OTP example  : 
+Suppose a user logs in to an application and receives an OTP for verification. The OTP is valid only for a short time and should not be permanently stored when the user object is saved. So, we declare the OTP field as transient. During serialization, all user details like name and email are saved, but the OTP is skipped because it is temporary and sensitive information.   
  
 					
 Q13 : what is data hiding ? 
