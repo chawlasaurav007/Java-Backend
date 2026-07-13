@@ -313,6 +313,16 @@ Select from sales;
 Update sales set quantity quantity 1.1 where employee_name = "David";
 
 
+difference between DELETE vs  TRUNCATE vs DROP
+
+| DELETE                | TRUNCATE              | DROP                  |
+| --------------------- | --------------------- | --------------------- |
+| Deletes some/all rows | Deletes all rows      | Deletes entire table  |
+| `WHERE` allowed ✅     | `WHERE` not allowed ❌ | `WHERE` not allowed ❌ |
+| Table remains ✅       | Table remains ✅       | Table deleted ❌       |
+| Slower                | Faster                | Fastest               |
+
+
 -------------------------
 
 
