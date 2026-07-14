@@ -1745,6 +1745,33 @@ or
 Interface gives common default logic, but implementing classes can change it according to their requirement by overriding the default method.
 
 
+Q : why interface does not have object  ? 
+Ans : 
+An interface does not have an object because it is incomplete.
+An interface cannot have an object because it only contains a contract (method declarations) and has no complete implementation. Java can create objects only of classes that provide the implementation. implementation of object can only happen on class which is fully ompleted and interface have both abstarct anbd complete method(default and static ) so interface is not fully completed so we cant create the object in interface.
+
+or
+
+Interface sirf ek contract ya blueprint hota hai. Ye batata hai ki methods kaun se hone chahiye, lekin object banane ke liye Java ko ek concrete class chahiye. Isliye interface ka object nahi ban sakta; object sirf us class ka banta hai jo interface ko implement karti hai.
+
+Q : why interface does not have object ? 
+ans : 
+Constructor ka kaam object ko initialize karna hota hai. Interface ka object hi nahi ban sakta, isliye interface me constructor ki zarurat nahi hoti.
+or
+An interface does not have a constructor because constructors are used to initialize objects, and an interface cannot have an object.
+
+Q : why abstrat class has constructor ? 
+ans : 
+An abstract class has a constructor because when a child class object is created, the abstract class constructor is automatically called to initialize the common data.
+or
+Jab child class ka object banta hai, to sabse pehle parent abstract class ka constructor call hota hai. Isliye abstract class me constructor hota hai, taaki common data initialize ho sake.
+
+Q : why abstract class cannot create object ? 
+Ans :
+An abstract class cannot create an object because it is incomplete. It may contain abstract methods that have no implementation.
+or
+Abstract class ka object nahi ban sakta kyunki woh complete class nahi hoti. Usme abstract methods ho sakte hain jinki implementation nahi hoti. Isliye Java uska object create nahi karta.
+
 Q : is this correct ? 
 
 interface Vehicle {
