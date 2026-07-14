@@ -605,6 +605,57 @@ When all are full → other cars must wait until someone leaves.
 👉 In short:
 This code controls how many threads can enter a section of code at once — perfect for limited resources.
 
+Q : What is Race Condition ? 
+Ans : 
+Yes, that's the basic idea, but here's the interview-friendly explanation.
+
+### What is Race Condition?
+
+A **race condition** happens when **multiple threads try to access and modify the same shared resource at the same time**, causing unpredictable results.
+
+### How does `synchronized` solve it?
+
+The `synchronized` keyword ensures that **only one thread can enter the critical section at a time**.
+
+* If **Thread A** reaches the synchronized block first, it acquires the **lock**.
+* **Thread B** arrives even a few **milliseconds (or nanoseconds)** later, but it **must wait**.
+* After Thread A finishes and releases the lock, Thread B gets the lock and executes.
+
+So yes, you can think of it as:
+
+> **"Whichever thread acquires the lock first executes first. Other threads wait until the lock is released."**
+
+### Example
+
+Without `synchronized`:
+
+```
+Thread A: balance = 100
+Thread B: balance = 100
+
+Thread A withdraws 50
+Thread B withdraws 50
+
+Final balance = 50   ❌ (Expected 0)
+```
+
+With `synchronized`:
+
+```
+Thread A gets the lock
+Balance = 100 → 50
+Releases the lock
+
+Thread B gets the lock
+Balance = 50 → 0
+
+Final balance = 0 ✅
+```
+
+### Interview Answer (Short)
+
+> **Synchronization prevents race conditions by allowing only one thread to execute the critical section at a time. The thread that acquires the lock first executes first, while the other threads wait until the lock is released.**
+
 
 Q7 : synchronized vs volatile vs atomic in java ? 
 Ans  : all these three things are used to achieve thread safety in java 

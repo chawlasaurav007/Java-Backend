@@ -1744,6 +1744,95 @@ ex : suppose another class dont like the logic which is written in interface tha
 or
 Interface gives common default logic, but implementing classes can change it according to their requirement by overriding the default method.
 
+
+Q : is this correct ? 
+
+interface Vehicle {
+
+    // Default method
+    default void start() {
+        System.out.println("Vehicle started");
+    }
+
+    // Static method
+    static void stop() {
+        System.out.println("Vehicle stopped");
+    }
+}
+
+class Car implements Vehicle {
+    // No need to override default method
+@Override
+default void start() {
+
+        System.out.println("Vehicle started from here"); 
+
+    } 
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Car car = new Car();
+        car.start();          // Calls default method
+
+        Vehicle.stop();       // Calls static method
+    }
+}
+
+is this correct  ?
+
+ans : 
+✅ Yes. A default method can be overridden in the implementing class to provide a different implementation. The only rule is that you do not use the default keyword while overriding.
+
+❌ **No.** This is **not correct** because you **cannot use `default` while overriding** a method in a class. The `default` keyword is allowed **only inside an interface**.
+
+✅ Correct code:
+
+```java
+interface Vehicle {
+
+    default void start() {
+        System.out.println("Vehicle started");
+    }
+
+    static void stop() {
+        System.out.println("Vehicle stopped");
+    }
+}
+
+class Car implements Vehicle {
+
+    @Override
+    public void start() {
+        System.out.println("Vehicle started from here");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Car car = new Car();
+        car.start();
+
+        Vehicle.stop();
+    }
+}
+```
+
+**Output:**
+
+```text
+Vehicle started from here
+Vehicle stopped
+```
+
+**Reason (Interview):**
+`default` is used **only when declaring a method inside an interface**. When overriding it in a class, it becomes a normal **`public`** method.
+
+
+Interface methods are public by default, including default methods. So while overriding, the method must remain public; otherwise, Java throws a compile-time error because you cannot reduce the visibility of an inherited method.
+
 ->static methods in interface – belong to the interface class itself
 ex : implemented class should use this logic only interface dont want to give this logic to class to modify so what ever its present in interface in stataic method cant be override and cant be modified and the class which wants to use the can call directly to interface like this suppose 
 
