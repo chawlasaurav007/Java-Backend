@@ -405,6 +405,29 @@ int day = switch (today) {
 
 Q4: JAR vs WAR ? 
 
+ans : 
+another answer by chat gpt  : and this answer is looking simple and easy : 
+**Partially correct**, but this is **not the answer you should give in an interview**.
+
+### **JAR vs WAR**
+
+* **JAR (Java Archive)** contains **compiled Java classes (`.class`)**, resources (`application.properties`, images, etc.), and libraries. It is mainly used for **Java applications** or **Spring Boot applications** with an **embedded server (Tomcat)**.
+* **WAR (Web Application Archive)** contains everything in a **JAR** **plus** **web application files** like **HTML, CSS, JavaScript, JSP**, and the **WEB-INF** directory. It is used to deploy applications on an **external web server** like **Tomcat**, **JBoss**, or **WebLogic**.
+* Both **JAR** and **WAR** are **ZIP-based archive files**. They are not zipping **`.java` source files**; they package **compiled `.class` files** and other resources.
+* In **Spring Boot**, we mostly generate a **JAR** because it has an **embedded Tomcat**, so we can run it directly using:
+
+  ```bash
+  java -jar application.jar
+  ```
+* We use a **WAR** when the application needs to be deployed on an **external application server**.
+
+### **Interview One-Liner**
+
+> **JAR packages compiled Java classes and resources for standalone execution, while WAR packages a web application with compiled classes and web resources for deployment on an external web server.**
+
+
+
+
 my answer
 Jar - it contains a group of .class files
 War - a war file represents one we application which contains servlets ,jsp, html ,css ,js pages and so on.

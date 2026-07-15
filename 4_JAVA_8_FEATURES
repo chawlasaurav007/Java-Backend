@@ -147,7 +147,102 @@ or
 my words : 
 so what does this means is why do we need to use functional interface because as u know the interface which is annotated with functional interface here we can create only one abstract or incomplete method and which ever class suppose there are three classes they can take this incomplete abstarct method from interface and they can implement there own logic via a lambadas expression.
 
-     			                                                   
+Q : can we implement fucntional interface abstract method without using lambdas expression ? If yes then why we use lambdas expression then? 
+Ans : 
+✅ **Yes.** A functional interface's abstract method can be implemented **without using a lambda expression**.
+
+There are **two ways**:
+
+### 1. Using a Normal Class (Before Java 8)
+
+```java
+@FunctionalInterface
+interface Animal {
+    void sound();
+}
+
+class Dog implements Animal {
+    public void sound() {
+        System.out.println("Bark");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal a = new Dog();
+        a.sound();
+    }
+}
+```
+
+**Output**
+
+```text
+Bark
+```
+
+---
+
+### 2. Using an Anonymous Class
+
+```java
+@FunctionalInterface
+interface Animal {
+    void sound();
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Animal a = new Animal() {
+            @Override
+            public void sound() {
+                System.out.println("Bark");
+            }
+        };
+
+        a.sound();
+    }
+}
+```
+
+**Output**
+
+```text
+Bark
+```
+
+---
+
+### 3. Using a Lambda Expression (Java 8+)
+
+```java
+Animal a = () -> System.out.println("Bark");
+a.sound();
+```
+
+---
+
+## Interview Answer (Short)
+
+> **Yes. A functional interface can be implemented using a normal class, an anonymous class, or a lambda expression. Lambda is just a shorter and cleaner way introduced in Java 8.**
+
+### Interview Tip
+
+A functional interface **does not mean** you **must** use a lambda.
+
+It simply means the interface has **one abstract method**. You are free to implement it using:
+
+* ✅ Normal class
+* ✅ Anonymous class
+* ✅ Lambda expression
+
+so then why we use lambdas expression ? 
+We use lambda expressions to implement the single abstract method of a functional interface in a shorter, cleaner, and more readable way without creating a separate class or anonymous class.
+so we dont need to create seperate class to implement functional interface abstract method so thats why we use lambdas expression  
+
+
+
        
 	   Q: types of functional interface ?
 	   Ans :   1 . predicate--------|
@@ -249,12 +344,13 @@ so what does this means is why do we need to use functional interface because as
 				}
 		
     Important : 		
-		functional interface | methods of fucntional interface
-		_____________________|_________________________________    
-			  predicate        | test() 
-		    function         | apply()
-		    consumer         | accept() 
-		    supplier         | get()
+		| **Functional Interface** | **Method**    | **Return Type** |
+		| ------------------------ | ------------- | --------------- |
+		| **Predicate<T>**         | `test(T t)`   | `boolean`       |
+		| **Function<T, R>**       | `apply(T t)`  | `R`             |
+		| **Consumer<T>**          | `accept(T t)` | `void`          |
+		| **Supplier<T>**          | `get()`       | `T`             |
+
 	
 
     2. Lambdas expression : 
@@ -723,3 +819,7 @@ public class Main {
 
 Output:
 [Apple, Orange, Banana]
+
+
+boxed () : boxed() is used to convert a primitive stream (IntStream, LongStream, DoubleStream) into a stream of wrapper objects (Stream<Integer>, Stream<Long>, Stream<Double>).
+int > Integer like this  

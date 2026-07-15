@@ -130,7 +130,100 @@ AuthenticationManager
  Login Success   Login Failed
 ```
 
+
+registration flow : 
+User fills Registration Form
+        │
+        ▼
+Controller receives request
+        │
+        ▼
+Validate input
+        │
+        ▼
+Check if user already exists
+        │
+        ▼
+Encrypt password using BCryptPasswordEncoder
+        │
+        ▼
+Save user in Database
+        │
+        ▼
+Registration Successful
 ---
+Login Flow : 
+
+User enters Username & Password
+            │
+            ▼
+AuthenticationManager
+            │
+            ▼
+DaoAuthenticationProvider
+            │
+            ▼
+UserDetailsService
+            │
+            ▼
+Fetch User from Database
+            │
+            ▼
+BCryptPasswordEncoder
+compares passwords
+            │
+            ▼
+Authentication Successful
+            │
+            ▼
+Authentication object created
+            │
+            ▼
+Stored in SecurityContextHolder
+            │
+            ▼
+JWT Token generated
+            │
+            ▼
+JWT returned to Client
+
+
+After Login flow (Every API Request) : 
+
+Client sends JWT
+        │
+        ▼
+JWT Filter
+        │
+        ▼
+Validate JWT
+        │
+        ▼
+Extract Username & Roles
+        │
+        ▼
+Create Authentication object
+        │
+        ▼
+Store in SecurityContextHolder
+        │
+        ▼
+Spring Security checks authorization
+        │
+        ▼
+Access Granted or 403 Forbidden
+
+## What is the role of each?
+
+Q : what is SecurityContextHolder ? 
+ans : After a successful login, Spring Security creates an Authentication object and stores it in the SecurityContextHolder.
+
+It contains information like:
+
+Username
+Roles/Authorities (e.g., ROLE_USER, ROLE_ADMIN)
+Authentication status
+
 
 ## What is the role of each?
 
@@ -289,6 +382,22 @@ What actually happens is:
 2 : Spring Security reads the already hashed password from the database using UserDetailsService.
 3 : BCryptPasswordEncoder.matches(rawPassword, encodedPassword) is called.
 4 : It checks whether the entered password matches the stored hashed password.
+
+
+| **Step**                                     | **What it does**                                                                                                    |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **User enters Username & Password**          | User submits login credentials.                                                                                     |
+| **AuthenticationManager**                    | Receives the login request and starts the authentication process.                                                   |
+| **DaoAuthenticationProvider**                | Uses `UserDetailsService` and `BCryptPasswordEncoder` to verify the user.                                           |
+| **UserDetailsService**                       | Loads the user's details (username, encrypted password, roles) from the database.                                   |
+| **Fetch User from Database**                 | Retrieves the user's record from the database.                                                                      |
+| **BCryptPasswordEncoder compares passwords** | Compares the entered password with the encrypted password stored in the database.                                   |
+| **Authentication Successful**                | If the passwords match, the user is authenticated. Otherwise, login fails.                                          |
+| **Authentication object created**            | Spring Security creates an `Authentication` object containing the username, roles, and authentication status.       |
+| **Stored in SecurityContextHolder**          | Stores the authenticated user's details for the current request so they can be accessed throughout the application. |
+| **JWT Token generated**                      | The application creates a JWT containing the user's identity and roles.                                             |
+| **JWT returned to Client**                   | The JWT is sent back to the client, which stores it and sends it with future API requests.                          |
+
 
 Q : What is session ? and how to overcome session problem ?
 Ans : 
@@ -471,7 +580,7 @@ Q : so what is the difference between encode vs encryption ?
 | **Encoding**                      | **Encryption**                                |
 | --------------------------------- | --------------------------------------------- |
 | Changes data into another format. | Converts data into a secret format.           |
-| **Anyone can decode it.**         | Only someone with the **key** can decrypt it. |
+| **Anyone can decode it.**         | Only someone with the **secret key** can decrypt it. |
 | Used for data transmission.       | Used for security and confidentiality.        |
 | Example: Base64, Base64URL        | Example: AES, RSA                             |
 
@@ -727,7 +836,8 @@ import com.example.auth.security.JwtAuthenticationFilter;import com.example.auth
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructorpublic class SecurityConfig {
+@RequiredArgsConstructor
+public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final UserDetailsServiceImpl userDetailsService;
@@ -1022,7 +1132,8 @@ package com.example.auth.service;
 import com.example.auth.dto.LoginRequest;import com.example.auth.dto.JwtResponse;import com.example.auth.dto.RegisterRequest;import com.example.auth.model.User;import com.example.auth.repository.UserRepository;import com.example.auth.security.JwtUtil;import lombok.RequiredArgsConstructor;import org.springframework.security.authentication.AuthenticationManager;import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;import org.springframework.security.core.userdetails.UserDetails;import org.springframework.security.core.userdetails.UserDetailsService;import org.springframework.security.crypto.password.PasswordEncoder;import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructorpublic class AuthenticationService {
+@RequiredArgsConstructor
+public class AuthenticationService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -1071,7 +1182,8 @@ import com.example.auth.dto.LoginRequest;import com.example.auth.dto.JwtResponse
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@RequiredArgsConstructorpublic class AuthController {
+@RequiredArgsConstructor
+public class AuthController {
 
     private final AuthenticationService authenticationService;
 
@@ -1094,7 +1206,8 @@ package com.example.auth.controller;
 import org.springframework.http.ResponseEntity;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/demo")public class DemoController {
+@RequestMapping("/api/v1/demo")
+public class DemoController {
 
     @GetMapping
     public ResponseEntity<String> sayHello() {
