@@ -1,0 +1,36 @@
+order of studying  ->  to underestand kafka : 
+Client-Server
+        ↓
+Need of Messaging
+        ↓
+Message Queue
+        ↓
+ActiveMQ
+        ↓
+Problems in ActiveMQ
+        ↓
+Why Kafka was created
+        ↓
+Kafka Architecture
+        ↓
+Producer
+        ↓
+Broker
+        ↓
+Topic
+        ↓
+Partition
+        ↓
+Offset
+        ↓
+Consumer Group
+        ↓
+Replication
+        ↓
+Leader/Follower
+        ↓
+Exactly Once
+        ↓
+Real Project
+
+ok Thread, Process aur Thread Pool" samjha do pehle yeh then we will go further usse pehle yeh bata do iss question ka answer toh clients-server mechanism mai threads use hoti hai kya ?
